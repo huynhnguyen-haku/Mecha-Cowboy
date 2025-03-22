@@ -13,5 +13,6 @@ public class WeaponControls : MonoBehaviour
     private void Shot()
     {
         GetComponentInChildren<Animator>().SetTrigger("Fire");
+        Debug.Log("Shot");
     }
 }
