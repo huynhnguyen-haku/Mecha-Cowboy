@@ -8,6 +8,7 @@ public class PlayerWeaponVisuals : MonoBehaviour
     private bool isGrabbingWeapon;
 
     [SerializeField] private WeaponModel[] weaponModels;
+    [SerializeField] private BackupWeaponModel[] backupModels;
 
     [Header("Left Hand IK Settings")]
     [SerializeField] private Transform leftHandIK_Target;
@@ -27,6 +28,7 @@ public class PlayerWeaponVisuals : MonoBehaviour
         animator = GetComponentInChildren<Animator>();
         rig = GetComponentInChildren<Rig>();
         weaponModels = GetComponentsInChildren<WeaponModel>(true);
+        backupModels = GetComponentsInChildren<BackupWeaponModel>(true);
     }
 
     private void Update()
@@ -66,6 +68,12 @@ public class PlayerWeaponVisuals : MonoBehaviour
     {
         int animationIndex = (int)CurrentWeaponModel().holdType;
 
+        SwitchOffWeaponModels();
+        SwitchOffBackupWeaponModels();
+
+        if(player.weapon.HasOneWeapon()== false)
+            SwitchOnBackupWeaponModels();
+
         SwitchAnimationLayer(animationIndex);
         CurrentWeaponModel().gameObject.SetActive(true);
         AttachLeftHand();
@@ -77,6 +85,27 @@ public class PlayerWeaponVisuals : MonoBehaviour
             weaponModels[i].gameObject.SetActive(false);
         }
     }
+
+    public void SwitchOffBackupWeaponModels()
+    {
+        foreach (BackupWeaponModel backupModel in backupModels)
+        {
+            backupModel.gameObject.SetActive(false);
+        }
+    }
+
+    public void SwitchOnBackupWeaponModels()
+    {
+        WeaponType weaponType = player.weapon.BackupWeapon().weaponType;
+        foreach (BackupWeaponModel backupModel in backupModels)
+        {
+            if (backupModel.weaponType == weaponType)
+            {
+                backupModel.gameObject.SetActive(true);
+            }
+        }
+    }
+
     private void SwitchAnimationLayer(int layerIndex)
     {
         // Turn off all layers
