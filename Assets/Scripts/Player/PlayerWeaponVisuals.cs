@@ -8,6 +8,7 @@ public class PlayerWeaponVisuals : MonoBehaviour
 
     #region Weapon Transform
     [SerializeField] private Transform[] gunTransforms;
+
     [SerializeField] private Transform pistol;
     [SerializeField] private Transform revolver;
     [SerializeField] private Transform rifle;
@@ -42,14 +43,17 @@ public class PlayerWeaponVisuals : MonoBehaviour
     {
         CheckWeaponSwitch();
 
-        if (Input.GetKeyDown(KeyCode.R) && isGrabbingWeapon == false)
-        {
-            animator.SetTrigger("Reload");
-            ReduceRigWeight();
-        }
-
         UpdateRigWeight();
         UpdateLeftHandWeight();
+    }
+
+    public void PlayReloadAnimation()
+    {
+        if (isGrabbingWeapon)
+            return;
+
+        animator.SetTrigger("Reload");
+        ReduceRigWeight();
     }
 
     private void UpdateLeftHandWeight()
