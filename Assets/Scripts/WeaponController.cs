@@ -7,6 +7,9 @@ public class WeaponControls : MonoBehaviour
     [SerializeField] private float bulletSpeed;
     [SerializeField] private Transform gunPoint;
 
+    private const float REFERENCE_BULLET_SPEED = 20;
+    // This is the speed of the bullet from which our mass formula is derived
+
     [SerializeField] private Transform weaponHolder;
 
     private void Start()

@@ -61,7 +61,7 @@ public class PlayerAim : MonoBehaviour
         Vector3 laserDirection = player.weapon.BullectDirection();
         Vector3 endPoint = gunPoint.position + laserDirection * gunDistance;
 
-        if(Physics.Raycast(gunPoint.position, laserDirection, out RaycastHit hitInfo, gunDistance))
+        if (Physics.Raycast(gunPoint.position, laserDirection, out RaycastHit hitInfo, gunDistance))
         {
             endPoint = hitInfo.point;
             laserTipLength = 0;
@@ -77,7 +77,12 @@ public class PlayerAim : MonoBehaviour
 
         if (target != null && isLockedOnTarget)
         {
-            aim.position = target.position;
+            if (target.GetComponent<Renderer>() != null)
+                aim.position = target.GetComponent<Renderer>().bounds.center;
+
+            else
+                aim.position = target.position;
+
             return;
         }
 
