@@ -2,13 +2,13 @@ using UnityEngine;
 
 public class WeaponControls : MonoBehaviour
 {
+    private const float REFERENCE_BULLET_SPEED = 20;
+    // This is the speed of the bullet from which our mass formula is derived
+
     private Player player;
     [SerializeField] private GameObject bulletPrefab;
     [SerializeField] private float bulletSpeed;
     [SerializeField] private Transform gunPoint;
-
-    private const float REFERENCE_BULLET_SPEED = 20;
-    // This is the speed of the bullet from which our mass formula is derived
 
     [SerializeField] private Transform weaponHolder;
 
@@ -21,9 +21,13 @@ public class WeaponControls : MonoBehaviour
     private void Shot()
     {
         GameObject bullet = Instantiate(bulletPrefab, gunPoint.position, Quaternion.LookRotation(gunPoint.forward));
-        bullet.GetComponent<Rigidbody>().linearVelocity = BullectDirection() * bulletSpeed;
 
-        Destroy(bullet, 10);
+        Rigidbody rbBullet = bullet.GetComponent<Rigidbody>();
+
+        rbBullet.mass = REFERENCE_BULLET_SPEED / bulletSpeed;
+        rbBullet.linearVelocity = BullectDirection() * bulletSpeed;
+
+        Destroy(bullet, 10); // This is a bullet life time, don't mistake it with destroy when colliding in Bullet.cs
         GetComponentInChildren<Animator>().SetTrigger("Fire");
     }
 
