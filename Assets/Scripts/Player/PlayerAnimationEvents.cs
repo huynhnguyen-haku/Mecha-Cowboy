@@ -15,7 +15,6 @@ public class PlayerAnimationEvents : MonoBehaviour
     {
         weaponVisualController.MaximizeRigWeight();
         weaponController.CurrentWeapon().RefillBullets();
-        // Refill bullets
     }
     public void ReturnRig()
     {
@@ -27,4 +26,6 @@ public class PlayerAnimationEvents : MonoBehaviour
     {
         weaponVisualController.SetBusyGrabbingWeapon(false);
     }
+
+    public void SwitchOnWeapon() => weaponVisualController.SwitchOnCurrentWeaponModel();
 }

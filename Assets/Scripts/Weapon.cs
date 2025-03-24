@@ -21,7 +21,6 @@ public class Weapon
     {
         return HaveEnoughBullet();
     }
-
     private bool HaveEnoughBullet()
     {
         if (bulletsInMagazine > 0)
@@ -31,7 +30,6 @@ public class Weapon
         }
         return false;
     }
-
     public bool CanReload()
     {
         if (bulletsInMagazine == magazineCapacity)
@@ -45,7 +43,6 @@ public class Weapon
         }
         return false;
     }
-
     public void RefillBullets()
     {
         int bulletsToReload = magazineCapacity - bulletsInMagazine;
