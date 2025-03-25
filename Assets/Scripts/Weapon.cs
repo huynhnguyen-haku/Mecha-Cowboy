@@ -1,3 +1,6 @@
+using System;
+using UnityEngine;
+
 public enum WeaponType
 {
     Pistol,
@@ -16,6 +19,12 @@ public class Weapon
     public int bulletsInMagazine;
     public int magazineCapacity;
     public int TotalReserveAmmo;
+
+    [UnityEngine.Range(1, 3)]
+    public float reloadSpeed =1;
+
+    [UnityEngine.Range(1, 3)]
+    public float equipSpeed = 1;
 
     public bool CanShot()
     {

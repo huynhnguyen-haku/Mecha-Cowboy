@@ -25,9 +25,14 @@ public class WeaponController : MonoBehaviour
     {
         player = GetComponent<Player>();
         AssignInputEvents();
+
+        Invoke("EquipStartingWeapon", 0.1f);
     }
 
     #region Slot Management - Equip, Pickup, Drop
+
+    private void EquipStartingWeapon() => EquipWeapon(0); 
+    
 
     private void EquipWeapon(int i)
     {

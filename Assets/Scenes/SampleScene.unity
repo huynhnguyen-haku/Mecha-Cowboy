@@ -216,6 +216,8 @@ MonoBehaviour:
     bulletsInMagazine: 0
     magazineCapacity: 0
     TotalReserveAmmo: 0
+    reloadSpeed: 1
+    equipSpeed: 1
   bulletPrefab: {fileID: 4456756728090714116, guid: 368f2f8661611654abca43546366fbfb, type: 3}
   bulletSpeed: 80
   gunPoint: {fileID: 315932312}
@@ -225,10 +227,14 @@ MonoBehaviour:
     bulletsInMagazine: 5
     magazineCapacity: 5
     TotalReserveAmmo: 15
+    reloadSpeed: 1
+    equipSpeed: 1
   - weaponType: 1
     bulletsInMagazine: 6
     magazineCapacity: 6
     TotalReserveAmmo: 12
+    reloadSpeed: 2
+    equipSpeed: 2
   maxSlots: 2
 --- !u!114 &22133707
 MonoBehaviour:
@@ -255,6 +261,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weaponModels: []
+  backupModels: []
   leftHandIK_Target: {fileID: 198760048}
   leftHandIK: {fileID: 251145937}
   leftHandIK_WeightIncrease: 2.5
@@ -898,7 +905,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weaponType: 4
-  grabType: 1
+  equipAnimationType: 0
   holdType: 3
   gunPoint: {fileID: 307380335}
   holdPoint: {fileID: 1509343177}
@@ -1800,6 +1807,8 @@ MonoBehaviour:
     bulletsInMagazine: 30
     magazineCapacity: 30
     TotalReserveAmmo: 0
+    reloadSpeed: 1
+    equipSpeed: 1
 --- !u!65 &604478561
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2173,7 +2182,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weaponType: 3
-  grabType: 1
+  equipAnimationType: 0
   holdType: 2
   gunPoint: {fileID: 398647189}
   holdPoint: {fileID: 1847596934}
@@ -4668,7 +4677,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weaponType: 0
-  grabType: 0
+  equipAnimationType: 0
   holdType: 1
   gunPoint: {fileID: 315932312}
   holdPoint: {fileID: 328124462}
@@ -4726,7 +4735,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weaponType: 1
-  grabType: 0
+  equipAnimationType: 0
   holdType: 1
   gunPoint: {fileID: 204916397}
   holdPoint: {fileID: 2137665784}
@@ -5931,7 +5940,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weaponType: 2
-  grabType: 1
+  equipAnimationType: 0
   holdType: 1
   gunPoint: {fileID: 1414927825}
   holdPoint: {fileID: 1394994266}
