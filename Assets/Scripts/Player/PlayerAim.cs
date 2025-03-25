@@ -53,7 +53,16 @@ public class PlayerAim : MonoBehaviour
 
     private void UpdateAimVisual()
     {
-        Transform gunPoint = player.weapon.GunPoint;
+        aimLaser.enabled = player.weapon.WeaponReady(); // Enable laser only when weapon is ready
+        if (aimLaser.enabled == false)
+            return;
+
+        WeaponModel weaponModel = player.weaponVisuals.CurrentWeaponModel();
+        weaponModel.transform.LookAt(aim);
+        weaponModel.gunPoint.LookAt(aim);
+
+
+        Transform gunPoint = player.weapon.GunPoint();
 
         float laserTipLength = 0.5f;
         float gunDistance = 4f;

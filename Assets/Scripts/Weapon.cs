@@ -26,19 +26,32 @@ public class Weapon
     [UnityEngine.Range(1, 3)]
     public float equipSpeed = 1;
 
+    [Space]
+    public float fireRate = 1;
+    private float lastShotTime;
+
     public bool CanShot()
     {
-        return HaveEnoughBullet();
-    }
-    private bool HaveEnoughBullet()
-    {
-        if (bulletsInMagazine > 0)
+        if (HaveEnoughBullet() && ReadyToFire())
         {
             bulletsInMagazine--;
             return true;
         }
         return false;
     }
+
+    private bool ReadyToFire()
+    {
+       if (Time.time > lastShotTime + 1 / fireRate)
+        {
+            lastShotTime = Time.time;
+            return true;
+        }
+        return false;
+    }
+
+    #region Reload Methods
+
     public bool CanReload()
     {
         if (bulletsInMagazine == magazineCapacity)
@@ -52,6 +65,9 @@ public class Weapon
         }
         return false;
     }
+
+    private bool HaveEnoughBullet() => bulletsInMagazine > 0;
+
     public void RefillBullets()
     {
         int bulletsToReload = magazineCapacity - bulletsInMagazine;
@@ -68,4 +84,6 @@ public class Weapon
             TotalReserveAmmo = 0;
         }
     }
+
+    #endregion
 }
