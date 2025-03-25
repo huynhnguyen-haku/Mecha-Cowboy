@@ -14,7 +14,7 @@ public class Bullet : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
         CreateImpactFX(collision);
-        Destroy(gameObject); // Destroy the bullet on collision
+        ObjectPool.instance.ReturnBullet(gameObject);
     }
 
     private void CreateImpactFX(Collision collision)

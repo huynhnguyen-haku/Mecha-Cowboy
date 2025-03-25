@@ -64,17 +64,18 @@ public class WeaponController : MonoBehaviour
     private void Shot()
     {
         if (currentWeapon.CanShot() == false)
-        {
             return;
-        }
-        GameObject bullet = Instantiate(bulletPrefab, gunPoint.position, Quaternion.LookRotation(gunPoint.forward));
+        
+        GameObject bullet = ObjectPool.instance.GetBullet();
+
+        bullet.transform.position = gunPoint.position;
+        bullet.transform.rotation = Quaternion.LookRotation(gunPoint.forward);
 
         Rigidbody rbBullet = bullet.GetComponent<Rigidbody>();
 
         rbBullet.mass = REFERENCE_BULLET_SPEED / bulletSpeed;
         rbBullet.linearVelocity = BullectDirection() * bulletSpeed;
 
-        Destroy(bullet, 10); // This is a bullet life time, don't mistake it with destroy when colliding in Bullet.cs
         GetComponentInChildren<Animator>().SetTrigger("Fire");
     }
 
