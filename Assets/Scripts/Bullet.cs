@@ -14,17 +14,22 @@ public class Bullet : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
         CreateImpactFX(collision);
-        ObjectPool.instance.ReturnBullet(gameObject);
+        ReturnBulletToPool();
     }
+
+    private void ReturnBulletToPool()
+      =>  ObjectPool.instance.ReturnObject(gameObject);
+    
 
     private void CreateImpactFX(Collision collision)
     {
         if (collision.contacts.Length > 0)
         {
             ContactPoint contact = collision.contacts[0];
-            GameObject newImpactFX = Instantiate(bulletImpactFX, contact.point, Quaternion.LookRotation(contact.normal));
+            GameObject newImpactFX = ObjectPool.instance.GetObject(bulletImpactFX);
+            newImpactFX.transform.position = contact.point;
 
-            Destroy(newImpactFX, 1);
+            ObjectPool.instance.ReturnObject(newImpactFX, 1);
         }
     }
 }

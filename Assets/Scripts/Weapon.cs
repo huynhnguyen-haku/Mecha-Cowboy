@@ -95,6 +95,7 @@ public class Weapon
             fireRate = defaultFireRate;
         }
     }
+
     #endregion
 
     #region Spread Methods
@@ -138,6 +139,12 @@ public class Weapon
             return true;
         }
         return false;
+    }
+
+    public Weapon(WeaponType weaponType)
+    {
+        defaultFireRate = fireRate;
+        this.weaponType = weaponType;
     }
 
     #region Reload Methods

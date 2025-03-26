@@ -40,8 +40,12 @@ public class WeaponController : MonoBehaviour
     }
 
     #region Slot Management - Equip, Pickup, Drop, Ready
-    private void EquipStartingWeapon() 
-        => EquipWeapon(0);
+    private void EquipStartingWeapon()
+    {
+        weaponSlots[0] = new Weapon(WeaponType.Pistol);
+        EquipWeapon(0);
+    }
+
     private void EquipWeapon(int i)
     {
         if (i >= weaponSlots.Count)
@@ -114,7 +118,7 @@ public class WeaponController : MonoBehaviour
     {
         currentWeapon.bulletsInMagazine--;
 
-        GameObject bullet = ObjectPool.instance.GetBullet();
+        GameObject bullet = ObjectPool.instance.GetObject(bulletPrefab);
         Rigidbody rbBullet = bullet.GetComponent<Rigidbody>();
 
         bullet.transform.position = GunPoint().position;

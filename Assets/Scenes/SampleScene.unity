@@ -276,26 +276,6 @@ MonoBehaviour:
     burst_BulletsPerShot: 0
     burst_FireRate: 0
     burst_FireDelay: 0
-  - weaponType: 0
-    bulletsInMagazine: 24
-    magazineCapacity: 24
-    TotalReserveAmmo: 1200
-    bulletsPerShot: 1
-    defaultFireRate: 1000
-    shotType: 1
-    fireRate: 1000
-    reloadSpeed: 2.5
-    equipSpeed: 2.5
-    laserDistance: 6
-    cameraDistance: 6
-    minSpread: 1
-    maxSpread: 5
-    spreadIncreaseRate: 0.2
-    burstAvailable: 0
-    burstActive: 0
-    burst_BulletsPerShot: 0
-    burst_FireRate: 0
-    burst_FireDelay: 0
   maxSlots: 3
 --- !u!114 &22133707
 MonoBehaviour:
@@ -4449,7 +4429,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 43f82723b31c2024ba49bc43061cbdca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bulletPrefab: {fileID: 4456756728090714116, guid: 368f2f8661611654abca43546366fbfb, type: 3}
   poolSize: 50
 --- !u!4 &1487691972
 Transform:
