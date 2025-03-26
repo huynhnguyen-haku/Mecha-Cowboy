@@ -21,7 +21,7 @@ public class WeaponController : MonoBehaviour
 
     [Header("Inventory")]
     [SerializeField] private List<Weapon> weaponSlots;
-    [SerializeField] private int maxSlots = 2;
+    [SerializeField] private int maxSlots = 3; // Max weapon slots
 
     private void Start()
     {
@@ -33,26 +33,24 @@ public class WeaponController : MonoBehaviour
 
     private void Update()
     {
-        if(isShooting)
+        if (isShooting)
         {
             Shot();
-        }
-
-        if (Input.GetKeyDown(KeyCode.T))
-        {
-            currentWeapon.ToggleBurstMode();
         }
     }
 
     #region Slot Management - Equip, Pickup, Drop, Ready
-
-    private void EquipStartingWeapon() => EquipWeapon(0); 
-
+    private void EquipStartingWeapon() 
+        => EquipWeapon(0);
     private void EquipWeapon(int i)
     {
+        if (i >= weaponSlots.Count)
+            return;
+
         SetWeaponReady(false);
         currentWeapon = weaponSlots[i];
         player.weaponVisuals.PlayWeaponEquipAnimation();
+        CameraManager.instance.ChangeCameraDistance(currentWeapon.cameraDistance);
     }
     public void PickupWeapon(Weapon newWeapon)
     {
@@ -75,6 +73,8 @@ public class WeaponController : MonoBehaviour
     public bool WeaponReady() => weaponReady;
 
     #endregion
+
+    #region Shooting Mechanics
     private IEnumerator BurstFire()
     {
         SetWeaponReady(false);
@@ -87,10 +87,9 @@ public class WeaponController : MonoBehaviour
 
             if (i >= currentWeapon.bulletsPerShot)
                 SetWeaponReady(true);
-            
+
         }
     }
-
     private void Shot()
     {
         if (WeaponReady() == false)
@@ -111,9 +110,6 @@ public class WeaponController : MonoBehaviour
         }
         FireSingleBullet();
     }
-
-
-
     private void FireSingleBullet()
     {
         currentWeapon.bulletsInMagazine--;
@@ -129,13 +125,14 @@ public class WeaponController : MonoBehaviour
         rbBullet.mass = REFERENCE_BULLET_SPEED / bulletSpeed;
         rbBullet.linearVelocity = bulletsDirection * bulletSpeed;
     }
-
-
     private void Reload()
     {
         SetWeaponReady(false);
         player.weaponVisuals.PlayReloadAnimation();
     }
+    #endregion
+
+    #region Utility Methods
     public Vector3 BullectDirection()
     {
         Transform aim = player.aim.Aim;
@@ -150,18 +147,21 @@ public class WeaponController : MonoBehaviour
 
     public Transform GunPoint() => player.weaponVisuals.CurrentWeaponModel().gunPoint;
     public bool HasOneWeapon() => weaponSlots.Count <= 1;
-    public Weapon CurrentWeapon() => currentWeapon;
-    public Weapon BackupWeapon()
+
+    public Weapon WeaponInSlots(WeaponType weaponType)
     {
         foreach (Weapon weapon in weaponSlots)
         {
-            if (weapon != currentWeapon)
+            if (weapon.weaponType == weaponType)
             {
                 return weapon;
             }
         }
         return null;
     }
+
+    public Weapon CurrentWeapon() => currentWeapon;
+    #endregion
 
     #region Input Events
 
@@ -175,7 +175,11 @@ public class WeaponController : MonoBehaviour
 
         controls.Character.EquipSlot1.performed += context => EquipWeapon(0);
         controls.Character.EquipSlot2.performed += context => EquipWeapon(1);
+        controls.Character.EquipSlot3.performed += context => EquipWeapon(2);
+        controls.Character.EquipSlot4.performed += context => EquipWeapon(3);
+        controls.Character.EquipSlot5.performed += context => EquipWeapon(4);
 
+        controls.Character.ToggleBurstMode.performed += context => currentWeapon.ToggleBurstMode();
         controls.Character.DropCurrentWeapon.performed += context => DropWeapon();
         controls.Character.Reload.performed += context =>
         {
@@ -184,6 +188,7 @@ public class WeaponController : MonoBehaviour
                 Reload();
             }
         };
+
     }
 
     #endregion

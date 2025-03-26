@@ -94,14 +94,38 @@ public class PlayerWeaponVisuals : MonoBehaviour
 
     public void SwitchOnBackupWeaponModels()
     {
-        WeaponType weaponType = player.weapon.BackupWeapon().weaponType;
+        SwitchOffBackupWeaponModels();
+        BackupWeaponModel lowhangWeapon = null;
+        BackupWeaponModel backhangWeapon = null;
+        BackupWeaponModel sidehangWeapon = null;
+
         foreach (BackupWeaponModel backupModel in backupModels)
         {
-            if (backupModel.weaponType == weaponType)
+            if (backupModel.weaponType == player.weapon.CurrentWeapon().weaponType)
             {
-                backupModel.gameObject.SetActive(true);
+                continue;
+            }
+
+            if (player.weapon.WeaponInSlots(backupModel.weaponType) != null)
+            {
+                if(backupModel.HangTypeIs(HangType.LowBackHang))
+                    lowhangWeapon = backupModel;
+
+                if (backupModel.HangTypeIs(HangType.BackHang))
+                    backhangWeapon = backupModel;
+
+                if (backupModel.HangTypeIs(HangType.SideHang))
+                    sidehangWeapon = backupModel;
             }
         }
+
+        // If hangWeapon is not null, then activate it
+
+        lowhangWeapon?.gameObject.SetActive(true); 
+
+        backhangWeapon?.gameObject.SetActive(true);
+
+        sidehangWeapon?.gameObject.SetActive(true);
     }
 
     private void SwitchAnimationLayer(int layerIndex)

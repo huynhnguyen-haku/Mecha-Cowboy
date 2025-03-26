@@ -42,6 +42,12 @@ public class Weapon
     [UnityEngine.Range(1, 3)]
     public float equipSpeed = 1;
 
+    [UnityEngine.Range(2, 12)]
+    public float laserDistance = 4;  // Using only for laser aim, not effecting the actual bullet distance
+
+    [Range(3, 8)]
+    public float cameraDistance = 6;
+
     [Header("Spread")]
     private float currenSpread;
     public float minSpread = 1;
