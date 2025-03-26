@@ -216,14 +216,20 @@ MonoBehaviour:
     bulletsInMagazine: 0
     magazineCapacity: 0
     TotalReserveAmmo: 0
+    bulletsPerShot: 3
+    defaultFireRate: 0
     shotType: 0
     fireRate: 1
     reloadSpeed: 1
     equipSpeed: 1
-    baseSpread: 0
-    currenSpread: 0
+    minSpread: 1
     maxSpread: 0
     spreadIncreaseRate: 0.15
+    burstAvailable: 0
+    burstActive: 0
+    burst_BulletsPerShot: 3
+    burst_FireRate: 0
+    burst_FireDelay: 0.1
   bulletPrefab: {fileID: 4456756728090714116, guid: 368f2f8661611654abca43546366fbfb, type: 3}
   bulletSpeed: 80
   weaponHolder: {fileID: 862298342}
@@ -232,26 +238,38 @@ MonoBehaviour:
     bulletsInMagazine: 30
     magazineCapacity: 30
     TotalReserveAmmo: 120
+    bulletsPerShot: 1
+    defaultFireRate: 600
     shotType: 1
     fireRate: 600
     reloadSpeed: 1.5
     equipSpeed: 1.5
-    baseSpread: 0.5
-    currenSpread: 0.5
+    minSpread: 1
     maxSpread: 3
     spreadIncreaseRate: 0.15
-  - weaponType: 0
-    bulletsInMagazine: 24
-    magazineCapacity: 24
-    TotalReserveAmmo: 240
-    shotType: 1
-    fireRate: 1000
-    reloadSpeed: 1
-    equipSpeed: 1
-    baseSpread: 0
-    currenSpread: 0
-    maxSpread: 0
-    spreadIncreaseRate: 0.15
+    burstAvailable: 1
+    burstActive: 0
+    burst_BulletsPerShot: 3
+    burst_FireRate: 100
+    burst_FireDelay: 0.1
+  - weaponType: 3
+    bulletsInMagazine: 25
+    magazineCapacity: 25
+    TotalReserveAmmo: 100
+    bulletsPerShot: 5
+    defaultFireRate: 100
+    shotType: 0
+    fireRate: 100
+    reloadSpeed: 2
+    equipSpeed: 2
+    minSpread: 10
+    maxSpread: 10
+    spreadIncreaseRate: 0
+    burstAvailable: 0
+    burstActive: 0
+    burst_BulletsPerShot: 0
+    burst_FireRate: 0
+    burst_FireDelay: 0
   maxSlots: 2
 --- !u!114 &22133707
 MonoBehaviour:
@@ -1943,14 +1961,20 @@ MonoBehaviour:
     bulletsInMagazine: 30
     magazineCapacity: 30
     TotalReserveAmmo: 120
+    bulletsPerShot: 3
+    defaultFireRate: 0
     shotType: 0
     fireRate: 10
     reloadSpeed: 1.5
     equipSpeed: 1.5
-    baseSpread: 0
-    currenSpread: 0
+    minSpread: 1
     maxSpread: 0
     spreadIncreaseRate: 0.15
+    burstAvailable: 0
+    burstActive: 0
+    burst_BulletsPerShot: 3
+    burst_FireRate: 0
+    burst_FireDelay: 0.1
 --- !u!65 &604478561
 BoxCollider:
   m_ObjectHideFlags: 0

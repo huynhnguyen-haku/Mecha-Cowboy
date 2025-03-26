@@ -28,6 +28,8 @@ public class Weapon
     public int TotalReserveAmmo;
 
     [Header("Weapon Stats")]
+    public int bulletsPerShot;
+    public float defaultFireRate;
     public ShotType shotType;
     public float fireRate = 1;
     private float lastShotTime;
@@ -46,9 +48,48 @@ public class Weapon
     public float maxSpread = 3;
 
     public float spreadIncreaseRate = 0.15f;
-
     private float lastSpreadUpdateTime;
     private float spreadCooldown = 1f;
+
+    [Header("Burst Fire")]
+    public bool burstAvailable;
+    public bool burstActive;
+
+    public int burst_BulletsPerShot = 3;
+    public int burst_FireRate;
+    public float burst_FireDelay = 0.1f;
+
+    #region Burst Fire Methods
+
+    public bool BurstActivated()
+    {
+        if (weaponType == WeaponType.Shotgun)
+        {
+            burst_FireDelay = 0;
+            return true;
+        }
+        return burstActive;
+    }
+
+    public void ToggleBurstMode()
+    {
+        if (burstAvailable == false)
+            return;
+
+        burstActive = !burstActive;
+
+        if (burstActive)
+        {
+            bulletsPerShot = burst_BulletsPerShot;
+            fireRate = burst_FireRate;
+        }
+        else
+        {
+            bulletsPerShot = 1;
+            fireRate = defaultFireRate;
+        }
+    }
+    #endregion
 
     #region Spread Methods
 
@@ -80,18 +121,11 @@ public class Weapon
 
     #endregion
 
-    public bool CanShot()
-    {
-        if (HaveEnoughBullet() && ReadyToFire())
-        {
-            bulletsInMagazine--;
-            return true;
-        }
-        return false;
-    }
+    public bool CanShot() => HaveEnoughBullet() && ReadyToFire();
+
     private bool ReadyToFire()
     {
-        float timeBetweenShots = 60f / fireRate; // fireRate is now bullets per minute
+        float timeBetweenShots = 60f / fireRate; 
         if (Time.time > lastShotTime + timeBetweenShots)
         {
             lastShotTime = Time.time;
