@@ -9,6 +9,7 @@ public class WeaponController : MonoBehaviour
     private const float REFERENCE_BULLET_SPEED = 20;
     // This is the speed of the bullet from which our mass formula is derived
 
+    [SerializeField] private Weapon_Data defaultWeaponData;
     [SerializeField] private Weapon currentWeapon;
     private bool weaponReady;
     private bool isShooting;
@@ -42,7 +43,7 @@ public class WeaponController : MonoBehaviour
     #region Slot Management - Equip, Pickup, Drop, Ready
     private void EquipStartingWeapon()
     {
-        weaponSlots[0] = new Weapon(WeaponType.Pistol);
+        weaponSlots[0] = new Weapon(defaultWeaponData);
         EquipWeapon(0);
     }
 
@@ -56,11 +57,12 @@ public class WeaponController : MonoBehaviour
         player.weaponVisuals.PlayWeaponEquipAnimation();
         CameraManager.instance.ChangeCameraDistance(currentWeapon.cameraDistance);
     }
-    public void PickupWeapon(Weapon newWeapon)
+    public void PickupWeapon(Weapon_Data newweapon_Data)
     {
         if (weaponSlots.Count >= maxSlots)
             return;
 
+        Weapon newWeapon = new Weapon(newweapon_Data);
         weaponSlots.Add(newWeapon);
         player.weaponVisuals.SwitchOnBackupWeaponModels();
     }

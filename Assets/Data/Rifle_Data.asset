@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 58354826785886d4fb98529b1feff3e1, type: 3}
+  m_Name: Rifle_Data
+  m_EditorClassIdentifier: 
+  weaponName: Alaska 47
+  weaponType: 2
+  shotType: 1
+  bulletsPerShot: 1
+  fireRate: 600
+  bulletsInMagazine: 40
+  magazineCapacity: 40
+  TotalReserveAmmo: 240
+  reloadSpeed: 2
+  equipSpeed: 2
+  laserDistance: 7
+  cameraDistance: 7
+  minSpread: 0.3
+  maxSpread: 4
+  spreadIncreaseRate: 0.15
+  burstAvailable: 1
+  burstActive: 0
+  burst_BulletsPerShot: 3
+  burst_FireRate: 100
+  burst_FireDelay: 0.1

@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 public enum WeaponType
@@ -22,48 +21,44 @@ public class Weapon
 {
     public WeaponType weaponType;
 
-    [Header("Magazine Stats")]
+    #region Magazine Details
     public int bulletsInMagazine;
     public int magazineCapacity;
     public int TotalReserveAmmo;
+    #endregion
 
-    [Header("Weapon Stats")]
-    public int bulletsPerShot;
-    public float defaultFireRate;
+    #region Weapon Details
     public ShotType shotType;
-    public float fireRate = 1;
+    public int bulletsPerShot { get; private set; }
+    private float defaultFireRate;
+    public float fireRate;
     private float lastShotTime;
+    #endregion
 
-    [Space]
+    #region Weapon Settings
+    public float reloadSpeed { get; private set; }
+    public float equipSpeed { get; private set; }
+    public float laserDistance { get; private set; }
+    public float cameraDistance;
+    #endregion
 
-    [UnityEngine.Range(1, 3)]
-    public float reloadSpeed =1;
-
-    [UnityEngine.Range(1, 3)]
-    public float equipSpeed = 1;
-
-    [UnityEngine.Range(2, 12)]
-    public float laserDistance = 4;  // Using only for laser aim, not effecting the actual bullet distance
-
-    [Range(3, 8)]
-    public float cameraDistance = 6;
-
-    [Header("Spread")]
+    #region Spread
     private float currenSpread;
-    public float minSpread = 1;
-    public float maxSpread = 3;
+    private float minSpread;
+    private float maxSpread;
 
-    public float spreadIncreaseRate = 0.15f;
+    private float spreadIncreaseRate;
     private float lastSpreadUpdateTime;
-    private float spreadCooldown = 1f;
+    private float spreadCooldown;
+    #endregion
 
-    [Header("Burst Fire")]
-    public bool burstAvailable;
+    #region Burst Fire
+    private bool burstAvailable;
     public bool burstActive;
-
-    public int burst_BulletsPerShot = 3;
-    public int burst_FireRate;
-    public float burst_FireDelay = 0.1f;
+    private int burst_BulletsPerShot;
+    private int burst_FireRate;
+    public float burst_FireDelay { get; private set; }
+    #endregion
 
     #region Burst Fire Methods
 
@@ -132,7 +127,7 @@ public class Weapon
 
     private bool ReadyToFire()
     {
-        float timeBetweenShots = 60f / fireRate; 
+        float timeBetweenShots = 60f / fireRate;
         if (Time.time > lastShotTime + timeBetweenShots)
         {
             lastShotTime = Time.time;
@@ -141,10 +136,34 @@ public class Weapon
         return false;
     }
 
-    public Weapon(WeaponType weaponType)
+    public Weapon(Weapon_Data weapon_Data)
     {
+        weaponType = weapon_Data.weaponType;
+
+        shotType = weapon_Data.shotType;
+        bulletsPerShot = weapon_Data.bulletsPerShot;
+        fireRate = weapon_Data.fireRate;
+
+        bulletsInMagazine = weapon_Data.bulletsInMagazine;
+        magazineCapacity = weapon_Data.magazineCapacity;
+        TotalReserveAmmo = weapon_Data.TotalReserveAmmo;
+
+        reloadSpeed = weapon_Data.reloadSpeed;
+        equipSpeed = weapon_Data.equipSpeed;
+        laserDistance = weapon_Data.laserDistance;
+        cameraDistance = weapon_Data.cameraDistance;
+
+        minSpread = weapon_Data.minSpread;
+        maxSpread = weapon_Data.maxSpread;
+        spreadIncreaseRate = weapon_Data.spreadIncreaseRate;
+
+        burstAvailable = weapon_Data.burstAvailable;
+        burstActive = weapon_Data.burstActive;
+        burst_BulletsPerShot = weapon_Data.burst_BulletsPerShot;
+        burst_FireRate = weapon_Data.burst_FireRate;
+        burst_FireDelay = weapon_Data.burst_FireDelay;
+
         defaultFireRate = fireRate;
-        this.weaponType = weaponType;
     }
 
     #region Reload Methods
