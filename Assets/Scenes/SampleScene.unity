@@ -220,26 +220,38 @@ MonoBehaviour:
     fireRate: 1
     reloadSpeed: 1
     equipSpeed: 1
+    baseSpread: 0
+    currenSpread: 0
+    maxSpread: 0
+    spreadIncreaseRate: 0.15
   bulletPrefab: {fileID: 4456756728090714116, guid: 368f2f8661611654abca43546366fbfb, type: 3}
   bulletSpeed: 80
   weaponHolder: {fileID: 862298342}
   weaponSlots:
-  - weaponType: 4
-    bulletsInMagazine: 3
-    magazineCapacity: 3
-    TotalReserveAmmo: 12
-    shotType: 0
-    fireRate: 1
-    reloadSpeed: 1
-    equipSpeed: 1
   - weaponType: 2
     bulletsInMagazine: 30
     magazineCapacity: 30
     TotalReserveAmmo: 120
     shotType: 1
-    fireRate: 7
-    reloadSpeed: 2
-    equipSpeed: 2
+    fireRate: 600
+    reloadSpeed: 1.5
+    equipSpeed: 1.5
+    baseSpread: 0.5
+    currenSpread: 0.5
+    maxSpread: 3
+    spreadIncreaseRate: 0.15
+  - weaponType: 0
+    bulletsInMagazine: 24
+    magazineCapacity: 24
+    TotalReserveAmmo: 240
+    shotType: 1
+    fireRate: 1000
+    reloadSpeed: 1
+    equipSpeed: 1
+    baseSpread: 0
+    currenSpread: 0
+    maxSpread: 0
+    spreadIncreaseRate: 0.15
   maxSlots: 2
 --- !u!114 &22133707
 MonoBehaviour:
@@ -1935,6 +1947,10 @@ MonoBehaviour:
     fireRate: 10
     reloadSpeed: 1.5
     equipSpeed: 1.5
+    baseSpread: 0
+    currenSpread: 0
+    maxSpread: 0
+    spreadIncreaseRate: 0.15
 --- !u!65 &604478561
 BoxCollider:
   m_ObjectHideFlags: 0

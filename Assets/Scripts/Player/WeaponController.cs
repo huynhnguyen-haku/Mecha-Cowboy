@@ -87,8 +87,10 @@ public class WeaponController : MonoBehaviour
         bullet.transform.position = GunPoint().position;
         bullet.transform.rotation = Quaternion.LookRotation(GunPoint().forward);
 
+        Vector3 bulletsDirection = currentWeapon.ApplySpread(BullectDirection());
+
         rbBullet.mass = REFERENCE_BULLET_SPEED / bulletSpeed;
-        rbBullet.linearVelocity = BullectDirection() * bulletSpeed;
+        rbBullet.linearVelocity = bulletsDirection * bulletSpeed;
 
         player.weaponVisuals.PlayFireAnimation();
     }
@@ -146,8 +148,6 @@ public class WeaponController : MonoBehaviour
             }
         };
     }
-
-
 
     #endregion
 }

@@ -40,7 +40,45 @@ public class Weapon
     [UnityEngine.Range(1, 3)]
     public float equipSpeed = 1;
 
+    [Header("Spread")]
+    private float currenSpread;
+    public float minSpread = 1;
+    public float maxSpread = 3;
 
+    public float spreadIncreaseRate = 0.15f;
+
+    private float lastSpreadUpdateTime;
+    private float spreadCooldown = 1f;
+
+    #region Spread Methods
+
+    public Vector3 ApplySpread(Vector3 originalDirection)
+    {
+        UpdateSpread();
+        float randomizedValue = UnityEngine.Random.Range(-currenSpread, currenSpread);
+        Quaternion spreadRotation = Quaternion.Euler(randomizedValue, randomizedValue, randomizedValue);
+
+        return spreadRotation * originalDirection;
+    }
+    private void IncreaseSpread()
+    {
+        currenSpread = Mathf.Clamp(currenSpread + spreadIncreaseRate, minSpread, maxSpread);
+    }
+    private void UpdateSpread()
+    {
+        if (Time.time > lastSpreadUpdateTime + spreadCooldown)
+            DecreaseSpread();
+
+        else
+            IncreaseSpread();
+        lastSpreadUpdateTime = Time.time;
+    }
+    private void DecreaseSpread()
+    {
+        currenSpread = Mathf.Clamp(currenSpread - (spreadIncreaseRate * 5), minSpread, maxSpread);
+    }
+
+    #endregion
 
     public bool CanShot()
     {
@@ -51,10 +89,10 @@ public class Weapon
         }
         return false;
     }
-
     private bool ReadyToFire()
     {
-       if (Time.time > lastShotTime + 1 / fireRate)
+        float timeBetweenShots = 60f / fireRate; // fireRate is now bullets per minute
+        if (Time.time > lastShotTime + timeBetweenShots)
         {
             lastShotTime = Time.time;
             return true;
