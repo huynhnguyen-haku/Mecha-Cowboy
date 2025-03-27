@@ -101,6 +101,11 @@ public class Weapon
             burst_FireDelay = 0;
             return true;
         }
+        if (bulletsInMagazine < burst_BulletsPerShot)
+        {
+            return false;
+        }
+
         return burstActive;
     }
 

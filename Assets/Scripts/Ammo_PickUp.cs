@@ -15,7 +15,8 @@ public class Ammo_PickUp : Interactable
     public struct AmmoData
     {
         public WeaponType weaponType;
-        public int amount;
+        [Range(10, 100)] public int minAmount;
+        [Range(10, 100)] public int maxAmount;
     }
 
     [SerializeField] private AmmoBoxType boxType;
@@ -40,7 +41,7 @@ public class Ammo_PickUp : Interactable
         foreach (AmmoData ammo in currentAmmoList)
         {
             Weapon weapon = weaponController.WeaponInSlots(ammo.weaponType);
-            AddBullets(weapon, ammo.amount);
+            AddBullets(weapon, GetBulletAmount(ammo));
         }
 
         ObjectPool.instance.ReturnToPool(gameObject);
@@ -52,6 +53,17 @@ public class Ammo_PickUp : Interactable
 
         if (weaponController == null)
             weaponController = other.GetComponent<WeaponController>();
+    }
+
+    private int GetBulletAmount(AmmoData ammoData)
+    {
+        float min = Mathf.Min(ammoData.minAmount, ammoData.maxAmount);
+        float max = Mathf.Max(ammoData.minAmount, ammoData.maxAmount);
+
+        float randomAmmoAmount = Random.Range(min, max);
+
+        // Round to the nearest whole number
+        return Mathf.RoundToInt(randomAmmoAmount); 
     }
 
     private void AddBullets(Weapon weapon, int amount)

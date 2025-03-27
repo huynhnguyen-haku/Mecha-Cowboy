@@ -11218,16 +11218,21 @@ MonoBehaviour:
   boxType: 1
   smallBoxAmmo:
   - weaponType: 0
-    amount: 50
+    minAmount: 0
+    maxAmount: 0
   - weaponType: 1
-    amount: 50
+    minAmount: 0
+    maxAmount: 0
   bigBoxAmmo:
   - weaponType: 3
-    amount: 50
+    minAmount: 20
+    maxAmount: 60
   - weaponType: 2
-    amount: 50
+    minAmount: 20
+    maxAmount: 80
   - weaponType: 4
-    amount: 50
+    minAmount: 12
+    maxAmount: 24
   boxModel:
   - {fileID: 6352566688121904140}
   - {fileID: 3820714592325512514}
@@ -12469,16 +12474,21 @@ MonoBehaviour:
   boxType: 0
   smallBoxAmmo:
   - weaponType: 0
-    amount: 50
+    minAmount: 20
+    maxAmount: 40
   - weaponType: 1
-    amount: 50
+    minAmount: 12
+    maxAmount: 30
   bigBoxAmmo:
   - weaponType: 3
-    amount: 50
+    minAmount: 10
+    maxAmount: 10
   - weaponType: 2
-    amount: 50
+    minAmount: 10
+    maxAmount: 10
   - weaponType: 4
-    amount: 50
+    minAmount: 10
+    maxAmount: 10
   boxModel:
   - {fileID: 3687300173137775727}
   - {fileID: 6775337898189782305}
