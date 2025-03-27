@@ -14,13 +14,13 @@ public class Interactable : MonoBehaviour
         {
             meshRenderer = GetComponentInChildren<MeshRenderer>();
         }
-        defaultMaterial = meshRenderer.material;
+        defaultMaterial = meshRenderer.sharedMaterial;
     }
 
     protected void UpdateMeshAndMaterial(MeshRenderer newMesh)
     {
         meshRenderer = newMesh;
-        defaultMaterial = meshRenderer.material;
+        defaultMaterial = newMesh.sharedMaterial;
     }
 
     public virtual void Interact()

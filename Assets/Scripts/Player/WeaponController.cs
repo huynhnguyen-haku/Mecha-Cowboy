@@ -57,15 +57,33 @@ public class WeaponController : MonoBehaviour
         player.weaponVisuals.PlayWeaponEquipAnimation();
         CameraManager.instance.ChangeCameraDistance(currentWeapon.cameraDistance);
     }
+
     public void PickupWeapon(Weapon_Data newweapon_Data)
     {
-        if (weaponSlots.Count >= maxSlots)
-            return;
-
         Weapon newWeapon = new Weapon(newweapon_Data);
+
+        // If the weapon is already in the inventory, add the ammo to the existing weapon
+        if (WeaponInSlots(newWeapon.weaponType) != null)
+        {
+            WeaponInSlots(newWeapon.weaponType).TotalReserveAmmo += newWeapon.TotalReserveAmmo;
+            return;
+        }
+
+        // If the weapon is not in the inventory, add it to the inventory
+        if (weaponSlots.Count >= maxSlots && newWeapon.weaponType != currentWeapon.weaponType)
+        {
+            int weaponIndex = weaponSlots.IndexOf(currentWeapon);
+
+            player.weaponVisuals.SwitchOffWeaponModels();
+            weaponSlots[weaponIndex] = newWeapon;
+            EquipWeapon(weaponIndex);
+            return;
+        }
+
         weaponSlots.Add(newWeapon);
         player.weaponVisuals.SwitchOnBackupWeaponModels();
     }
+
     private void DropWeapon()
     {
         if (HasOneWeapon())
@@ -194,7 +212,6 @@ public class WeaponController : MonoBehaviour
                 Reload();
             }
         };
-
     }
 
     #endregion
