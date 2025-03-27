@@ -21,6 +21,8 @@ public class Weapon
 {
     public WeaponType weaponType;
 
+    public Weapon_Data weaponData { get; private set; }
+
     #region Magazine Details
     public int bulletsInMagazine;
     public int magazineCapacity;
@@ -50,6 +52,36 @@ public class Weapon
     private float spreadIncreaseRate;
     private float lastSpreadUpdateTime;
     private float spreadCooldown;
+    #endregion
+
+    #region Spread Methods
+
+    public Vector3 ApplySpread(Vector3 originalDirection)
+    {
+        UpdateSpread();
+        float randomizedValue = UnityEngine.Random.Range(-currenSpread, currenSpread);
+        Quaternion spreadRotation = Quaternion.Euler(randomizedValue, randomizedValue, randomizedValue);
+
+        return spreadRotation * originalDirection;
+    }
+    private void IncreaseSpread()
+    {
+        currenSpread = Mathf.Clamp(currenSpread + spreadIncreaseRate, minSpread, maxSpread);
+    }
+    private void UpdateSpread()
+    {
+        if (Time.time > lastSpreadUpdateTime + spreadCooldown)
+            DecreaseSpread();
+
+        else
+            IncreaseSpread();
+        lastSpreadUpdateTime = Time.time;
+    }
+    private void DecreaseSpread()
+    {
+        currenSpread = Mathf.Clamp(currenSpread - (spreadIncreaseRate * 5), minSpread, maxSpread);
+    }
+
     #endregion
 
     #region Burst Fire
@@ -93,35 +125,6 @@ public class Weapon
 
     #endregion
 
-    #region Spread Methods
-
-    public Vector3 ApplySpread(Vector3 originalDirection)
-    {
-        UpdateSpread();
-        float randomizedValue = UnityEngine.Random.Range(-currenSpread, currenSpread);
-        Quaternion spreadRotation = Quaternion.Euler(randomizedValue, randomizedValue, randomizedValue);
-
-        return spreadRotation * originalDirection;
-    }
-    private void IncreaseSpread()
-    {
-        currenSpread = Mathf.Clamp(currenSpread + spreadIncreaseRate, minSpread, maxSpread);
-    }
-    private void UpdateSpread()
-    {
-        if (Time.time > lastSpreadUpdateTime + spreadCooldown)
-            DecreaseSpread();
-
-        else
-            IncreaseSpread();
-        lastSpreadUpdateTime = Time.time;
-    }
-    private void DecreaseSpread()
-    {
-        currenSpread = Mathf.Clamp(currenSpread - (spreadIncreaseRate * 5), minSpread, maxSpread);
-    }
-
-    #endregion
 
     public bool CanShot() => HaveEnoughBullet() && ReadyToFire();
 
@@ -164,6 +167,7 @@ public class Weapon
         burst_FireDelay = weapon_Data.burst_FireDelay;
 
         defaultFireRate = fireRate;
+        this.weaponData = weapon_Data;
     }
 
     #region Reload Methods

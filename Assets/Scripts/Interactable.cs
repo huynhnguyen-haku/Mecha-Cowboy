@@ -49,7 +49,7 @@ public class Interactable : MonoBehaviour
         {
             return;
         }
-        playerInteraction.interactables.Add(this);
+        playerInteraction.GetInteractables().Add(this);
         playerInteraction.UpdateClosestInteracble();
     }
 
@@ -60,7 +60,7 @@ public class Interactable : MonoBehaviour
         {
             return;
         }
-        playerInteraction.interactables.Remove(this);
+        playerInteraction.GetInteractables().Remove(this);
         playerInteraction.UpdateClosestInteracble();
     }
 }

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerInteraction : MonoBehaviour
 {
-    public List<Interactable> interactables;
+    private List<Interactable> interactables = new List<Interactable>();
     private Interactable closestInteracble;
 
 
@@ -37,6 +37,14 @@ public class PlayerInteraction : MonoBehaviour
     private void InteractWithClosest()
     {
         closestInteracble?.Interact();
+        interactables.Remove(closestInteracble);
+
+        UpdateClosestInteracble();
+    }
+
+    public List<Interactable> GetInteractables()
+    {
+        return interactables;
     }
 }
 
