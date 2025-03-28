@@ -2,7 +2,6 @@ using UnityEngine;
 
 public class Weapon_PickUp : Interactable
 {
-    private WeaponController weaponController;
     [SerializeField] private Weapon_Data weaponData;
     [SerializeField] private Weapon weapon;
 
@@ -15,7 +14,7 @@ public class Weapon_PickUp : Interactable
         {
             weapon = new Weapon(weaponData);
         }
-        UpdateGameObject();
+        SetupGameObject();
     }
 
     public void SetUpPickupWeapon(Weapon weapon, Transform transform)
@@ -29,13 +28,13 @@ public class Weapon_PickUp : Interactable
     }
 
     [ContextMenu("Update Weapon Model")]
-    public void UpdateGameObject()
+    public void SetupGameObject()
     {
         gameObject.name = "Pickup_Weapon - " + weaponData.weaponName.ToString();
-        UpdateWeaponModel();
+        SetupWeaponModel();
     }
 
-    public void UpdateWeaponModel()
+    private void SetupWeaponModel()
     {
         foreach (BackupWeaponModel model in weaponModels)
         {
@@ -55,15 +54,5 @@ public class Weapon_PickUp : Interactable
         weaponController.PickupWeapon(weapon);
 
         ObjectPool.instance.ReturnToPool(gameObject);
-    }
-
-    protected override void OnTriggerEnter(Collider other)
-    {
-        base.OnTriggerEnter(other);
-
-        if (weaponController == null)
-        {
-            weaponController = other.GetComponent<WeaponController>();
-        }
     }
 }

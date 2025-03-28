@@ -6,6 +6,9 @@ public class Interactable : MonoBehaviour
     protected Material defaultMaterial;
     protected MeshRenderer meshRenderer;
 
+    protected WeaponController weaponController;
+
+
 
 
     private void Start()
@@ -43,6 +46,11 @@ public class Interactable : MonoBehaviour
 
     protected virtual void OnTriggerEnter(Collider other)
     {
+        if (weaponController == null)
+        {
+            weaponController = other.GetComponent<WeaponController>();
+        }
+
         PlayerInteraction playerInteraction = other.GetComponent<PlayerInteraction>();
 
         if (playerInteraction == null)

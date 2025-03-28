@@ -7,18 +7,16 @@ public enum AmmoBoxType
     bigBox
 }
 
+[System.Serializable]
+public struct AmmoData
+{
+    public WeaponType weaponType;
+    [Range(10, 100)] public int minAmount;
+    [Range(10, 100)] public int maxAmount;
+}
+
 public class Ammo_PickUp : Interactable
 {
-    private WeaponController weaponController;
-
-    [System.Serializable]
-    public struct AmmoData
-    {
-        public WeaponType weaponType;
-        [Range(10, 100)] public int minAmount;
-        [Range(10, 100)] public int maxAmount;
-    }
-
     [SerializeField] private AmmoBoxType boxType;
     [SerializeField] private List<AmmoData> smallBoxAmmo;
     [SerializeField] private List<AmmoData> bigBoxAmmo;
@@ -47,13 +45,6 @@ public class Ammo_PickUp : Interactable
         ObjectPool.instance.ReturnToPool(gameObject);
     }
 
-    protected override void OnTriggerEnter(Collider other)
-    {
-        base.OnTriggerEnter(other);
-
-        if (weaponController == null)
-            weaponController = other.GetComponent<WeaponController>();
-    }
 
     private int GetBulletAmount(AmmoData ammoData)
     {
