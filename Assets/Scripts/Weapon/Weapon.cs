@@ -44,7 +44,7 @@ public class Weapon
     public float cameraDistance;
     #endregion
 
-    #region Spread
+    #region Spread variables
     private float currenSpread;
     private float minSpread;
     private float maxSpread;
@@ -84,7 +84,7 @@ public class Weapon
 
     #endregion
 
-    #region Burst Fire
+    #region Burst variables
     private bool burstAvailable;
     public bool burstActive;
     private int burst_BulletsPerShot;
