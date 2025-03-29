@@ -1,23 +1,58 @@
 using UnityEngine;
+using UnityEngine.AI;
 
 public class Enemy : MonoBehaviour
 {
-    public EnemyStateMachine stateMachine;
+    [Header("Idle Info")]
+    public float idleTime;
 
-    public EnemyState idleState { get; private set; }
-    public EnemyState moveState { get; private set; }
+    [Header("Movement Info")]
+    public float moveSpeed;
 
-    void Start()
+    [SerializeField] private Transform[] patrolPoints;
+    private int currentPatrolIndex;
+
+    public NavMeshAgent agent { get; private set; }
+
+    public EnemyStateMachine stateMachine { get; private set; }
+
+    protected virtual void Awake()
     {
         stateMachine = new EnemyStateMachine();
-        idleState = new EnemyState(this, stateMachine, "Idle");
-        moveState = new EnemyState(this, stateMachine, "Move");
-
-        stateMachine.Initialize(idleState);
+        agent = GetComponent<NavMeshAgent>();
     }
 
-    void Update()
+    protected virtual void Start()
     {
-        stateMachine.currentState.Update();
+        InitializePatrolPoints();
     }
+
+
+    protected virtual void Update()
+    {
+        
+    }
+    
+    public Vector3 GetPatrolDestination()
+    {
+        Vector3 destination = patrolPoints[currentPatrolIndex].transform.position;
+
+        currentPatrolIndex++;
+
+        if (currentPatrolIndex >= patrolPoints.Length)
+        {
+            currentPatrolIndex = 0;
+        }
+
+        return destination;
+    }
+
+    private void InitializePatrolPoints()
+    {
+        foreach (Transform point in patrolPoints)
+        {
+            point.parent = null;
+        }
+    }
+
 }
