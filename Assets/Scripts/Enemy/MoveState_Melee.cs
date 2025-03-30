@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.AI;
 
 public class MoveState_Melee : EnemyState
 {
@@ -42,8 +41,5 @@ public class MoveState_Melee : EnemyState
         {
             stateMachine.ChangeState(enemy.idleState);
         }
-
     }
-
-
 }

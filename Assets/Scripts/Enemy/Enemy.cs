@@ -8,6 +8,7 @@ public class Enemy : MonoBehaviour
 
     [Header("Attack Info")]
     public float attackRange;
+    public float attackMoveSpeed;
 
     [Header("Idle Info")]
     public float idleTime;
@@ -15,6 +16,7 @@ public class Enemy : MonoBehaviour
     [Header("Movement Info")]
     public float moveSpeed;
     public float chaseSpeed;
+    private bool manualMovement;
 
     [SerializeField] private Transform[] patrolPoints;
     private int currentPatrolIndex;
@@ -53,6 +55,11 @@ public class Enemy : MonoBehaviour
         Gizmos.DrawWireSphere(transform.position, attackRange);
     }
 
+    public void ActivateManualMovement(bool manualMovement) => this.manualMovement = manualMovement;
+    public bool ManualMovementActive() => manualMovement;
+
+
+
     public void AnimationTrigger() => stateMachine.currentState.AnimationTrigger();
 
     public bool PlayerInAggressionRange()
@@ -64,6 +71,8 @@ public class Enemy : MonoBehaviour
     {
         return Vector3.Distance(transform.position, player.position) < attackRange;
     }
+
+
 
     public Vector3 GetPatrolDestination()
     {
