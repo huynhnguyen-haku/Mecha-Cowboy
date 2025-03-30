@@ -6,6 +6,9 @@ public class Enemy : MonoBehaviour
     public float turnSpeed;
     public float arrgresssionRange;
 
+    [Header("Attack Info")]
+    public float attackRange;
+
     [Header("Idle Info")]
     public float idleTime;
 
@@ -45,6 +48,9 @@ public class Enemy : MonoBehaviour
     {
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, arrgresssionRange);
+
+        Gizmos.color = Color.blue;
+        Gizmos.DrawWireSphere(transform.position, attackRange);
     }
 
     public void AnimationTrigger() => stateMachine.currentState.AnimationTrigger();
@@ -52,6 +58,11 @@ public class Enemy : MonoBehaviour
     public bool PlayerInAggressionRange()
     {
         return Vector3.Distance(transform.position, player.position) < arrgresssionRange;
+    }
+
+    public bool PlayerInAttackRange()
+    {
+        return Vector3.Distance(transform.position, player.position) < attackRange;
     }
 
     public Vector3 GetPatrolDestination()
