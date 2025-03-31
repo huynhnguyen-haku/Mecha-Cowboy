@@ -1,3 +1,5 @@
+using NUnit.Framework;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class AttackState_Melee : EnemyState
@@ -16,6 +18,7 @@ public class AttackState_Melee : EnemyState
     public override void Enter()
     {
         base.Enter();
+        enemy.PullWeapon();
 
         attackMoveSpeed = enemy.attackData.moveSpeed;
         enemy.anim.SetFloat("AttackAnimationSpeed", enemy.attackData.animationSpeed);
@@ -24,19 +27,21 @@ public class AttackState_Melee : EnemyState
         enemy.agent.isStopped = true;
         enemy.agent.velocity = Vector3.zero;
 
-        attackDirection = enemy.transform.position + enemy.transform.forward * MAX_ATTACK_DISTANCE;
+        attackDirection = enemy.transform.position + (enemy.transform.forward * MAX_ATTACK_DISTANCE);
     }
 
     public override void Exit()
     {
         base.Exit();
+        SetupNextAttack();
+    }
 
-        enemy.anim.SetFloat("RecoveryIndex", 0);
+    private void SetupNextAttack()
+    {
+        int recoveryIndex = PlayerClose() ? 1 : 0;
 
-        if (enemy.PlayerInAttackRange())
-        {
-            enemy.anim.SetFloat("RecoveryIndex", 1);
-        }
+        enemy.anim.SetFloat("RecoveryIndex", recoveryIndex);
+        enemy.attackData = UpdatedAttackData();
     }
 
     public override void Update()
@@ -46,24 +51,34 @@ public class AttackState_Melee : EnemyState
         if (enemy.ManualRotationActive())
         {
             enemy.transform.rotation = enemy.FaceTarget(enemy.player.position);
-            attackDirection = enemy.transform.position + enemy.transform.forward * MAX_ATTACK_DISTANCE;
+            attackDirection = enemy.transform.position + (enemy.transform.forward * MAX_ATTACK_DISTANCE);
         }
 
         if (enemy.ManualMovementActive())
-        {
             enemy.transform.position = Vector3.MoveTowards(enemy.transform.position, attackDirection, attackMoveSpeed * Time.deltaTime);
-        }
+
+
 
         if (triggerCalled)
         {
             if (enemy.PlayerInAttackRange())
-            {
                 stateMachine.ChangeState(enemy.recoveryState);
-            }
+            
             else
-            {
                 stateMachine.ChangeState(enemy.chaseState);
-            }
         }
+    }
+
+    private bool PlayerClose() => Vector3.Distance(enemy.transform.position, enemy.player.position) <= 1;
+
+    private AttackData UpdatedAttackData()
+    {
+        List<AttackData> validAttacks = new List<AttackData>(enemy.attackList);
+
+        if (PlayerClose())
+            validAttacks.RemoveAll(parameter => parameter.attackType == AttackType_Melee.Charge);
+
+        int random = Random.Range(0, validAttacks.Count);
+        return validAttacks[random];
     }
 }

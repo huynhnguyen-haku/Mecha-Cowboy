@@ -53,11 +53,11 @@ public class Enemy : MonoBehaviour
 
     public void ActivateManualMovement(bool manualMovement) => this.manualMovement = manualMovement;
     public bool ManualMovementActive() => manualMovement;
+    public void ActivateManualRotation(bool manualRotation) => this.manualRotation = manualRotation;
     public bool ManualRotationActive() => manualRotation;
 
 
 
-    public void ActivateManualRotation(bool manualRotation) => this.manualRotation = manualRotation;
     public void AnimationTrigger() => stateMachine.currentState.AnimationTrigger();
     public bool PlayerInAggressionRange()
     {

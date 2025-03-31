@@ -6648,6 +6648,92 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac0b09e7857660247b1477e93731de29, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &1565234431
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1565234432}
+  - component: {fileID: 1565234434}
+  - component: {fileID: 1565234433}
+  m_Layer: 0
+  m_Name: hiddenWeapon_wrench
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1565234432
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1565234431}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0.46128446, y: 0.47971553, z: 0.51733696, w: 0.5380076}
+  m_LocalPosition: {x: -0.038, y: 0.002, z: -0.126}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8197137810383407123}
+  m_LocalEulerAnglesHint: {x: -83.072, y: 18.815, z: 71.057}
+--- !u!23 &1565234433
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1565234431}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 3758952881610933197, guid: 058bb422e8cfba3498489234bf846d79, type: 3}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!33 &1565234434
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1565234431}
+  m_Mesh: {fileID: 8855272448860988091, guid: 058bb422e8cfba3498489234bf846d79, type: 3}
 --- !u!4 &1580482065 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3686572829772075693, guid: efc0876c5a203a243a654fdab7946c2c, type: 3}
@@ -6802,18 +6888,35 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   idleTime: 2
-  arrgresssionRange: 4
+  arrgresssionRange: 6
   moveSpeed: 1.5
-  turnSpeed: 5
-  chaseSpeed: 4
+  turnSpeed: 4
+  chaseSpeed: 5
   patrolPoints:
   - {fileID: 1961400162}
   - {fileID: 1581901154}
+  hiddenWeapon: {fileID: 1565234432}
+  pulledWeapon: {fileID: 1630764973754742291}
   attackData:
+    attackName: 
     attackRange: 1
-    moveSpeed: 0.5
+    moveSpeed: 0
+    attackIndex: 1
+    animationSpeed: 1.4
+    attackType: 0
+  attackList:
+  - attackName: Spin Attack
+    attackRange: 1.5
+    moveSpeed: 2.5
+    attackIndex: 0
+    animationSpeed: 1
+    attackType: 1
+  - attackName: Slash Above
+    attackRange: 1
+    moveSpeed: 0
     attackIndex: 1
     animationSpeed: 1.5
+    attackType: 0
 --- !u!4 &1588940603
 Transform:
   m_ObjectHideFlags: 0
@@ -11273,12 +11376,12 @@ GameObject:
   - component: {fileID: 8617603546993782984}
   - component: {fileID: 1750934730354414971}
   m_Layer: 0
-  m_Name: weap_enemy_wrench
+  m_Name: pulledWeapon_wrench
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &2777604234083761020
 GameObject:
   m_ObjectHideFlags: 0
@@ -15229,6 +15332,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 1565234432}
   - {fileID: 3377604179790798075}
   m_Father: {fileID: 8478849556167654272}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
