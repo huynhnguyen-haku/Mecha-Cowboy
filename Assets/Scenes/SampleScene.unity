@@ -6911,7 +6911,7 @@ MonoBehaviour:
     attackIndex: 0
     animationSpeed: 1
     attackType: 1
-  - attackName: Slash Above
+  - attackName: Overhead Strike
     attackRange: 1
     moveSpeed: 0
     attackIndex: 1
@@ -10293,13 +10293,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2734897330190924645}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.5, y: 0.5, z: 0.5, w: 0.5}
-  m_LocalPosition: {x: -0.308, y: 0.028, z: 0.016}
+  m_LocalRotation: {x: -0.5411452, y: 0.4753967, z: 0.45780906, w: 0.52112454}
+  m_LocalPosition: {x: -0.2991, y: 0.0403, z: -0.0363}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 2865885596583265079}
-  m_LocalEulerAnglesHint: {x: -90, y: 90, z: 0}
+  m_LocalEulerAnglesHint: {x: -92.159, y: 0.0010070801, z: 82.598}
 --- !u!1 &1646019972723316217
 GameObject:
   m_ObjectHideFlags: 0
