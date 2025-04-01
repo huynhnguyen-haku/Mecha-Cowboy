@@ -14,6 +14,8 @@ public struct AttackData
 }
 
 public enum AttackType_Melee { Close, Charge }
+public enum EnemyMelee_Type { Regular, Shield}
+
 
 public class Enemy_Melee : Enemy
 {
@@ -24,6 +26,10 @@ public class Enemy_Melee : Enemy
     public AttackState_Melee attackState { get; private set; }
     public DeadState_Melee deadState { get; private set; }
 
+    [Header("Enemy Setting")]
+    public EnemyMelee_Type meleeType;
+    public Transform shieldTransform;
+
     [Header("Weapon Visual")]
     [SerializeField] private Transform hiddenWeapon;
     [SerializeField] private Transform pulledWeapon;
@@ -31,6 +37,8 @@ public class Enemy_Melee : Enemy
     [Header("Attack Data")]
     public AttackData attackData;
     public List<AttackData> attackList;
+
+    //--------------------------------------------------------------------------------
 
     protected override void Awake()
     {
@@ -48,12 +56,22 @@ public class Enemy_Melee : Enemy
     {
         base.Start();
         stateMachine.Initialize(idleState);
+        InitializeSpeciality();
     }
 
     protected override void Update()
     {
         base.Update();
         stateMachine.currentState.Update();
+    }
+
+    private void InitializeSpeciality()
+    {
+        if (meleeType == EnemyMelee_Type.Shield)
+        {
+            anim.SetFloat("ChaseIndex", 1);
+            shieldTransform.gameObject.SetActive(true);
+        }
     }
 
     public bool PlayerInAttackRange()

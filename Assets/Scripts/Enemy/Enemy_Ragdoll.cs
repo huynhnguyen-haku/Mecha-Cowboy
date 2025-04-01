@@ -4,8 +4,8 @@ public class Enemy_Ragdoll : MonoBehaviour
 {
     [SerializeField] private Transform ragdollParent;
 
-    [SerializeField] private Collider[] ragdollColliders;
-    [SerializeField] private Rigidbody[] ragdollRigidbodies;
+    private Collider[] ragdollColliders;
+    private Rigidbody[] ragdollRigidbodies;
 
     private void Awake()
     {
@@ -20,6 +20,14 @@ public class Enemy_Ragdoll : MonoBehaviour
         foreach (Rigidbody rb in ragdollRigidbodies)
         {
             rb.isKinematic = !active;
+        }
+    }
+
+    public void ColliderActive(bool active)
+    {
+        foreach (Collider col in ragdollColliders)
+        {
+            col.enabled = active;
         }
     }
 }
