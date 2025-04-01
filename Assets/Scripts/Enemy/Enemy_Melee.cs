@@ -22,6 +22,7 @@ public class Enemy_Melee : Enemy
     public RecoveryState_Melee recoveryState { get; private set; }
     public ChaseState_Melee chaseState { get; private set; }
     public AttackState_Melee attackState { get; private set; }
+    public DeadState_Melee deadState { get; private set; }
 
     [Header("Weapon Visual")]
     [SerializeField] private Transform hiddenWeapon;
@@ -40,6 +41,7 @@ public class Enemy_Melee : Enemy
         recoveryState = new RecoveryState_Melee(this, stateMachine, "Recovery");
         chaseState = new ChaseState_Melee(this, stateMachine, "Chase");
         attackState = new AttackState_Melee(this, stateMachine, "Attack");
+        deadState = new DeadState_Melee(this, stateMachine, "Idle"); // We use ragdoll instead of animation
     }
 
     protected override void Start()
@@ -71,5 +73,10 @@ public class Enemy_Melee : Enemy
     {
         hiddenWeapon.gameObject.SetActive(false);
         pulledWeapon.gameObject.SetActive(true);
+    }
+
+    public override void GetHit()
+    {
+        stateMachine.ChangeState(deadState);
     }
 }

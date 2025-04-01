@@ -4,15 +4,24 @@ public class Bullet : MonoBehaviour
 {
     [SerializeField] private GameObject bulletImpactFX;
 
+    private BoxCollider boxCollider;
     private Rigidbody rb;
 
-    private void Start()
+    private void Awake()
     {
         rb = GetComponent<Rigidbody>();
+        boxCollider = GetComponent<BoxCollider>();
     }
 
     private void OnCollisionEnter(Collision collision)
     {
+        Enemy enemy = collision.gameObject.GetComponentInParent<Enemy>();
+
+        if (enemy != null)
+        {
+            enemy.GetHit();
+        }
+
         CreateImpactFX(collision);
         ReturnBulletToPool();
     }

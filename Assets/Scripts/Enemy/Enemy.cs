@@ -45,6 +45,10 @@ public class Enemy : MonoBehaviour
         
     }
 
+    public virtual void GetHit()
+    {
+    }
+
     protected virtual void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
