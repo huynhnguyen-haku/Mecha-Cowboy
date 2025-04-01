@@ -7,10 +7,18 @@ public class Bullet : MonoBehaviour
     private BoxCollider boxCollider;
     private Rigidbody rb;
 
+    public float impactForce;
+
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
         boxCollider = GetComponent<BoxCollider>();
+    }
+
+    public void BulletSetup(float impactForce)
+    {
+        boxCollider.enabled = true;
+        this.impactForce = impactForce;
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -19,7 +27,11 @@ public class Bullet : MonoBehaviour
 
         if (enemy != null)
         {
+            Vector3 force = rb.linearVelocity.normalized * impactForce;
+            Rigidbody hitRigibBody = collision.collider.attachedRigidbody;
+
             enemy.GetHit();
+            enemy.HitImpact(force, collision.contacts[0].point, hitRigibBody);
         }
 
         CreateImpactFX(collision);

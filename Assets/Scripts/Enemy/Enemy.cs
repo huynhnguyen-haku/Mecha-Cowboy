@@ -1,8 +1,11 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 
 public class Enemy : MonoBehaviour
 {
+    [SerializeField] protected int healthPoint = 15;
+
     [Header("Idle Info")]
     public float idleTime;
     public float arrgresssionRange;
@@ -47,7 +50,19 @@ public class Enemy : MonoBehaviour
 
     public virtual void GetHit()
     {
+        healthPoint--;
     }
+
+    public virtual void HitImpact(Vector3 force, Vector3 hitpoint, Rigidbody rb)
+    {
+        StartCoroutine(HitImpactCourotine(force, hitpoint, rb));
+    }
+
+    private IEnumerator HitImpactCourotine(Vector3 force, Vector3 hitpoint, Rigidbody rb)
+    {
+        yield return new WaitForSeconds(0.1f);
+        rb.AddForceAtPosition(force, hitpoint, ForceMode.Impulse);
+    }    
 
     protected virtual void OnDrawGizmos()
     {
