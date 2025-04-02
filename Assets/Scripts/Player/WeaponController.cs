@@ -213,7 +213,6 @@ public class WeaponController : MonoBehaviour
             Enemy_Melee enemy_melee = hit.collider.GetComponentInParent<Enemy_Melee>();
             if (enemy_melee != null)
             {
-                Debug.Log("Enemy in sight");
                 enemy_melee.ActivateDodgeRoll();
             }
         }

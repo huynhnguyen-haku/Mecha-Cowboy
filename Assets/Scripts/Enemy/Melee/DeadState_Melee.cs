@@ -34,7 +34,11 @@ public class DeadState_Melee : EnemyState
     public override void Update()
     {
         base.Update();
+        DisableInteraction();
+    }
 
+    private void DisableInteraction()
+    {
         if (stateTimer <= 0 && interactionDisabled == false)
         {
             interactionDisabled = true;

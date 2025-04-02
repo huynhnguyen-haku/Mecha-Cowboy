@@ -6,6 +6,8 @@ public class Bullet : MonoBehaviour
 
     private BoxCollider boxCollider;
     private Rigidbody rb;
+    [SerializeField] private float bulletLifeTime;
+    private float currentLifeTime;
 
     public float impactForce;
 
@@ -13,6 +15,20 @@ public class Bullet : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         boxCollider = GetComponent<BoxCollider>();
+    }
+
+    private void OnEnable()
+    {
+        currentLifeTime = bulletLifeTime;
+    }
+
+    private void Update()
+    {
+        currentLifeTime -= Time.deltaTime;
+        if (currentLifeTime <= 0)
+        {
+            ReturnBulletToPool();
+        }
     }
 
     public void BulletSetup(float impactForce)
@@ -27,7 +43,7 @@ public class Bullet : MonoBehaviour
         ReturnBulletToPool();
 
         Enemy enemy = collision.gameObject.GetComponentInParent<Enemy>();
-        EnemyShield shield = collision.gameObject.GetComponent<EnemyShield>();
+        Enemy_Shield shield = collision.gameObject.GetComponent<Enemy_Shield>();
 
         if (shield != null)
         {
@@ -41,13 +57,12 @@ public class Bullet : MonoBehaviour
             Rigidbody hitRigibBody = collision.collider.attachedRigidbody;
 
             enemy.GetHit();
-            enemy.HitImpact(force, collision.contacts[0].point, hitRigibBody);
+            enemy.DeathImpact(force, collision.contacts[0].point, hitRigibBody);
         }
     }
 
     private void ReturnBulletToPool()
-      =>  ObjectPool.instance.ReturnObject(gameObject);
-    
+      => ObjectPool.instance.ReturnObject(gameObject);
 
     private void CreateImpactFX(Collision collision)
     {

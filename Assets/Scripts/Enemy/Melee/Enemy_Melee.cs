@@ -19,6 +19,7 @@ public enum EnemyMelee_Type { Regular, Shield, Dodge, AxeThrow }
 
 public class Enemy_Melee : Enemy
 {
+    #region States
     public IdleState_Melee idleState { get; private set; }
     public MoveState_Melee moveState { get; private set; }
     public RecoveryState_Melee recoveryState { get; private set; }
@@ -26,6 +27,7 @@ public class Enemy_Melee : Enemy
     public AttackState_Melee attackState { get; private set; }
     public DeadState_Melee deadState { get; private set; }
     public AbilityState_Melee abilityState { get; private set; }
+    #endregion
 
     [Header("Enemy Setting")]
     public EnemyMelee_Type meleeType;
@@ -77,6 +79,20 @@ public class Enemy_Melee : Enemy
     {
         base.Update();
         stateMachine.currentState.Update();
+
+        if (ShouldEnterBattleMode())
+        {
+            EnterBattleMode();
+        }
+    }
+
+    public override void EnterBattleMode()
+    {
+        if (inBattleMode)
+            return;
+
+        base.EnterBattleMode();
+        stateMachine.ChangeState(recoveryState);
     }
 
     //--------------------------------------------------------------------------------
@@ -99,14 +115,6 @@ public class Enemy_Melee : Enemy
     public bool PlayerInAttackRange()
     {
         return Vector3.Distance(transform.position, player.position) < attackData.attackRange;
-    }
-
-    protected override void OnDrawGizmos()
-    {
-        base.OnDrawGizmos();
-
-        Gizmos.color = Color.blue;
-        Gizmos.DrawWireSphere(transform.position, attackData.attackRange);
     }
 
     public void PullWeapon()
@@ -157,5 +165,12 @@ public class Enemy_Melee : Enemy
         {
             stateMachine.ChangeState(deadState);
         }
+    }
+    protected override void OnDrawGizmos()
+    {
+        base.OnDrawGizmos();
+
+        Gizmos.color = Color.blue;
+        Gizmos.DrawWireSphere(transform.position, attackData.attackRange);
     }
 }

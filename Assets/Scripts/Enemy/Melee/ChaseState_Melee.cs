@@ -13,7 +13,6 @@ public class ChaseState_Melee : EnemyState
 
     public override void Enter()
     {
-        //CheckChaseAnimation();
         base.Enter();
         enemy.agent.speed = enemy.chaseSpeed;
         enemy.agent.isStopped = false;
@@ -33,7 +32,7 @@ public class ChaseState_Melee : EnemyState
             stateMachine.ChangeState(enemy.attackState);
         }
 
-        enemy.transform.rotation = enemy.FaceTarget(GetNextPathPoint());
+        enemy.FaceTarget(GetNextPathPoint());
 
         if (CanUpdateDestination())
         {
@@ -53,13 +52,5 @@ public class ChaseState_Melee : EnemyState
             return false;
         }
     }
-
-    //private void CheckChaseAnimation()
-    //{
-    //    if (enemy.meleeType == EnemyMelee_Type.Shield && enemy.shieldTransform == null)
-    //    {
-    //        enemy.anim.SetFloat("ChaseIndex", 0);
-    //    }
-    //}
 }
 

@@ -25,8 +25,8 @@ MonoBehaviour:
   laserDistance: 6
   cameraDistance: 6
   minSpread: 6
-  maxSpread: 8
-  spreadIncreaseRate: 0.25
+  maxSpread: 6
+  spreadIncreaseRate: 0
   burstAvailable: 0
   burstActive: 0
   burst_BulletsPerShot: 0
