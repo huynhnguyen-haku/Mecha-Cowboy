@@ -2413,10 +2413,10 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.11134681
-  m_Height: 0.44538724
+  m_Radius: 0.04206361
+  m_Height: 0.44173688
   m_Direction: 1
-  m_Center: {x: 0, y: 0.22269362, z: 0}
+  m_Center: {x: -0.00000530386, y: 0.22086841, z: -0.00000012615155}
 --- !u!1 &491094515
 GameObject:
   m_ObjectHideFlags: 0
@@ -3181,10 +3181,10 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.11999512
-  m_Height: 0.3999837
+  m_Radius: 0.06258994
+  m_Height: 0.3999821
   m_Direction: 1
-  m_Center: {x: 0, y: 0.19999185, z: 0}
+  m_Center: {x: 0.010116006, y: 0.199991, z: 0.0000000012891983}
 --- !u!4 &568042365
 Transform:
   m_ObjectHideFlags: 0
@@ -4840,10 +4840,10 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.13887835
+  m_Radius: 0.04309024
   m_Height: 0.6943917
   m_Direction: 1
-  m_Center: {x: 0, y: 0.34719586, z: 0}
+  m_Center: {x: 0.0000000036504813, y: 0.34719256, z: -0.0025343308}
 --- !u!1 &938457376
 GameObject:
   m_ObjectHideFlags: 0
@@ -6692,10 +6692,10 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.11999462
-  m_Height: 0.39998204
+  m_Radius: 0.06258994
+  m_Height: 0.3999821
   m_Direction: 1
-  m_Center: {x: 0, y: 0.19999102, z: 0}
+  m_Center: {x: 0.010116006, y: 0.199991, z: 0.0000000012891983}
 --- !u!4 &1281171064 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6830751631485344378, guid: 78458a27e8691ce45b225ee26db27fb4, type: 3}
@@ -6885,10 +6885,10 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.13786827
-  m_Height: 0.68934137
+  m_Radius: 0.04309024
+  m_Height: 0.6943917
   m_Direction: 1
-  m_Center: {x: 0, y: 0.34467068, z: 0}
+  m_Center: {x: 0.0000000036504813, y: 0.34719256, z: -0.0025343308}
 --- !u!1001 &1288657864
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -9087,6 +9087,7 @@ MonoBehaviour:
   - {fileID: 1581901154}
   meleeType: 0
   shieldTransform: {fileID: 0}
+  dodgeCooldown: 0
   hiddenWeapon: {fileID: 1565234432}
   pulledWeapon: {fileID: 1630764973754742291}
   attackData:
@@ -11329,8 +11330,9 @@ MonoBehaviour:
   patrolPoints:
   - {fileID: 1966098155}
   - {fileID: 1878711204}
-  meleeType: 1
+  meleeType: 2
   shieldTransform: {fileID: 8885984011621367725}
+  dodgeCooldown: 3
   hiddenWeapon: {fileID: 1480571790}
   pulledWeapon: {fileID: 980621693}
   attackData:
@@ -11781,10 +11783,10 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.11043422
+  m_Radius: 0.04206361
   m_Height: 0.44173688
   m_Direction: 1
-  m_Center: {x: 0, y: 0.22086844, z: 0}
+  m_Center: {x: -0.00000530386, y: 0.22086841, z: -0.00000012615155}
 --- !u!4 &2037860601 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7973120000589690253, guid: e0196260fbf2d9342b732fa0c7a98bf9, type: 3}
@@ -20334,7 +20336,7 @@ Transform:
   m_GameObject: {fileID: 652118169891297276}
   serializedVersion: 2
   m_LocalRotation: {x: -0.4666397, y: 0.4666511, z: -0.53126, w: 0.53126925}
-  m_LocalPosition: {x: 0.003, y: 0.147, z: -0.023}
+  m_LocalPosition: {x: 0.005, y: 0.147, z: -0.04}
   m_LocalScale: {x: 0.79999995, y: 0.79999995, z: 0.79999995}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -20364,7 +20366,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ff2bee3dbd739344ae2cfdcd2001305, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  durability: 2
+  durability: 15
 --- !u!1 &9056498124555194807
 GameObject:
   m_ObjectHideFlags: 0

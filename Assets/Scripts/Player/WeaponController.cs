@@ -146,6 +146,7 @@ public class WeaponController : MonoBehaviour
             return;
         }
         FireSingleBullet();
+        TriggerEnemyDodge();
     }
     private void FireSingleBullet()
     {
@@ -201,9 +202,25 @@ public class WeaponController : MonoBehaviour
     }
 
     public Weapon CurrentWeapon() => currentWeapon;
+
+    private void TriggerEnemyDodge()
+    {
+        Vector3 rayOrigin = GunPoint().position;
+        Vector3 rayDirection = BullectDirection();
+
+        if (Physics.Raycast(rayOrigin, rayDirection, out RaycastHit hit, Mathf.Infinity))
+        {
+            Enemy_Melee enemy_melee = hit.collider.GetComponentInParent<Enemy_Melee>();
+            if (enemy_melee != null)
+            {
+                Debug.Log("Enemy in sight");
+                enemy_melee.ActivateDodgeRoll();
+            }
+        }
+    }
     #endregion
 
-    #region Input Events
+        #region Input Events
 
     private void AssignInputEvents()
     {

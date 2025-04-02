@@ -14,7 +14,7 @@ public struct AttackData
 }
 
 public enum AttackType_Melee { Close, Charge }
-public enum EnemyMelee_Type { Regular, Shield}
+public enum EnemyMelee_Type { Regular, Shield, Dodge }
 
 
 public class Enemy_Melee : Enemy
@@ -29,6 +29,8 @@ public class Enemy_Melee : Enemy
     [Header("Enemy Setting")]
     public EnemyMelee_Type meleeType;
     public Transform shieldTransform;
+    public float dodgeCooldown;
+    private float lastDodgeTime;
 
     [Header("Weapon Visual")]
     [SerializeField] private Transform hiddenWeapon;
@@ -50,6 +52,8 @@ public class Enemy_Melee : Enemy
         chaseState = new ChaseState_Melee(this, stateMachine, "Chase");
         attackState = new AttackState_Melee(this, stateMachine, "Attack");
         deadState = new DeadState_Melee(this, stateMachine, "Idle"); // We use ragdoll instead of animation
+
+        lastDodgeTime = Time.realtimeSinceStartup;
     }
 
     protected override void Start()
@@ -65,6 +69,7 @@ public class Enemy_Melee : Enemy
         stateMachine.currentState.Update();
     }
 
+    //--------------------------------------------------------------------------------
     private void InitializeSpeciality()
     {
         if (meleeType == EnemyMelee_Type.Shield)
@@ -91,6 +96,24 @@ public class Enemy_Melee : Enemy
     {
         hiddenWeapon.gameObject.SetActive(false);
         pulledWeapon.gameObject.SetActive(true);
+    }
+
+    public void ActivateDodgeRoll()
+    {
+        if (meleeType != EnemyMelee_Type.Dodge)
+        {
+            return; // We can only dodge roll if the enemy is a dodge type
+        }
+
+        if (stateMachine.currentState != chaseState)
+        {
+            return; // We can only dodge roll during chase state
+        }
+        if (Time.time > lastDodgeTime + dodgeCooldown)
+        {
+            lastDodgeTime = Time.time;
+            anim.SetTrigger("Dodge");
+        }
     }
 
     public override void GetHit()
