@@ -100,15 +100,18 @@ public class Enemy_Melee : Enemy
 
     public void ActivateDodgeRoll()
     {
-        if (meleeType != EnemyMelee_Type.Dodge)
-        {
-            return; // We can only dodge roll if the enemy is a dodge type
-        }
+        // Only dodge roll if the player is outside of attack range
+        if (Vector3.Distance(transform.position, player.position) < attackData.attackRange)
+            return; 
 
+        // Only dodge roll if the enemy is a dodge type
+        if (meleeType != EnemyMelee_Type.Dodge)
+            return; 
+
+        // Only dodge roll during chase state
         if (stateMachine.currentState != chaseState)
-        {
-            return; // We can only dodge roll during chase state
-        }
+            return; 
+        
         if (Time.time > lastDodgeTime + dodgeCooldown)
         {
             lastDodgeTime = Time.time;
