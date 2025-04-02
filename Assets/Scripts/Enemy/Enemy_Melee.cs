@@ -14,7 +14,7 @@ public struct AttackData
 }
 
 public enum AttackType_Melee { Close, Charge }
-public enum EnemyMelee_Type { Regular, Shield, Dodge }
+public enum EnemyMelee_Type { Regular, Shield, Dodge, AxeThrow }
 
 
 public class Enemy_Melee : Enemy
@@ -25,6 +25,7 @@ public class Enemy_Melee : Enemy
     public ChaseState_Melee chaseState { get; private set; }
     public AttackState_Melee attackState { get; private set; }
     public DeadState_Melee deadState { get; private set; }
+    public AbilityState_Melee abilityState { get; private set; }
 
     [Header("Enemy Setting")]
     public EnemyMelee_Type meleeType;
@@ -40,6 +41,14 @@ public class Enemy_Melee : Enemy
     public AttackData attackData;
     public List<AttackData> attackList;
 
+    [Header("Special Attack")]
+    public GameObject axePrefab;
+    public float axeFlySpeed;
+    public float axeAimTimer;
+    public float axeThrowCooldown;
+    private float lastAxeThrowTime;
+    public Transform axeStartPoint;
+
     //--------------------------------------------------------------------------------
 
     protected override void Awake()
@@ -52,6 +61,7 @@ public class Enemy_Melee : Enemy
         chaseState = new ChaseState_Melee(this, stateMachine, "Chase");
         attackState = new AttackState_Melee(this, stateMachine, "Attack");
         deadState = new DeadState_Melee(this, stateMachine, "Idle"); // We use ragdoll instead of animation
+        abilityState = new AbilityState_Melee(this, stateMachine, "AxeThrow");
 
         lastDodgeTime = Time.realtimeSinceStartup;
     }
@@ -79,6 +89,13 @@ public class Enemy_Melee : Enemy
         }
     }
 
+    public override void AbilityTrigger()
+    {
+        base.AbilityTrigger();
+        moveSpeed = moveSpeed * 0.5f;
+        pulledWeapon.gameObject.SetActive(false);
+    }
+
     public bool PlayerInAttackRange()
     {
         return Vector3.Distance(transform.position, player.position) < attackData.attackRange;
@@ -102,21 +119,35 @@ public class Enemy_Melee : Enemy
     {
         // Only dodge roll if the player is outside of attack range
         if (Vector3.Distance(transform.position, player.position) < attackData.attackRange)
-            return; 
+            return;
 
         // Only dodge roll if the enemy is a dodge type
         if (meleeType != EnemyMelee_Type.Dodge)
-            return; 
+            return;
 
         // Only dodge roll during chase state
         if (stateMachine.currentState != chaseState)
-            return; 
-        
+            return;
+
         if (Time.time > lastDodgeTime + dodgeCooldown)
         {
             lastDodgeTime = Time.time;
             anim.SetTrigger("Dodge");
         }
+    }
+
+    public bool CanThrowAxe()
+    {
+        if (meleeType != EnemyMelee_Type.AxeThrow)
+            return false;
+
+        if (Time.time > lastAxeThrowTime + axeThrowCooldown)
+        {
+            lastAxeThrowTime = Time.time;
+            return true;
+        }
+
+        return false;
     }
 
     public override void GetHit()

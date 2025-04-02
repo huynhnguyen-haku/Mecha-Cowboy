@@ -56,4 +56,6 @@ public class EnemyState
         return agent.destination;
     }
 
+    public virtual void AbilityTrigger() { }
+
 }
