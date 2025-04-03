@@ -32,7 +32,7 @@ public class WeaponController : MonoBehaviour
         player = GetComponent<Player>();
         AssignInputEvents();
 
-        Invoke("EquipStartingWeapon", 0.1f);
+        Invoke(nameof(EquipStartingWeapon), 0.1f);
     }
 
     private void Update()
@@ -124,7 +124,6 @@ public class WeaponController : MonoBehaviour
 
             if (i >= currentWeapon.bulletsPerShot)
                 SetWeaponReady(true);
-
         }
     }
     private void Shot()
@@ -143,6 +142,7 @@ public class WeaponController : MonoBehaviour
         if (currentWeapon.BurstActivated() == true)
         {
             StartCoroutine(BurstFire());
+            TriggerEnemyDodge();
             return;
         }
         FireSingleBullet();

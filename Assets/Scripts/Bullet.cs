@@ -6,6 +6,8 @@ public class Bullet : MonoBehaviour
 
     private BoxCollider boxCollider;
     private Rigidbody rb;
+
+    [SerializeField] private TrailRenderer bulletTrail;
     [SerializeField] private float bulletLifeTime;
     private float currentLifeTime;
 
@@ -15,6 +17,7 @@ public class Bullet : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         boxCollider = GetComponent<BoxCollider>();
+        bulletTrail = GetComponent<TrailRenderer>();
     }
 
     private void OnEnable()
@@ -62,7 +65,10 @@ public class Bullet : MonoBehaviour
     }
 
     private void ReturnBulletToPool()
-      => ObjectPool.instance.ReturnObject(gameObject);
+    {
+        bulletTrail.Clear();
+        ObjectPool.instance.ReturnObject(gameObject);
+    }
 
     private void CreateImpactFX(Collision collision)
     {

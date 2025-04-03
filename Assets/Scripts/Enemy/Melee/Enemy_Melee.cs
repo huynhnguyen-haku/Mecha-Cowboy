@@ -19,6 +19,7 @@ public enum EnemyMelee_Type { Regular, Shield, Dodge, AxeThrow }
 
 public class Enemy_Melee : Enemy
 {
+    private Enemy_Visual enemyVisual;
     #region States
     public IdleState_Melee idleState { get; private set; }
     public MoveState_Melee moveState { get; private set; }
@@ -34,10 +35,6 @@ public class Enemy_Melee : Enemy
     public Transform shieldTransform;
     public float dodgeCooldown;
     private float lastDodgeTime;
-
-    [Header("Weapon Visual")]
-    [SerializeField] private Transform hiddenWeapon;
-    [SerializeField] private Transform pulledWeapon;
 
     [Header("Attack Data")]
     public AttackData attackData;
@@ -56,6 +53,7 @@ public class Enemy_Melee : Enemy
     protected override void Awake()
     {
         base.Awake();
+        enemyVisual = GetComponent<Enemy_Visual>();
 
         idleState = new IdleState_Melee(this, stateMachine, "Idle");
         moveState = new MoveState_Melee(this, stateMachine, "Move");
@@ -72,7 +70,9 @@ public class Enemy_Melee : Enemy
     {
         base.Start();
         stateMachine.Initialize(idleState);
+
         InitializeSpeciality();
+        enemyVisual.SetupVisual();
     }
 
     protected override void Update()
@@ -98,10 +98,16 @@ public class Enemy_Melee : Enemy
     //--------------------------------------------------------------------------------
     private void InitializeSpeciality()
     {
+        if (meleeType == EnemyMelee_Type.AxeThrow)
+        {
+            enemyVisual.SetupWeaponType(Enemy_MeleeWeaponType.Throw);
+        }
+
         if (meleeType == EnemyMelee_Type.Shield)
         {
             anim.SetFloat("ChaseIndex", 1);
             shieldTransform.gameObject.SetActive(true);
+            enemyVisual.SetupWeaponType(Enemy_MeleeWeaponType.OneHand);
         }
     }
 
@@ -109,7 +115,7 @@ public class Enemy_Melee : Enemy
     {
         base.AbilityTrigger();
         moveSpeed = moveSpeed * 0.5f;
-        pulledWeapon.gameObject.SetActive(false);
+        EnableWeaponModel(false);
     }
 
     public bool PlayerInAttackRange()
@@ -117,10 +123,9 @@ public class Enemy_Melee : Enemy
         return Vector3.Distance(transform.position, player.position) < attackData.attackRange;
     }
 
-    public void PullWeapon()
+    public void EnableWeaponModel(bool active)
     {
-        hiddenWeapon.gameObject.SetActive(false);
-        pulledWeapon.gameObject.SetActive(true);
+        enemyVisual.currentWeaponModel.gameObject.SetActive(active);
     }
 
     public void ActivateDodgeRoll()
