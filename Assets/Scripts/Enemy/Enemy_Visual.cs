@@ -1,4 +1,3 @@
-using NUnit.Framework;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -15,19 +14,50 @@ public class Enemy_Visual : MonoBehaviour
     [SerializeField] private Enemy_MeleeWeaponType weaponType;
     public GameObject currentWeaponModel;
 
+    [Header("Crystal")]
+    [SerializeField] private GameObject[] crystals;
+    [SerializeField] private int crystalAmount;
+
     private void Awake()
     {
         weaponModels = GetComponentsInChildren<Enemy_WeaponModel>(true);
+        CollectCrystals();
     }
+
 
     public void SetupVisual()
     {
         SetupRandomColor();
         SetupRandomWeapon();
+        SetupRandomCrystals();
+    }
+
+    private void SetupRandomCrystals()
+    {
+        List<int> availableIndexs = new List<int>();
+
+        for (int i = 0; i < crystals.Length; i++)
+        {
+            availableIndexs.Add(i);
+            crystals[i].SetActive(false);
+        }
+
+        for (int i = 0; i < crystalAmount; i++)
+        {
+            if (availableIndexs.Count == 0)
+                break;  
+
+            int randomIndex = Random.Range(0, availableIndexs.Count);
+            int objectIndex = availableIndexs[randomIndex];
+
+            crystals[objectIndex].SetActive(true);
+            availableIndexs.RemoveAt(randomIndex);
+        }
+
+
     }
 
     public void SetupWeaponType(Enemy_MeleeWeaponType type) => weaponType = type;
-
 
     private void SetupRandomColor()
     {
@@ -57,9 +87,18 @@ public class Enemy_Visual : MonoBehaviour
 
         int randomIndex = Random.Range(0, filteredWeaponModels.Count);
 
-
         currentWeaponModel = filteredWeaponModels[randomIndex].gameObject;
         currentWeaponModel.SetActive(true);
     }
 
+    private void CollectCrystals()
+    {
+        Enemy_Crystal[] crystalComponents = GetComponentsInChildren<Enemy_Crystal>(true);
+        crystals = new GameObject[crystalComponents.Length];
+
+        for (int i = 0; i < crystalComponents.Length; i++)
+        {
+            crystals[i] = crystalComponents[i].gameObject;
+        }
+    }
 }
