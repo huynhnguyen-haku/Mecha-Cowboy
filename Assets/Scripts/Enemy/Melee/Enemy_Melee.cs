@@ -19,7 +19,8 @@ public enum EnemyMelee_Type { Regular, Shield, Dodge, AxeThrow }
 
 public class Enemy_Melee : Enemy
 {
-    private Enemy_Visual enemyVisual;
+    public Enemy_Visual enemyVisual { get; private set; }
+
     #region States
     public IdleState_Melee idleState { get; private set; }
     public MoveState_Melee moveState { get; private set; }
@@ -103,16 +104,21 @@ public class Enemy_Melee : Enemy
             enemyVisual.SetupWeaponType(Enemy_MeleeWeaponType.Throw);
         }
 
-        if (meleeType == EnemyMelee_Type.Shield)
+        else if (meleeType == EnemyMelee_Type.Shield)
         {
             anim.SetFloat("ChaseIndex", 1);
             shieldTransform.gameObject.SetActive(true);
             enemyVisual.SetupWeaponType(Enemy_MeleeWeaponType.OneHand);
         }
 
-        if (meleeType == EnemyMelee_Type.Dodge)
+        else if (meleeType == EnemyMelee_Type.Dodge)
         {
             enemyVisual.SetupWeaponType(Enemy_MeleeWeaponType.Unarmed);
+        }
+
+        else if (meleeType == EnemyMelee_Type.Regular)
+        {
+            enemyVisual.SetupWeaponType(Enemy_MeleeWeaponType.OneHand);
         }
     }
 

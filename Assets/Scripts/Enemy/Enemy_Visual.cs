@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum Enemy_MeleeWeaponType { OneHand, Throw, Unarmed}
+public enum Enemy_MeleeWeaponType { OneHand, Throw, Unarmed }
 
 public class Enemy_Visual : MonoBehaviour
 {
@@ -24,6 +24,12 @@ public class Enemy_Visual : MonoBehaviour
         CollectCrystals();
     }
 
+    public void EnableWeaponTrail(bool enable)
+    {
+        Enemy_WeaponModel currentWeaponScript = currentWeaponModel.GetComponent<Enemy_WeaponModel>();
+        currentWeaponScript.EnableTrailEffect(enable);
+
+    }
 
     public void SetupVisual()
     {
@@ -45,7 +51,7 @@ public class Enemy_Visual : MonoBehaviour
         for (int i = 0; i < crystalAmount; i++)
         {
             if (availableIndexs.Count == 0)
-                break;  
+                break;
 
             int randomIndex = Random.Range(0, availableIndexs.Count);
             int objectIndex = availableIndexs[randomIndex];

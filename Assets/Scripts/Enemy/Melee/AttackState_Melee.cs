@@ -19,6 +19,7 @@ public class AttackState_Melee : EnemyState
     {
         base.Enter();
         enemy.EnableWeaponModel(true);
+        enemy.enemyVisual.EnableWeaponTrail(true);
 
         attackMoveSpeed = enemy.attackData.moveSpeed;
         enemy.anim.SetFloat("AttackAnimationSpeed", enemy.attackData.animationSpeed);
@@ -35,6 +36,8 @@ public class AttackState_Melee : EnemyState
     {
         base.Exit();
         SetupNextAttack();
+
+        enemy.enemyVisual.EnableWeaponTrail(false);
     }
 
     private void SetupNextAttack()
