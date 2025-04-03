@@ -109,6 +109,11 @@ public class Enemy_Melee : Enemy
             shieldTransform.gameObject.SetActive(true);
             enemyVisual.SetupWeaponType(Enemy_MeleeWeaponType.OneHand);
         }
+
+        if (meleeType == EnemyMelee_Type.Dodge)
+        {
+            enemyVisual.SetupWeaponType(Enemy_MeleeWeaponType.Unarmed);
+        }
     }
 
     public override void AbilityTrigger()

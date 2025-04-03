@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum Enemy_MeleeWeaponType { OneHand, Throw }
+public enum Enemy_MeleeWeaponType { OneHand, Throw, Unarmed}
 
 public class Enemy_Visual : MonoBehaviour
 {
@@ -89,6 +89,17 @@ public class Enemy_Visual : MonoBehaviour
 
         currentWeaponModel = filteredWeaponModels[randomIndex].gameObject;
         currentWeaponModel.SetActive(true);
+
+        OverrideAnimatorController();
+    }
+
+    private void OverrideAnimatorController()
+    {
+        AnimatorOverrideController overrideController = currentWeaponModel.GetComponent<Enemy_WeaponModel>().overrideController;
+        if (overrideController != null)
+        {
+            GetComponentInChildren<Animator>().runtimeAnimatorController = overrideController;
+        }
     }
 
     private void CollectCrystals()
