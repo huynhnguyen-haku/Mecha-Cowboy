@@ -49,7 +49,10 @@ public class Enemy : MonoBehaviour
 
     protected virtual void Update()
     {
-
+        if (ShouldEnterBattleMode())
+        {
+            EnterBattleMode();
+        }
     }
 
     protected bool ShouldEnterBattleMode()
