@@ -11,9 +11,9 @@ public class Bullet : MonoBehaviour
     [SerializeField] private float bulletLifeTime;
     private float currentLifeTime;
 
-    public float impactForce;
+    private float impactForce;
 
-    private void Awake()
+    protected void Awake()
     {
         rb = GetComponent<Rigidbody>();
         boxCollider = GetComponent<BoxCollider>();
@@ -25,7 +25,7 @@ public class Bullet : MonoBehaviour
         currentLifeTime = bulletLifeTime;
     }
 
-    private void Update()
+    protected virtual void Update()
     {
         currentLifeTime -= Time.deltaTime;
         if (currentLifeTime <= 0)
@@ -34,13 +34,13 @@ public class Bullet : MonoBehaviour
         }
     }
 
-    public void BulletSetup(float impactForce)
+    public void BulletSetup(float impactForce = 100)
     {
         boxCollider.enabled = true;
         this.impactForce = impactForce;
     }
 
-    private void OnCollisionEnter(Collision collision)
+    protected virtual void OnCollisionEnter(Collision collision)
     {
         CreateImpactFX(collision);
         ReturnBulletToPool();
@@ -64,13 +64,13 @@ public class Bullet : MonoBehaviour
         }
     }
 
-    private void ReturnBulletToPool()
+    protected void ReturnBulletToPool()
     {
         bulletTrail.Clear();
         ObjectPool.instance.ReturnObject(gameObject);
     }
 
-    private void CreateImpactFX(Collision collision)
+    protected void CreateImpactFX(Collision collision)
     {
         if (collision.contacts.Length > 0)
         {
