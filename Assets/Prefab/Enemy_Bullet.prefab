@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 4540850724579241950}
   - component: {fileID: 1080241606119193711}
   - component: {fileID: -4886324459792259829}
-  m_Layer: 9
+  m_Layer: 12
   m_Name: Enemy_Bullet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -269,4 +269,3 @@ MonoBehaviour:
   bulletImpactFX: {fileID: 7298562295588813929, guid: 36dd6bfce0ed33f4ca51033233fc180a, type: 3}
   bulletTrail: {fileID: 1080241606119193711}
   bulletLifeTime: 10
-  impactForce: 20
