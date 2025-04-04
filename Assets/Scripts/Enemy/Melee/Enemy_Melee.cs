@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
-public struct AttackData
+public struct AttackData_EnemyMelee
 {
     public string attackName;
     public float attackRange;
@@ -38,8 +38,8 @@ public class Enemy_Melee : Enemy
     private float lastDodgeTime;
 
     [Header("Attack Data")]
-    public AttackData attackData;
-    public List<AttackData> attackList;
+    public AttackData_EnemyMelee attackData;
+    public List<AttackData_EnemyMelee> attackList;
 
     [Header("Special Attack")]
     public GameObject axePrefab;
@@ -72,8 +72,9 @@ public class Enemy_Melee : Enemy
         base.Start();
         stateMachine.Initialize(idleState);
 
-        InitializeSpeciality();
+        InitializePerk();
         enemyVisual.SetupVisual();
+        UpdateAttackData();
     }
 
     protected override void Update()
@@ -96,8 +97,7 @@ public class Enemy_Melee : Enemy
         stateMachine.ChangeState(recoveryState);
     }
 
-    //--------------------------------------------------------------------------------
-    private void InitializeSpeciality()
+    private void InitializePerk()
     {
         if (meleeType == EnemyMelee_Type.AxeThrow)
         {
@@ -127,6 +127,16 @@ public class Enemy_Melee : Enemy
         base.AbilityTrigger();
         moveSpeed = moveSpeed * 0.5f;
         EnableWeaponModel(false);
+    }
+
+    public void UpdateAttackData()
+    {
+        Enemy_WeaponModel currentWeapon = enemyVisual.currentWeaponModel.GetComponent<Enemy_WeaponModel>();
+        if (currentWeapon != null)
+        {
+            attackList = new List<AttackData_EnemyMelee>(currentWeapon.weaponData.attackData);
+            turnSpeed = currentWeapon.weaponData.turnSpeed;
+        }
     }
 
     public bool PlayerInAttackRange()
