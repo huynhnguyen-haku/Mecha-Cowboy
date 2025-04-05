@@ -17,11 +17,13 @@ public class BattleState_Range : EnemyState
     {
         base.Enter();
         enemy.agent.isStopped = true;
+        enemy.enemyVisual.EnableIK(true);
     }
 
     public override void Exit()
     {
         base.Exit();
+        enemy.enemyVisual.EnableIK(false);
     }
 
     public override void Update()

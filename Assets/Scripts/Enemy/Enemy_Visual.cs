@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Animations.Rigging;
 
 public enum Enemy_MeleeWeaponType { OneHand, Throw, Unarmed }
 public enum Enemy_RangeWeaponType { Pistol, Revolver, Shotgun, Rifle, Sniper }
@@ -15,6 +16,11 @@ public class Enemy_Visual : MonoBehaviour
     [Header("Crystal")]
     [SerializeField] private GameObject[] crystals;
     [SerializeField] private int crystalAmount;
+
+    [Header("Rig Reference")]
+    [SerializeField] private Transform leftHandIK;
+    [SerializeField] private Transform leftElbowIK;
+    [SerializeField] private Rig rig;
 
 
     public void EnableWeaponTrail(bool enable)
@@ -95,6 +101,7 @@ public class Enemy_Visual : MonoBehaviour
             if (weaponModel.weaponType == weaponType)
             {
                 SwitchAnimationLayer(((int)weaponModel.weaponHoldType));
+                SetupLeftHandIK(weaponModel.leftHandTarget, weaponModel.leftElbowTarget);
                 return weaponModel.gameObject;
             }
         }
@@ -149,5 +156,19 @@ public class Enemy_Visual : MonoBehaviour
         }
         // Turn on the layer we want
         animator.SetLayerWeight(layerIndex, 1);
+    }
+
+    public void EnableIK(bool enable)
+    {
+        rig.weight = enable ? 1 : 0;
+    }
+
+    private void SetupLeftHandIK(Transform leftHandTarget, Transform leftElbowTarget)
+    {
+        leftHandIK.localPosition = leftHandTarget.localPosition;
+        leftHandIK.localRotation = leftHandTarget.localRotation;
+
+        leftElbowIK.localPosition = leftElbowTarget.localPosition;
+        leftElbowIK.localRotation = leftElbowTarget.localRotation;
     }
 }

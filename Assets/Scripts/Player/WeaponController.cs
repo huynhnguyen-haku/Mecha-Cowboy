@@ -200,9 +200,7 @@ public class WeaponController : MonoBehaviour
         }
         return null;
     }
-
     public Weapon CurrentWeapon() => currentWeapon;
-
     private void TriggerEnemyDodge()
     {
         Vector3 rayOrigin = GunPoint().position;
