@@ -1,17 +1,20 @@
+using NUnit.Framework;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Enemy_Range : Enemy
 {
-    public Transform weaponHolder;
+    [Header("Weapon Details")]
     public Enemy_RangeWeaponType weaponType;
+    public Enemy_RangeWeaponData weaponData;
 
-    public float fireRate; // Bullets per second
-    public GameObject bulletPrefab;
+    [Space]
     public Transform gunPoint;
-    public float bulletSpeed;
+    public Transform weaponHolder;
+    public GameObject bulletPrefab;
 
-    public int bulletsToShoot = 10; // Bullets to shoot before cooldown
-    public float weaponCooldown = 1.5f; // Cooldown time in seconds
+
+    [SerializeField] List<Enemy_RangeWeaponData> avaiableWeaponData;
 
     public IdleState_Range idleState { get; private set; }
     public MoveState_Range moveState { get; private set; }
@@ -32,6 +35,7 @@ public class Enemy_Range : Enemy
 
         stateMachine.Initialize(idleState);
         enemyVisual.SetupVisual();
+        SetupWeapon();
     }
 
     protected override void Update()
@@ -53,8 +57,10 @@ public class Enemy_Range : Enemy
         newBullet.GetComponent<Enemy_Bullet>().BulletSetup();
         Rigidbody rbNewBullet = newBullet.GetComponent<Rigidbody>();
 
-        rbNewBullet.mass = 20 / bulletSpeed;
-        rbNewBullet.linearVelocity = bulletsDirection * bulletSpeed;
+        Vector3 bulletDirectionWithSpread = weaponData.ApplyWeaponSpread(bulletsDirection);
+
+        rbNewBullet.mass = 20 /  weaponData.bulletSpeed;
+        rbNewBullet.linearVelocity = bulletDirectionWithSpread * weaponData.bulletSpeed;
     }
 
     public override void EnterBattleMode()
@@ -64,5 +70,29 @@ public class Enemy_Range : Enemy
 
         base.EnterBattleMode();
         stateMachine.ChangeState(battleState);
+    }
+
+    private void SetupWeapon()
+    {
+        List<Enemy_RangeWeaponData> filteredData = new List<Enemy_RangeWeaponData>();
+        gunPoint = enemyVisual.currentWeaponModel.GetComponent<Enemy_RangeWeaponModel>().gunPoint;
+
+        foreach (var weaponData in avaiableWeaponData)
+        {
+            if (weaponData.weaponType == weaponType)
+            {
+                filteredData.Add(weaponData);
+            }
+        }
+
+        if (filteredData.Count > 0)
+        {
+            weaponData = filteredData[Random.Range(0, filteredData.Count)];
+        }
+        else
+        {
+            Debug.LogError("No weapon data found for the specified weapon type.");
+        }
+
     }
 }
