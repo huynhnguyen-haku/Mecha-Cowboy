@@ -122,9 +122,7 @@ public class PlayerWeaponVisuals : MonoBehaviour
         // If hangWeapon is not null, then activate it
 
         lowhangWeapon?.gameObject.SetActive(true); 
-
         backhangWeapon?.gameObject.SetActive(true);
-
         sidehangWeapon?.gameObject.SetActive(true);
     }
 

@@ -12323,13 +12323,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bcf27ce4bf7daaf479a0e16e6f685966, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentWeaponModel: {fileID: 0}
   colorTexures:
   - {fileID: 2800000, guid: c944cd58b9873d540a0bc6fb1b8110dc, type: 3}
   - {fileID: 2800000, guid: d5eba235daefff540b7c8a85e5ba5ccc, type: 3}
   - {fileID: 2800000, guid: de07db931654476479b783a442ad7ebe, type: 3}
   - {fileID: 2800000, guid: d1c86919d2118904d96bb4be63507f08, type: 3}
   skinnedMeshRenderers: {fileID: 4794341294948753191}
-  currentWeaponModel: {fileID: 0}
   crystals: []
   crystalAmount: 0
 --- !u!4 &2689335710726829339
@@ -16448,6 +16448,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weaponType: 0
+  weaponHoldType: 0
 --- !u!4 &6290389657864412337
 Transform:
   m_ObjectHideFlags: 0
@@ -17236,6 +17237,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weaponType: 1
+  weaponHoldType: 0
 --- !u!1 &6815143628434723050
 GameObject:
   m_ObjectHideFlags: 0
@@ -17800,6 +17802,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weaponType: 2
+  weaponHoldType: 1
 --- !u!114 &7152517792177845826
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17827,7 +17830,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   healthPoint: 15
   idleTime: 1.5
-  arrgresssionRange: 7
+  arrgresssionRange: 1
   moveSpeed: 1.5
   turnSpeed: 4
   chaseSpeed: 5
@@ -17835,7 +17838,7 @@ MonoBehaviour:
   - {fileID: 9096609004788986053}
   - {fileID: 1749825309213741502}
   weaponHolder: {fileID: 1890604388177951731}
-  weaponType: 0
+  weaponType: 4
   fireRate: 400
   bulletPrefab: {fileID: 4456756728090714116, guid: ad10f1802aa69e640ac07f5abbffd421, type: 3}
   gunPoint: {fileID: 168100226}
@@ -19847,6 +19850,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weaponType: 4
+  weaponHoldType: 2
 --- !u!4 &8870677941513646496
 Transform:
   m_ObjectHideFlags: 0
@@ -19928,6 +19932,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weaponType: 3
+  weaponHoldType: 0
 --- !u!144 &8893026093527258169
 CharacterJoint:
   m_ObjectHideFlags: 0

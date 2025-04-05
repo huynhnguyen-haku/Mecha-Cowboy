@@ -94,6 +94,7 @@ public class Enemy_Visual : MonoBehaviour
         {
             if (weaponModel.weaponType == weaponType)
             {
+                SwitchAnimationLayer(((int)weaponModel.weaponHoldType));
                 return weaponModel.gameObject;
             }
         }
@@ -136,5 +137,17 @@ public class Enemy_Visual : MonoBehaviour
         {
             GetComponentInChildren<Animator>().runtimeAnimatorController = overrideController;
         }
+    }
+    private void SwitchAnimationLayer(int layerIndex)
+    {
+        Animator animator = GetComponentInChildren<Animator>();
+
+        // Turn off all layers
+        for (int i = 0; i < animator.layerCount; i++)
+        {
+            animator.SetLayerWeight(i, 0);
+        }
+        // Turn on the layer we want
+        animator.SetLayerWeight(layerIndex, 1);
     }
 }
