@@ -32,10 +32,13 @@ public class Enemy : MonoBehaviour
     public NavMeshAgent agent { get; private set; }
 
     public EnemyStateMachine stateMachine { get; private set; }
+    public Enemy_Visual enemyVisual { get; private set; }
+
 
     protected virtual void Awake()
     {
         stateMachine = new EnemyStateMachine();
+        enemyVisual = GetComponent<Enemy_Visual>();
         agent = GetComponent<NavMeshAgent>();
         anim = GetComponentInChildren<Animator>();
         player = GameObject.Find("Player").GetComponent<Transform>();

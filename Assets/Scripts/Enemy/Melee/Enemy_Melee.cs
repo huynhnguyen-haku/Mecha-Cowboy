@@ -19,7 +19,6 @@ public enum EnemyMelee_Type { Regular, Shield, Dodge, AxeThrow }
 
 public class Enemy_Melee : Enemy
 {
-    public Enemy_Visual enemyVisual { get; private set; }
 
     #region States
     public IdleState_Melee idleState { get; private set; }
@@ -33,6 +32,9 @@ public class Enemy_Melee : Enemy
 
     [Header("Enemy Setting")]
     public EnemyMelee_Type meleeType;
+    public Enemy_MeleeWeaponType weaponType;
+
+
     public Transform shieldTransform;
     public float dodgeCooldown;
     private float lastDodgeTime;
@@ -54,7 +56,6 @@ public class Enemy_Melee : Enemy
     protected override void Awake()
     {
         base.Awake();
-        enemyVisual = GetComponent<Enemy_Visual>();
 
         idleState = new IdleState_Melee(this, stateMachine, "Idle");
         moveState = new MoveState_Melee(this, stateMachine, "Move");
@@ -66,7 +67,6 @@ public class Enemy_Melee : Enemy
 
         lastDodgeTime = Time.realtimeSinceStartup;
     }
-
     protected override void Start()
     {
         base.Start();
@@ -76,12 +76,12 @@ public class Enemy_Melee : Enemy
         enemyVisual.SetupVisual();
         UpdateAttackData();
     }
-
     protected override void Update()
     {
         base.Update();
         stateMachine.currentState.Update();
     }
+
 
     public override void EnterBattleMode()
     {
@@ -91,32 +91,6 @@ public class Enemy_Melee : Enemy
         base.EnterBattleMode();
         stateMachine.ChangeState(recoveryState);
     }
-
-    private void InitializePerk()
-    {
-        if (meleeType == EnemyMelee_Type.AxeThrow)
-        {
-            enemyVisual.SetupWeaponType(Enemy_MeleeWeaponType.Throw);
-        }
-
-        else if (meleeType == EnemyMelee_Type.Shield)
-        {
-            anim.SetFloat("ChaseIndex", 1);
-            shieldTransform.gameObject.SetActive(true);
-            enemyVisual.SetupWeaponType(Enemy_MeleeWeaponType.OneHand);
-        }
-
-        else if (meleeType == EnemyMelee_Type.Dodge)
-        {
-            enemyVisual.SetupWeaponType(Enemy_MeleeWeaponType.Unarmed);
-        }
-
-        else if (meleeType == EnemyMelee_Type.Regular)
-        {
-            enemyVisual.SetupWeaponType(Enemy_MeleeWeaponType.OneHand);
-        }
-    }
-
     public override void AbilityTrigger()
     {
         base.AbilityTrigger();
@@ -124,6 +98,31 @@ public class Enemy_Melee : Enemy
         EnableWeaponModel(false);
     }
 
+
+    private void InitializePerk()
+    {
+        if (meleeType == EnemyMelee_Type.AxeThrow)
+        {
+            weaponType = Enemy_MeleeWeaponType.Throw;
+        }
+
+        else if (meleeType == EnemyMelee_Type.Shield)
+        {
+            anim.SetFloat("ChaseIndex", 1);
+            shieldTransform.gameObject.SetActive(true);
+            weaponType = Enemy_MeleeWeaponType.OneHand;
+        }
+
+        else if (meleeType == EnemyMelee_Type.Dodge)
+        {
+            weaponType = Enemy_MeleeWeaponType.Unarmed;
+        }
+
+        else if (meleeType == EnemyMelee_Type.Regular)
+        {
+            weaponType = Enemy_MeleeWeaponType.OneHand;
+        }
+    }
     public void UpdateAttackData()
     {
         Enemy_WeaponModel currentWeapon = enemyVisual.currentWeaponModel.GetComponent<Enemy_WeaponModel>();
@@ -133,17 +132,10 @@ public class Enemy_Melee : Enemy
             turnSpeed = currentWeapon.weaponData.turnSpeed;
         }
     }
-
-    public bool PlayerInAttackRange()
-    {
-        return Vector3.Distance(transform.position, player.position) < attackData.attackRange;
-    }
-
     public void EnableWeaponModel(bool active)
     {
         enemyVisual.currentWeaponModel.gameObject.SetActive(active);
     }
-
     public void ActivateDodgeRoll()
     {
         // Only dodge roll if the player is outside of attack range
@@ -164,6 +156,15 @@ public class Enemy_Melee : Enemy
             anim.SetTrigger("Dodge");
         }
     }
+    public override void GetHit()
+    {
+        base.GetHit();
+        if (healthPoint <= 0)
+        {
+            stateMachine.ChangeState(deadState);
+        }
+    }
+
 
     public bool CanThrowAxe()
     {
@@ -178,15 +179,11 @@ public class Enemy_Melee : Enemy
 
         return false;
     }
-
-    public override void GetHit()
+    public bool PlayerInAttackRange()
     {
-        base.GetHit();
-        if (healthPoint <= 0)
-        {
-            stateMachine.ChangeState(deadState);
-        }
+        return Vector3.Distance(transform.position, player.position) < attackData.attackRange;
     }
+
     protected override void OnDrawGizmos()
     {
         base.OnDrawGizmos();
