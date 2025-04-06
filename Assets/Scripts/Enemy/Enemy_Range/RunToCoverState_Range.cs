@@ -18,7 +18,7 @@ public class RunToCoverState_Range : EnemyState
         enemy.enemyVisual.EnableIK(true, false);
         enemy.agent.speed = enemy.runSpeed;
 
-        destination = enemy.lastCover.position;
+        destination = enemy.AttempToFindCover().position;
         enemy.agent.SetDestination(destination);
     }
 

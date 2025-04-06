@@ -5,7 +5,8 @@ public class Enemy_Range : Enemy
 {
     [Header("Cover System")]
     public bool canUseCovers = true;
-    public Transform lastCover;
+    public CoverPoint lastCover;
+    public List<Cover> allCovers = new List<Cover>();
 
 
     [Header("Weapon Details")]
@@ -42,6 +43,8 @@ public class Enemy_Range : Enemy
         stateMachine.Initialize(idleState);
         enemyVisual.SetupVisual();
         SetupWeapon();
+
+        allCovers.AddRange(CollectNearByCovers());
     }
 
     protected override void Update()
@@ -108,4 +111,51 @@ public class Enemy_Range : Enemy
         }
 
     }
+
+    #region Cover System
+
+    private List<Cover> CollectNearByCovers()
+    {
+        float coverRadiusCheck = 30;
+        Collider[] hitColliders = Physics.OverlapSphere(transform.position, coverRadiusCheck);
+        List<Cover> collectedCover = new List<Cover>();
+
+        foreach (Collider collider in hitColliders)
+        {
+            Cover cover = collider.GetComponent<Cover>();
+
+            if (cover != null && collectedCover.Contains(cover) == false)
+                collectedCover.Add(cover);
+        }
+        return collectedCover;
+    }
+
+    public Transform AttempToFindCover()
+    {
+        List<CoverPoint> collectedCoverPoints = new List<CoverPoint>();
+        foreach (Cover cover in allCovers)
+        {
+            collectedCoverPoints.AddRange(cover.GetCoverPoints());
+        }
+
+        CoverPoint closestCoverPoint = null;
+        float closestDistance = float.MaxValue;
+
+        foreach (CoverPoint coverPoint in collectedCoverPoints)
+        {
+            float currentDistance = Vector3.Distance(transform.position, coverPoint.transform.position);
+            if (currentDistance < closestDistance)
+            {
+                closestCoverPoint = coverPoint;
+                closestDistance = currentDistance;
+            }
+        }
+
+        if (closestCoverPoint != null)
+        {
+            lastCover = closestCoverPoint;
+        }
+        return closestCoverPoint.transform;
+    }
+    #endregion
 }
