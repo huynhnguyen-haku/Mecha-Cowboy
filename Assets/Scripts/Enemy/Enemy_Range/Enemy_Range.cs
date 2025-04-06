@@ -5,8 +5,8 @@ public class Enemy_Range : Enemy
 {
     [Header("Cover System")]
     public bool canUseCovers = true;
-    public CoverPoint lastCover;
-    public List<Cover> allCovers = new List<Cover>();
+    public CoverPoint lastCover { get; private set; }
+    public CoverPoint currentCover { get; private set; }
 
 
     [Header("Weapon Details")]
@@ -43,8 +43,6 @@ public class Enemy_Range : Enemy
         stateMachine.Initialize(idleState);
         enemyVisual.SetupVisual();
         SetupWeapon();
-
-        allCovers.AddRange(CollectNearByCovers());
     }
 
     protected override void Update()
@@ -78,7 +76,7 @@ public class Enemy_Range : Enemy
             return;
 
         base.EnterBattleMode();
-        if (canUseCovers)
+        if (CanGetCover())
         {
             stateMachine.ChangeState(runToCoverState);
         }
@@ -130,10 +128,25 @@ public class Enemy_Range : Enemy
         return collectedCover;
     }
 
-    public Transform AttempToFindCover()
+    public bool CanGetCover()
+    {
+        if (canUseCovers == false)
+            return false;
+
+        currentCover = AttempToFindCover()?.GetComponent<CoverPoint>();
+
+        if (lastCover != currentCover && currentCover != null)
+            return true;
+
+        Debug.Log("No cover found");
+        return false;
+
+    }
+
+    private Transform AttempToFindCover()
     {
         List<CoverPoint> collectedCoverPoints = new List<CoverPoint>();
-        foreach (Cover cover in allCovers)
+        foreach (Cover cover in CollectNearByCovers())
         {
             collectedCoverPoints.AddRange(cover.GetValidCoverPoints(transform));
         }
@@ -154,10 +167,14 @@ public class Enemy_Range : Enemy
         if (closestCoverPoint != null)
         {
             lastCover?.SetupOccupied(false);
-            lastCover = closestCoverPoint;
-            lastCover.SetupOccupied(true);
+            lastCover = currentCover;
+
+            currentCover = closestCoverPoint;
+            currentCover.SetupOccupied(true);
+
+            return currentCover.transform;
         }
-        return closestCoverPoint.transform;
+        return null;
     }
     #endregion
 }

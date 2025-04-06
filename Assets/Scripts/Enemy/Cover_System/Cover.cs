@@ -55,15 +55,23 @@ public class Cover : MonoBehaviour
     {
         // If the cover point is occupied by another enemy, it can't be used
         if (coverPoint.isOccupied)
-        {
             return false;
-        }
 
-        // If the cover point is close to player, enemy can't take it
-        if (IsCoverBehindPlayer(coverPoint, enemyTransform)) 
-        {
+        if (IsFarthestFromPlayer(coverPoint) == false)
             return false;
-        }
+
+
+        if (IsCoverBehindPlayer(coverPoint, enemyTransform)) 
+            return false;
+        
+
+        if (IsCoverCloseToPlayer(coverPoint))
+            return false;
+        
+
+        if (IsCoverCloseToLastCover(coverPoint, enemyTransform))
+            return false;
+        
         return true;
     }
 
@@ -74,5 +82,36 @@ public class Cover : MonoBehaviour
         float distanceToEnemy = Vector3.Distance(coverPoint.transform.position, enemyTransform.position);
 
         return distanceToPlayer < distanceToEnemy;
+    }
+
+    // Check if the player is close to the cover point
+    private bool IsCoverCloseToPlayer(CoverPoint coverPoint)
+    {
+        float distanceToPlayer = Vector3.Distance(coverPoint.transform.position, playerTransform.position);
+        return distanceToPlayer < 2f; 
+    }
+
+    private bool IsCoverCloseToLastCover(CoverPoint coverPoint, Transform enemyTransform)
+    {
+        CoverPoint lastCover = enemyTransform.GetComponent<Enemy_Range>().lastCover;
+        return lastCover != null && 
+            Vector3.Distance(coverPoint.transform.position, lastCover.transform.position) < 3;
+    }
+
+    private bool IsFarthestFromPlayer(CoverPoint coverPoint)
+    {
+        CoverPoint farthestPoint = null;
+        float farthestDistance = 0;
+
+        foreach (CoverPoint point in coverPoints)
+        {
+            float distance = Vector3.Distance(point.transform.position, playerTransform.position);
+            if (distance > farthestDistance)
+            {
+                farthestDistance = distance;
+                farthestPoint = point;
+            }
+        }
+        return farthestPoint == coverPoint;
     }
 }
