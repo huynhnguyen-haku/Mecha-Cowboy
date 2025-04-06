@@ -9,6 +9,8 @@ public class BattleState_Range : EnemyState
 
     private int bulletsPerAttack;
     private float weaponCooldown;
+    private float aimStartTime;
+    private float aimDelay = 1.0f; // Delay before shooting after facing the player
 
     public BattleState_Range(Enemy enemyBase, EnemyStateMachine stateMachine, string animBoolName) : base(enemyBase, stateMachine, animBoolName)
     {
@@ -23,13 +25,14 @@ public class BattleState_Range : EnemyState
         weaponCooldown = enemy.weaponData.GetRandomWeaponCooldown();
 
         enemy.agent.isStopped = true;
-        enemy.enemyVisual.EnableIK(true);
+        enemy.enemyVisual.EnableIK(true, true);
+        aimStartTime = Time.time; // Record the time when the enemy starts aiming
     }
 
     public override void Exit()
     {
         base.Exit();
-        enemy.enemyVisual.EnableIK(false);
+        enemy.enemyVisual.EnableIK(false, false);
     }
 
     public override void Update()
@@ -37,6 +40,12 @@ public class BattleState_Range : EnemyState
         base.Update();
 
         enemy.FaceTarget(enemy.player.position);
+
+        if (Time.time < aimStartTime + aimDelay)
+        {
+            // Wait for the aim delay before allowing to shoot
+            return;
+        }
 
         if (WeaponOutOfBullets())
         {

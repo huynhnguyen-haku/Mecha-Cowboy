@@ -94,7 +94,7 @@ public class Enemy_Melee : Enemy
     public override void AbilityTrigger()
     {
         base.AbilityTrigger();
-        moveSpeed = moveSpeed * 0.5f;
+        walkSpeed = walkSpeed * 0.5f;
         EnableWeaponModel(false);
     }
 

@@ -11,9 +11,9 @@ public class Enemy : MonoBehaviour
     public float arrgresssionRange;
 
     [Header("Movement Info")]
-    public float moveSpeed;
+    public float walkSpeed = 1.5f;
+    public float runSpeed = 4f;
     public float turnSpeed;
-    public float chaseSpeed;
 
 
     private bool manualMovement;

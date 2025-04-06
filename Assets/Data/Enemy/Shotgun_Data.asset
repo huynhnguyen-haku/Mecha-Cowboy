@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: Shotgun_Data
   m_EditorClassIdentifier: 
   weaponType: 2
-  fireRate: 3000
+  fireRate: 3200
   minBulletPerAttack: 6
   maxBulletPerAttack: 6
-  minWeaponCooldown: 2
-  maxWeaponCooldown: 3
-  bulletSpeed: 40
+  minWeaponCooldown: 4
+  maxWeaponCooldown: 6
+  bulletSpeed: 30
   weaponSpread: 15
