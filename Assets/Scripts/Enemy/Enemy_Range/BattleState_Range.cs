@@ -24,10 +24,13 @@ public class BattleState_Range : EnemyState
     public override void Enter()
     {
         base.Enter();
+        enemy.agent.isStopped = true;
+        enemy.agent.velocity = Vector3.zero;
+
+
         bulletsPerAttack = enemy.weaponData.GetRandomBulletPerAttack();
         weaponCooldown = enemy.weaponData.GetRandomWeaponCooldown();
 
-        enemy.agent.isStopped = true;
         enemy.enemyVisual.EnableIK(true, true);
         aimStartTime = Time.time; // Record the time when the enemy starts aiming
     }
@@ -43,11 +46,15 @@ public class BattleState_Range : EnemyState
         base.Update();
 
         ChangeCoverIfShould();
-
         enemy.FaceTarget(enemy.player.position);
+
+        if (enemy.IsPlayerInAgrressionRage() == false)
+        {
+            stateMachine.ChangeState(enemy.advancePlayerState);
+        }
+
         if (Time.time < aimStartTime + aimDelay)
         {
-            // Wait for the aim delay before allowing to shoot
             return;
         }
 

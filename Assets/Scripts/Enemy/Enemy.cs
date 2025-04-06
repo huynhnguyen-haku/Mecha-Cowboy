@@ -60,8 +60,7 @@ public class Enemy : MonoBehaviour
 
     protected bool ShouldEnterBattleMode()
     {
-        bool inAggresionRange = Vector3.Distance(transform.position, player.position) < arrgresssionRange;
-        if (inAggresionRange && !inBattleMode)
+        if (IsPlayerInAgrressionRage() && !inBattleMode)
         {
             EnterBattleMode();
             return true;
@@ -137,6 +136,12 @@ public class Enemy : MonoBehaviour
             patrolPoints[i].gameObject.SetActive(false);
         }
     }
+
+    public bool IsPlayerInAgrressionRage()
+    {
+        return Vector3.Distance(transform.position, player.position) < arrgresssionRange;
+    }
+
     #endregion
 
     protected virtual void OnDrawGizmos()
