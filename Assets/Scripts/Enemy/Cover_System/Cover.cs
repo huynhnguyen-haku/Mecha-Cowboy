@@ -1,10 +1,10 @@
-using NUnit.Framework;
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Cover : MonoBehaviour
 {
+    private Transform playerTransform;
+
     [Header("Cover Points")]
     [SerializeField] private GameObject coverPointPrefab;
     [SerializeField] private List<CoverPoint> coverPoints = new List<CoverPoint>();
@@ -15,6 +15,7 @@ public class Cover : MonoBehaviour
     private void Start()
     {
         GenerateCoverPoints();
+        playerTransform = GameObject.FindFirstObjectByType<Player>().transform;  
     }
 
     private void GenerateCoverPoints()
@@ -35,8 +36,43 @@ public class Cover : MonoBehaviour
         }
     }
 
-    public List<CoverPoint> GetCoverPoints()
+    public List<CoverPoint> GetValidCoverPoints(Transform enemyTransform)
     {
-        return coverPoints;
+        List<CoverPoint> validCoverPoints = new List<CoverPoint>();
+        foreach (CoverPoint coverPoint in coverPoints)
+        {
+            if (IsValidCoverPoint(coverPoint, enemyTransform))
+            {
+                validCoverPoints.Add(coverPoint);
+            }
+        }
+        return validCoverPoints;
+    }
+
+
+    // Check if the cover point is valid
+    private bool IsValidCoverPoint(CoverPoint coverPoint, Transform enemyTransform)
+    {
+        // If the cover point is occupied by another enemy, it can't be used
+        if (coverPoint.isOccupied)
+        {
+            return false;
+        }
+
+        // If the cover point is close to player, enemy can't take it
+        if (IsCoverBehindPlayer(coverPoint, enemyTransform)) 
+        {
+            return false;
+        }
+        return true;
+    }
+
+    // Check if the cover point is behind the player
+    private bool IsCoverBehindPlayer(CoverPoint coverPoint, Transform enemyTransform)
+    {
+        float distanceToPlayer = Vector3.Distance(coverPoint.transform.position, playerTransform.position);
+        float distanceToEnemy = Vector3.Distance(coverPoint.transform.position, enemyTransform.position);
+
+        return distanceToPlayer < distanceToEnemy;
     }
 }

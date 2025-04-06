@@ -135,7 +135,7 @@ public class Enemy_Range : Enemy
         List<CoverPoint> collectedCoverPoints = new List<CoverPoint>();
         foreach (Cover cover in allCovers)
         {
-            collectedCoverPoints.AddRange(cover.GetCoverPoints());
+            collectedCoverPoints.AddRange(cover.GetValidCoverPoints(transform));
         }
 
         CoverPoint closestCoverPoint = null;
@@ -153,7 +153,9 @@ public class Enemy_Range : Enemy
 
         if (closestCoverPoint != null)
         {
+            lastCover?.SetupOccupied(false);
             lastCover = closestCoverPoint;
+            lastCover.SetupOccupied(true);
         }
         return closestCoverPoint.transform;
     }
