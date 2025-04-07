@@ -53,7 +53,7 @@ public class BattleState_Range : EnemyState
         }
 
 
-        if (enemy.IsPlayerInAgrressionRage() == false)
+        if (enemy.IsPlayerInAgrressionRage() == false && ReadyToLeaveCover())
         {
             stateMachine.ChangeState(enemy.advancePlayerState);
         }
@@ -73,34 +73,18 @@ public class BattleState_Range : EnemyState
             return;
         }
 
-        if (CanShoot())
+        if (CanShoot() && enemy.IsAimingOnPlayer())
         {
             Shoot();
         }
 
     }
 
-    private void ChangeCoverIfShould()
+    private bool ReadyToLeaveCover()
     {
-        if (enemy.coverPerk != CoverPerk.ChangeCover)
-            return;
-
-
-        // Check the cover every 0.5 seconds
-        coverCheckTimer -= Time.deltaTime;
-        if (coverCheckTimer < 0)
-        {
-            coverCheckTimer = 0.5f;
-        }
-
-        if (IsPlayerInClearSight() || IsPlayerClose())
-        {
-            if (enemy.CanGetCover())
-            {
-                stateMachine.ChangeState(enemy.runToCoverState);
-            }
-        }
+        return Time.time > enemy.coverTime + enemy.runToCoverState.lastTimeTookCover;
     }
+
 
     #region Weapon
 
@@ -133,6 +117,13 @@ public class BattleState_Range : EnemyState
     #endregion
 
     #region Cover System
+    private bool ReadyToChangeCover()
+    {
+        bool inDanger = IsPlayerInClearSight() || IsPlayerClose();
+        bool advanceTimeIsOver = Time.time > enemy.advancePlayerState.lastTimeAdvanced + enemy.advanceTime;
+
+        return inDanger && advanceTimeIsOver;
+    }
 
     private bool IsPlayerClose()
     {
@@ -147,6 +138,28 @@ public class BattleState_Range : EnemyState
             return hit.collider.gameObject.GetComponentInParent<Player>();
         }
         return false;
+    }
+
+    private void ChangeCoverIfShould()
+    {
+        if (enemy.coverPerk != CoverPerk.ChangeCover)
+            return;
+
+
+        // Check the cover every 0.5 seconds
+        coverCheckTimer -= Time.deltaTime;
+        if (coverCheckTimer < 0)
+        {
+            coverCheckTimer = 0.5f;
+        }
+
+        if (ReadyToChangeCover())
+        {
+            if (enemy.CanGetCover())
+            {
+                stateMachine.ChangeState(enemy.runToCoverState);
+            }
+        }
     }
     #endregion
 }

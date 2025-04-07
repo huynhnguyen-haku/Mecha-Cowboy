@@ -167,7 +167,7 @@ Transform:
   m_GameObject: {fileID: 22133699}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.09, y: 0, z: -7.33}
+  m_LocalPosition: {x: -5.91, y: 0, z: 1.47}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -376,7 +376,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 50263841}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -18856,18 +18856,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   healthPoint: 15
   idleTime: 1.5
-  arrgresssionRange: 10
+  arrgresssionRange: 8
   walkSpeed: 1
   runSpeed: 3
   turnSpeed: 6
   patrolPoints:
   - {fileID: 9096609004788986053}
   - {fileID: 1749825309213741502}
-  coverPerk: 1
+  coverPerk: 2
   advanceSpeed: 3
-  advanceStoppingDistance: 5
+  advanceStoppingDistance: 6
   safeDistance: 2
-  weaponType: 3
+  advanceTime: 2
+  coverTime: 4
+  weaponType: 2
   weaponData: {fileID: 0}
   gunPoint: {fileID: 168100226}
   weaponHolder: {fileID: 1890604388177951731}

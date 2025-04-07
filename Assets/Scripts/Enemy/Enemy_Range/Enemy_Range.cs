@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public enum CoverPerk { None, RunToCover, ChangeCover}
 public class Enemy_Range : Enemy
 {
@@ -15,6 +16,8 @@ public class Enemy_Range : Enemy
     public float safeDistance;
     public CoverPoint lastCover { get; private set; }
     public CoverPoint currentCover { get; private set; }
+    public float advanceTime;
+    public float coverTime;
 
 
     [Header("Weapon Details")]
@@ -27,8 +30,8 @@ public class Enemy_Range : Enemy
     public GameObject bulletPrefab;
 
     [Header("Aim Data")]
-    public float slowAim = 4;
-    public float fastAim = 20;
+    public float slowAim = 4; // Use to slow down the reaction time of enemy after player is spotted
+    public float fastAim = 20; // Use when enemy is in battle mode
     public Transform aim;
     public Transform playerBody;
     public LayerMask whatToIgnore;
@@ -132,7 +135,7 @@ public class Enemy_Range : Enemy
 
     #region Aim Setup
 
-    public bool AimOnPlaayer()
+    public bool IsAimingOnPlayer()
     {
         float distanceAimToPlayer = Vector3.Distance(aim.position, player.position);
 
@@ -157,7 +160,7 @@ public class Enemy_Range : Enemy
 
     public void UpdateAimPosition()
     {
-        float aimSpeed = AimOnPlaayer() ? fastAim : slowAim;
+        float aimSpeed = IsAimingOnPlayer() ? fastAim : slowAim;
         aim.position = Vector3.MoveTowards(aim.position, playerBody.position, aimSpeed * Time.deltaTime);
     }
 
