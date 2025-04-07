@@ -26,6 +26,13 @@ public class Enemy_Range : Enemy
     public Transform weaponHolder;
     public GameObject bulletPrefab;
 
+    [Header("Aim Data")]
+    public float slowAim = 4;
+    public float fastAim = 20;
+    public Transform aim;
+    public Transform playerBody;
+    public LayerMask whatToIgnore;
+
 
     [SerializeField] List<Enemy_RangeWeaponData> avaiableWeaponData;
 
@@ -50,6 +57,9 @@ public class Enemy_Range : Enemy
     {
         base.Start();
 
+        playerBody = player.GetComponent<Player>().playerBody;
+        aim.parent = null;
+
         stateMachine.Initialize(idleState);
         enemyVisual.SetupVisual();
         SetupWeapon();
@@ -65,7 +75,7 @@ public class Enemy_Range : Enemy
     public void FireSingleBullet()
     {
         anim.SetTrigger("Fire");
-        Vector3 bulletsDirection = ((player.position + Vector3.up) - gunPoint.position).normalized;
+        Vector3 bulletsDirection = (aim.position - gunPoint.position).normalized;
 
         GameObject newBullet = ObjectPool.instance.GetObject(bulletPrefab);
         newBullet.transform.position = gunPoint.position;
@@ -119,6 +129,40 @@ public class Enemy_Range : Enemy
         }
 
     }
+
+    #region Aim Setup
+
+    public bool AimOnPlaayer()
+    {
+        float distanceAimToPlayer = Vector3.Distance(aim.position, player.position);
+
+        return distanceAimToPlayer < 2;
+    }
+
+    public bool IsSeeingPlayer()
+    {
+        Vector3 myPosition = transform.position + Vector3.up;
+        Vector3 directionToPlayer = playerBody.position - myPosition;
+
+        if (Physics.Raycast(myPosition, directionToPlayer, out RaycastHit hit, Mathf.Infinity, ~whatToIgnore))
+        {
+            if (hit.transform.root == player.root)
+            {
+                UpdateAimPosition();
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public void UpdateAimPosition()
+    {
+        float aimSpeed = AimOnPlaayer() ? fastAim : slowAim;
+        aim.position = Vector3.MoveTowards(aim.position, playerBody.position, aimSpeed * Time.deltaTime);
+    }
+
+    #endregion
+
 
     #region Cover System
 

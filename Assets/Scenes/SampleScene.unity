@@ -167,7 +167,7 @@ Transform:
   m_GameObject: {fileID: 22133699}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -5.83, y: 0, z: 0.99}
+  m_LocalPosition: {x: 0.09, y: 0, z: -7.33}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -250,6 +250,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a8ce26e555519ce489fa60cef7c457ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerBody: {fileID: 1537293076162477656}
 --- !u!114 &22133708
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -335,6 +336,92 @@ Transform:
   - {fileID: 7484858905338251322}
   m_Father: {fileID: 1275253640}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &50263841
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 50263842}
+  - component: {fileID: 50263845}
+  - component: {fileID: 50263844}
+  m_Layer: 11
+  m_Name: EnemyAim
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &50263842
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 50263841}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0.4, y: 0.4, z: 0.4}
+  m_ConstrainProportionsScale: 1
+  m_Children: []
+  m_Father: {fileID: 5620084757997275130}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!23 &50263844
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 50263841}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: d1a5903867c8f0a4a8a94c3fe36dad11, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!33 &50263845
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 50263841}
+  m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1 &50607552
 GameObject:
   m_ObjectHideFlags: 0
@@ -3101,7 +3188,7 @@ MonoBehaviour:
     m_SourceObjects:
       m_Length: 1
       m_Item0:
-        transform: {fileID: 1537293076162477656}
+        transform: {fileID: 50263842}
         weight: 1
       m_Item1:
         transform: {fileID: 0}
@@ -13247,7 +13334,7 @@ MonoBehaviour:
   - {fileID: 2800000, guid: d1c86919d2118904d96bb4be63507f08, type: 3}
   skinnedMeshRenderers: {fileID: 4794341294948753191}
   crystals: []
-  crystalAmount: 0
+  crystalAmount: 5
   leftHandIK: {fileID: 434684313}
   leftElbowIK: {fileID: 175978615}
   leftHandIKConstraint: {fileID: 1853659057}
@@ -16595,6 +16682,7 @@ Transform:
   m_Children:
   - {fileID: 4694922520295091864}
   - {fileID: 2068928330910107519}
+  - {fileID: 50263842}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &5624725275471531178
@@ -18775,7 +18863,7 @@ MonoBehaviour:
   patrolPoints:
   - {fileID: 9096609004788986053}
   - {fileID: 1749825309213741502}
-  coverPerk: 2
+  coverPerk: 1
   advanceSpeed: 3
   advanceStoppingDistance: 5
   safeDistance: 2
@@ -18784,6 +18872,13 @@ MonoBehaviour:
   gunPoint: {fileID: 168100226}
   weaponHolder: {fileID: 1890604388177951731}
   bulletPrefab: {fileID: 4456756728090714116, guid: ad10f1802aa69e640ac07f5abbffd421, type: 3}
+  slowAim: 4
+  fastAim: 20
+  aim: {fileID: 50263842}
+  playerBody: {fileID: 0}
+  whatToIgnore:
+    serializedVersion: 2
+    m_Bits: 2048
   avaiableWeaponData:
   - {fileID: 11400000, guid: 415286eb411a72548afd208a6cc2b079, type: 2}
   - {fileID: 11400000, guid: e2d2450d3ad8ccd4b942277d2493f0a4, type: 2}
