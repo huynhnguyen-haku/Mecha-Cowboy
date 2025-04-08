@@ -58,6 +58,11 @@ public class Enemy : MonoBehaviour
         }
     }
 
+    protected virtual void InitializePerk()
+    {
+
+    }
+
     protected bool ShouldEnterBattleMode()
     {
         if (IsPlayerInAgrressionRage() && !inBattleMode)

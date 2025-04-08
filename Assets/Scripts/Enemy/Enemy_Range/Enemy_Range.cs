@@ -3,24 +3,27 @@ using UnityEngine;
 
 
 public enum CoverPerk { None, RunToCover, ChangeCover}
+public enum UnstoppablePerk { None, Unstoppable }
 public class Enemy_Range : Enemy
 {
     [Header("Enemy Perks")]
     public CoverPerk coverPerk;
+    public UnstoppablePerk unstoppablePerk;
 
     [Header("Advance Perks")]
     public float advanceSpeed;
     public float advanceStoppingDistance;
+    public float advanceDuration;
 
     [Header("Cover System")]
     public float safeDistance;
     public CoverPoint lastCover { get; private set; }
     public CoverPoint currentCover { get; private set; }
-    public float advanceTime;
     public float coverTime;
 
 
     [Header("Weapon Details")]
+    public float attackDelay;
     public Enemy_RangeWeaponType weaponType;
     public Enemy_RangeWeaponData weaponData;
 
@@ -63,6 +66,8 @@ public class Enemy_Range : Enemy
         playerBody = player.GetComponent<Player>().playerBody;
         aim.parent = null;
 
+        InitializePerk();
+
         stateMachine.Initialize(idleState);
         enemyVisual.SetupVisual();
         SetupWeapon();
@@ -75,6 +80,7 @@ public class Enemy_Range : Enemy
         stateMachine.currentState.Update();
     }
 
+    #region Weapon Setup
     public void FireSingleBullet()
     {
         anim.SetTrigger("Fire");
@@ -132,6 +138,7 @@ public class Enemy_Range : Enemy
         }
 
     }
+    #endregion
 
     #region Aim Setup
 
@@ -165,7 +172,6 @@ public class Enemy_Range : Enemy
     }
 
     #endregion
-
 
     #region Cover System
 
@@ -234,4 +240,18 @@ public class Enemy_Range : Enemy
         return null;
     }
     #endregion
+
+    public bool IsUnstoppable()
+    {
+        return unstoppablePerk == UnstoppablePerk.Unstoppable;
+    }
+
+    protected override void InitializePerk()
+    {
+        if (IsUnstoppable())
+        {
+            advanceSpeed = 1;
+            anim.SetFloat("AdvanceIndex", 1);
+        }
+    }
 }

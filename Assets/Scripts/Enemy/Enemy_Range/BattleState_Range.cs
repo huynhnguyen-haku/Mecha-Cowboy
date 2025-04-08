@@ -1,5 +1,6 @@
 using UnityEngine;
 
+
 public class BattleState_Range : EnemyState
 {
     private Enemy_Range enemy;
@@ -10,10 +11,9 @@ public class BattleState_Range : EnemyState
     private int bulletsPerAttack;
     private float weaponCooldown;
 
-    private float aimStartTime;
-    private float aimDelay = 1.0f; // Delay before shooting after facing the player
 
     private float coverCheckTimer;
+    private bool firstTimeAttack = true;
 
     public BattleState_Range(Enemy enemyBase, EnemyStateMachine stateMachine, string animBoolName) : base(enemyBase, stateMachine, animBoolName)
     {
@@ -24,42 +24,33 @@ public class BattleState_Range : EnemyState
     public override void Enter()
     {
         base.Enter();
+        SetupFirstAttack();
+
         enemy.agent.isStopped = true;
         enemy.agent.velocity = Vector3.zero;
 
-
-        bulletsPerAttack = enemy.weaponData.GetRandomBulletPerAttack();
-        weaponCooldown = enemy.weaponData.GetRandomWeaponCooldown();
-
         enemy.enemyVisual.EnableIK(true, true);
-        aimStartTime = Time.time; // Record the time when the enemy starts aiming
-    }
-
-    public override void Exit()
-    {
-        base.Exit();
-        enemy.enemyVisual.EnableIK(false, false);
+        stateTimer = enemy.attackDelay;
     }
 
     public override void Update()
     {
         base.Update();
 
-        ChangeCoverIfShould();
 
         if (enemy.IsSeeingPlayer())
         {
             enemy.FaceTarget(enemy.aim.position);
         }
 
-
-        if (enemy.IsPlayerInAgrressionRage() == false && ReadyToLeaveCover())
+        if (HandleAdvancePlayer())
         {
             stateMachine.ChangeState(enemy.advancePlayerState);
         }
 
+        ChangeCoverIfShould();
 
-        if (Time.time < aimStartTime + aimDelay)
+        if (stateTimer > 0)
         {
             return;
         }
@@ -67,9 +58,17 @@ public class BattleState_Range : EnemyState
 
         if (WeaponOutOfBullets())
         {
+            if (enemy.IsUnstoppable() && UnStoppableWalkReady())
+            {
+                enemy.advanceDuration = weaponCooldown;
+                stateMachine.ChangeState(enemy.advancePlayerState);
+            }
+
             if (WeaponOnCooldown())
+            {
                 AttempToResetWeapon();
-            
+            }
+
             return;
         }
 
@@ -80,13 +79,23 @@ public class BattleState_Range : EnemyState
 
     }
 
+    private bool HandleAdvancePlayer()
+    {
+        if (enemy.IsUnstoppable())
+        {
+            return false;
+        }
+
+        return (enemy.IsPlayerInAgrressionRage() == false && ReadyToLeaveCover());
+
+    }
     private bool ReadyToLeaveCover()
     {
         return Time.time > enemy.coverTime + enemy.runToCoverState.lastTimeTookCover;
     }
 
 
-    #region Weapon
+    #region Weapon System
 
     private void AttempToResetWeapon()
     {
@@ -113,6 +122,15 @@ public class BattleState_Range : EnemyState
         lastTimeShot = Time.time;
         bulletsShoot++;
     }
+    private void SetupFirstAttack()
+    {
+        if (firstTimeAttack)
+        {
+            firstTimeAttack = false;
+            bulletsPerAttack = enemy.weaponData.GetRandomBulletPerAttack();
+            weaponCooldown = enemy.weaponData.GetRandomWeaponCooldown();
+        }
+    }
 
     #endregion
 
@@ -120,7 +138,7 @@ public class BattleState_Range : EnemyState
     private bool ReadyToChangeCover()
     {
         bool inDanger = IsPlayerInClearSight() || IsPlayerClose();
-        bool advanceTimeIsOver = Time.time > enemy.advancePlayerState.lastTimeAdvanced + enemy.advanceTime;
+        bool advanceTimeIsOver = Time.time > enemy.advancePlayerState.lastTimeAdvanced + enemy.advanceDuration;
 
         return inDanger && advanceTimeIsOver;
     }
@@ -160,6 +178,16 @@ public class BattleState_Range : EnemyState
                 stateMachine.ChangeState(enemy.runToCoverState);
             }
         }
+    }
+
+    public bool UnStoppableWalkReady()
+    {
+        float distanceToPlayer = Vector3.Distance(enemy.transform.position, enemy.player.position);
+        bool outOfStoppingDistance = distanceToPlayer > enemy.advanceStoppingDistance;
+        bool unStoppableWalkOnColdDown =
+            Time.time < enemy.weaponData.minWeaponCooldown + enemy.advancePlayerState.lastTimeAdvanced;
+
+        return outOfStoppingDistance && unStoppableWalkOnColdDown == false;
     }
     #endregion
 }

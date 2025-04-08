@@ -95,7 +95,7 @@ public class Cover : MonoBehaviour
     {
         CoverPoint lastCover = enemyTransform.GetComponent<Enemy_Range>().currentCover;
         return lastCover != null && 
-            Vector3.Distance(coverPoint.transform.position, lastCover.transform.position) < 3;
+            Vector3.Distance(coverPoint.transform.position, lastCover.transform.position) < 5;
     }
 
     private bool IsFarthestFromPlayer(CoverPoint coverPoint)

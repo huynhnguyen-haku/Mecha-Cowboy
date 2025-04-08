@@ -99,7 +99,7 @@ public class Enemy_Melee : Enemy
     }
 
 
-    private void InitializePerk()
+    protected override void InitializePerk()
     {
         if (meleeType == EnemyMelee_Type.AxeThrow)
         {

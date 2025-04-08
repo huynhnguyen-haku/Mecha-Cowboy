@@ -1,5 +1,6 @@
 using UnityEngine;
 
+
 public class AdvancePlayerState_Range : EnemyState
 {
     private Enemy_Range enemy;
@@ -21,6 +22,12 @@ public class AdvancePlayerState_Range : EnemyState
 
         enemy.agent.isStopped = false;
         enemy.agent.speed = enemy.advanceSpeed;
+
+        if (enemy.IsUnstoppable())
+        {
+            enemy.enemyVisual.EnableIK(true, false);
+            stateTimer = enemy.advanceDuration;
+        }
     }
 
     public override void Update()
@@ -33,7 +40,7 @@ public class AdvancePlayerState_Range : EnemyState
         enemy.agent.SetDestination(enemy.player.transform.position);
         enemy.FaceTarget(GetNextPathPoint());
 
-        if (CanEnterBattleState())
+        if (CanEnterBattleState() && enemy.IsSeeingPlayer())
         {
             stateMachine.ChangeState(enemy.battleState);
         }
@@ -47,7 +54,16 @@ public class AdvancePlayerState_Range : EnemyState
 
     public bool CanEnterBattleState()
     {
-        return Vector3.Distance(enemy.transform.position, playerPosition) < enemy.arrgresssionRange
-            && enemy.IsSeeingPlayer();
+        bool closeEnoughToPlayer = Vector3.Distance(enemy.transform.position, playerPosition) < enemy.arrgresssionRange;
+        
+        if (enemy.IsUnstoppable())
+        {
+            return closeEnoughToPlayer || stateTimer <= 0;
+        }
+        else
+        {
+            return closeEnoughToPlayer;
+        }
+
     }
 }
