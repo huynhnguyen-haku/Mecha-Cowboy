@@ -73,7 +73,7 @@ public class Enemy_Melee : Enemy
         stateMachine.Initialize(idleState);
 
         InitializePerk();
-        enemyVisual.SetupVisual();
+        visual.SetupVisual();
         UpdateAttackData();
     }
     protected override void Update()
@@ -95,7 +95,7 @@ public class Enemy_Melee : Enemy
     {
         base.AbilityTrigger();
         walkSpeed = walkSpeed * 0.5f;
-        EnableWeaponModel(false);
+        visual.EnableWeaponModel(false);
     }
 
 
@@ -125,17 +125,14 @@ public class Enemy_Melee : Enemy
     }
     public void UpdateAttackData()
     {
-        Enemy_WeaponModel currentWeapon = enemyVisual.currentWeaponModel.GetComponent<Enemy_WeaponModel>();
+        Enemy_WeaponModel currentWeapon = visual.currentWeaponModel.GetComponent<Enemy_WeaponModel>();
         if (currentWeapon != null)
         {
             attackList = new List<AttackData_EnemyMelee>(currentWeapon.weaponData.attackData);
             turnSpeed = currentWeapon.weaponData.turnSpeed;
         }
     }
-    public void EnableWeaponModel(bool active)
-    {
-        enemyVisual.currentWeaponModel.gameObject.SetActive(active);
-    }
+
     public void ActivateDodgeRoll()
     {
         // Only dodge roll if the player is outside of attack range

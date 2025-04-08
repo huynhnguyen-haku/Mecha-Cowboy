@@ -29,7 +29,7 @@ public class BattleState_Range : EnemyState
         enemy.agent.isStopped = true;
         enemy.agent.velocity = Vector3.zero;
 
-        enemy.enemyVisual.EnableIK(true, true);
+        enemy.visual.EnableIK(true, true);
         stateTimer = enemy.attackDelay;
     }
 
@@ -41,6 +41,11 @@ public class BattleState_Range : EnemyState
         if (enemy.IsSeeingPlayer())
         {
             enemy.FaceTarget(enemy.aim.position);
+        }
+
+        if (enemy.CanThrowGrenade())
+        {
+            stateMachine.ChangeState(enemy.throwGrenadeState);
         }
 
         if (HandleAdvancePlayer())

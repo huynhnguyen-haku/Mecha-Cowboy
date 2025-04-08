@@ -22,4 +22,5 @@ public class Enemy_AnimationEvents : MonoBehaviour
     public void StopManualRotation() => enemy.ActivateManualRotation(false);
 
     public void AbilityEvent() => enemy.AbilityTrigger();
+    public void EnableIK() => enemy.visual.EnableIK(true, true, 1.5f);
 }

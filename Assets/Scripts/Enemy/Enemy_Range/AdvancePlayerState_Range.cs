@@ -18,14 +18,14 @@ public class AdvancePlayerState_Range : EnemyState
     {
         base.Enter();
 
-        enemy.enemyVisual.EnableIK(true, false);
+        enemy.visual.EnableIK(true, false);
 
         enemy.agent.isStopped = false;
         enemy.agent.speed = enemy.advanceSpeed;
 
         if (enemy.IsUnstoppable())
         {
-            enemy.enemyVisual.EnableIK(true, false);
+            enemy.visual.EnableIK(true, false);
             stateTimer = enemy.advanceDuration;
         }
     }

@@ -11,7 +11,7 @@ public class IdleState_Range : EnemyState
     public override void Enter()
     {
         base.Enter();
-        enemy.enemyVisual.EnableIK(true, false);
+        enemy.visual.EnableIK(true, false);
 
         stateTimer = enemy.idleTime;
     }

@@ -4,16 +4,22 @@ using UnityEngine;
 
 public enum CoverPerk { None, RunToCover, ChangeCover}
 public enum UnstoppablePerk { None, Unstoppable }
+public enum GrenadePerk { None, ThrowGrenade }
 public class Enemy_Range : Enemy
 {
     [Header("Enemy Perks")]
     public CoverPerk coverPerk;
     public UnstoppablePerk unstoppablePerk;
+    public GrenadePerk grenadePerk;
 
     [Header("Advance Perks")]
     public float advanceSpeed;
     public float advanceStoppingDistance;
     public float advanceDuration;
+
+    [Header("Grenade Perks")]
+    public float grenadeCooldown;
+    private float lastGrenadeThrowTime;
 
     [Header("Cover System")]
     public float safeDistance;
@@ -47,16 +53,19 @@ public class Enemy_Range : Enemy
     public BattleState_Range battleState { get; private set; }
     public RunToCoverState_Range runToCoverState { get; private set; }
     public AdvancePlayerState_Range advancePlayerState { get; private set; }
+    public ThrowGrenadeState_Range throwGrenadeState { get; private set; }
 
 
     protected override void Awake()
     {
         base.Awake();
+
         idleState = new IdleState_Range(this, stateMachine, "Idle");
         moveState = new MoveState_Range(this, stateMachine, "Move");
         battleState = new BattleState_Range(this, stateMachine, "Battle");
         runToCoverState = new RunToCoverState_Range(this, stateMachine, "Run");
         advancePlayerState = new AdvancePlayerState_Range(this, stateMachine, "Advance");
+        throwGrenadeState = new ThrowGrenadeState_Range(this, stateMachine, "ThrowGrenade");
     }
 
     protected override void Start()
@@ -69,7 +78,7 @@ public class Enemy_Range : Enemy
         InitializePerk();
 
         stateMachine.Initialize(idleState);
-        enemyVisual.SetupVisual();
+        visual.SetupVisual();
         SetupWeapon();
     }
 
@@ -81,6 +90,7 @@ public class Enemy_Range : Enemy
     }
 
     #region Weapon Setup
+
     public void FireSingleBullet()
     {
         anim.SetTrigger("Fire");
@@ -118,7 +128,7 @@ public class Enemy_Range : Enemy
     private void SetupWeapon()
     {
         List<Enemy_RangeWeaponData> filteredData = new List<Enemy_RangeWeaponData>();
-        gunPoint = enemyVisual.currentWeaponModel.GetComponent<Enemy_RangeWeaponModel>().gunPoint;
+        gunPoint = visual.currentWeaponModel.GetComponent<Enemy_RangeWeaponModel>().gunPoint;
 
         foreach (var weaponData in avaiableWeaponData)
         {
@@ -138,6 +148,7 @@ public class Enemy_Range : Enemy
         }
 
     }
+
     #endregion
 
     #region Aim Setup
@@ -253,5 +264,25 @@ public class Enemy_Range : Enemy
             advanceSpeed = 1;
             anim.SetFloat("AdvanceIndex", 1);
         }
+    }
+
+    public bool CanThrowGrenade()
+    {
+        if (grenadePerk == GrenadePerk.None)
+            return false;
+
+        if (Vector3.Distance(player.transform.position, transform.position) < safeDistance)
+            return false;
+
+        if (Time.time > grenadeCooldown + lastGrenadeThrowTime)
+            return true;
+
+        return false;
+    }
+
+    public void ThrowGrenade()
+    {
+        lastGrenadeThrowTime = Time.time;
+        Debug.Log("Throwing grenade");
     }
 }
