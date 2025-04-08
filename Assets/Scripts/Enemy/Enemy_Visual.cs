@@ -42,7 +42,12 @@ public class Enemy_Visual : MonoBehaviour
 
     public void EnableWeaponModel(bool active)
     {
-        currentWeaponModel.gameObject.SetActive(active);
+        currentWeaponModel?.gameObject.SetActive(active);
+    }
+
+    public void EnableHoldingWeaponModel(bool active)
+    {
+        FindHoldingWeaponModel()?.SetActive(active);
     }
 
     public void SetupVisual()
@@ -150,6 +155,21 @@ public class Enemy_Visual : MonoBehaviour
             crystals[i] = crystalComponents[i].gameObject;
         }
         return crystals;
+    }
+    private GameObject FindHoldingWeaponModel()
+    {
+        Enemy_HoldWeaponModel[] weaponModels = GetComponentsInChildren<Enemy_HoldWeaponModel>(true);
+        Enemy_RangeWeaponType weaponType = GetComponentInParent<Enemy_Range>().weaponType;
+
+        foreach (var weaponModel in weaponModels)
+        {
+            if (weaponModel.weaponType == weaponType)
+            {
+                return weaponModel.gameObject;
+            }
+
+        }
+        return null;
     }
 
     private void OverrideAnimatorController()

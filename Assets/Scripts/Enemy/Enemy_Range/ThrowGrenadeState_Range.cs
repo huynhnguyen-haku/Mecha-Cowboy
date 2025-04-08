@@ -13,6 +13,7 @@ public class ThrowGrenadeState_Range : EnemyState
         base.Enter();
         enemy.visual.EnableWeaponModel(false);
         enemy.visual.EnableIK(false, false);
+        enemy.visual.EnableHoldingWeaponModel(true);
     }
 
     public override void Update()
