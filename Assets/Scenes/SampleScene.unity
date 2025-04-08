@@ -646,7 +646,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &121828404
 Transform:
   m_ObjectHideFlags: 0
@@ -655,14 +655,14 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 121828403}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.5, y: 0.5, z: 0.5, w: 0.5}
-  m_LocalPosition: {x: -0.088, y: 0.057, z: 0.048}
+  m_LocalRotation: {x: 0.48276347, y: 0.48276344, z: 0.51666194, w: 0.5166618}
+  m_LocalPosition: {x: -0.105, y: 0.07, z: 0.042}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 309242521}
   m_Father: {fileID: 1915139809}
-  m_LocalEulerAnglesHint: {x: 0, y: 90, z: 90}
+  m_LocalEulerAnglesHint: {x: 0, y: 86.115, z: 90}
 --- !u!23 &121828405
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -3896,14 +3896,14 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 695129141}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: 0.49340534, y: 0.5499374, z: 0.60393876, w: 0.2989616}
+  m_LocalPosition: {x: -0.1529, y: -0.024, z: 0.0765}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1749630494}
   m_Father: {fileID: 1915139809}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -21.669, y: 95.666, z: 103.464}
 --- !u!23 &695129143
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -5142,15 +5142,15 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1030721840}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: 0.47167802, y: 0.49377978, z: 0.59066147, w: 0.42990747}
+  m_LocalPosition: {x: -0.1464, y: 0.054, z: -0.0146}
   m_LocalScale: {x: 0.8, y: 0.8, z: 0.8}
-  m_ConstrainProportionsScale: 1
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1955819241}
   - {fileID: 517041428}
   m_Father: {fileID: 1915139809}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -10.239, y: 86.073, z: 98.339}
 --- !u!23 &1030721842
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -19932,7 +19932,7 @@ MonoBehaviour:
   safeDistance: 2
   coverTime: 4
   attackDelay: 1
-  weaponType: 2
+  weaponType: 4
   weaponData: {fileID: 0}
   gunPoint: {fileID: 168100226}
   weaponHolder: {fileID: 1890604388177951731}

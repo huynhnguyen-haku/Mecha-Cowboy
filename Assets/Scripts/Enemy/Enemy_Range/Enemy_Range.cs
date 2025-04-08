@@ -147,7 +147,13 @@ public class Enemy_Range : Enemy
             Debug.LogError("No weapon data found for the specified weapon type.");
         }
 
+        // Set grenadePerk to None if the weapon type is Pistol or Revolver
+        if (weaponType == Enemy_RangeWeaponType.Pistol || weaponType == Enemy_RangeWeaponType.Revolver)
+        {
+            grenadePerk = GrenadePerk.None;
+        }
     }
+
 
     #endregion
 
