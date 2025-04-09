@@ -7402,7 +7402,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   healthPoint: 15
   idleTime: 3
-  arrgresssionRange: 0
+  arrgresssionRange: 8
   walkSpeed: 1.75
   runSpeed: 4
   turnSpeed: 5
@@ -7410,6 +7410,7 @@ MonoBehaviour:
   - {fileID: 2143141595}
   - {fileID: 2063035179}
   - {fileID: 1825323553}
+  attackRange: 2
 --- !u!195 &1723794603
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -19775,6 +19776,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5016211666982784020}
   - component: {fileID: 1404284412552549998}
+  - component: {fileID: 5681002049255085743}
   m_Layer: 0
   m_Name: character_boss
   m_TagString: Untagged
@@ -19782,6 +19784,18 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &5681002049255085743
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5681002049255085742}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f707a065f68463d4b953ffe1b90ce289, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5692474982905660364
 GameObject:
   m_ObjectHideFlags: 0
@@ -25723,7 +25737,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &9020037590663082762
 GameObject:
   m_ObjectHideFlags: 0
