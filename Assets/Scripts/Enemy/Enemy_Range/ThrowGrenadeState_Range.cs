@@ -3,6 +3,8 @@ using UnityEngine;
 public class ThrowGrenadeState_Range : EnemyState
 {
     private Enemy_Range enemy;
+    public bool finishedThrowing { get; private set; }  
+
     public ThrowGrenadeState_Range(Enemy enemyBase, EnemyStateMachine stateMachine, string animBoolName) : base(enemyBase, stateMachine, animBoolName)
     {
         enemy = (Enemy_Range)enemyBase;
@@ -12,9 +14,12 @@ public class ThrowGrenadeState_Range : EnemyState
     {
         base.Enter();
 
+        finishedThrowing = false;
+
         enemy.visual.EnableWeaponModel(false);
         enemy.visual.EnableIK(false, false);
         enemy.visual.EnableHoldingWeaponModel(true);
+        enemy.visual.EnableGrenadeModel(true);
     }
 
     public override void Update()
@@ -36,6 +41,7 @@ public class ThrowGrenadeState_Range : EnemyState
     public override void AbilityTrigger()
     {
         base.AbilityTrigger();
+        finishedThrowing = true;
         enemy.ThrowGrenade();
     }
 }

@@ -8,6 +8,7 @@ public enum Enemy_RangeWeaponType { Pistol, Revolver, Shotgun, Rifle, Sniper }
 public class Enemy_Visual : MonoBehaviour
 {
     public GameObject currentWeaponModel;
+    public GameObject grenadeModel;
 
     [Header("Color")]
     [SerializeField] private Texture[] colorTexures;
@@ -48,6 +49,11 @@ public class Enemy_Visual : MonoBehaviour
     public void EnableHoldingWeaponModel(bool active)
     {
         FindHoldingWeaponModel()?.SetActive(active);
+    }
+
+    public void EnableGrenadeModel(bool active)
+    {
+        grenadeModel?.SetActive(active);
     }
 
     public void SetupVisual()

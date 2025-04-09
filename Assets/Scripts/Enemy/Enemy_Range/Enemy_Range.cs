@@ -60,6 +60,7 @@ public class Enemy_Range : Enemy
     public RunToCoverState_Range runToCoverState { get; private set; }
     public AdvancePlayerState_Range advancePlayerState { get; private set; }
     public ThrowGrenadeState_Range throwGrenadeState { get; private set; }
+    public DeadState_Range deadState { get; private set; }
 
 
     protected override void Awake()
@@ -72,6 +73,7 @@ public class Enemy_Range : Enemy
         runToCoverState = new RunToCoverState_Range(this, stateMachine, "Run");
         advancePlayerState = new AdvancePlayerState_Range(this, stateMachine, "Advance");
         throwGrenadeState = new ThrowGrenadeState_Range(this, stateMachine, "ThrowGrenade");
+        deadState = new DeadState_Range(this, stateMachine, "Idle"); // Idle is used for placeholder
     }
 
     protected override void Start()
@@ -88,11 +90,21 @@ public class Enemy_Range : Enemy
         SetupWeapon();
     }
 
+
     protected override void Update()
     {
         base.Update();
 
         stateMachine.currentState.Update();
+    }
+
+    public override void GetHit()
+    {
+        base.GetHit();
+        if (healthPoint <= 0 && stateMachine.currentState != deadState)
+        {
+            stateMachine.ChangeState(deadState);
+        }
     }
 
     #region Weapon Setup
@@ -295,10 +307,19 @@ public class Enemy_Range : Enemy
     public void ThrowGrenade()
     {
         lastGrenadeThrowTime = Time.time;
+        visual.EnableGrenadeModel(false);
+
         GameObject newGrenade = ObjectPool.instance.GetObject(grenadePrefab);
         newGrenade.transform.position = grenadeStartPoint.position;
 
         Enemy_Grenade newGrenadeScript = newGrenade.GetComponent<Enemy_Grenade>();
+
+        if (stateMachine.currentState == deadState)
+        {
+            newGrenadeScript.SetupGrenade(transform.position, 1, explosionTimer, impactPower);
+            return;
+        }
+
         newGrenadeScript.SetupGrenade(player.transform.position, timeToTarget, explosionTimer, impactPower);
     }
 }

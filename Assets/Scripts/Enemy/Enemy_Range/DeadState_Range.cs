@@ -1,19 +1,24 @@
 using UnityEngine;
 
-public class DeadState_Melee : EnemyState
+public class DeadState_Range : EnemyState
 {
-    private Enemy_Melee enemy;
+    private Enemy_Range enemy;
 
     private bool interactionDisabled;
 
-    public DeadState_Melee(Enemy enemyBase, EnemyStateMachine stateMachine, string animBoolName) : base(enemyBase, stateMachine, animBoolName)
+    public DeadState_Range(Enemy enemyBase, EnemyStateMachine stateMachine, string animBoolName) : base(enemyBase, stateMachine, animBoolName)
     {
-        enemy = (Enemy_Melee)enemyBase;
+        enemy = (Enemy_Range)enemyBase;
     }
 
     public override void Enter()
     {
         base.Enter();
+
+        if (enemy.throwGrenadeState.finishedThrowing == false)
+        {
+            enemy.ThrowGrenade();
+        }
 
         interactionDisabled = false;
         enemy.anim.enabled = false;
@@ -28,6 +33,7 @@ public class DeadState_Melee : EnemyState
     {
         base.Exit();
     }
+
 
     public override void Update()
     {
@@ -45,4 +51,3 @@ public class DeadState_Melee : EnemyState
         }
     }
 }
-

@@ -83,6 +83,7 @@ public class Enemy_Melee : Enemy
     }
 
 
+
     public override void EnterBattleMode()
     {
         if (inBattleMode)
@@ -156,7 +157,7 @@ public class Enemy_Melee : Enemy
     public override void GetHit()
     {
         base.GetHit();
-        if (healthPoint <= 0)
+        if (healthPoint <= 0 && stateMachine.currentState != deadState)
         {
             stateMachine.ChangeState(deadState);
         }
