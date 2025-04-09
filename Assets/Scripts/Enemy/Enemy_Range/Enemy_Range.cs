@@ -18,8 +18,14 @@ public class Enemy_Range : Enemy
     public float advanceDuration;
 
     [Header("Grenade Perks")]
+    public GameObject grenadePrefab;
+    public float explosionTimer = 0.75f;
+    public float timeToTarget = 1.2f;
+    public float impactPower;
+
     public float grenadeCooldown;
     private float lastGrenadeThrowTime;
+    [SerializeField] private Transform grenadeStartPoint;
 
     [Header("Cover System")]
     public float safeDistance;
@@ -289,6 +295,10 @@ public class Enemy_Range : Enemy
     public void ThrowGrenade()
     {
         lastGrenadeThrowTime = Time.time;
-        Debug.Log("Throwing grenade");
+        GameObject newGrenade = ObjectPool.instance.GetObject(grenadePrefab);
+        newGrenade.transform.position = grenadeStartPoint.position;
+
+        Enemy_Grenade newGrenadeScript = newGrenade.GetComponent<Enemy_Grenade>();
+        newGrenadeScript.SetupGrenade(player.transform.position, timeToTarget, explosionTimer, impactPower);
     }
 }

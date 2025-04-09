@@ -507,8 +507,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df0b43ea03445a0459b9f32d7fafb638, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  highlightMaterial: {fileID: 2100000, guid: ecec4012fd11b734896f267bef0a3825, type: 2}
+  highlightMaterial: {fileID: 2100000, guid: ef1f4fc8158f07e4da518723f6cede54, type: 2}
   weaponData: {fileID: 11400000, guid: c8a5090540c8e5c48a00a5e7ba8a4034, type: 2}
+  weapon:
+    weaponType: 0
+    bulletsInMagazine: 0
+    magazineCapacity: 0
+    TotalReserveAmmo: 0
+    shotType: 0
+    fireRate: 0
+    cameraDistance: 0
+    burstActive: 0
   weaponModels:
   - {fileID: 1155946326057816448}
   - {fileID: 352281507356417362}

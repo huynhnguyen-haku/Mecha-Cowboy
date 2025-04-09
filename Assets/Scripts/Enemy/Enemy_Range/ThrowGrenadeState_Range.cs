@@ -36,7 +36,6 @@ public class ThrowGrenadeState_Range : EnemyState
     public override void AbilityTrigger()
     {
         base.AbilityTrigger();
-
         enemy.ThrowGrenade();
     }
 }
