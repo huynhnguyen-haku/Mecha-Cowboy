@@ -53,10 +53,7 @@ public class AbilityState_Melee : EnemyState
 
     public override void AbilityTrigger()
     {
-
-        GameObject newAxe = ObjectPool.instance.GetObject(enemy.axePrefab);
-
-        newAxe.transform.position = enemy.axeStartPoint.position;
-        newAxe.GetComponent<Enemy_Axe>().AxeSetup(enemy.axeFlySpeed, enemy.player, enemy.axeAimTimer);
+        base.AbilityTrigger();
+        enemy.ThrowAxe();
     }
 }

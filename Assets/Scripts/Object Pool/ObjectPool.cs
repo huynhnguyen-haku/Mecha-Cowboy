@@ -68,7 +68,7 @@ public class ObjectPool : MonoBehaviour
         poolDictionary[originalPrefab].Enqueue(objectToReturn);
     }
 
-    public GameObject GetObject(GameObject prefab)
+    public GameObject GetObject(GameObject prefab, Transform target)
     {
         if (poolDictionary.ContainsKey(prefab) == false)
             InitializeNewPool(prefab);
@@ -77,8 +77,11 @@ public class ObjectPool : MonoBehaviour
             CreateNewObject(prefab);
 
         GameObject objectToGet = poolDictionary[prefab].Dequeue();
-        objectToGet.SetActive(true);
+
+        objectToGet.transform.position = target.position;
         objectToGet.transform.SetParent(null);
+
+        objectToGet.SetActive(true);
 
         return objectToGet;
     }

@@ -36,13 +36,15 @@ public class Bullet : MonoBehaviour
 
     public void BulletSetup(float impactForce = 100)
     {
-        boxCollider.enabled = true;
         this.impactForce = impactForce;
+
+        boxCollider.enabled = true;
+        bulletTrail.Clear();
     }
 
     protected virtual void OnCollisionEnter(Collision collision)
     {
-        CreateImpactFX(collision);
+        CreateImpactFX();
         ReturnBulletToPool();
 
         Enemy enemy = collision.gameObject.GetComponentInParent<Enemy>();
@@ -66,20 +68,13 @@ public class Bullet : MonoBehaviour
 
     protected void ReturnBulletToPool()
     {
-        bulletTrail.Clear();
         ObjectPool.instance.ReturnObject(gameObject);
     }
 
-    protected void CreateImpactFX(Collision collision)
+    protected void CreateImpactFX()
     {
-        if (collision.contacts.Length > 0)
-        {
-            ContactPoint contact = collision.contacts[0];
-            GameObject newImpactFX = ObjectPool.instance.GetObject(bulletImpactFX);
-            newImpactFX.transform.position = contact.point;
-
-            ObjectPool.instance.ReturnObject(newImpactFX, 1);
-        }
+        GameObject newImpactFX = ObjectPool.instance.GetObject(bulletImpactFX, transform);
+        ObjectPool.instance.ReturnObject(newImpactFX, 1);
     }
 }
 

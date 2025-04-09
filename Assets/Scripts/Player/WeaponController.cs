@@ -102,7 +102,7 @@ public class WeaponController : MonoBehaviour
 
     private void CreateWeaponOnTheGround()
     {
-        GameObject droppedWeapon = ObjectPool.instance.GetObject(weaponPickupPrefab);
+        GameObject droppedWeapon = ObjectPool.instance.GetObject(weaponPickupPrefab, transform);
         droppedWeapon.GetComponent<Weapon_PickUp>().SetUpPickupWeapon(currentWeapon, player.transform);
     }
 
@@ -152,10 +152,9 @@ public class WeaponController : MonoBehaviour
     {
         currentWeapon.bulletsInMagazine--;
 
-        GameObject bullet = ObjectPool.instance.GetObject(bulletPrefab);
+        GameObject bullet = ObjectPool.instance.GetObject(bulletPrefab, GunPoint());
         Rigidbody rbBullet = bullet.GetComponent<Rigidbody>();
 
-        bullet.transform.position = GunPoint().position;
         bullet.transform.rotation = Quaternion.LookRotation(GunPoint().forward);
 
         Bullet bulletScript = bullet.GetComponent<Bullet>();

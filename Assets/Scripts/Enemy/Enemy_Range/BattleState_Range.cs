@@ -158,7 +158,7 @@ public class BattleState_Range : EnemyState
         Vector3 directionToPlayer = enemy.player.transform.position - enemy.transform.position;
         if (Physics.Raycast(enemy.transform.position, directionToPlayer, out RaycastHit hit))
         {
-            return hit.collider.gameObject.GetComponentInParent<Player>();
+            return hit.transform.parent == enemy.player;
         }
         return false;
     }
@@ -176,7 +176,7 @@ public class BattleState_Range : EnemyState
             coverCheckTimer = 0.5f;
         }
 
-        if (ReadyToChangeCover())
+        if (ReadyToChangeCover() && ReadyToLeaveCover())
         {
             if (enemy.CanGetCover())
             {

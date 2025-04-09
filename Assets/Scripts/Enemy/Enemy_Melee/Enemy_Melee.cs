@@ -163,6 +163,11 @@ public class Enemy_Melee : Enemy
         }
     }
 
+    public void ThrowAxe()
+    {
+        GameObject newAxe = ObjectPool.instance.GetObject(axePrefab, axeStartPoint);
+        newAxe.GetComponent<Enemy_Axe>().AxeSetup(axeFlySpeed, player, axeAimTimer);
+    }
 
     public bool CanThrowAxe()
     {
