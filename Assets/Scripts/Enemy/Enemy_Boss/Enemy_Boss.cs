@@ -8,10 +8,17 @@ public class Enemy_Boss : Enemy
     private float lastTimeJump;
     public float minJumpDistanceRequired;
 
+    [Header("Abilities")]
+    public float flamethrowDuration;
+    public ParticleSystem flamethrower;
+    public bool flamethrowerActive { get; private set; }
+
+
     public IdleState_Boss idleState { get; private set; }
     public MoveState_Boss moveState { get; private set; }
     public AttackState_Boss attackState { get; private set; }
     public JumpAttackState_Boss jumpAttackState { get; private set; }
+    public AbilityState_Boss abilityState { get; private set; }
     [Space]
     [SerializeField] private LayerMask whatToIgnore;
 
@@ -24,6 +31,7 @@ public class Enemy_Boss : Enemy
         moveState = new MoveState_Boss(this, stateMachine, "Move");
         attackState = new AttackState_Boss(this, stateMachine, "Attack");
         jumpAttackState = new JumpAttackState_Boss(this, stateMachine, "JumpAttack");
+        abilityState = new AbilityState_Boss(this, stateMachine, "Ability");
     }
 
     protected override void Start()
@@ -36,6 +44,12 @@ public class Enemy_Boss : Enemy
     {
         base.Update();
         stateMachine.currentState.Update();
+
+        // Test ability
+        if (Input.GetKeyDown(KeyCode.V))
+        {
+            stateMachine.ChangeState(abilityState);
+        }
 
         if (ShouldEnterBattleMode())
         {
@@ -51,6 +65,27 @@ public class Enemy_Boss : Enemy
     {
         base.EnterBattleMode();
         stateMachine.ChangeState(moveState);
+    }
+
+    public void ActivateFlamethrower(bool activate)
+    {
+        flamethrowerActive = activate;
+
+        if (!activate)
+        {
+            flamethrower.Stop();
+            anim.SetTrigger("StopFlamethrower");
+            return;
+        }
+
+        var mainModule = flamethrower.main;
+        var extraModule = flamethrower.transform.GetChild(0).GetComponent<ParticleSystem>().main;
+
+        mainModule.duration = flamethrowDuration;
+        extraModule.duration = flamethrowDuration;
+
+        flamethrower.Clear();
+        flamethrower.Play();
     }
 
     public bool CanDoJumpAttack()
