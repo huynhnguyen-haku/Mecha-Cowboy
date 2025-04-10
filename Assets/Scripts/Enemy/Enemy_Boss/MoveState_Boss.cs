@@ -32,7 +32,12 @@ public class MoveState_Boss : EnemyState
             Vector3 playerPosition = enemy.player.position;
             enemy.agent.SetDestination(playerPosition);
 
-            if (Vector3.Distance(playerPosition, enemy.transform.position) < enemy.attackRange)
+            if (enemy.CanDoJumpAttack())
+            {
+                stateMachine.ChangeState(enemy.jumpAttackState);
+            }
+
+            else if (enemy.PlayerInAttackRange())
             {
                 stateMachine.ChangeState(enemy.attackState);
             }
