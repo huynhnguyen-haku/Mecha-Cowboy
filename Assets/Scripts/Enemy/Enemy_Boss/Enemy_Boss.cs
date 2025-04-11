@@ -1,9 +1,11 @@
 using UnityEngine;
 
+public enum BossWeaponType { Fist, Hammer}
 public class Enemy_Boss : Enemy
 {
 
     [Header("Boss Detail")]
+    public BossWeaponType weaponType;
     public float attackRange;
     public float actionCooldown = 10;
 
@@ -16,6 +18,7 @@ public class Enemy_Boss : Enemy
     public float jumpAttackCooldown = 10;
     private float lastTimeJump;
     public float minJumpDistanceRequired;
+    public Transform impactPoint;
 
     [Header("Abilities")]
     public float flamethrowDuration;
@@ -115,8 +118,12 @@ public class Enemy_Boss : Enemy
 
     public void JumpImpact()
     {
+        Transform impactPoint = this.impactPoint;
 
-        Collider[] colliders = Physics.OverlapSphere(transform.position, impactRadius);
+        if (impactPoint == null)
+            impactPoint = transform;
+
+        Collider[] colliders = Physics.OverlapSphere(impactPoint.position, impactRadius);
 
         foreach (Collider hit in colliders)
         {

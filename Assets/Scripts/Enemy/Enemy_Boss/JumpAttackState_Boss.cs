@@ -26,6 +26,13 @@ public class JumpAttackState_Boss : EnemyState
 
         jumpAttackMovementSpeed = distanceToPlayer / enemy.travelTimeToTarget;
         enemy.FaceTarget(lastPlayerPosition, 1000);
+
+        if (enemy.weaponType == BossWeaponType.Hammer)
+        {
+            enemy.agent.isStopped = false;
+            enemy.agent.speed = enemy.runSpeed;
+            enemy.agent.SetDestination(lastPlayerPosition);
+        }
     }
 
     public override void Update()
