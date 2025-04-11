@@ -26,13 +26,17 @@ public class Enemy_Boss : Enemy
     public AttackState_Boss attackState { get; private set; }
     public JumpAttackState_Boss jumpAttackState { get; private set; }
     public AbilityState_Boss abilityState { get; private set; }
+    public Enemy_BossVisual bossVisual { get; private set; }
+
     [Space]
+
     [SerializeField] private LayerMask whatToIgnore;
 
 
     protected override void Awake()
     {
         base.Awake();
+        bossVisual = GetComponent<Enemy_BossVisual>();
         idleState = new IdleState_Boss(this, stateMachine, "Idle");
         moveState = new MoveState_Boss(this, stateMachine, "Move");
         attackState = new AttackState_Boss(this, stateMachine, "Attack");
