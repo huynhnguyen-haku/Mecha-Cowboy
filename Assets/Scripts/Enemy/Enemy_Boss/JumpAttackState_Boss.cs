@@ -19,6 +19,8 @@ public class JumpAttackState_Boss : EnemyState
         enemy.agent.isStopped = true;
         enemy.agent.velocity = Vector3.zero;    
 
+        enemy.bossVisual.PlaceLandingZone(lastPlayerPosition); // Place the landing zone effect at the player's position
+
         float distanceToPlayer = Vector3.Distance(lastPlayerPosition, enemy.transform.position);
 
         jumpAttackMovementSpeed = distanceToPlayer / enemy.travelTimeToTarget;
