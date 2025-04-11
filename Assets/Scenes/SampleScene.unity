@@ -7411,15 +7411,17 @@ MonoBehaviour:
   - {fileID: 2143141595}
   - {fileID: 2063035179}
   - {fileID: 1825323553}
+  attackRange: 1.5
+  actionCooldown: 2
   travelTimeToTarget: 1
   jumpAttackCooldown: 5
   minJumpDistanceRequired: 4
   flamethrowDuration: 3
+  abilityCooldown: 5
   flamethrower: {fileID: 198421077710567724}
   whatToIgnore:
     serializedVersion: 2
     m_Bits: 2048
-  attackRange: 1.5
 --- !u!195 &1723794603
 NavMeshAgent:
   m_ObjectHideFlags: 0

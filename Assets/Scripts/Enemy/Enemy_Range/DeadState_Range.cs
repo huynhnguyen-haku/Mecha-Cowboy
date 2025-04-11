@@ -46,8 +46,8 @@ public class DeadState_Range : EnemyState
         if (stateTimer <= 0 && interactionDisabled == false)
         {
             interactionDisabled = true;
-            enemy.ragdoll.RagdollActive(false);
-            enemy.ragdoll.ColliderActive(false);
+            //enemy.ragdoll.RagdollActive(false);
+            //enemy.ragdoll.ColliderActive(false);
         }
     }
 }

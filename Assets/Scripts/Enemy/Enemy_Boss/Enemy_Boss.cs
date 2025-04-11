@@ -2,6 +2,11 @@ using UnityEngine;
 
 public class Enemy_Boss : Enemy
 {
+
+    [Header("Boss Detail")]
+    public float attackRange;
+    public float actionCooldown = 10;
+
     [Header("Jump Attack")]
     public float travelTimeToTarget = 1;
     public float jumpAttackCooldown = 10;
@@ -10,6 +15,8 @@ public class Enemy_Boss : Enemy
 
     [Header("Abilities")]
     public float flamethrowDuration;
+    public float abilityCooldown;   
+    private float lastTimeAbility;  
     public ParticleSystem flamethrower;
     public bool flamethrowerActive { get; private set; }
 
@@ -22,7 +29,6 @@ public class Enemy_Boss : Enemy
     [Space]
     [SerializeField] private LayerMask whatToIgnore;
 
-    public float attackRange;
 
     protected override void Awake()
     {
@@ -44,12 +50,6 @@ public class Enemy_Boss : Enemy
     {
         base.Update();
         stateMachine.currentState.Update();
-
-        // Test ability
-        if (Input.GetKeyDown(KeyCode.V))
-        {
-            stateMachine.ChangeState(abilityState);
-        }
 
         if (ShouldEnterBattleMode())
         {
@@ -96,11 +96,22 @@ public class Enemy_Boss : Enemy
 
         if (Time.time > lastTimeJump + jumpAttackCooldown && IsPlayerInClearSight())
         {
-            lastTimeJump = Time.time;
             return true;
         }
         return false;
     }
+
+    public bool CanDoAbility()
+    {
+        if (Time.time > lastTimeAbility + abilityCooldown /*&& IsPlayerInClearSight()*/)
+        {
+            return true;
+        }
+        return false;
+    }
+
+    public void SetAbilityOnCooldown() => lastTimeAbility = Time.time;
+    public void SetJumpAttackOnCooldown() => lastTimeJump = Time.time;
 
     public bool IsPlayerInClearSight()
     {

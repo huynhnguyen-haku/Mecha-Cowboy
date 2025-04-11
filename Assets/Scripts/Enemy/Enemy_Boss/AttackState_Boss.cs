@@ -3,6 +3,7 @@ using UnityEngine;
 public class AttackState_Boss : EnemyState
 {
     private Enemy_Boss enemy;
+    public float lastTimeAttack { get; private set; }
 
     public AttackState_Boss(Enemy enemyBase, EnemyStateMachine stateMachine, string animBoolName) : base(enemyBase, stateMachine, animBoolName)
     {
@@ -16,11 +17,18 @@ public class AttackState_Boss : EnemyState
         enemy.anim.SetFloat("AttackIndex", Random.Range(0, 2));
         enemy.agent.isStopped = true;
 
+        stateTimer = 1f;
     }
 
     public override void Update()
     {
         base.Update();
+
+        if (stateTimer > 0)
+        {
+            enemy.FaceTarget(enemy.player.position, 20);
+        }
+
         if (triggerCalled)
         {
             if (enemy.PlayerInAttackRange())
@@ -32,5 +40,11 @@ public class AttackState_Boss : EnemyState
                 stateMachine.ChangeState(enemy.moveState);
             }
         }
+    }
+
+    public override void Exit()
+    {
+        base.Exit();
+        lastTimeAttack = Time.time;
     }
 }
