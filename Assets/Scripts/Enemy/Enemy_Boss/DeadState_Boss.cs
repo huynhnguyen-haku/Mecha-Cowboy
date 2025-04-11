@@ -1,24 +1,20 @@
 using UnityEngine;
 
-public class DeadState_Range : EnemyState
+public class DeadState_Boss : EnemyState
 {
-    private Enemy_Range enemy;
-
+    private Enemy_Boss enemy;
     private bool interactionDisabled;
 
-    public DeadState_Range(Enemy enemyBase, EnemyStateMachine stateMachine, string animBoolName) : base(enemyBase, stateMachine, animBoolName)
+    public DeadState_Boss(Enemy enemyBase, EnemyStateMachine stateMachine, string animBoolName) : base(enemyBase, stateMachine, animBoolName)
     {
-        enemy = (Enemy_Range)enemyBase;
+        enemy = (Enemy_Boss)enemyBase;
     }
 
     public override void Enter()
     {
         base.Enter();
 
-        if (enemy.throwGrenadeState.finishedThrowing == false)
-        {
-            enemy.ThrowGrenade();
-        }
+        enemy.abilityState.DisableFlamethrower();
 
         interactionDisabled = false;
         enemy.anim.enabled = false;
@@ -28,12 +24,6 @@ public class DeadState_Range : EnemyState
 
         stateTimer = 1.5f;
     }
-
-    public override void Exit()
-    {
-        base.Exit();
-    }
-
 
     public override void Update()
     {

@@ -24,9 +24,9 @@ public class AbilityState_Boss : EnemyState
         base.Update();
         enemy.FaceTarget(enemy.player.position);
 
-        if (stateTimer < 0 && enemy.flamethrowerActive)
+        if (stateTimer < 0)
         {
-            enemy.ActivateFlamethrower(false);
+           DisableFlamethrower();
         }
         if (triggerCalled)
         {
@@ -47,5 +47,14 @@ public class AbilityState_Boss : EnemyState
         base.Exit();
         enemy.SetAbilityOnCooldown();
         enemy.bossVisual.ResetBatteries();
+    }
+
+    public void DisableFlamethrower()
+    {
+        if (enemy.flamethrowerActive == false)
+        {
+            return;
+        }
+        enemy.ActivateFlamethrower(false);
     }
 }

@@ -32,7 +32,7 @@ public class DeadState_Melee : EnemyState
     public override void Update()
     {
         base.Update();
-        DisableInteraction();
+        //DisableInteraction();
     }
 
     private void DisableInteraction()

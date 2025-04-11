@@ -8,6 +8,10 @@ public class Enemy_Boss : Enemy
     public float actionCooldown = 10;
 
     [Header("Jump Attack")]
+    public float impactRadius = 2.5f;
+    public float impactPower = 10;
+    [SerializeField] private float upwardsMulti = 10;
+    [Space]
     public float travelTimeToTarget = 1;
     public float jumpAttackCooldown = 10;
     private float lastTimeJump;
@@ -27,6 +31,7 @@ public class Enemy_Boss : Enemy
     public JumpAttackState_Boss jumpAttackState { get; private set; }
     public AbilityState_Boss abilityState { get; private set; }
     public Enemy_BossVisual bossVisual { get; private set; }
+    public DeadState_Boss deadState { get; private set; }
 
     [Space]
 
@@ -42,6 +47,7 @@ public class Enemy_Boss : Enemy
         attackState = new AttackState_Boss(this, stateMachine, "Attack");
         jumpAttackState = new JumpAttackState_Boss(this, stateMachine, "JumpAttack");
         abilityState = new AbilityState_Boss(this, stateMachine, "Ability");
+        deadState = new DeadState_Boss(this, stateMachine, "Idle");
     }
 
     protected override void Start()
@@ -67,6 +73,8 @@ public class Enemy_Boss : Enemy
 
     public override void EnterBattleMode()
     {
+        if (inBattleMode)
+            return;
         base.EnterBattleMode();
         stateMachine.ChangeState(moveState);
     }
@@ -105,6 +113,22 @@ public class Enemy_Boss : Enemy
         return false;
     }
 
+    public void JumpImpact()
+    {
+
+        Collider[] colliders = Physics.OverlapSphere(transform.position, impactRadius);
+
+        foreach (Collider hit in colliders)
+        {
+            Rigidbody rb = hit.GetComponent<Rigidbody>();
+            if (rb != null)
+            {
+                rb.AddExplosionForce(impactPower, transform.position, impactRadius, upwardsMulti, ForceMode.Impulse);
+            }
+
+        }
+    }
+
     public bool CanDoAbility()
     {
         if (Time.time > lastTimeAbility + abilityCooldown /*&& IsPlayerInClearSight()*/)
@@ -131,7 +155,14 @@ public class Enemy_Boss : Enemy
         return false;
     }
 
-
+    public override void GetHit()
+    {
+        base.GetHit();
+        if (healthPoint <= 0 && stateMachine.currentState != deadState)
+        {
+            stateMachine.ChangeState(deadState);
+        }
+    }
 
     protected override void OnDrawGizmos()
     {
@@ -149,5 +180,8 @@ public class Enemy_Boss : Enemy
 
         Gizmos.color = Color.white;
         Gizmos.DrawWireSphere(transform.position, minJumpDistanceRequired);
+
+        Gizmos.color = Color.green;
+        Gizmos.DrawWireSphere(transform.position, impactRadius);
     }
 }
