@@ -18,6 +18,7 @@ public class AttackState_Boss : EnemyState
         enemy.agent.isStopped = true;
 
         stateTimer = 1f;
+        enemy.bossVisual.EnableWeaponTrail(true);
     }
 
     public override void Update()
@@ -46,5 +47,6 @@ public class AttackState_Boss : EnemyState
     {
         base.Exit();
         lastTimeAttack = Time.time;
+        enemy.bossVisual.EnableWeaponTrail(false);
     }
 }
