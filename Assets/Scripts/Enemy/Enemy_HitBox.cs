@@ -13,7 +13,6 @@ public class Enemy_HitBox : HitBox
     public override void TakeDamage()
     {
         base.TakeDamage();
-
         enemy.GetHit();
     }
 }

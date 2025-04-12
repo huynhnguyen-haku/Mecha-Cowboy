@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class WeaponController : MonoBehaviour
 {
+    [SerializeField] private LayerMask whatIsAlly;
+    [Space]
     private Player player;
     private const float REFERENCE_BULLET_SPEED = 20;
     // This is the speed of the bullet from which our mass formula is derived
@@ -158,7 +160,7 @@ public class WeaponController : MonoBehaviour
         bullet.transform.rotation = Quaternion.LookRotation(GunPoint().forward);
 
         Bullet bulletScript = bullet.GetComponent<Bullet>();
-        bulletScript.BulletSetup(bulletImpactForce);
+        bulletScript.BulletSetup(whatIsAlly, bulletImpactForce);
 
         Vector3 bulletsDirection = currentWeapon.ApplySpread(BullectDirection());
 

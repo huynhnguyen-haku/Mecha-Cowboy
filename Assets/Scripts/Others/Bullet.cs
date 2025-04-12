@@ -4,6 +4,7 @@ public class Bullet : MonoBehaviour
 {
     [SerializeField] private GameObject bulletImpactFX;
 
+    private float impactForce;
     private BoxCollider boxCollider;
     private Rigidbody rb;
 
@@ -11,7 +12,8 @@ public class Bullet : MonoBehaviour
     [SerializeField] private float bulletLifeTime;
     private float currentLifeTime;
 
-    private float impactForce;
+    private LayerMask allyLayerMask;
+
 
     protected void Awake()
     {
@@ -34,8 +36,9 @@ public class Bullet : MonoBehaviour
         }
     }
 
-    public void BulletSetup(float impactForce = 100)
+    public void BulletSetup(LayerMask allyLayerMask, float impactForce = 100)
     {
+        this.allyLayerMask = allyLayerMask;
         this.impactForce = impactForce;
 
         boxCollider.enabled = true;
@@ -44,6 +47,16 @@ public class Bullet : MonoBehaviour
 
     protected virtual void OnCollisionEnter(Collision collision)
     {
+
+        if (FriendlyFire() == false)
+        {
+            if ((allyLayerMask.value & (1 << collision.gameObject.layer)) > 0)
+            {
+                ReturnBulletToPool(10);
+                return;
+            }
+        }
+
         CreateImpactFX();
         ReturnBulletToPool();
 
@@ -57,6 +70,7 @@ public class Bullet : MonoBehaviour
             shield.ReduceDurability();
             return;
         }
+
         ApplyBulletImpact(collision);
     }
 
@@ -71,15 +85,20 @@ public class Bullet : MonoBehaviour
         }
     }
 
-    protected void ReturnBulletToPool()
+    protected void ReturnBulletToPool(float delay = 0)
     {
-        ObjectPool.instance.ReturnObject(gameObject);
+        ObjectPool.instance.ReturnObject(gameObject, delay);
     }
 
     protected void CreateImpactFX()
     {
         GameObject newImpactFX = ObjectPool.instance.GetObject(bulletImpactFX, transform);
         ObjectPool.instance.ReturnObject(newImpactFX, 1);
+    }
+
+    public bool FriendlyFire()
+    {
+        return GameManager.instance.friendlyFire;
     }
 }
 
