@@ -84,15 +84,24 @@ public class MoveState_Boss : EnemyState
 
         if (Random.Range(0, 2) == 0)
         {
-            if (enemy.CanDoAbility())
-                stateMachine.ChangeState(enemy.abilityState);
+            ActiveSpecialAbility();
         }
         else
         {
             if (enemy.CanDoJumpAttack())
                 stateMachine.ChangeState(enemy.jumpAttackState);
+            // For hammer boss only
+            else if (enemy.weaponType == BossWeaponType.Hammer)
+                ActiveSpecialAbility();
         }
     }
+
+    private void ActiveSpecialAbility()
+    {
+        if (enemy.CanDoAbility())
+            stateMachine.ChangeState(enemy.abilityState);
+    }
+
     private bool ShouldSpeedUp()
     {
         if (SpeedUpActive)
