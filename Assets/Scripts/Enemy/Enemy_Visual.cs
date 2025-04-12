@@ -28,17 +28,27 @@ public class Enemy_Visual : MonoBehaviour
     private float weaponAimTargetWeight;
     private float rigChangeRate;
 
-    private void Update()
+    private Enemy_Range enemyRange;
+
+    private void Awake()
     {
-        leftHandIKConstraint.weight = AdjustIKWeight(leftHandIKConstraint.weight, leftHandTargetWeight);
-        weaponAimConstraint.weight = AdjustIKWeight(weaponAimConstraint.weight, weaponAimTargetWeight);
+        enemyRange = GetComponent<Enemy_Range>();
     }
 
+    private void Update()
+    {
+        if (enemyRange != null)
+        {
+            leftHandIKConstraint.weight = AdjustIKWeight(leftHandIKConstraint.weight, leftHandTargetWeight);
+            weaponAimConstraint.weight = AdjustIKWeight(weaponAimConstraint.weight, weaponAimTargetWeight);
+        }
+    }
+
+    #region Weapon Methods
     public void EnableWeaponTrail(bool enable)
     {
         Enemy_WeaponModel currentWeaponScript = currentWeaponModel.GetComponent<Enemy_WeaponModel>();
         currentWeaponScript.EnableTrailEffect(enable);
-
     }
 
     public void EnableWeaponModel(bool active)
@@ -56,6 +66,80 @@ public class Enemy_Visual : MonoBehaviour
         grenadeModel?.SetActive(active);
     }
 
+    private GameObject FindRangeWeaponModel()
+    {
+        Enemy_RangeWeaponModel[] weaponModels = GetComponentsInChildren<Enemy_RangeWeaponModel>(true);
+        Enemy_RangeWeaponType weaponType = enemyRange.weaponType;
+
+        foreach (var weaponModel in weaponModels)
+        {
+            if (weaponModel.weaponType == weaponType)
+            {
+                SwitchAnimationLayer(((int)weaponModel.weaponHoldType));
+                SetupLeftHandIK(weaponModel.leftHandTarget, weaponModel.leftElbowTarget);
+                return weaponModel.gameObject;
+            }
+        }
+
+        Debug.LogError("No matching weapon model found for type: " + weaponType);
+        return null;
+    }
+
+    private GameObject FindMeleeWeaponModel()
+    {
+        Enemy_WeaponModel[] weaponModels = GetComponentsInChildren<Enemy_WeaponModel>(true);
+        Enemy_MeleeWeaponType weaponType = GetComponent<Enemy_Melee>().weaponType;
+        List<Enemy_WeaponModel> filteredWeaponModels = new List<Enemy_WeaponModel>();
+
+        foreach (var weaponModel in weaponModels)
+        {
+            if (weaponModel.weaponType == weaponType)
+                filteredWeaponModels.Add(weaponModel);
+        }
+
+        int randomIndex = Random.Range(0, filteredWeaponModels.Count);
+        return filteredWeaponModels[randomIndex].gameObject;
+    }
+
+    private GameObject FindHoldingWeaponModel()
+    {
+        Enemy_HoldWeaponModel[] weaponModels = GetComponentsInChildren<Enemy_HoldWeaponModel>(true);
+        Enemy_RangeWeaponType weaponType = GetComponentInParent<Enemy_Range>().weaponType;
+
+        foreach (var weaponModel in weaponModels)
+        {
+            if (weaponModel.weaponType == weaponType)
+            {
+                return weaponModel.gameObject;
+            }
+        }
+        return null;
+    }
+
+    private void OverrideAnimatorController()
+    {
+        AnimatorOverrideController overrideController = currentWeaponModel.GetComponent<Enemy_WeaponModel>()?.overrideController;
+        if (overrideController != null)
+        {
+            GetComponentInChildren<Animator>().runtimeAnimatorController = overrideController;
+        }
+    }
+
+    private void SwitchAnimationLayer(int layerIndex)
+    {
+        Animator animator = GetComponentInChildren<Animator>();
+
+        // Turn off all layers
+        for (int i = 0; i < animator.layerCount; i++)
+        {
+            animator.SetLayerWeight(i, 0);
+        }
+        // Turn on the layer we want
+        animator.SetLayerWeight(layerIndex, 1);
+    }
+    #endregion
+
+    #region Visual Setup Methods
     public void SetupVisual()
     {
         SetupRandomColor();
@@ -72,11 +156,11 @@ public class Enemy_Visual : MonoBehaviour
 
         skinnedMeshRenderers.material = newMat;
     }
+
     private void SetupRandomWeapon()
     {
         bool thisEnemyIsMelee = GetComponent<Enemy_Melee>() != null;
-        bool thisEnemyIsRange = GetComponent<Enemy_Range>() != null;
-
+        bool thisEnemyIsRange = enemyRange != null;
 
         if (thisEnemyIsMelee)
         {
@@ -91,6 +175,7 @@ public class Enemy_Visual : MonoBehaviour
         currentWeaponModel.SetActive(true);
         OverrideAnimatorController();
     }
+
     private void SetupRandomCrystals()
     {
         List<int> availableIndexs = new List<int>();
@@ -115,42 +200,6 @@ public class Enemy_Visual : MonoBehaviour
         }
     }
 
-
-
-    private GameObject FindRangeWeaponModel()
-    {
-        Enemy_RangeWeaponModel[] weaponModels = GetComponentsInChildren<Enemy_RangeWeaponModel>(true);
-        Enemy_RangeWeaponType weaponType = GetComponent<Enemy_Range>().weaponType;
-
-        foreach (var weaponModel in weaponModels)
-        {
-            if (weaponModel.weaponType == weaponType)
-            {
-                SwitchAnimationLayer(((int)weaponModel.weaponHoldType));
-                SetupLeftHandIK(weaponModel.leftHandTarget, weaponModel.leftElbowTarget);
-                return weaponModel.gameObject;
-            }
-        }
-
-        Debug.LogError("No matching weapon model found for type: " + weaponType);
-        return null;
-
-    }
-    private GameObject FindMeleeWeaponModel()
-    {
-        Enemy_WeaponModel[] weaponModels = GetComponentsInChildren<Enemy_WeaponModel>(true);
-        Enemy_MeleeWeaponType weaponType = GetComponent<Enemy_Melee>().weaponType;
-        List<Enemy_WeaponModel> filteredWeaponModels = new List<Enemy_WeaponModel>();
-
-        foreach (var weaponModel in weaponModels)
-        {
-            if (weaponModel.weaponType == weaponType)
-                filteredWeaponModels.Add(weaponModel);
-        }
-
-        int randomIndex = Random.Range(0, filteredWeaponModels.Count);
-        return filteredWeaponModels[randomIndex].gameObject;
-    }
     private GameObject[] CollectCrystals()
     {
         Enemy_Crystal[] crystalComponents = GetComponentsInChildren<Enemy_Crystal>(true);
@@ -162,57 +211,29 @@ public class Enemy_Visual : MonoBehaviour
         }
         return crystals;
     }
-    private GameObject FindHoldingWeaponModel()
-    {
-        Enemy_HoldWeaponModel[] weaponModels = GetComponentsInChildren<Enemy_HoldWeaponModel>(true);
-        Enemy_RangeWeaponType weaponType = GetComponentInParent<Enemy_Range>().weaponType;
+    #endregion
 
-        foreach (var weaponModel in weaponModels)
-        {
-            if (weaponModel.weaponType == weaponType)
-            {
-                return weaponModel.gameObject;
-            }
-
-        }
-        return null;
-    }
-
-    private void OverrideAnimatorController()
-    {
-        AnimatorOverrideController overrideController = currentWeaponModel.GetComponent<Enemy_WeaponModel>()?.overrideController;
-        if (overrideController != null)
-        {
-            GetComponentInChildren<Animator>().runtimeAnimatorController = overrideController;
-        }
-    }
-    private void SwitchAnimationLayer(int layerIndex)
-    {
-        Animator animator = GetComponentInChildren<Animator>();
-
-        // Turn off all layers
-        for (int i = 0; i < animator.layerCount; i++)
-        {
-            animator.SetLayerWeight(i, 0);
-        }
-        // Turn on the layer we want
-        animator.SetLayerWeight(layerIndex, 1);
-    }
-
+    #region IK Methods
     public void EnableIK(bool enableLeftHand, bool enableAim, float changeRate = 10)
     {
-        rigChangeRate = changeRate;
-        leftHandTargetWeight = enableLeftHand ? 1 : 0;
-        weaponAimTargetWeight = enableAim ? 1 : 0;
+        if (enemyRange != null)
+        {
+            rigChangeRate = changeRate;
+            leftHandTargetWeight = enableLeftHand ? 1 : 0;
+            weaponAimTargetWeight = enableAim ? 1 : 0;
+        }
     }
 
     private void SetupLeftHandIK(Transform leftHandTarget, Transform leftElbowTarget)
     {
-        leftHandIK.localPosition = leftHandTarget.localPosition;
-        leftHandIK.localRotation = leftHandTarget.localRotation;
+        if (enemyRange != null)
+        {
+            leftHandIK.localPosition = leftHandTarget.localPosition;
+            leftHandIK.localRotation = leftHandTarget.localRotation;
 
-        leftElbowIK.localPosition = leftElbowTarget.localPosition;
-        leftElbowIK.localRotation = leftElbowTarget.localRotation;
+            leftElbowIK.localPosition = leftElbowTarget.localPosition;
+            leftElbowIK.localRotation = leftElbowTarget.localRotation;
+        }
     }
 
     private float AdjustIKWeight(float currentWeight, float targetWeight)
@@ -223,4 +244,5 @@ public class Enemy_Visual : MonoBehaviour
         else
             return targetWeight;
     }
+    #endregion
 }
