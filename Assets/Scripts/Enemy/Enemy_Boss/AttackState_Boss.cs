@@ -14,7 +14,7 @@ public class AttackState_Boss : EnemyState
     {
         base.Enter();
 
-        enemy.anim.SetFloat("AttackIndex", Random.Range(0, 2));
+        enemy.anim.SetFloat("AttackIndex", Random.Range(0, enemy.attackAnimationCount));
         enemy.agent.isStopped = true;
 
         stateTimer = 1f;

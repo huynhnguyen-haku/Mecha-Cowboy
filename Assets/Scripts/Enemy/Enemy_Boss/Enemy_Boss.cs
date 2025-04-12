@@ -8,6 +8,7 @@ public class Enemy_Boss : Enemy
     public BossWeaponType weaponType;
     public float attackRange;
     public float actionCooldown = 10;
+    public int attackAnimationCount;
 
     [Header("Jump Attack")]
     public float impactRadius = 2.5f;

@@ -12833,14 +12833,17 @@ MonoBehaviour:
   - {fileID: 6629212743520173280}
   - {fileID: 4581388236128486269}
   - {fileID: 9160915024482067295}
+  weaponType: 0
   attackRange: 1.5
   actionCooldown: 2
+  attackAnimationCount: 2
   impactRadius: 2.5
   impactPower: 10
   upwardsMulti: 10
   travelTimeToTarget: 1
   jumpAttackCooldown: 5
   minJumpDistanceRequired: 4
+  impactPoint: {fileID: 0}
   flamethrowDuration: 5
   abilityCooldown: 10
   flamethrower: {fileID: 4004212250159170218}
@@ -12859,6 +12862,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 301bc5c44e9199346a87f40869d40530, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  landingOffset: 1
   landingZoneFX: {fileID: 7312726434302896671}
   weaponTrails:
   - {fileID: 3466997706018323579}
