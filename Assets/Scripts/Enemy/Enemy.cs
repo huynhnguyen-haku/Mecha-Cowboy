@@ -5,7 +5,7 @@ using UnityEngine.AI;
 [RequireComponent(typeof(NavMeshAgent))]
 public class Enemy : MonoBehaviour
 {
-    [SerializeField] protected int healthPoint = 15;
+    public int healthPoint = 15;
 
     [Header("Idle Info")]
     public float idleTime;
@@ -84,7 +84,6 @@ public class Enemy : MonoBehaviour
 
     public virtual void GetHit()
     {
-        healthPoint--;
         EnterBattleMode();
     }
     public virtual void DeathImpact(Vector3 force, Vector3 hitpoint, Rigidbody rb)

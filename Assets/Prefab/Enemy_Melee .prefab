@@ -2664,14 +2664,15 @@ MonoBehaviour:
   healthPoint: 30
   idleTime: 2
   arrgresssionRange: 3
-  moveSpeed: 1.5
+  walkSpeed: 1.5
+  runSpeed: 4
   turnSpeed: 4
-  chaseSpeed: 5
   patrolPoints:
   - {fileID: 6254619318467831264}
   - {fileID: 3511077392035562651}
   - {fileID: 5441700921684676703}
-  meleeType: 0
+  meleeType: 3
+  weaponType: 0
   shieldTransform: {fileID: 511613782695665271}
   dodgeCooldown: 1
   attackData:
@@ -2746,17 +2747,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bcf27ce4bf7daaf479a0e16e6f685966, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentWeaponModel: {fileID: 0}
+  grenadeModel: {fileID: 0}
   colorTexures:
   - {fileID: 2800000, guid: c944cd58b9873d540a0bc6fb1b8110dc, type: 3}
   - {fileID: 2800000, guid: d5eba235daefff540b7c8a85e5ba5ccc, type: 3}
   - {fileID: 2800000, guid: de07db931654476479b783a442ad7ebe, type: 3}
   - {fileID: 2800000, guid: d1c86919d2118904d96bb4be63507f08, type: 3}
   skinnedMeshRenderers: {fileID: 7672328991946770946}
-  weaponModels: []
-  weaponType: 0
-  currentWeaponModel: {fileID: 0}
   crystals: []
   crystalAmount: 5
+  leftHandIK: {fileID: 0}
+  leftElbowIK: {fileID: 0}
+  leftHandIKConstraint: {fileID: 0}
+  weaponAimConstraint: {fileID: 0}
 --- !u!1 &2846495586491016750
 GameObject:
   m_ObjectHideFlags: 0

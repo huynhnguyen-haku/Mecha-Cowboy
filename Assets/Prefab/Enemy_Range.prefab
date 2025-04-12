@@ -1167,12 +1167,12 @@ MonoBehaviour:
   explosionTimer: 0.75
   timeToTarget: 1.2
   impactPower: 5
-  grenadeCooldown: 2
+  grenadeCooldown: 10
   grenadeStartPoint: {fileID: 4924998967319633075}
   safeDistance: 2
   coverTime: 4
   attackDelay: 1
-  weaponType: 4
+  weaponType: 3
   weaponData: {fileID: 0}
   gunPoint: {fileID: 2209498877247101513}
   weaponHolder: {fileID: 4126980879494675410}
