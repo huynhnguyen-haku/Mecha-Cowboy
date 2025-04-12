@@ -12839,14 +12839,16 @@ MonoBehaviour:
   attackAnimationCount: 2
   impactRadius: 2.5
   impactPower: 10
-  upwardsMulti: 10
+  impactPoint: {fileID: 0}
   travelTimeToTarget: 1
   jumpAttackCooldown: 5
+  upwardsMulti: 10
   minJumpDistanceRequired: 4
-  impactPoint: {fileID: 0}
+  minAbilityDistance: 8
+  abilityCooldown: 5
   flamethrowDuration: 5
-  abilityCooldown: 10
   flamethrower: {fileID: 4004212250159170218}
+  activationPrefab: {fileID: 0}
   whatToIgnore:
     serializedVersion: 2
     m_Bits: 2048

@@ -1,9 +1,8 @@
 using UnityEngine;
 
-public enum BossWeaponType { Fist, Hammer}
+public enum BossWeaponType { Flamethrower, Hammer}
 public class Enemy_Boss : Enemy
 {
-
     [Header("Boss Detail")]
     public BossWeaponType weaponType;
     public float attackRange;
@@ -13,21 +12,28 @@ public class Enemy_Boss : Enemy
     [Header("Jump Attack")]
     public float impactRadius = 2.5f;
     public float impactPower = 10;
-    [SerializeField] private float upwardsMulti = 10;
-    [Space]
-    public float travelTimeToTarget = 1;
-    public float jumpAttackCooldown = 10;
-    private float lastTimeJump;
-    public float minJumpDistanceRequired;
     public Transform impactPoint;
 
+    [Space]
+
+    public float travelTimeToTarget = 1;
+    public float jumpAttackCooldown = 10;
+    [SerializeField] private float upwardsMulti = 10;
+    private float lastTimeJump;
+    public float minJumpDistanceRequired;
+
     [Header("Abilities")]
+    public float minAbilityDistance;
+    public float abilityCooldown;
+    private float lastTimeAbility;
+
+    [Header("Flamethrower")]
     public float flamethrowDuration;
-    public float abilityCooldown;   
-    private float lastTimeAbility;  
     public ParticleSystem flamethrower;
     public bool flamethrowerActive { get; private set; }
 
+    [Header("Hammer")]
+    public GameObject activationPrefab;
 
     public IdleState_Boss idleState { get; private set; }
     public MoveState_Boss moveState { get; private set; }
@@ -41,7 +47,7 @@ public class Enemy_Boss : Enemy
 
     [SerializeField] private LayerMask whatToIgnore;
 
-
+    #region Unity Methods
     protected override void Awake()
     {
         base.Awake();
@@ -70,11 +76,24 @@ public class Enemy_Boss : Enemy
             EnterBattleMode();
         }
     }
-    public bool PlayerInAttackRange()
-    {
-        return Vector3.Distance(transform.position, player.position) < attackRange;
-    }
 
+    protected override void OnDrawGizmos()
+    {
+        base.OnDrawGizmos();
+        Gizmos.DrawWireSphere(transform.position, attackRange);
+
+        Gizmos.color = Color.white;
+        Gizmos.DrawWireSphere(transform.position, minJumpDistanceRequired);
+
+        Gizmos.color = Color.green;
+        Gizmos.DrawWireSphere(transform.position, impactRadius);
+
+        Gizmos.color = Color.blue;
+        Gizmos.DrawWireSphere(transform.position, minAbilityDistance);
+    }
+    #endregion
+
+    #region Battle Mode Methods
     public override void EnterBattleMode()
     {
         if (inBattleMode)
@@ -83,6 +102,27 @@ public class Enemy_Boss : Enemy
         stateMachine.ChangeState(moveState);
     }
 
+    public bool PlayerInAttackRange()
+    {
+        return Vector3.Distance(transform.position, player.position) < attackRange;
+    }
+
+    public bool IsPlayerInClearSight()
+    {
+        Vector3 myPosition = transform.position + new Vector3(0, 1.5f, 0);
+        Vector3 playerPosition = player.position + Vector3.up;
+        Vector3 directionToPlayer = (playerPosition - myPosition).normalized;
+
+        if (Physics.Raycast(myPosition, directionToPlayer, out RaycastHit hit, 100, ~whatToIgnore))
+        {
+            if (hit.transform == player || hit.transform.parent == player)
+                return true;
+        }
+        return false;
+    }
+    #endregion
+
+    #region Attack Methods
     public void ActivateFlamethrower(bool activate)
     {
         flamethrowerActive = activate;
@@ -102,6 +142,12 @@ public class Enemy_Boss : Enemy
 
         flamethrower.Clear();
         flamethrower.Play();
+    }
+
+    public void ActivateHammer()
+    {
+        GameObject newActivation = ObjectPool.instance.GetObject(activationPrefab, impactPoint);
+        ObjectPool.instance.ReturnObject(newActivation, 1);
     }
 
     public bool CanDoJumpAttack()
@@ -139,7 +185,12 @@ public class Enemy_Boss : Enemy
 
     public bool CanDoAbility()
     {
-        if (Time.time > lastTimeAbility + abilityCooldown /*&& IsPlayerInClearSight()*/)
+        bool playerWithinDistance = Vector3.Distance(transform.position, player.position) < minAbilityDistance;
+
+        if (playerWithinDistance == false)
+            return false;
+
+        if (Time.time > lastTimeAbility + abilityCooldown && playerWithinDistance)
         {
             return true;
         }
@@ -148,21 +199,9 @@ public class Enemy_Boss : Enemy
 
     public void SetAbilityOnCooldown() => lastTimeAbility = Time.time;
     public void SetJumpAttackOnCooldown() => lastTimeJump = Time.time;
+    #endregion
 
-    public bool IsPlayerInClearSight()
-    {
-        Vector3 myPosition = transform.position + new Vector3(0, 1.5f, 0);
-        Vector3 playerPosition = player.position + Vector3.up;
-        Vector3 directionToPlayer = (playerPosition - myPosition).normalized;
-
-        if (Physics.Raycast(myPosition, directionToPlayer, out RaycastHit hit, 100, ~whatToIgnore))
-        {
-            if (hit.transform == player || hit.transform.parent == player)
-                return true;
-        }
-        return false;
-    }
-
+    #region Damage Methods
     public override void GetHit()
     {
         base.GetHit();
@@ -171,25 +210,5 @@ public class Enemy_Boss : Enemy
             stateMachine.ChangeState(deadState);
         }
     }
-
-    protected override void OnDrawGizmos()
-    {
-        base.OnDrawGizmos();
-        Gizmos.DrawWireSphere(transform.position, attackRange);
-
-        if (player != null)
-        {
-            Vector3 myPosition = transform.position + new Vector3(0, 1.5f, 0);
-            Vector3 playerPosition = player.position + Vector3.up;
-
-            Gizmos.color = Color.blue;
-            Gizmos.DrawLine(myPosition, playerPosition);
-        }
-
-        Gizmos.color = Color.white;
-        Gizmos.DrawWireSphere(transform.position, minJumpDistanceRequired);
-
-        Gizmos.color = Color.green;
-        Gizmos.DrawWireSphere(transform.position, impactRadius);
-    }
+    #endregion
 }
