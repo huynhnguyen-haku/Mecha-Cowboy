@@ -33,7 +33,7 @@ public class Enemy : MonoBehaviour
     public NavMeshAgent agent { get; private set; }
     public EnemyStateMachine stateMachine { get; private set; }
     public Enemy_Visual visual { get; private set; }
-    public Enemy_Ragdoll ragdoll { get; private set; }
+    public Ragdoll ragdoll { get; private set; }
     public Enemy_Health health { get; private set; }
 
 
@@ -41,7 +41,7 @@ public class Enemy : MonoBehaviour
     {
         stateMachine = new EnemyStateMachine();
         health = GetComponent<Enemy_Health>();
-        ragdoll = GetComponent<Enemy_Ragdoll>();
+        ragdoll = GetComponent<Ragdoll>();
         visual = GetComponent<Enemy_Visual>();
         agent = GetComponent<NavMeshAgent>();
         anim = GetComponentInChildren<Animator>();
