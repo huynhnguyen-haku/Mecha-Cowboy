@@ -98,10 +98,10 @@ public class Enemy_Range : Enemy
         stateMachine.currentState.Update();
     }
 
-    public override void GetHit()
+    public override void Die()
     {
-        base.GetHit();
-        if (healthPoint <= 0 && stateMachine.currentState != deadState)
+        base.Die();
+        if (stateMachine.currentState != deadState)
         {
             stateMachine.ChangeState(deadState);
         }
