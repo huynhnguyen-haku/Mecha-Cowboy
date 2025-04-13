@@ -19,7 +19,6 @@ public enum EnemyMelee_Type { Regular, Shield, Dodge, AxeThrow }
 
 public class Enemy_Melee : Enemy
 {
-
     #region States
     public IdleState_Melee idleState { get; private set; }
     public MoveState_Melee moveState { get; private set; }
@@ -30,10 +29,10 @@ public class Enemy_Melee : Enemy
     public AbilityState_Melee abilityState { get; private set; }
     #endregion
 
+    #region Fields
     [Header("Enemy Setting")]
     public EnemyMelee_Type meleeType;
     public Enemy_MeleeWeaponType weaponType;
-
 
     public Transform shieldTransform;
     public float dodgeCooldown;
@@ -42,6 +41,8 @@ public class Enemy_Melee : Enemy
     [Header("Attack Data")]
     public AttackData_EnemyMelee attackData;
     public List<AttackData_EnemyMelee> attackList;
+    private Enemy_WeaponModel currentWeapon;
+    private bool isAttackReady;
 
     [Header("Special Attack")]
     public GameObject axePrefab;
@@ -50,8 +51,11 @@ public class Enemy_Melee : Enemy
     public float axeThrowCooldown;
     private float lastAxeThrowTime;
     public Transform axeStartPoint;
+    [Space]
+    [SerializeField] private GameObject meleeAttackFX;
+    #endregion
 
-
+    #region Unity Methods
     protected override void Awake()
     {
         base.Awake();
@@ -66,6 +70,7 @@ public class Enemy_Melee : Enemy
 
         lastDodgeTime = Time.realtimeSinceStartup;
     }
+
     protected override void Start()
     {
         base.Start();
@@ -75,12 +80,25 @@ public class Enemy_Melee : Enemy
         visual.SetupVisual();
         UpdateAttackData();
     }
+
     protected override void Update()
     {
         base.Update();
         stateMachine.currentState.Update();
+
+        AttackCheck();
     }
 
+    protected override void OnDrawGizmos()
+    {
+        base.OnDrawGizmos();
+
+        Gizmos.color = Color.blue;
+        Gizmos.DrawWireSphere(transform.position, attackData.attackRange);
+    }
+    #endregion
+
+    #region State Methods
     public override void EnterBattleMode()
     {
         if (inBattleMode)
@@ -89,67 +107,12 @@ public class Enemy_Melee : Enemy
         base.EnterBattleMode();
         stateMachine.ChangeState(recoveryState);
     }
+
     public override void AbilityTrigger()
     {
         base.AbilityTrigger();
         walkSpeed = walkSpeed * 0.5f;
         visual.EnableWeaponModel(false);
-    }
-
-
-    protected override void InitializePerk()
-    {
-        if (meleeType == EnemyMelee_Type.AxeThrow)
-        {
-            weaponType = Enemy_MeleeWeaponType.Throw;
-        }
-
-        else if (meleeType == EnemyMelee_Type.Shield)
-        {
-            anim.SetFloat("ChaseIndex", 1);
-            shieldTransform.gameObject.SetActive(true);
-            weaponType = Enemy_MeleeWeaponType.OneHand;
-        }
-
-        else if (meleeType == EnemyMelee_Type.Dodge)
-        {
-            weaponType = Enemy_MeleeWeaponType.Unarmed;
-        }
-
-        else if (meleeType == EnemyMelee_Type.Regular)
-        {
-            weaponType = Enemy_MeleeWeaponType.OneHand;
-        }
-    }
-    public void UpdateAttackData()
-    {
-        Enemy_WeaponModel currentWeapon = visual.currentWeaponModel.GetComponent<Enemy_WeaponModel>();
-        if (currentWeapon != null && meleeType != EnemyMelee_Type.AxeThrow) // Added check for enemy thrwong axe
-        {
-            attackList = new List<AttackData_EnemyMelee>(currentWeapon.weaponData.attackData);
-            turnSpeed = currentWeapon.weaponData.turnSpeed;
-        }
-    }
-
-    public void ActivateDodgeRoll()
-    {
-        // Only dodge roll if the player is outside of attack range
-        if (Vector3.Distance(transform.position, player.position) < attackData.attackRange)
-            return;
-
-        // Only dodge roll if the enemy is a dodge type
-        if (meleeType != EnemyMelee_Type.Dodge)
-            return;
-
-        // Only dodge roll during chase state
-        if (stateMachine.currentState != chaseState)
-            return;
-
-        if (Time.time > lastDodgeTime + dodgeCooldown)
-        {
-            lastDodgeTime = Time.time;
-            anim.SetTrigger("Dodge");
-        }
     }
 
     public override void Die()
@@ -158,6 +121,52 @@ public class Enemy_Melee : Enemy
         if (stateMachine.currentState != deadState)
         {
             stateMachine.ChangeState(deadState);
+        }
+    }
+    #endregion
+
+    #region Attack Methods
+
+    public void AttackCheck()
+    {
+        if (isAttackReady == false)
+            return;
+
+        foreach (Transform attackPoint in currentWeapon.damagePoints)
+        {
+            Collider[] detectedHits = 
+                Physics.OverlapSphere(attackPoint.position, currentWeapon.attackRadius, whatIsPlayer);
+
+            for (int i = 0; i < detectedHits.Length; i++)
+            {
+                I_Damagable damagable = detectedHits[i].GetComponent<I_Damagable>();
+
+                if (damagable != null)
+                {
+                    damagable.TakeDamage();
+                    isAttackReady = false;
+                    GameObject newAttackFX = ObjectPool.instance.GetObject(meleeAttackFX, attackPoint);
+
+                    ObjectPool.instance.ReturnObject(newAttackFX, 1);
+                    return;
+                }
+            }
+        }
+    }
+
+    public void EnableAttackCheck(bool enable)
+    {
+        isAttackReady = enable;
+    }
+
+    public void UpdateAttackData()
+    {
+        currentWeapon = visual.currentWeaponModel.GetComponent<Enemy_WeaponModel>();
+
+        if (currentWeapon.weaponData != null)
+        {
+            attackList = new List<AttackData_EnemyMelee>(currentWeapon.weaponData.attackData);
+            turnSpeed = currentWeapon.weaponData.turnSpeed;
         }
     }
 
@@ -180,16 +189,58 @@ public class Enemy_Melee : Enemy
 
         return false;
     }
+
     public bool PlayerInAttackRange()
     {
         return Vector3.Distance(transform.position, player.position) < attackData.attackRange;
     }
 
-    protected override void OnDrawGizmos()
-    {
-        base.OnDrawGizmos();
+    #endregion
 
-        Gizmos.color = Color.blue;
-        Gizmos.DrawWireSphere(transform.position, attackData.attackRange);
+    #region Ability Methods
+    public void ActivateDodgeRoll()
+    {
+        // Only dodge roll if the player is outside of attack range
+        if (Vector3.Distance(transform.position, player.position) < attackData.attackRange)
+            return;
+
+        // Only dodge roll if the enemy is a dodge type
+        if (meleeType != EnemyMelee_Type.Dodge)
+            return;
+
+        // Only dodge roll during chase state
+        if (stateMachine.currentState != chaseState)
+            return;
+
+        if (Time.time > lastDodgeTime + dodgeCooldown)
+        {
+            lastDodgeTime = Time.time;
+            anim.SetTrigger("Dodge");
+        }
     }
+    #endregion
+
+    #region Initialization Methods
+    protected override void InitializePerk()
+    {
+        if (meleeType == EnemyMelee_Type.AxeThrow)
+        {
+            weaponType = Enemy_MeleeWeaponType.Throw;
+        }
+        else if (meleeType == EnemyMelee_Type.Shield)
+        {
+            anim.SetFloat("ChaseIndex", 1);
+            shieldTransform.gameObject.SetActive(true);
+            weaponType = Enemy_MeleeWeaponType.OneHand;
+        }
+        else if (meleeType == EnemyMelee_Type.Dodge)
+        {
+            weaponType = Enemy_MeleeWeaponType.Unarmed;
+        }
+        else if (meleeType == EnemyMelee_Type.Regular)
+        {
+            weaponType = Enemy_MeleeWeaponType.OneHand;
+        }
+    }
+    #endregion
 }
