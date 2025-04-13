@@ -13,7 +13,7 @@ public class Bullet : MonoBehaviour
     private float currentLifeTime;
 
     private LayerMask allyLayerMask;
-
+    private bool hasCollided; // Flag to check if the bullet has already collided
 
     protected void Awake()
     {
@@ -25,6 +25,7 @@ public class Bullet : MonoBehaviour
     private void OnEnable()
     {
         currentLifeTime = bulletLifeTime;
+        hasCollided = false; // Reset the flag when the bullet is enabled
     }
 
     protected virtual void Update()
@@ -47,6 +48,9 @@ public class Bullet : MonoBehaviour
 
     protected virtual void OnCollisionEnter(Collision collision)
     {
+        if (hasCollided) return; // If the bullet has already collided, do nothing
+
+        hasCollided = true; // Set the flag to true to prevent further collisions
 
         if (FriendlyFire() == false)
         {
@@ -60,7 +64,7 @@ public class Bullet : MonoBehaviour
         CreateImpactFX();
         ReturnBulletToPool();
 
-        I_Damagable damagable = collision.gameObject.GetComponent<I_Damagable>();
+        I_Damagable damagable = collision.gameObject.GetComponentInChildren<I_Damagable>(); // Check for damageable component (even in children)
         damagable?.TakeDamage();
 
         Enemy_Shield shield = collision.gameObject.GetComponent<Enemy_Shield>();

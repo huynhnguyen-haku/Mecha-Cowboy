@@ -320,8 +320,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea6a5d16d4f92584c9b6ecd04a43b6f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 20
+  maxHealth: 10
   currentHealth: 0
+  isDead: 0
 --- !u!114 &22133712
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -475,6 +476,83 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 50607552}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1001 &97202252
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2383584909498837373, guid: 91d63b89049e4204087ee058ce17baaf, type: 3}
+      propertyPath: maxHealth
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 3438887253424489838, guid: 91d63b89049e4204087ee058ce17baaf, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 4.64
+      objectReference: {fileID: 0}
+    - target: {fileID: 3438887253424489838, guid: 91d63b89049e4204087ee058ce17baaf, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.00000047683716
+      objectReference: {fileID: 0}
+    - target: {fileID: 3438887253424489838, guid: 91d63b89049e4204087ee058ce17baaf, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -7.21
+      objectReference: {fileID: 0}
+    - target: {fileID: 3438887253424489838, guid: 91d63b89049e4204087ee058ce17baaf, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3438887253424489838, guid: 91d63b89049e4204087ee058ce17baaf, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3438887253424489838, guid: 91d63b89049e4204087ee058ce17baaf, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3438887253424489838, guid: 91d63b89049e4204087ee058ce17baaf, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3438887253424489838, guid: 91d63b89049e4204087ee058ce17baaf, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3438887253424489838, guid: 91d63b89049e4204087ee058ce17baaf, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3438887253424489838, guid: 91d63b89049e4204087ee058ce17baaf, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6509163712645123849, guid: 91d63b89049e4204087ee058ce17baaf, type: 3}
+      propertyPath: coverPerk
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6509163712645123849, guid: 91d63b89049e4204087ee058ce17baaf, type: 3}
+      propertyPath: weaponType
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6509163712645123849, guid: 91d63b89049e4204087ee058ce17baaf, type: 3}
+      propertyPath: grenadePerk
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6509163712645123849, guid: 91d63b89049e4204087ee058ce17baaf, type: 3}
+      propertyPath: unstoppablePerk
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8468676910417932253, guid: 91d63b89049e4204087ee058ce17baaf, type: 3}
+      propertyPath: m_Name
+      value: Enemy_Range
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 91d63b89049e4204087ee058ce17baaf, type: 3}
 --- !u!1 &108741032
 GameObject:
   m_ObjectHideFlags: 0
@@ -13669,8 +13747,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.19580097, y: 0.28183287, z: 0.11466945}
-  m_Center: {x: -0.0010075192, y: 0.14091642, z: 0.019207371}
+  m_Size: {x: 0.19580097, y: 0.28183287, z: 0.14613935}
+  m_Center: {x: -0.0010077426, y: 0.14091642, z: 0.0034724488}
 --- !u!114 &6914001720137865951
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15686,3 +15764,4 @@ SceneRoots:
   - {fileID: 1531225226}
   - {fileID: 497049308}
   - {fileID: 1179386907}
+  - {fileID: 97202252}

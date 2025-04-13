@@ -85,11 +85,11 @@ public class Enemy : MonoBehaviour
     public virtual void GetHit()
     {
         EnterBattleMode();
+        health.ReduceHealth();
         if (health.ShouldDie())
         {
             Die();
         }
-        health.ReduceHealth();
     }
 
     public virtual void Die()

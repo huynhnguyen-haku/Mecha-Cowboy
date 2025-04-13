@@ -35,6 +35,8 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
+        if (player.health.isDead)
+            return;
         ApplyMovement();
         ApplyRotation();
         AnimatorControllers();
