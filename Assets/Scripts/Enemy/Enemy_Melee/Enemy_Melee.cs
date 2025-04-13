@@ -51,7 +51,6 @@ public class Enemy_Melee : Enemy
     private float lastAxeThrowTime;
     public Transform axeStartPoint;
 
-    //--------------------------------------------------------------------------------
 
     protected override void Awake()
     {
@@ -81,8 +80,6 @@ public class Enemy_Melee : Enemy
         base.Update();
         stateMachine.currentState.Update();
     }
-
-
 
     public override void EnterBattleMode()
     {
@@ -127,7 +124,7 @@ public class Enemy_Melee : Enemy
     public void UpdateAttackData()
     {
         Enemy_WeaponModel currentWeapon = visual.currentWeaponModel.GetComponent<Enemy_WeaponModel>();
-        if (currentWeapon != null)
+        if (currentWeapon != null && meleeType != EnemyMelee_Type.AxeThrow) // Added check for enemy thrwong axe
         {
             attackList = new List<AttackData_EnemyMelee>(currentWeapon.weaponData.attackData);
             turnSpeed = currentWeapon.weaponData.turnSpeed;
@@ -154,10 +151,11 @@ public class Enemy_Melee : Enemy
             anim.SetTrigger("Dodge");
         }
     }
-    public override void GetHit()
+
+    public override void Die()
     {
-        base.GetHit();
-        if (healthPoint <= 0 && stateMachine.currentState != deadState)
+        base.Die();
+        if (stateMachine.currentState != deadState)
         {
             stateMachine.ChangeState(deadState);
         }
