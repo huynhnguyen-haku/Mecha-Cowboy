@@ -13,7 +13,7 @@ public class Bullet : MonoBehaviour
     private float currentLifeTime;
 
     private LayerMask allyLayerMask;
-    private bool hasCollided; // Flag to check if the bullet has already collided
+    private bool canCollide; // Flag to check if the bullet has already collided
 
     protected void Awake()
     {
@@ -25,7 +25,6 @@ public class Bullet : MonoBehaviour
     private void OnEnable()
     {
         currentLifeTime = bulletLifeTime;
-        hasCollided = false; // Reset the flag when the bullet is enabled
     }
 
     protected virtual void Update()
@@ -44,13 +43,14 @@ public class Bullet : MonoBehaviour
 
         boxCollider.enabled = true;
         bulletTrail.Clear();
+        canCollide = true; // Reset the flag when the bullet is setup
     }
 
     protected virtual void OnCollisionEnter(Collision collision)
     {
-        if (hasCollided) return; // If the bullet has already collided, do nothing
+        if (!canCollide) return; // If the bullet has already collided, do nothing
 
-        hasCollided = true; // Set the flag to true to prevent further collisions
+        canCollide = false; // Set the flag to false to prevent further collisions
 
         if (FriendlyFire() == false)
         {

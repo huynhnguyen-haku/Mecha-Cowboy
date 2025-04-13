@@ -320,7 +320,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea6a5d16d4f92584c9b6ecd04a43b6f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 10
+  maxHealth: 20
   currentHealth: 0
   isDead: 0
 --- !u!114 &22133712
@@ -484,10 +484,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 2383584909498837373, guid: 91d63b89049e4204087ee058ce17baaf, type: 3}
-      propertyPath: maxHealth
-      value: 10
-      objectReference: {fileID: 0}
     - target: {fileID: 3438887253424489838, guid: 91d63b89049e4204087ee058ce17baaf, type: 3}
       propertyPath: m_LocalPosition.x
       value: 4.64
@@ -529,20 +525,12 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6509163712645123849, guid: 91d63b89049e4204087ee058ce17baaf, type: 3}
-      propertyPath: coverPerk
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6509163712645123849, guid: 91d63b89049e4204087ee058ce17baaf, type: 3}
-      propertyPath: weaponType
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 6509163712645123849, guid: 91d63b89049e4204087ee058ce17baaf, type: 3}
       propertyPath: grenadePerk
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6509163712645123849, guid: 91d63b89049e4204087ee058ce17baaf, type: 3}
-      propertyPath: unstoppablePerk
-      value: 0
+      propertyPath: grenadeCooldown
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 8468676910417932253, guid: 91d63b89049e4204087ee058ce17baaf, type: 3}
       propertyPath: m_Name
