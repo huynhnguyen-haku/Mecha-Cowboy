@@ -1605,8 +1605,8 @@ MonoBehaviour:
   - {fileID: 5472808145348874993}
   - {fileID: 2231264617785665452}
   - {fileID: 1426515306892000143}
-  meleeType: 0
-  weaponType: 0
+  meleeType: 2
+  weaponType: 2
   shieldTransform: {fileID: 3273775928577735614}
   dodgeCooldown: 1
   attackData:
@@ -6442,7 +6442,7 @@ TrailRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: b8f81f2c174c4634a965ffe34a4f6bb4, type: 2}
+  - {fileID: 2100000, guid: 2a6d4ff60294e87468f054bdcfb1f196, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
