@@ -91284,14 +91284,14 @@ AnimationClip:
     intParameter: 0
     messageOptions: 0
   - time: 1.5333333
-    functionName: AbilityEvent
+    functionName: StopManualRotation
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
-  - time: 1.5333333
-    functionName: StopManualRotation
+  - time: 1.6
+    functionName: AbilityEvent
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0

@@ -130,7 +130,7 @@ public class Enemy_Visual : MonoBehaviour
         Animator animator = GetComponentInChildren<Animator>();
 
         // Turn off all layers
-        for (int i = 0; i < animator.layerCount; i++)
+        for (int i = 1; i < animator.layerCount; i++)
         {
             animator.SetLayerWeight(i, 0);
         }
