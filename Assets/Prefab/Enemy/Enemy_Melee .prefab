@@ -3194,7 +3194,6 @@ GameObject:
   - component: {fileID: 8867893792761248864}
   - component: {fileID: 7172232413165441671}
   - component: {fileID: 4761774347350332244}
-  - component: {fileID: 2185702202043139381}
   - component: {fileID: 7073094417249778183}
   m_Layer: 11
   m_Name: Shield
@@ -3319,18 +3318,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &2185702202043139381
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3789501052528125852}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 854ec8d1f55af194594e752f4821a669, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &7073094417249778183
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3343,7 +3330,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5ad0ca88c7f15f444966ef87f914ad78, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  durability: 20
+  durability: 50
 --- !u!1 &3872116909699087923
 GameObject:
   m_ObjectHideFlags: 0
@@ -4497,8 +4484,9 @@ MonoBehaviour:
   - {fileID: 3859099101072921467}
   - {fileID: 6344109147089464601}
   - {fileID: 7095630939752328653}
-  meleeType: 3
-  weaponType: 1
+  meleeType: 1
+  weaponType: 0
+  shieldDurability: 20
   shieldTransform: {fileID: 4674243420392903701}
   dodgeCooldown: 1
   attackData:
@@ -4524,7 +4512,7 @@ MonoBehaviour:
   axePrefab: {fileID: 4862397190595803901, guid: 9f2a7c1c5c8ea294a82c0903ee2dc7dd, type: 3}
   axeFlySpeed: 5
   axeAimTimer: 1
-  axeThrowCooldown: 0
+  axeThrowCooldown: 10
   axeStartPoint: {fileID: 5809861487531229921}
   meleeAttackFX: {fileID: 8073450575305726352, guid: 9458f7dd9d49a89448257faf7a8bc163, type: 3}
 --- !u!195 &3422458251683226034
@@ -4920,7 +4908,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &4935573402032342807
 Transform:
   m_ObjectHideFlags: 0
@@ -4960,7 +4948,7 @@ TrailRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 2a6d4ff60294e87468f054bdcfb1f196, type: 2}
+  - {fileID: 2100000, guid: b8f81f2c174c4634a965ffe34a4f6bb4, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
