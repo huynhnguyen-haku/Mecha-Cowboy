@@ -31,6 +31,7 @@ public class Enemy : MonoBehaviour
 
     private int currentPatrolIndex;
     public bool inBattleMode { get; private set; }
+    protected bool isMeleeAttackReady;
 
     public Transform player { get; private set; }
     public Animator anim { get; private set; }
@@ -96,6 +97,40 @@ public class Enemy : MonoBehaviour
         }
     }
 
+
+    public virtual void MeleeAttackCheck(Transform[] damagePoints, float attackCheckRadius, GameObject FX)
+    {
+        if (isMeleeAttackReady == false)
+            return;
+
+        foreach (Transform damagePoint in damagePoints)
+        {
+            Collider[] detectedHits =
+                Physics.OverlapSphere(damagePoint.position, attackCheckRadius, whatIsPlayer);
+
+
+                for (int i = 0; i < detectedHits.Length; i++)
+            {
+                I_Damagable damagable = detectedHits[i].GetComponent<I_Damagable>();
+
+                if (damagable != null)
+                {
+                    damagable.TakeDamage();
+                    isMeleeAttackReady = false;
+                    GameObject newAttackFX = ObjectPool.instance.GetObject(FX, damagePoint);
+
+                    ObjectPool.instance.ReturnObject(newAttackFX, 1);
+                    return;
+                }
+            }
+        }
+    }
+
+    public void EnableMeleeAttack(bool enable)
+    {
+        isMeleeAttackReady = enable;
+    }
+
     public virtual void Die()
     {
 
@@ -121,6 +156,7 @@ public class Enemy : MonoBehaviour
     {
         stateMachine.currentState.AbilityTrigger();
     }
+
     public void FaceTarget(Vector3 target, float turnSpeed = 0)
     {
         Quaternion targetRotation = Quaternion.LookRotation(target - transform.position);

@@ -10,7 +10,7 @@ public class Enemy_WeaponModel : MonoBehaviour
 
     [Header("Damage Attributes")]
     public Transform[] damagePoints;
-    public float attackRadius;
+    public float attackCheckRadius;
 
     [ContextMenu("Assign Damage Points")]
     private void GetDamagePoints()
@@ -37,7 +37,7 @@ public class Enemy_WeaponModel : MonoBehaviour
             foreach (Transform point in damagePoints)
             {
                 Gizmos.color = Color.red;
-                Gizmos.DrawWireSphere(point.position, attackRadius);
+                Gizmos.DrawWireSphere(point.position, attackCheckRadius);
             }
         }
     }

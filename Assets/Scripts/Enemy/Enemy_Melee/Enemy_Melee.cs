@@ -90,7 +90,7 @@ public class Enemy_Melee : Enemy
         base.Update();
         stateMachine.currentState.Update();
 
-        AttackCheck();
+        MeleeAttackCheck(currentWeapon.damagePoints, currentWeapon.attackCheckRadius, meleeAttackFX);
     }
 
     protected override void OnDrawGizmos()
@@ -131,37 +131,7 @@ public class Enemy_Melee : Enemy
 
     #region Attack Methods
 
-    public void AttackCheck()
-    {
-        if (isAttackReady == false)
-            return;
 
-        foreach (Transform attackPoint in currentWeapon.damagePoints)
-        {
-            Collider[] detectedHits = 
-                Physics.OverlapSphere(attackPoint.position, currentWeapon.attackRadius, whatIsPlayer);
-
-            for (int i = 0; i < detectedHits.Length; i++)
-            {
-                I_Damagable damagable = detectedHits[i].GetComponent<I_Damagable>();
-
-                if (damagable != null)
-                {
-                    damagable.TakeDamage();
-                    isAttackReady = false;
-                    GameObject newAttackFX = ObjectPool.instance.GetObject(meleeAttackFX, attackPoint);
-
-                    ObjectPool.instance.ReturnObject(newAttackFX, 1);
-                    return;
-                }
-            }
-        }
-    }
-
-    public void EnableAttackCheck(bool enable)
-    {
-        isAttackReady = enable;
-    }
 
     public void UpdateAttackData()
     {

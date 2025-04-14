@@ -44,11 +44,11 @@ public class Enemy_AnimationEvents : MonoBehaviour
 
     public void BeginMeleeAttackCheck()
     {
-        melee?.EnableAttackCheck(true);
+        enemy?.EnableMeleeAttack(true);
     }
 
     public void FinishMeleeAttackCheck()
     {
-        melee?.EnableAttackCheck(false);
+        enemy?.EnableMeleeAttack(false);
     }
 }

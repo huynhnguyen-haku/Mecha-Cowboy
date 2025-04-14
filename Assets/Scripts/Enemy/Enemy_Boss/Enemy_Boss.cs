@@ -35,6 +35,12 @@ public class Enemy_Boss : Enemy
     [Header("Hammer")]
     public GameObject activationPrefab;
 
+    [Header("Attack")]
+    [SerializeField] private Transform[] damagePoints;
+    [SerializeField] private float attackCheckRadius;
+    [SerializeField] private GameObject meleeAttackFX;
+
+
     public IdleState_Boss idleState { get; private set; }
     public MoveState_Boss moveState { get; private set; }
     public AttackState_Boss attackState { get; private set; }
@@ -75,6 +81,8 @@ public class Enemy_Boss : Enemy
         {
             EnterBattleMode();
         }
+
+        MeleeAttackCheck(damagePoints, attackCheckRadius, meleeAttackFX);
     }
 
     protected override void OnDrawGizmos()
@@ -90,6 +98,16 @@ public class Enemy_Boss : Enemy
 
         Gizmos.color = Color.blue;
         Gizmos.DrawWireSphere(transform.position, minAbilityDistance);
+
+        Gizmos.color = Color.yellow;
+        if (damagePoints.Length > 0)
+        {
+
+            foreach (var damagePoint in damagePoints)
+            {
+                Gizmos.DrawWireSphere(damagePoint.position, attackCheckRadius);
+            }
+        }
     }
     #endregion
 
@@ -202,10 +220,11 @@ public class Enemy_Boss : Enemy
     #endregion
 
     #region Damage Methods
-    public override void GetHit()
+
+    public override void Die()
     {
-        base.GetHit();
-        if (healthPoint <= 0 && stateMachine.currentState != deadState)
+        base.Die();
+        if (stateMachine.currentState != deadState)
         {
             stateMachine.ChangeState(deadState);
         }
