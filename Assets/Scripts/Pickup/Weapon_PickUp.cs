@@ -53,6 +53,6 @@ public class Weapon_PickUp : Interactable
         Debug.Log("Picked up weapon: " + weaponData.weaponName);
         weaponController.PickupWeapon(weapon);
 
-        ObjectPool.instance.ReturnToPool(gameObject);
+        ObjectPool.instance.ReturnObject(gameObject);
     }
 }

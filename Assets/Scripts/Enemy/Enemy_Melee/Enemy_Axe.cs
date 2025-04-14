@@ -5,14 +5,13 @@ public class Enemy_Axe : MonoBehaviour
     [SerializeField] private GameObject impactFX;
     [SerializeField] private Rigidbody rb;
     [SerializeField] private Transform axeVisual;
-    private Transform player;
 
+    private Vector3 direction;
+    private Transform player;
     private float flySpeed;
     private float rotateSpeed;
-    private Vector3 direction;
 
     private float timer = 1;
-
 
     public void AxeSetup(float flySpeed, Transform player, float timer)
     {
@@ -22,6 +21,7 @@ public class Enemy_Axe : MonoBehaviour
         this.player = player;
         this.timer = timer;
     }
+
 
     private void Update()
     {
@@ -35,14 +35,19 @@ public class Enemy_Axe : MonoBehaviour
 
         rb.linearVelocity = direction.normalized * flySpeed;
         transform.forward = rb.linearVelocity;
+
+        if (gameObject.layer != LayerMask.NameToLayer("Enemy_Axe"))
+        {
+            gameObject.layer = LayerMask.NameToLayer("Enemy_Axe");
+        }
     }
 
-    private void OnTriggerEnter(Collider other)
-    {
-        Bullet bullet = other.GetComponent<Bullet>();
-        Player player = other.GetComponent<Player>();
 
-        if (bullet != null || player != null)
+    private void OnCollisionEnter(Collision other)
+    {
+        I_Damagable damagable = other.gameObject.GetComponent<I_Damagable>();
+
+        if (damagable != null)
         {
             GameObject newImpactFX = ObjectPool.instance.GetObject(impactFX, transform);
 
