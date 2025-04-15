@@ -14,13 +14,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weaponName: Hindenburg
   weaponType: 4
-  bulletDamage: 50
+  bulletDamage: 80
   shotType: 0
   bulletsPerShot: 1
   fireRate: 100
   bulletsInMagazine: 3
   magazineCapacity: 3
-  TotalReserveAmmo: 12
+  TotalReserveAmmo: 3
   reloadSpeed: 1
   equipSpeed: 1
   laserDistance: 8

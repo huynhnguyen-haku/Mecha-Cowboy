@@ -14,13 +14,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weaponName: Cowboy Bolt
   weaponType: 1
-  bulletDamage: 25
+  bulletDamage: 20
   shotType: 0
   bulletsPerShot: 1
-  fireRate: 200
+  fireRate: 150
   bulletsInMagazine: 6
   magazineCapacity: 6
-  TotalReserveAmmo: 24
+  TotalReserveAmmo: 30
   reloadSpeed: 2
   equipSpeed: 3
   laserDistance: 6

@@ -13,14 +13,14 @@ MonoBehaviour:
   m_Name: Enemy_Melee
   m_EditorClassIdentifier: 
   attackData:
-  - attackDamage: 25
+  - attackDamage: 20
     attackName: Spin Attack
     attackRange: 1.5
     moveSpeed: 3.5
     attackIndex: 0
     animationSpeed: 1.1
     attackType: 1
-  - attackDamage: 20
+  - attackDamage: 15
     attackName: Sword Slash
     attackRange: 1
     moveSpeed: 0

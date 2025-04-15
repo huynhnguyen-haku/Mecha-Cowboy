@@ -4930,7 +4930,6 @@ MonoBehaviour:
   whatIsPlayer:
     serializedVersion: 2
     m_Bits: 256
-  healthPoint: 20
   idleTime: 1.5
   arrgresssionRange: 5
   walkSpeed: 1
@@ -4939,12 +4938,13 @@ MonoBehaviour:
   patrolPoints:
   - {fileID: 8357150741987942660}
   - {fileID: 4311735259814070112}
-  coverPerk: 0
+  coverPerk: 2
   unstoppablePerk: 0
   grenadePerk: 1
   advanceSpeed: 3
   advanceStoppingDistance: 4
   advanceDuration: 2.5
+  grenadeDamage: 60
   grenadePrefab: {fileID: 8220927926543488239, guid: 6cc4996d50cc85c40bfb779139f76dfa, type: 3}
   explosionTimer: 0.75
   timeToTarget: 1.2
@@ -4954,7 +4954,7 @@ MonoBehaviour:
   safeDistance: 2
   coverTime: 4
   attackDelay: 1
-  weaponType: 2
+  weaponType: 3
   weaponData: {fileID: 0}
   gunPoint: {fileID: 4696151124864136131}
   weaponHolder: {fileID: 1675467191901798211}
@@ -4984,7 +4984,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c9dcaefae6c9584880f103e99fc6df4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 15
+  maxHealth: 120
   currentHealth: 0
 --- !u!1 &4893005789405341513
 GameObject:
