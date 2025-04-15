@@ -4484,12 +4484,13 @@ MonoBehaviour:
   - {fileID: 3859099101072921467}
   - {fileID: 6344109147089464601}
   - {fileID: 7095630939752328653}
-  meleeType: 1
-  weaponType: 0
+  meleeType: 2
+  weaponType: 2
   shieldDurability: 20
   shieldTransform: {fileID: 4674243420392903701}
   dodgeCooldown: 1
   attackData:
+    attackDamage: 0
     attackName: 
     attackRange: 1
     moveSpeed: 0
@@ -4497,18 +4498,21 @@ MonoBehaviour:
     animationSpeed: 1.4
     attackType: 0
   attackList:
-  - attackName: Spin Attack
+  - attackDamage: 25
+    attackName: Spin Attack
     attackRange: 1.5
     moveSpeed: 2.5
     attackIndex: 0
     animationSpeed: 1.1
     attackType: 1
-  - attackName: Sword Slash
+  - attackDamage: 20
+    attackName: Sword Slash
     attackRange: 1
     moveSpeed: 0
     attackIndex: 1
     animationSpeed: 1.5
     attackType: 0
+  axeDamage: 0
   axePrefab: {fileID: 4862397190595803901, guid: 9f2a7c1c5c8ea294a82c0903ee2dc7dd, type: 3}
   axeFlySpeed: 5
   axeAimTimer: 1

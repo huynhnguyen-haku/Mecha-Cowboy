@@ -4,6 +4,7 @@ public class Bullet : MonoBehaviour
 {
     [SerializeField] private GameObject bulletImpactFX;
 
+    private int bulletDamage;
     private float impactForce;
     private BoxCollider boxCollider;
     private Rigidbody rb;
@@ -36,11 +37,11 @@ public class Bullet : MonoBehaviour
         }
     }
 
-    public void BulletSetup(LayerMask allyLayerMask, float impactForce = 100)
+    public void BulletSetup(LayerMask allyLayerMask, int bulletDamage, float impactForce = 100)
     {
         this.allyLayerMask = allyLayerMask;
         this.impactForce = impactForce;
-
+        this.bulletDamage = bulletDamage;
         boxCollider.enabled = true;
         bulletTrail.Clear();
         canCollide = true; // Reset the flag when the bullet is setup
@@ -65,7 +66,7 @@ public class Bullet : MonoBehaviour
         ReturnBulletToPool();
 
         I_Damagable damagable = collision.gameObject.GetComponentInChildren<I_Damagable>(); // Check for damageable component (even in children)
-        damagable?.TakeDamage();
+        damagable?.TakeDamage(bulletDamage);
 
         ApplyBulletImpact(collision);
     }

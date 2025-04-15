@@ -14,11 +14,13 @@ public class Enemy_Axe : MonoBehaviour
     private float timer = 1; // Time the axe will change direction towards the player
     private float currentLifeTime = 10;
 
+    private int damage;
 
-    public void AxeSetup(float flySpeed, Transform player, float timer)
+    public void AxeSetup(float flySpeed, Transform player, float timer, int damage)
     {
         rotationSpeed = 1600;
 
+        this.damage = damage;
         this.flySpeed = flySpeed;
         this.player = player;
         this.timer = timer;
@@ -65,7 +67,7 @@ public class Enemy_Axe : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
         I_Damagable damagable = collision.gameObject.GetComponent<I_Damagable>();
-        damagable?.TakeDamage();
+        damagable?.TakeDamage(damage);
 
 
         GameObject newFx = ObjectPool.instance.GetObject(impactFx, transform);

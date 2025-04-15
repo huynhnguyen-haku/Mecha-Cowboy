@@ -160,7 +160,7 @@ public class WeaponController : MonoBehaviour
         bullet.transform.rotation = Quaternion.LookRotation(GunPoint().forward);
 
         Bullet bulletScript = bullet.GetComponent<Bullet>();
-        bulletScript.BulletSetup(whatIsAlly, bulletImpactForce);
+        bulletScript.BulletSetup(whatIsAlly, currentWeapon.bulletDamage, bulletImpactForce);
 
         Vector3 bulletsDirection = currentWeapon.ApplySpread(BullectDirection());
 

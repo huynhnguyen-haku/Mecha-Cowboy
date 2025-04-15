@@ -21,6 +21,8 @@ public class Weapon
 {
     public WeaponType weaponType;
 
+    public int bulletDamage;
+
     public Weapon_Data weaponData { get; private set; }
 
     #region Magazine Details
@@ -148,6 +150,7 @@ public class Weapon
     {
         weaponType = weapon_Data.weaponType;
 
+        bulletDamage = weapon_Data.bulletDamage;
         shotType = weapon_Data.shotType;
         bulletsPerShot = weapon_Data.bulletsPerShot;
         fireRate = weapon_Data.fireRate;

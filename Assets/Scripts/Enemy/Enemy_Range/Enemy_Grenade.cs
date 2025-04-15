@@ -9,6 +9,7 @@ public class Enemy_Grenade : MonoBehaviour
     private Rigidbody rb;
     private float timer;
     private float impactPower;
+    private int grenadeDamage;
 
     private LayerMask allyLayerMask;
     private bool canExplode; // Flag to check if the grenade has already exploded
@@ -47,7 +48,7 @@ public class Enemy_Grenade : MonoBehaviour
                 if (uniqueEntities.Add(rootEntity) == false)
                     continue; // Skip if the entity has already been hit
 
-                damagable.TakeDamage();
+                damagable.TakeDamage(grenadeDamage);
             }
             ApplyPhysicalForce(hit);
         }
@@ -69,14 +70,16 @@ public class Enemy_Grenade : MonoBehaviour
         ObjectPool.instance.ReturnObject(newFX, 1); // Return the explosion fx atfer 1s
     }
 
-    public void SetupGrenade(LayerMask allyLayerMask, Vector3 target, float timeToTarget, float countdown, float impactPower)
+    public void SetupGrenade(LayerMask allyLayerMask, Vector3 target, float timeToTarget, float countdown, float impactPower, int grenadeDamage)
     {
         this.allyLayerMask = allyLayerMask;
-        rb.linearVelocity = CalculateLaunchVelocity(target, timeToTarget);
+        this.grenadeDamage = grenadeDamage;
+        this.impactPower = impactPower;
 
         timer = countdown + timeToTarget;
-        this.impactPower = impactPower;
         canExplode = true; // Make grenade able to explode
+
+        rb.linearVelocity = CalculateLaunchVelocity(target, timeToTarget);
     }
 
     private bool IsTargetValid(Collider collider)

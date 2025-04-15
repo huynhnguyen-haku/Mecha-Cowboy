@@ -220,6 +220,7 @@ MonoBehaviour:
   defaultWeaponData: {fileID: 11400000, guid: c8a5090540c8e5c48a00a5e7ba8a4034, type: 2}
   currentWeapon:
     weaponType: 0
+    bulletDamage: 0
     bulletsInMagazine: 0
     magazineCapacity: 0
     TotalReserveAmmo: 0
@@ -233,6 +234,7 @@ MonoBehaviour:
   weaponHolder: {fileID: 862298342}
   weaponSlots:
   - weaponType: 2
+    bulletDamage: 0
     bulletsInMagazine: 0
     magazineCapacity: 0
     TotalReserveAmmo: 0
@@ -320,7 +322,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea6a5d16d4f92584c9b6ecd04a43b6f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 20
+  maxHealth: 100
   currentHealth: 0
   isDead: 0
 --- !u!114 &22133712
@@ -387,6 +389,10 @@ PrefabInstance:
     - target: {fileID: 8436782181739607903, guid: b2cdc8d0b85c37042bd651947afb7373, type: 3}
       propertyPath: m_Name
       value: Enemy_Boss_Hammer
+      objectReference: {fileID: 0}
+    - target: {fileID: 8436782181739607903, guid: b2cdc8d0b85c37042bd651947afb7373, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -585,6 +591,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Enemy_Boss_Flamethrower
       objectReference: {fileID: 0}
+    - target: {fileID: 5594415157857804821, guid: f14841b09c52fdc4f93cf8dc865fb542, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -625,6 +635,7 @@ MonoBehaviour:
   weaponData: {fileID: 11400000, guid: cd6a28c5fbf23054da24dbac5deafe4f, type: 2}
   weapon:
     weaponType: 0
+    bulletDamage: 0
     bulletsInMagazine: 0
     magazineCapacity: 0
     TotalReserveAmmo: 0
@@ -3067,6 +3078,7 @@ MonoBehaviour:
   weaponData: {fileID: 11400000, guid: 8c98bdf542040df4ba226b8dc8b26c34, type: 2}
   weapon:
     weaponType: 0
+    bulletDamage: 0
     bulletsInMagazine: 0
     magazineCapacity: 0
     TotalReserveAmmo: 0
@@ -5005,6 +5017,63 @@ Transform:
   m_Children: []
   m_Father: {fileID: 270512663}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &1207416886
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4304375820993687407, guid: b95db5b9c6d616a42978ba76cbc28ae4, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -3.5960913
+      objectReference: {fileID: 0}
+    - target: {fileID: 4304375820993687407, guid: b95db5b9c6d616a42978ba76cbc28ae4, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.00000023841858
+      objectReference: {fileID: 0}
+    - target: {fileID: 4304375820993687407, guid: b95db5b9c6d616a42978ba76cbc28ae4, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -9.73
+      objectReference: {fileID: 0}
+    - target: {fileID: 4304375820993687407, guid: b95db5b9c6d616a42978ba76cbc28ae4, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4304375820993687407, guid: b95db5b9c6d616a42978ba76cbc28ae4, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4304375820993687407, guid: b95db5b9c6d616a42978ba76cbc28ae4, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4304375820993687407, guid: b95db5b9c6d616a42978ba76cbc28ae4, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4304375820993687407, guid: b95db5b9c6d616a42978ba76cbc28ae4, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4304375820993687407, guid: b95db5b9c6d616a42978ba76cbc28ae4, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4304375820993687407, guid: b95db5b9c6d616a42978ba76cbc28ae4, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5765666782680054302, guid: b95db5b9c6d616a42978ba76cbc28ae4, type: 3}
+      propertyPath: m_Name
+      value: 'Enemy_Melee '
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: b95db5b9c6d616a42978ba76cbc28ae4, type: 3}
 --- !u!1 &1213565351
 GameObject:
   m_ObjectHideFlags: 0
@@ -6655,6 +6724,7 @@ MonoBehaviour:
   weaponData: {fileID: 11400000, guid: 02296316e885653468b5867805716bdf, type: 2}
   weapon:
     weaponType: 0
+    bulletDamage: 0
     bulletsInMagazine: 0
     magazineCapacity: 0
     TotalReserveAmmo: 0
@@ -9379,6 +9449,7 @@ MonoBehaviour:
   weaponData: {fileID: 11400000, guid: 0940ed989398d1c4c81bcc7f8923f0fa, type: 2}
   weapon:
     weaponType: 0
+    bulletDamage: 0
     bulletsInMagazine: 0
     magazineCapacity: 0
     TotalReserveAmmo: 0
@@ -13563,6 +13634,7 @@ MonoBehaviour:
   weaponData: {fileID: 11400000, guid: c8a5090540c8e5c48a00a5e7ba8a4034, type: 2}
   weapon:
     weaponType: 0
+    bulletDamage: 0
     bulletsInMagazine: 0
     magazineCapacity: 0
     TotalReserveAmmo: 0
@@ -15803,3 +15875,4 @@ SceneRoots:
   - {fileID: 1179386907}
   - {fileID: 70953916}
   - {fileID: 22371010}
+  - {fileID: 1207416886}

@@ -18,6 +18,7 @@ public class Enemy_Range : Enemy
     public float advanceDuration;
 
     [Header("Grenade Perks")]
+    public int grenadeDamage;
     public GameObject grenadePrefab;
     public float explosionTimer = 0.75f;
     public float timeToTarget = 1.2f;
@@ -117,7 +118,7 @@ public class Enemy_Range : Enemy
         GameObject newBullet = ObjectPool.instance.GetObject(bulletPrefab, gunPoint);
         newBullet.transform.rotation = Quaternion.LookRotation(gunPoint.forward);
 
-        newBullet.GetComponent<Bullet>().BulletSetup(whatIsAlly);
+        newBullet.GetComponent<Bullet>().BulletSetup(whatIsAlly, weaponData.bulletDamage);
         Rigidbody rbNewBullet = newBullet.GetComponent<Rigidbody>();
 
         Vector3 bulletDirectionWithSpread = weaponData.ApplyWeaponSpread(bulletsDirection);
@@ -314,10 +315,10 @@ public class Enemy_Range : Enemy
 
         if (stateMachine.currentState == deadState)
         {
-            newGrenadeScript.SetupGrenade(whatIsAlly, transform.position, 1, explosionTimer, impactPower);
+            newGrenadeScript.SetupGrenade(whatIsAlly, transform.position, 1, explosionTimer, impactPower, grenadeDamage);
             return;
         }
 
-        newGrenadeScript.SetupGrenade(whatIsAlly, player.transform.position, timeToTarget, explosionTimer, impactPower);
+        newGrenadeScript.SetupGrenade(whatIsAlly, player.transform.position, timeToTarget, explosionTimer, impactPower, grenadeDamage);
     }
 }

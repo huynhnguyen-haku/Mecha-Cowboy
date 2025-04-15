@@ -4,6 +4,7 @@ using UnityEngine;
 [System.Serializable]
 public struct AttackData_EnemyMelee
 {
+    public int attackDamage;
     public string attackName;
     public float attackRange;
     public float moveSpeed;
@@ -49,6 +50,7 @@ public class Enemy_Melee : Enemy
     private bool isAttackReady;
 
     [Header("Special Attack")]
+    public int axeDamage;
     public GameObject axePrefab;
     public float axeFlySpeed;
     public float axeAimTimer;
@@ -82,7 +84,7 @@ public class Enemy_Melee : Enemy
 
         InitializePerk();
         visual.SetupVisual();
-        UpdateAttackData();
+        UpdateAttackData(); // Ensure attack data is initialized
     }
 
     protected override void Update()
@@ -90,7 +92,7 @@ public class Enemy_Melee : Enemy
         base.Update();
         stateMachine.currentState.Update();
 
-        MeleeAttackCheck(currentWeapon.damagePoints, currentWeapon.attackCheckRadius, meleeAttackFX);
+        MeleeAttackCheck(currentWeapon.damagePoints, currentWeapon.attackCheckRadius, meleeAttackFX, attackData.attackDamage);
     }
 
     protected override void OnDrawGizmos()
@@ -109,6 +111,7 @@ public class Enemy_Melee : Enemy
             return;
 
         base.EnterBattleMode();
+        UpdateAttackData(); // Update attack data when entering battle mode
         stateMachine.ChangeState(recoveryState);
     }
 
@@ -131,23 +134,26 @@ public class Enemy_Melee : Enemy
 
     #region Attack Methods
 
-
-
     public void UpdateAttackData()
     {
         currentWeapon = visual.currentWeaponModel.GetComponent<Enemy_WeaponModel>();
-
         if (currentWeapon.weaponData != null)
         {
             attackList = new List<AttackData_EnemyMelee>(currentWeapon.weaponData.attackData);
             turnSpeed = currentWeapon.weaponData.turnSpeed;
+
+            // Update attackData with the first attack in the list
+            if (attackList.Count > 0)
+            {
+                attackData = attackList[0];
+            }
         }
     }
 
     public void ThrowAxe()
     {
         GameObject newAxe = ObjectPool.instance.GetObject(axePrefab, axeStartPoint);
-        newAxe.GetComponent<Enemy_Axe>().AxeSetup(axeFlySpeed, player, axeAimTimer);
+        newAxe.GetComponent<Enemy_Axe>().AxeSetup(axeFlySpeed, player, axeAimTimer, axeDamage);
     }
 
     public bool CanThrowAxe()
