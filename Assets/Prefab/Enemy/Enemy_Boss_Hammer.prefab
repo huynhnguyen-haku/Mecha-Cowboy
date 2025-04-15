@@ -18649,7 +18649,6 @@ MonoBehaviour:
   whatIsPlayer:
     serializedVersion: 2
     m_Bits: 256
-  healthPoint: 50
   idleTime: 3
   arrgresssionRange: 8
   walkSpeed: 1.75
@@ -18659,28 +18658,32 @@ MonoBehaviour:
   - {fileID: 5846697415338810078}
   - {fileID: 7766282892550334120}
   - {fileID: 4888312663581456899}
-  weaponType: 1
-  attackRange: 1.5
-  actionCooldown: 0.5
-  attackAnimationCount: 4
-  impactRadius: 2.5
-  impactPower: 15
-  impactPoint: {fileID: 4198087147834590605}
-  travelTimeToTarget: 1
-  jumpAttackCooldown: 2
-  upwardsMulti: 10
-  minJumpDistanceRequired: 4
   minAbilityDistance: 3
   abilityCooldown: 1
-  flameDamageCooldown: 0
-  flamethrowDuration: 5
-  flamethrower: {fileID: 5165825853949551045}
-  activationPrefab: {fileID: 2965222256817593503, guid: a164e676dbbd6e54587237e619372c98, type: 3}
-  hammerCheckRadius: 1.25
+  meleeAttackDamage: 40
   damagePoints:
   - {fileID: 8046430591893240493}
   attackCheckRadius: 0.4
   meleeAttackFX: {fileID: 8073450575305726352, guid: 5b36478457fcafd4a9db6c916d850972, type: 3}
+  weaponType: 1
+  attackRange: 1.6
+  actionCooldown: 0.5
+  attackAnimationCount: 4
+  flameDamage: 0
+  flameDamageCooldown: 0
+  flamethrowDuration: 5
+  flamethrower: {fileID: 5165825853949551045}
+  hammerActiveDamage: 25
+  activationPrefab: {fileID: 2965222256817593503, guid: a164e676dbbd6e54587237e619372c98, type: 3}
+  hammerCheckRadius: 1.25
+  jumpAttackDamage: 25
+  impactRadius: 2.5
+  impactPower: 15
+  impactPoint: {fileID: 4198087147834590605}
+  travelTimeToTarget: 0.6
+  jumpAttackCooldown: 2
+  upwardsMulti: 10
+  minJumpDistanceRequired: 4
   whatToIgnore:
     serializedVersion: 2
     m_Bits: 2048
@@ -18727,7 +18730,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c9dcaefae6c9584880f103e99fc6df4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 150
+  maxHealth: 1600
   currentHealth: 0
 --- !u!1 &8444515674338903198
 GameObject:

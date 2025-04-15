@@ -69,7 +69,6 @@ public class MoveState_Boss : EnemyState
     {
         SpeedUpActive = false;
         enemy.anim.SetFloat("MoveIndex", 0); // Set the move index to 0, so boss will walk nomally
-        enemy.anim.SetFloat("MoveSpeedMultipler", 1);
         enemy.agent.speed = enemy.walkSpeed;
     }
     private void SpeedUp()
@@ -77,7 +76,6 @@ public class MoveState_Boss : EnemyState
         SpeedUpActive = true;
         enemy.agent.speed = enemy.runSpeed;
         enemy.anim.SetFloat("MoveIndex", 1); // Set the move index to 1, so boss will run
-        enemy.anim.SetFloat("MoveSpeedMultipler", 1.5f);
     }
 
     private void PerfomRandomAction()
