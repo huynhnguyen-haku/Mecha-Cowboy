@@ -10,8 +10,6 @@ public class Enemy : MonoBehaviour
 
     [Space]
 
-    public int healthPoint = 15;
-
     [Header("Idle Info")]
     public float idleTime;
     public float arrgresssionRange;
