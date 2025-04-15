@@ -15,6 +15,7 @@ public class JumpAttackState_Boss : EnemyState
     public override void Enter()
     {
         base.Enter();
+
         lastPlayerPosition = enemy.player.position;
         enemy.agent.isStopped = true;
         enemy.agent.velocity = Vector3.zero;    
@@ -43,7 +44,8 @@ public class JumpAttackState_Boss : EnemyState
 
         if (enemy.ManualMovementActive())
         {
-          enemy.transform.position =  Vector3.MoveTowards(myPosition, lastPlayerPosition, jumpAttackMovementSpeed * Time.deltaTime);
+            enemy.agent.velocity = Vector3.zero;
+            enemy.transform.position =  Vector3.MoveTowards(myPosition, lastPlayerPosition, jumpAttackMovementSpeed * Time.deltaTime);
         }
         if (triggerCalled)
         {

@@ -1,45 +1,48 @@
+using System.Collections.Generic;
 using UnityEngine;
 
-public enum BossWeaponType { Flamethrower, Hammer}
+public enum BossWeaponType { Flamethrower, Hammer }
 public class Enemy_Boss : Enemy
 {
-    [Header("Boss Detail")]
-    public BossWeaponType weaponType;
-    public float attackRange;
-    public float actionCooldown = 10;
-    public int attackAnimationCount;
-
-    [Header("Jump Attack")]
-    public float impactRadius = 2.5f;
-    public float impactPower = 10;
-    public Transform impactPoint;
-
-    [Space]
-
-    public float travelTimeToTarget = 1;
-    public float jumpAttackCooldown = 10;
-    [SerializeField] private float upwardsMulti = 10;
-    private float lastTimeJump;
-    public float minJumpDistanceRequired;
-
     [Header("Abilities")]
     public float minAbilityDistance;
     public float abilityCooldown;
     private float lastTimeAbility;
-
-    [Header("Flamethrower")]
-    public float flamethrowDuration;
-    public ParticleSystem flamethrower;
-    public bool flamethrowerActive { get; private set; }
-
-    [Header("Hammer")]
-    public GameObject activationPrefab;
 
     [Header("Attack")]
     [SerializeField] private Transform[] damagePoints;
     [SerializeField] private float attackCheckRadius;
     [SerializeField] private GameObject meleeAttackFX;
 
+    [Header("Boss Detail")]
+    public BossWeaponType weaponType;
+    public float attackRange;
+    public float actionCooldown = 10;
+    public int attackAnimationCount;
+
+    [Header("Flamethrower")]
+    public float flameDamageCooldown;
+    public float flamethrowDuration;
+    public ParticleSystem flamethrower;
+    public bool flamethrowerActive { get; private set; }
+
+    [Header("Hammer")]
+    public GameObject activationPrefab;
+    [SerializeField] private float hammerCheckRadius;
+
+    [Header("Jump Attack")]
+    public float impactRadius = 2.5f;
+    public float impactPower = 10;
+    public Transform impactPoint;
+    [Space]
+    public float travelTimeToTarget = 1;
+    public float jumpAttackCooldown = 10;
+    [SerializeField] private float upwardsMulti = 10;
+    private float lastTimeJump;
+    public float minJumpDistanceRequired;
+
+    [Space]
+    [SerializeField] private LayerMask whatToIgnore;
 
     public IdleState_Boss idleState { get; private set; }
     public MoveState_Boss moveState { get; private set; }
@@ -48,10 +51,6 @@ public class Enemy_Boss : Enemy
     public AbilityState_Boss abilityState { get; private set; }
     public Enemy_BossVisual bossVisual { get; private set; }
     public DeadState_Boss deadState { get; private set; }
-
-    [Space]
-
-    [SerializeField] private LayerMask whatToIgnore;
 
     #region Unity Methods
     protected override void Awake()
@@ -102,11 +101,13 @@ public class Enemy_Boss : Enemy
         Gizmos.color = Color.yellow;
         if (damagePoints.Length > 0)
         {
-
             foreach (var damagePoint in damagePoints)
             {
                 Gizmos.DrawWireSphere(damagePoint.position, attackCheckRadius);
             }
+
+            Gizmos.color = Color.cyan;
+            Gizmos.DrawWireSphere(damagePoints[0].position, hammerCheckRadius);
         }
     }
     #endregion
@@ -133,8 +134,10 @@ public class Enemy_Boss : Enemy
 
         if (Physics.Raycast(myPosition, directionToPlayer, out RaycastHit hit, 100, ~whatToIgnore))
         {
-            if (hit.transform == player || hit.transform.parent == player)
+            if (hit.transform == player.root)
+            {
                 return true;
+            }
         }
         return false;
     }
@@ -166,6 +169,8 @@ public class Enemy_Boss : Enemy
     {
         GameObject newActivation = ObjectPool.instance.GetObject(activationPrefab, impactPoint);
         ObjectPool.instance.ReturnObject(newActivation, 1);
+
+        MassDamage(damagePoints[0].position, hammerCheckRadius);
     }
 
     public bool CanDoJumpAttack()
@@ -188,16 +193,38 @@ public class Enemy_Boss : Enemy
         if (impactPoint == null)
             impactPoint = transform;
 
-        Collider[] colliders = Physics.OverlapSphere(impactPoint.position, impactRadius);
+        MassDamage(impactPoint.position, impactRadius);
+    }
+
+    private void MassDamage(Vector3 impactPoint, float impactRadius)
+    {
+        HashSet<GameObject> uniqueEntities = new HashSet<GameObject>();
+        Collider[] colliders = Physics.OverlapSphere(impactPoint, impactRadius, ~whatIsAlly);
 
         foreach (Collider hit in colliders)
         {
-            Rigidbody rb = hit.GetComponent<Rigidbody>();
-            if (rb != null)
+            I_Damagable damagable = hit.GetComponent<I_Damagable>();
+            if (damagable != null)
             {
-                rb.AddExplosionForce(impactPower, transform.position, impactRadius, upwardsMulti, ForceMode.Impulse);
+                GameObject rootEntity = hit.transform.root.gameObject;
+                if (uniqueEntities.Add(rootEntity) == false)
+                {
+                    continue;
+                }
+                damagable.TakeDamage();
             }
+            ApplyPhysicalForce(impactPoint, impactRadius, hit);
 
+        }
+    }
+
+    private void ApplyPhysicalForce(Vector3 impactPoint, float impactRadius, Collider hit)
+    {
+        Rigidbody rb = hit.GetComponent<Rigidbody>();
+
+        if (rb != null)
+        {
+            rb.AddExplosionForce(impactPower, impactPoint, impactRadius, upwardsMulti, ForceMode.Impulse);
         }
     }
 
