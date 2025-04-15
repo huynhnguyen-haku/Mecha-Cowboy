@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weaponName: Glock 2077
   weaponType: 0
-  bulletDamage: 2
+  bulletDamage: 20
   shotType: 1
   bulletsPerShot: 1
   fireRate: 300
@@ -28,8 +28,8 @@ MonoBehaviour:
   minSpread: 0.25
   maxSpread: 2
   spreadIncreaseRate: 0.15
-  burstAvailable: 0
+  burstAvailable: 1
   burstActive: 0
-  burst_BulletsPerShot: 0
-  burst_FireRate: 0
-  burst_FireDelay: 0.1
+  burst_BulletsPerShot: 2
+  burst_FireRate: 100
+  burst_FireDelay: 0.2

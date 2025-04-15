@@ -7,7 +7,7 @@ public class PlayerAim : MonoBehaviour
     private PlayerControls controls;
 
     [Header("Aim Visual - Laser")]
-    [SerializeField] private LineRenderer aimLaser;
+    public LineRenderer aimLaser; // Change here to be accessible from other scripts
 
     [Header("Camera Controls")]
 

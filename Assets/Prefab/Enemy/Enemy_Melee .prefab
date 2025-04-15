@@ -3330,7 +3330,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5ad0ca88c7f15f444966ef87f914ad78, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  durability: 50
+  durability: 400
 --- !u!1 &3872116909699087923
 GameObject:
   m_ObjectHideFlags: 0
@@ -3675,9 +3675,9 @@ MonoBehaviour:
   overrideController: {fileID: 0}
   weaponData: {fileID: 11400000, guid: 7366385eb40820f4dabc5f4dcc089207, type: 2}
   trailEffects:
-  - {fileID: 3448040037912864603}
+  - {fileID: 6137243869185524225}
   damagePoints:
-  - {fileID: 6690847441572201824}
+  - {fileID: 4935573402032342807}
   attackCheckRadius: 0.3
 --- !u!1 &4300502521643463577
 GameObject:
@@ -4486,7 +4486,7 @@ MonoBehaviour:
   - {fileID: 7095630939752328653}
   meleeType: 2
   weaponType: 2
-  shieldDurability: 20
+  shieldDurability: 400
   shieldTransform: {fileID: 4674243420392903701}
   dodgeCooldown: 1
   attackData:
@@ -4512,7 +4512,7 @@ MonoBehaviour:
     attackIndex: 1
     animationSpeed: 1.5
     attackType: 0
-  axeDamage: 0
+  axeDamage: 70
   axePrefab: {fileID: 4862397190595803901, guid: 9f2a7c1c5c8ea294a82c0903ee2dc7dd, type: 3}
   axeFlySpeed: 5
   axeAimTimer: 1
@@ -4592,7 +4592,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c9dcaefae6c9584880f103e99fc6df4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 20
+  maxHealth: 150
   currentHealth: 0
 --- !u!1 &5805875993886530891
 GameObject:
@@ -4912,7 +4912,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &4935573402032342807
 Transform:
   m_ObjectHideFlags: 0

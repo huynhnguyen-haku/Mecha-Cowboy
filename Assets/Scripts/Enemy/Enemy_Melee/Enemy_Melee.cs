@@ -84,7 +84,19 @@ public class Enemy_Melee : Enemy
 
         InitializePerk();
         visual.SetupVisual();
-        UpdateAttackData(); // Ensure attack data is initialized
+
+        RandomizeFirstAttack();
+        UpdateAttackData(); 
+
+    }
+
+    private void RandomizeFirstAttack()
+    {
+        // This method is used to fix the bug where the enemy always uses the same attack
+        if (attackList.Count > 0)
+        {
+            attackData = attackList[Random.Range(0, attackList.Count)];
+        }
     }
 
     protected override void Update()
@@ -130,10 +142,6 @@ public class Enemy_Melee : Enemy
             stateMachine.ChangeState(deadState);
         }
     }
-    #endregion
-
-    #region Attack Methods
-
     public void UpdateAttackData()
     {
         currentWeapon = visual.currentWeaponModel.GetComponent<Enemy_WeaponModel>();
@@ -141,12 +149,6 @@ public class Enemy_Melee : Enemy
         {
             attackList = new List<AttackData_EnemyMelee>(currentWeapon.weaponData.attackData);
             turnSpeed = currentWeapon.weaponData.turnSpeed;
-
-            // Update attackData with the first attack in the list
-            if (attackList.Count > 0)
-            {
-                attackData = attackList[0];
-            }
         }
     }
 

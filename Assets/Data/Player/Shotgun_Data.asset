@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weaponName: Reberca
   weaponType: 3
-  bulletDamage: 3
+  bulletDamage: 20
   shotType: 0
   bulletsPerShot: 5
   fireRate: 150
@@ -25,8 +25,8 @@ MonoBehaviour:
   equipSpeed: 2
   laserDistance: 6
   cameraDistance: 6
-  minSpread: 6
-  maxSpread: 6
+  minSpread: 10
+  maxSpread: 10
   spreadIncreaseRate: 0
   burstAvailable: 0
   burstActive: 0
