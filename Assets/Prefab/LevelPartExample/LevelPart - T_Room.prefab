@@ -174,7 +174,7 @@ GameObject:
   - component: {fileID: 3407461749903743229}
   - component: {fileID: 4750022189987236309}
   m_Layer: 6
-  m_Name: SnapPoint - Enter
+  m_Name: SnapPoint - Exit
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -281,7 +281,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b02efc1ba7c097d4dbd890d15b91c2b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pointType: 0
+  pointType: 1
 --- !u!1 &7789935161528584107
 GameObject:
   m_ObjectHideFlags: 0
