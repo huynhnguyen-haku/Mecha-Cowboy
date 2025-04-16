@@ -27,14 +27,14 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 73476411438000828}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: 0.46915776, y: 0.60288006, z: 0.50927556, w: 0.39631432}
+  m_LocalPosition: {x: -0.0078, y: 0.0592, z: 0.0405}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2860528409335874259}
   m_Father: {fileID: 9037755071397354004}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -14.016, y: 99.92, z: 87.575}
 --- !u!33 &7210046233205754094
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -4829,11 +4829,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3197032396493435423}
+  - component: {fileID: 2122108921089556254}
+  - component: {fileID: 5444482884643385677}
   - component: {fileID: 8712370896228159148}
   - component: {fileID: 6341899618620792271}
   - component: {fileID: 954372867471128308}
-  - component: {fileID: 5444482884643385677}
-  - component: {fileID: 2122108921089556254}
   m_Layer: 11
   m_Name: Enemy_Range
   m_TagString: Untagged
@@ -4859,6 +4859,80 @@ Transform:
   - {fileID: 6575711961088956095}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2122108921089556254
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4851063174530935344}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2c9dcaefae6c9584880f103e99fc6df4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 120
+  currentHealth: 0
+--- !u!114 &5444482884643385677
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4851063174530935344}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2417574386d08ac40b63bb2057987651, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  whatIsAlly:
+    serializedVersion: 2
+    m_Bits: 2048
+  whatIsPlayer:
+    serializedVersion: 2
+    m_Bits: 256
+  idleTime: 1.5
+  arrgresssionRange: 5
+  walkSpeed: 1
+  runSpeed: 3
+  turnSpeed: 6
+  patrolPoints:
+  - {fileID: 8357150741987942660}
+  - {fileID: 4311735259814070112}
+  weaponType: 3
+  coverPerk: 2
+  unstoppablePerk: 0
+  grenadePerk: 1
+  advanceSpeed: 3
+  advanceStoppingDistance: 4
+  advanceDuration: 2.5
+  grenadeDamage: 60
+  grenadePrefab: {fileID: 8220927926543488239, guid: 6cc4996d50cc85c40bfb779139f76dfa, type: 3}
+  explosionTimer: 0.75
+  timeToTarget: 1.2
+  impactPower: 5
+  grenadeCooldown: 10
+  grenadeStartPoint: {fileID: 3760270104983765043}
+  safeDistance: 2
+  coverTime: 4
+  attackDelay: 1
+  weaponData: {fileID: 0}
+  gunPoint: {fileID: 4696151124864136131}
+  weaponHolder: {fileID: 1675467191901798211}
+  bulletPrefab: {fileID: 4456756728090714116, guid: 749967a8f944d9245b2c581f8bf4194e, type: 3}
+  slowAim: 4
+  fastAim: 20
+  aim: {fileID: 6575711961088956095}
+  playerBody: {fileID: 0}
+  whatToIgnore:
+    serializedVersion: 2
+    m_Bits: 2048
+  avaiableWeaponData:
+  - {fileID: 11400000, guid: 415286eb411a72548afd208a6cc2b079, type: 2}
+  - {fileID: 11400000, guid: e2d2450d3ad8ccd4b942277d2493f0a4, type: 2}
+  - {fileID: 11400000, guid: e6e1adb37e43b5646be06b05d105bee6, type: 2}
+  - {fileID: 11400000, guid: ad281eed14d2df14d8271a3d8d027fca, type: 2}
+  - {fileID: 11400000, guid: 49e0c5117a86e0b469bb9991d943a21c, type: 2}
 --- !u!195 &8712370896228159148
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -4920,80 +4994,6 @@ MonoBehaviour:
   leftElbowIK: {fileID: 5953993946798256391}
   leftHandIKConstraint: {fileID: 870930516926873129}
   weaponAimConstraint: {fileID: 3260602148461222417}
---- !u!114 &5444482884643385677
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4851063174530935344}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2417574386d08ac40b63bb2057987651, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  whatIsAlly:
-    serializedVersion: 2
-    m_Bits: 2048
-  whatIsPlayer:
-    serializedVersion: 2
-    m_Bits: 256
-  idleTime: 1.5
-  arrgresssionRange: 5
-  walkSpeed: 1
-  runSpeed: 3
-  turnSpeed: 6
-  patrolPoints:
-  - {fileID: 8357150741987942660}
-  - {fileID: 4311735259814070112}
-  coverPerk: 2
-  unstoppablePerk: 0
-  grenadePerk: 1
-  advanceSpeed: 3
-  advanceStoppingDistance: 4
-  advanceDuration: 2.5
-  grenadeDamage: 60
-  grenadePrefab: {fileID: 8220927926543488239, guid: 6cc4996d50cc85c40bfb779139f76dfa, type: 3}
-  explosionTimer: 0.75
-  timeToTarget: 1.2
-  impactPower: 5
-  grenadeCooldown: 10
-  grenadeStartPoint: {fileID: 3760270104983765043}
-  safeDistance: 2
-  coverTime: 4
-  attackDelay: 1
-  weaponType: 3
-  weaponData: {fileID: 0}
-  gunPoint: {fileID: 4696151124864136131}
-  weaponHolder: {fileID: 1675467191901798211}
-  bulletPrefab: {fileID: 4456756728090714116, guid: 749967a8f944d9245b2c581f8bf4194e, type: 3}
-  slowAim: 4
-  fastAim: 20
-  aim: {fileID: 6575711961088956095}
-  playerBody: {fileID: 0}
-  whatToIgnore:
-    serializedVersion: 2
-    m_Bits: 2048
-  avaiableWeaponData:
-  - {fileID: 11400000, guid: 415286eb411a72548afd208a6cc2b079, type: 2}
-  - {fileID: 11400000, guid: e2d2450d3ad8ccd4b942277d2493f0a4, type: 2}
-  - {fileID: 11400000, guid: e6e1adb37e43b5646be06b05d105bee6, type: 2}
-  - {fileID: 11400000, guid: ad281eed14d2df14d8271a3d8d027fca, type: 2}
-  - {fileID: 11400000, guid: 49e0c5117a86e0b469bb9991d943a21c, type: 2}
---- !u!114 &2122108921089556254
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4851063174530935344}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2c9dcaefae6c9584880f103e99fc6df4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maxHealth: 120
-  currentHealth: 0
 --- !u!1 &4893005789405341513
 GameObject:
   m_ObjectHideFlags: 0
@@ -7226,14 +7226,14 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7072979561871107588}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: 0.46915776, y: 0.60288006, z: 0.50927556, w: 0.39631432}
+  m_LocalPosition: {x: -0.0078, y: 0.0592, z: 0.0405}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 9187984672080648372}
   m_Father: {fileID: 9037755071397354004}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -14.016, y: 99.92, z: 87.575}
 --- !u!33 &4759357412937806042
 MeshFilter:
   m_ObjectHideFlags: 0

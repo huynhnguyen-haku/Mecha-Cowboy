@@ -8,6 +8,7 @@ public enum GrenadePerk { None, ThrowGrenade }
 public class Enemy_Range : Enemy
 {
     [Header("Enemy Perks")]
+    public Enemy_RangeWeaponType weaponType;
     public CoverPerk coverPerk;
     public UnstoppablePerk unstoppablePerk;
     public GrenadePerk grenadePerk;
@@ -37,7 +38,6 @@ public class Enemy_Range : Enemy
 
     [Header("Weapon Details")]
     public float attackDelay;
-    public Enemy_RangeWeaponType weaponType;
     public Enemy_RangeWeaponData weaponData;
 
     [Space]
@@ -165,11 +165,6 @@ public class Enemy_Range : Enemy
             Debug.LogError("No weapon data found for the specified weapon type.");
         }
 
-        // Set grenadePerk to None if the weapon type is Pistol or Revolver
-        if (weaponType == Enemy_RangeWeaponType.Pistol || weaponType == Enemy_RangeWeaponType.Revolver)
-        {
-            grenadePerk = GrenadePerk.None;
-        }
     }
 
 
@@ -236,7 +231,6 @@ public class Enemy_Range : Enemy
         if (lastCover != currentCover && currentCover != null)
             return true;
 
-        Debug.Log("No cover found");
         return false;
 
     }
@@ -283,11 +277,30 @@ public class Enemy_Range : Enemy
 
     protected override void InitializePerk()
     {
+        if (weaponType == Enemy_RangeWeaponType.Random)
+        {
+            ChooseRandomWeapon();
+        }
+
         if (IsUnstoppable())
         {
             advanceSpeed = 1;
             anim.SetFloat("AdvanceIndex", 1);
         }
+    }
+
+    private void ChooseRandomWeapon()
+    {
+        List<Enemy_RangeWeaponType> validTypes = new List<Enemy_RangeWeaponType>();
+        foreach (Enemy_RangeWeaponType type in System.Enum.GetValues(typeof(Enemy_RangeWeaponType)))
+        {
+            if (type != Enemy_RangeWeaponType.Random && type != Enemy_RangeWeaponType.Sniper)
+            {
+                validTypes.Add(type);
+            }
+        }
+        int RandomInxex = Random.Range(0, validTypes.Count);
+        weaponType = validTypes[RandomInxex];
     }
 
     public bool CanThrowGrenade()
