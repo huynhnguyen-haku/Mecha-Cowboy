@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-public class PlayerAim : MonoBehaviour
+public class Player_AimController : MonoBehaviour
 {
     private Player player;
     private PlayerControls controls;

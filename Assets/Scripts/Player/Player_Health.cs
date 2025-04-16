@@ -3,7 +3,7 @@ using UnityEngine;
 public class Player_Health : HealthController
 {
     private Player player;
-    private PlayerAim aim;
+    private Player_AimController aim;
 
     public bool isDead;
     private LineRenderer aimLaser;

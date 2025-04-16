@@ -138,7 +138,7 @@ public class Enemy_Boss : Enemy
 
         if (Physics.Raycast(myPosition, directionToPlayer, out RaycastHit hit, 100, ~whatToIgnore))
         {
-            if (hit.transform == player.root)
+            if (hit.transform.root == player.root)
             {
                 return true;
             }

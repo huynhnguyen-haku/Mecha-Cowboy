@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Enemy_HitBox : HitBox 
+public class Enemy_HitBox : HitBox
 {
     private Enemy enemy;
 
@@ -12,6 +12,7 @@ public class Enemy_HitBox : HitBox
 
     public override void TakeDamage(int damage)
     {
-        enemy.GetHit(damage);
+        int newDamage = Mathf.RoundToInt(damage * damageMultiplier);
+        enemy.GetHit(newDamage);
     }
 }

@@ -4,11 +4,11 @@ public class Player : MonoBehaviour
 {
     public Transform playerBody;
     public PlayerControls controls { get; private set; } 
-    public PlayerAim aim { get; private set; }
-    public PlayerMovement movement { get; private set; }
-    public WeaponController weapon { get; private set; }
-    public PlayerWeaponVisuals weaponVisuals { get; private set; }
-    public PlayerInteraction interaction { get; private set; }
+    public Player_AimController aim { get; private set; }
+    public Player_Movement movement { get; private set; }
+    public Player_WeaponController weapon { get; private set; }
+    public Player_WeaponVisuals weaponVisuals { get; private set; }
+    public Player_Interaction interaction { get; private set; }
     public Player_Health health { get; private set; }
     public Ragdoll ragdoll { get; private set; } 
     public Animator anim { get; private set; }
@@ -16,11 +16,11 @@ public class Player : MonoBehaviour
     private void Awake()
     {
         controls = new PlayerControls();
-        aim = GetComponent<PlayerAim>();
-        movement = GetComponent<PlayerMovement>();
-        weapon = GetComponent<WeaponController>();
-        weaponVisuals = GetComponentInChildren<PlayerWeaponVisuals>();
-        interaction = GetComponent<PlayerInteraction>();
+        aim = GetComponent<Player_AimController>();
+        movement = GetComponent<Player_Movement>();
+        weapon = GetComponent<Player_WeaponController>();
+        weaponVisuals = GetComponentInChildren<Player_WeaponVisuals>();
+        interaction = GetComponent<Player_Interaction>();
         health = GetComponent<Player_Health>();
         ragdoll = GetComponent<Ragdoll>();
         anim = GetComponentInChildren<Animator>();
