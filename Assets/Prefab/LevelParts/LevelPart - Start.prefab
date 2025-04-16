@@ -162,6 +162,9 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -327,6 +330,9 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -410,6 +416,9 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -494,6 +503,9 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -598,6 +610,9 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -7498,11 +7513,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5647196396636149808, guid: acdaeec2648876a45be92501ed07b6a5, type: 3}
       propertyPath: m_LocalScale.x
-      value: 99.99998
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5647196396636149808, guid: acdaeec2648876a45be92501ed07b6a5, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5647196396636149808, guid: acdaeec2648876a45be92501ed07b6a5, type: 3}
       propertyPath: m_LocalScale.z
-      value: 99.99998
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5647196396636149808, guid: acdaeec2648876a45be92501ed07b6a5, type: 3}
       propertyPath: m_LocalPosition.x
@@ -7543,6 +7562,10 @@ PrefabInstance:
     - target: {fileID: 5647196396636149808, guid: acdaeec2648876a45be92501ed07b6a5, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5647196396636149808, guid: acdaeec2648876a45be92501ed07b6a5, type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -9015,6 +9038,18 @@ PrefabInstance:
       value: chest_weap_pistols
       objectReference: {fileID: 0}
     - target: {fileID: 5676875557441003720, guid: f39b530911567f04585fd73404a5b315, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5676875557441003720, guid: f39b530911567f04585fd73404a5b315, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5676875557441003720, guid: f39b530911567f04585fd73404a5b315, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5676875557441003720, guid: f39b530911567f04585fd73404a5b315, type: 3}
       propertyPath: m_LocalPosition.x
       value: 56.62903
       objectReference: {fileID: 0}
@@ -9053,6 +9088,10 @@ PrefabInstance:
     - target: {fileID: 5676875557441003720, guid: f39b530911567f04585fd73404a5b315, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5676875557441003720, guid: f39b530911567f04585fd73404a5b315, type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
