@@ -25,6 +25,15 @@ public class HealthController : MonoBehaviour
         }
     }
 
+    public virtual void HealHeath(int amount)
+    {
+        currentHealth += amount;
+        if (currentHealth > maxHealth)
+        {
+            currentHealth = maxHealth;
+        }
+    }
+
     public bool ShouldDie()
     {
         return currentHealth <= 0;
