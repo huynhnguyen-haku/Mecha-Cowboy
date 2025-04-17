@@ -13,11 +13,11 @@ public class Player_AimController : MonoBehaviour
 
     [SerializeField] private Transform cameraTarget;
     [Range(0.5f, 1)]
-    [SerializeField] private float minCameraDistance = 1;
+    [SerializeField] private float minCameraDistance = 1.5f;
     [Range(1, 3f)]
-    [SerializeField] private float maxCameraDistance = 1.5f;
+    [SerializeField] private float maxCameraDistance = 4f;
     [Range(3f, 5f)]
-    [SerializeField] private float cameraSensetivity = 3;
+    [SerializeField] private float cameraSensetivity = 5;
 
     [Header("Aim Controls")]
 
