@@ -1,58 +1,50 @@
 using System.Collections;
 using UnityEngine;
 
+
 public class ZoneLimitation : MonoBehaviour
 {
+    private ParticleSystem[] lines;
     private BoxCollider zoneCollider;
-    private MeshRenderer meshRenderer;
-    private Coroutine fadeCoroutine;
-    private bool isPlayerInside;
 
     private void Start()
     {
-        meshRenderer = GetComponent<MeshRenderer>();
+        GetComponent<MeshRenderer>().enabled = false;
         zoneCollider = GetComponent<BoxCollider>();
-        SetWallState(false, false);
+        lines = GetComponentsInChildren<ParticleSystem>();
+        ActivateWall(false);
     }
 
-    private void SetWallState(bool activate, bool fadeIn)
-    {
-        zoneCollider.isTrigger = !activate;
-        if (fadeCoroutine != null)
-            StopCoroutine(fadeCoroutine);
-        fadeCoroutine = StartCoroutine(FadeMeshRenderer(fadeIn));
-    }
 
-    private IEnumerator FadeMeshRenderer(bool fadeIn)
+    private void ActivateWall(bool activate)
     {
-        float duration = 1f, elapsed = 0f;
-        meshRenderer.enabled = true;
-        Color color = meshRenderer.material.color;
-        float startAlpha = fadeIn ? 0f : color.a, endAlpha = fadeIn ? 1f : 0f;
-
-        while (elapsed < duration)
+        foreach (var line in lines)
         {
-            elapsed += Time.deltaTime;
-            color.a = Mathf.Lerp(startAlpha, endAlpha, elapsed / duration);
-            meshRenderer.material.color = color;
-            yield return null;
+            if (activate)
+            {
+                line.Play();
+            }
+            else
+            {
+                line.Stop();
+            }
         }
 
-        color.a = endAlpha;
-        meshRenderer.material.color = color;
-        meshRenderer.enabled = fadeIn;
+        zoneCollider.isTrigger = !activate;
+    }
+
+    IEnumerator WallActivationCo()
+    {
+        ActivateWall(true);
+
+        yield return new WaitForSeconds(1);
+
+        ActivateWall(false);
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        isPlayerInside = true;
-        SetWallState(true, true);
-        Debug.Log("We don't have any business in that area! Don't go near it!");
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
-        isPlayerInside = false;
-        SetWallState(false, false);
+        StartCoroutine(WallActivationCo());
+        Debug.Log("My sensors are going crazy, I think it's dangerous!");
     }
 }
