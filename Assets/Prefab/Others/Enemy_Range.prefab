@@ -4892,6 +4892,7 @@ MonoBehaviour:
   whatIsPlayer:
     serializedVersion: 2
     m_Bits: 256
+  enemyType: 1
   idleTime: 1.5
   arrgresssionRange: 5
   walkSpeed: 1
@@ -5007,6 +5008,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 59805ee22aff0034fafbb92c7f8cc3db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  missionObjectKey: {fileID: 0}
 --- !u!1 &4893005789405341513
 GameObject:
   m_ObjectHideFlags: 0

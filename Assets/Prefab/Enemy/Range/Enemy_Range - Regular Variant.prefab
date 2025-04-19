@@ -61,6 +61,10 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5444482884643385677, guid: 91d63b89049e4204087ee058ce17baaf, type: 3}
+      propertyPath: enemyType
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5444482884643385677, guid: 91d63b89049e4204087ee058ce17baaf, type: 3}
       propertyPath: weaponType
       value: 5
       objectReference: {fileID: 0}

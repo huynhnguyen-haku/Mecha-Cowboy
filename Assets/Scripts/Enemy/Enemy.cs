@@ -2,11 +2,19 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 
+public enum EnemyType
+{
+    Melee,
+    Range,
+    Boss
+}
+
 [RequireComponent(typeof(NavMeshAgent))]
 public class Enemy : MonoBehaviour
 {
     public LayerMask whatIsAlly;
     public LayerMask whatIsPlayer;
+    public EnemyType enemyType;
 
     [Space]
 
@@ -102,7 +110,6 @@ public class Enemy : MonoBehaviour
         if (health.EnemyShouldDie())
         {
             Die();
-            dropController.DropItems();
         }
 
         EnterBattleMode();
@@ -144,7 +151,10 @@ public class Enemy : MonoBehaviour
 
     public virtual void Die()
     {
+        dropController.DropItems();
 
+        MissionObject_Target huntTarget = GetComponent<MissionObject_Target>();
+        huntTarget?.InvokeOnTargetKilled();
     }
 
     public virtual void BulletImpact(Vector3 force, Vector3 hitpoint, Rigidbody rb)
