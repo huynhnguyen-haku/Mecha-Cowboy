@@ -6,27 +6,24 @@ public class LevelGenerator : MonoBehaviour
 {
     public static LevelGenerator instance;
 
-    // Navmesh
-    [SerializeField] private NavMeshSurface navMeshSurface;
-    [Space]
 
-    // Level parts
+    // Level parts  
     [SerializeField] private List<Transform> levelParts;
     [SerializeField] private Transform lastLevelPart;
     private List<Transform> currentLevelParts;
     private List<Transform> generatedLevelParts = new List<Transform>();
 
-    // Snap points
+    // Snap points  
     [SerializeField] private SnapPoint nextSnapPoint;
     private SnapPoint defaultSnapPoint;
 
-    // Generation
+    // Generation  
     [Space]
     [SerializeField] private float generationCooldown;
     private bool generationOver;
     private float cooldownTimer;
 
-    // Enemies
+    // Enemies  
     private List<Enemy> enemyList;
 
     private void Awake()
@@ -76,10 +73,10 @@ public class LevelGenerator : MonoBehaviour
     {
         foreach (Enemy enemy in enemyList)
             Destroy(enemy.gameObject);
-        
+
         foreach (Transform part in generatedLevelParts)
             Destroy(part.gameObject);
-        
+
 
         generatedLevelParts = new List<Transform>();
         enemyList = new List<Enemy>();
@@ -90,7 +87,6 @@ public class LevelGenerator : MonoBehaviour
         generationOver = true;
         GenerateNextLevelPart();
 
-        navMeshSurface.BuildNavMesh();
 
         foreach (Enemy enemy in enemyList)
         {

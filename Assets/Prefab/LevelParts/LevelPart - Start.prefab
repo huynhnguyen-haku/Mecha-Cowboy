@@ -133,6 +133,8 @@ GameObject:
   - component: {fileID: 2587642520407677593}
   - component: {fileID: 9090279198317574853}
   - component: {fileID: 6263893661574481423}
+  - component: {fileID: 8519387323323724281}
+  - component: {fileID: 5705984272670470846}
   m_Layer: 0
   m_Name: car_truck
   m_TagString: Untagged
@@ -214,6 +216,48 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &8519387323323724281
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 904128401786224554}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1.9813223, y: 0.83632505, z: 5.4675336}
+  m_Center: {x: 0.0013955171, y: 0.37844905, z: -1.2014756}
+--- !u!65 &5705984272670470846
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 904128401786224554}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1.9813223, y: 1.2431397, z: 2.7515986}
+  m_Center: {x: 0.0013897212, y: 1.5765351, z: 0.15649857}
 --- !u!1 &906033563402314068
 GameObject:
   m_ObjectHideFlags: 0
@@ -6313,6 +6357,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 7427270481095913247}
     m_Modifications:
+    - target: {fileID: 1593255084243059974, guid: 996f37b1e670d6e4a8f48fd401ef2953, type: 3}
+      propertyPath: m_IsKinematic
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2363237938696457269, guid: 996f37b1e670d6e4a8f48fd401ef2953, type: 3}
       propertyPath: m_Enabled
       value: 1
