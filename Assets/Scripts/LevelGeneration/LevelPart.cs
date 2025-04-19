@@ -99,4 +99,9 @@ public class LevelPart : MonoBehaviour
         // If no matching snap points are found, return null
         return null;
     }
+
+    public Enemy[] GetEnemies()
+    {
+        return GetComponentsInChildren<Enemy>(true);
+    }
 }

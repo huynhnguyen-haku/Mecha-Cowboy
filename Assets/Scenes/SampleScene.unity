@@ -2120,6 +2120,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5773017722321680309, guid: 36aeb632ef210f9449e6c080744b2f00, type: 3}
   m_PrefabInstance: {fileID: 46401184924285110}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &687638896 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8017156742101680661, guid: 0e61b6b7d285a9f4bb8e7e798bcdc748, type: 3}
+  m_PrefabInstance: {fileID: 545301488496574131}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a5ac11cc976e418e8d13136b07e1f52, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &710613358
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5400,8 +5411,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d55d95ad3def580418a9e607c0303840, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  navMeshSurface: {fileID: 687638896}
   levelParts:
-  - {fileID: 8155945728179234221, guid: da9d94fce013a0f498725728579b4059, type: 3}
+  - {fileID: 6168851359540970998, guid: 742e17d07fa0fc049baf0b3c30500aea, type: 3}
   lastLevelPart: {fileID: 2961092432926518290, guid: a8fd711215e3e374b99bf670aa16d4ac, type: 3}
   nextSnapPoint: {fileID: 8872344032025864751}
   generationCooldown: 0.25
