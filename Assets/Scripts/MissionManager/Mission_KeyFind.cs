@@ -10,6 +10,7 @@ public class Misson_KeyFind : Mission
         MissionObject_Key.OnKeyPickedUp += PickupKey;
         Enemy enemy = LevelGenerator.instance.GetRandomEnemy();
         enemy.GetComponent<Enemy_DropController>()?.GiveKey(key);
+        enemy.MakeEnemyStronger();
     }
 
     public override bool MissionCompleted()

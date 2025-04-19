@@ -72,6 +72,14 @@ public class Enemy : MonoBehaviour
 
     }
 
+    public virtual void MakeEnemyStronger()
+    {
+        int addtionalHealth = Mathf.RoundToInt(health.currentHealth * 1.5f);
+        health.currentHealth += addtionalHealth;
+
+        transform.localScale = transform.localScale * 1.5f;
+    }
+
     protected bool ShouldEnterBattleMode()
     {
         if (IsPlayerInAgrressionRage() && !inBattleMode)
@@ -153,7 +161,6 @@ public class Enemy : MonoBehaviour
         yield return new WaitForSeconds(0.1f);
         rb.AddForceAtPosition(force, hitpoint, ForceMode.Impulse);
     }
-
 
     public virtual void AbilityTrigger()
     {
