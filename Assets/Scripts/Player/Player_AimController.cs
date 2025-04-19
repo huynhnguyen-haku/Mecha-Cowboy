@@ -40,7 +40,7 @@ public class Player_AimController : MonoBehaviour
 
     private void Update()
     {
-        if (player.health.isDead)
+        if (player.health.playerIsDead)
             return;
 
         if (Input.GetKeyDown(KeyCode.P))

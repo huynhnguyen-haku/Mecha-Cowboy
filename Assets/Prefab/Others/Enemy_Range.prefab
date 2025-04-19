@@ -4834,6 +4834,7 @@ GameObject:
   - component: {fileID: 8712370896228159148}
   - component: {fileID: 6341899618620792271}
   - component: {fileID: 954372867471128308}
+  - component: {fileID: -2952951910535933870}
   m_Layer: 11
   m_Name: Enemy_Range
   m_TagString: Untagged
@@ -4994,6 +4995,18 @@ MonoBehaviour:
   leftElbowIK: {fileID: 5953993946798256391}
   leftHandIKConstraint: {fileID: 870930516926873129}
   weaponAimConstraint: {fileID: 3260602148461222417}
+--- !u!114 &-2952951910535933870
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4851063174530935344}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59805ee22aff0034fafbb92c7f8cc3db, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4893005789405341513
 GameObject:
   m_ObjectHideFlags: 0

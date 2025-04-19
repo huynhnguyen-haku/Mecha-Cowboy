@@ -5,7 +5,7 @@ public class Player_Health : HealthController
     private Player player;
     private Player_AimController aim;
 
-    public bool isDead;
+    public bool playerIsDead; 
     private LineRenderer aimLaser;
 
     protected override void Awake()
@@ -18,21 +18,20 @@ public class Player_Health : HealthController
     public override void ReduceHealth(int damage)
     {
         base.ReduceHealth(damage);
-        if (ShouldDie())
+        if (PlayerShouldDie())
         {
             Die();
         }
-
     }
 
     private void Die()
     {
-        if (isDead)
+        if (playerIsDead) 
             return;
 
-        isDead = true;
+        playerIsDead = true;
         player.anim.enabled = false;
         player.ragdoll.RagdollActive(true);
-        player.aim.aimLaser.enabled = false; // Disable aim laser on death
+        player.aim.aimLaser.enabled = false;
     }
 }

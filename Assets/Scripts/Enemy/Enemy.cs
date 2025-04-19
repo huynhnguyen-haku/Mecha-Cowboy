@@ -38,6 +38,7 @@ public class Enemy : MonoBehaviour
     public Enemy_Visual visual { get; private set; }
     public Ragdoll ragdoll { get; private set; }
     public Enemy_Health health { get; private set; }
+    public Enemy_DropController dropController { get; private set; }
 
 
     protected virtual void Awake()
@@ -48,6 +49,7 @@ public class Enemy : MonoBehaviour
         visual = GetComponent<Enemy_Visual>();
         agent = GetComponent<NavMeshAgent>();
         anim = GetComponentInChildren<Animator>();
+        dropController = GetComponent<Enemy_DropController>();
         player = GameObject.Find("Player").GetComponent<Transform>();
     }
 
@@ -89,9 +91,10 @@ public class Enemy : MonoBehaviour
     {
         health.ReduceHealth(damage);
 
-        if (health.ShouldDie())
+        if (health.EnemyShouldDie())
         {
             Die();
+            dropController.DropItems();
         }
 
         EnterBattleMode();
@@ -138,7 +141,7 @@ public class Enemy : MonoBehaviour
 
     public virtual void BulletImpact(Vector3 force, Vector3 hitpoint, Rigidbody rb)
     {
-        if(health.ShouldDie())
+        if(health.EnemyShouldDie())
         {
             StartCoroutine(DeathImpactCourotine(force, hitpoint, rb));
 

@@ -4,6 +4,7 @@ public class HealthController : MonoBehaviour
 {
     public int maxHealth;
     public int currentHealth;
+    private bool isDead;
 
     protected virtual void Awake()
     {
@@ -34,7 +35,24 @@ public class HealthController : MonoBehaviour
         }
     }
 
-    public bool ShouldDie()
+    // Used for enemy
+    public bool EnemyShouldDie()
+    {
+        if (isDead)
+        {
+            return false;
+        }
+
+        if (currentHealth <= 0)
+        {
+            isDead = true;
+            return true;
+        }
+        return false;
+    }
+
+    // Used for player
+    public bool PlayerShouldDie()
     {
         return currentHealth <= 0;
     }

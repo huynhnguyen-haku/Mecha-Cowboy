@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class LevelGenerator : MonoBehaviour
 {
+    public static LevelGenerator instance;
+
     // Navmesh
     [SerializeField] private NavMeshSurface navMeshSurface;
     [Space]
@@ -26,6 +28,11 @@ public class LevelGenerator : MonoBehaviour
 
     // Enemies
     private List<Enemy> enemyList;
+
+    private void Awake()
+    {
+        instance = this;
+    }
 
     private void Start()
     {
@@ -125,5 +132,11 @@ public class LevelGenerator : MonoBehaviour
         currentLevelParts.RemoveAt(randomIndex);
 
         return chosenPart;
+    }
+
+    public Enemy GetRandomEnemy()
+    {
+        int randomIndex = Random.Range(0, enemyList.Count);
+        return enemyList[randomIndex];
     }
 }
