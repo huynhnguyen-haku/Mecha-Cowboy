@@ -12,7 +12,7 @@ public class MissionManager : MonoBehaviour
 
     private void Start()
     {
-        currentMission?.StartMission();
+        Invoke(nameof(StartMission), 2); 
     }
 
     private void Update()
@@ -22,11 +22,11 @@ public class MissionManager : MonoBehaviour
 
     private void StartMission()
     {
-        currentMission.StartMission();
+       currentMission.StartMission();
     }
 
-    public void CompleteMission()
+    public bool CompleteMission()
     {
-        currentMission.MissionCompleted();
+       return currentMission.MissionCompleted();
     }
 }
