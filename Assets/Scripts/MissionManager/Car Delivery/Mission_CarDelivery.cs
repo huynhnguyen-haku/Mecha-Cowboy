@@ -7,6 +7,9 @@ public class Mission_CarDelivery : Mission
     private bool isCarDelivered;
     public override void StartMission()
     {
+
+        FindObjectOfType<MissionObject_CarDeliveryZone>(true).gameObject.SetActive(true);
+
         isCarDelivered = false;
         MissionObject_Car.OnCarDelivery += CompleteCarDelivery;
 
