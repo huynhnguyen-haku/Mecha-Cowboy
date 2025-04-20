@@ -4,7 +4,7 @@ using UnityEngine;
 public class Misson_KeyFind : Mission
 {
     [SerializeField] private GameObject key;
-    private bool keyFound;
+    private bool isKeyFound;
     public override void StartMission()
     {
         MissionObject_Key.OnKeyPickedUp += PickupKey;
@@ -15,13 +15,13 @@ public class Misson_KeyFind : Mission
 
     public override bool MissionCompleted()
     {
-        return keyFound;
+        return isKeyFound;
     }
 
 
     private void PickupKey()
     {
-        keyFound = true;
+        isKeyFound = true;
         MissionObject_Key.OnKeyPickedUp -= PickupKey;
         Debug.Log("Key Found");
     }
