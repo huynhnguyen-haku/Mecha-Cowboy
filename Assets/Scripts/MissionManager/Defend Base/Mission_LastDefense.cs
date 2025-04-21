@@ -6,6 +6,7 @@ using UnityEngine;
 public class Mission_LastDefense : Mission
 {
     public bool isDefenceStarted = false;
+    public bool isMissionCompleted = false; // New flag to track mission completion
 
     [Header("Mission Details")]
     public float defenseDuration = 120;
@@ -30,40 +31,45 @@ public class Mission_LastDefense : Mission
         isDefenceStarted = false;
     }
 
-
     public override void StartMission()
     {
+        if (isMissionCompleted)
+            return; // Prevent starting the mission if it's already completed
+
         defensePoint = FindObjectOfType<MissionEnd_Trigger>().transform.position;
         respawnPoints = new List<Transform>(ClosestPoints(numberOfRespawnPoints));
     }
+
     public override bool MissionCompleted()
     {
+        if (isMissionCompleted)
+            return true; // Return true if the mission is already completed
+
         if (isDefenceStarted == false)
         {
             StartDefenceEvent();
             return false;
         }
-        return defenseTimer < 0;
+        return false;
     }
 
     public override void UpdateMission()
     {
-        if (isDefenceStarted == false)
-            return;
+        if (isDefenceStarted == false || isMissionCompleted) return;
 
         defenseTimer -= Time.deltaTime;
         waveTimer -= Time.deltaTime;
 
         if (defenseTimer <= 0)
         {
-            EndDefenceEvent(); // Gọi phương thức kết thúc nhiệm vụ
-            return; // Dừng việc spawn enemy
+            EndDefenceEvent();
+            return;
         }
 
         if (waveTimer < 0)
         {
             CreateNewEnemies(numberOfEnemiesPerWave);
-            waveTimer = timeBetweenWaves; // Cool down for the next wave
+            waveTimer = timeBetweenWaves;
         }
 
         defenceTimerText = System.TimeSpan.FromSeconds(defenseTimer).ToString("mm':'ss");
@@ -72,16 +78,16 @@ public class Mission_LastDefense : Mission
 
     private void StartDefenceEvent()
     {
-        waveTimer = 0.5f; // Start the first wave immediately
+        waveTimer = 0.5f;
         defenseTimer = defenseDuration;
         isDefenceStarted = true;
     }
 
     private void EndDefenceEvent()
     {
-        isDefenceStarted = false; // Dừng nhiệm vụ phòng thủ
+        isDefenceStarted = false;
 
-        // Tìm tất cả các kẻ địch trong scene
+        // Destroy all enemies in the scene
         Enemy[] allEnemies = FindObjectsOfType<Enemy>();
         foreach (var enemy in allEnemies)
         {
@@ -91,11 +97,9 @@ public class Mission_LastDefense : Mission
                 healthController.SetHealthToZero();
             }
         }
-
+        isMissionCompleted = true; // Mark the mission as completed
         Debug.Log("Defense mission ended. All enemies have been defeated.");
     }
-
-
 
     private void CreateNewEnemies(int number)
     {
