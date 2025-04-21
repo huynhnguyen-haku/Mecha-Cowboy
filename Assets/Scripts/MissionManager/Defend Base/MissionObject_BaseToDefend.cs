@@ -13,5 +13,10 @@ public class MissionObject_BaseToDefend : MonoBehaviour
     {
         if (other.gameObject != player)
             return;
+
+        if (MissionManager.instance.MissionCompleted())
+        {
+            Debug.Log("Start Mission");
+        }
     }
 }

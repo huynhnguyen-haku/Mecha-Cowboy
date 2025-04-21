@@ -29,6 +29,7 @@ public class Mission_LastDefense : Mission
     private void OnEnable()
     {
         isDefenceStarted = false;
+        isMissionCompleted = false; 
     }
 
     public override void StartMission()
@@ -36,7 +37,6 @@ public class Mission_LastDefense : Mission
         if (isMissionCompleted)
             return; // Prevent starting the mission if it's already completed
 
-        //defensePoint = FindObjectOfType<MissionEnd_Trigger>().transform.position;
         defensePoint = FindObjectOfType<MissionObject_BaseToDefend>().transform.position;
         respawnPoints = new List<Transform>(ClosestPoints(numberOfRespawnPoints));
     }
