@@ -15,11 +15,14 @@ MonoBehaviour:
   missionName: Final Defence
   missionDescription: Get to the exit point and defend the airplace till it's ready
     to take off.
-  defenceDuration: 120
+  isDefenceStarted: 0
+  defenseDuration: 30
   timeBetweenWaves: 15
   numberOfRespawnPoints: 2
-  respawnPoints: []
-  numberOfEnemiesPerWave: 4
+  respawnPoints:
+  - {fileID: 0}
+  - {fileID: 0}
+  numberOfEnemiesPerWave: 2
   enemyPrefabs:
   - {fileID: 6710769619524479166, guid: 960d338485c890c47ad6d910e0d92194, type: 3}
   - {fileID: 8978599588123965400, guid: 1ccd577960029fd45aaaaf9ca9da413b, type: 3}

@@ -1,23 +1,23 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "Last Defence Mission", menuName = "Mission/Last Defence - Mission")]
 
-public class Mission_LastDefence : Mission
+public class Mission_LastDefense : Mission
 {
     public bool isDefenceStarted;
 
     [Header("Mission Details")]
-    public float defenceDuration = 120;
+    public float defenseDuration = 120;
     public float timeBetweenWaves = 15;
 
-    private float defenceTimer;
+    private float defenseTimer;
     private float waveTimer;
 
     [Header("Respawn Details")]
     public int numberOfRespawnPoints = 2;
     public List<Transform> respawnPoints;
-    private Vector3 defencePoint;
+    private Vector3 defensePoint;
 
     [Space]
 
@@ -35,15 +35,14 @@ public class Mission_LastDefence : Mission
         if (isDefenceStarted == false)
         {
             StartDefenceEvent();
-            return false;
+            return true;
         }
-
-        return defenceTimer < 0;
+        return defenseTimer <= 0;
     }
 
     public override void StartMission()
     {
-        defencePoint = FindObjectOfType<MissionEnd_Trigger>().transform.position;
+        defensePoint = FindObjectOfType<MissionEnd_Trigger>().transform.position;
         respawnPoints = new List<Transform>(ClosestPoints(numberOfRespawnPoints));
     }
 
@@ -52,20 +51,29 @@ public class Mission_LastDefence : Mission
         if (isDefenceStarted == false)
             return;
 
-        defenceTimer -= Time.deltaTime;
+        defenseTimer -= Time.deltaTime;
         waveTimer -= Time.deltaTime;
+
+        if (defenseTimer <= 0)
+        {
+            EndDefenceEvent(); // Gọi phương thức kết thúc nhiệm vụ
+            return; // Dừng việc spawn enemy
+        }
 
         if (waveTimer < 0)
         {
             CreateNewEnemies(numberOfEnemiesPerWave);
             waveTimer = timeBetweenWaves; // Cool down for the next wave
         }
-        defenceTimerText = System.TimeSpan.FromSeconds(defenceTimer).ToString("mm':'ss");
+
+        defenceTimerText = System.TimeSpan.FromSeconds(defenseTimer).ToString("mm':'ss");
         Debug.Log(defenceTimerText);
     }
 
+
     private void CreateNewEnemies(int number)
     {
+
         for (int i = 0; i < number; i++)
         {
             int randomEnemyIndex = Random.Range(0, enemyPrefabs.Length);
@@ -77,14 +85,35 @@ public class Mission_LastDefence : Mission
             randomEnemy.GetComponent<Enemy>().arrgresssionRange = 100;
             ObjectPool.instance.GetObject(randomEnemy, randomRespawnPoint);
         }
+
+        if (enemyPrefabs.Length == 0 || respawnPoints.Count == 0) return;
     }
 
     private void StartDefenceEvent()
     {
         waveTimer = 0.5f; // Start the first wave immediately
-        defenceTimer = defenceDuration;
+        defenseTimer = defenseDuration;
         isDefenceStarted = true;
     }
+
+    private void EndDefenceEvent()
+    {
+        isDefenceStarted = false; // Dừng nhiệm vụ phòng thủ
+
+        // Tìm tất cả các kẻ địch trong scene
+        Enemy[] allEnemies = FindObjectsOfType<Enemy>();
+        foreach (var enemy in allEnemies)
+        {
+            HealthController healthController = enemy.GetComponent<HealthController>();
+            if (healthController != null)
+            {
+                healthController.SetHealthToZero();
+            }
+        }
+
+        Debug.Log("Defense mission ended. All enemies have been defeated.");
+    }
+
 
     private List<Transform> ClosestPoints(int number)
     {
@@ -99,7 +128,7 @@ public class Mission_LastDefence : Mission
 
             foreach (var point in allPoints)
             {
-                float distance = Vector3.Distance(defencePoint, point.transform.position);
+                float distance = Vector3.Distance(defensePoint, point.transform.position);
                 if (distance < shortestDistance)
                 {
                     shortestDistance = distance;

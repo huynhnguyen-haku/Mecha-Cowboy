@@ -152,7 +152,6 @@ public class Enemy : MonoBehaviour
     public virtual void Die()
     {
         dropController.DropItems();
-
         MissionObject_Target huntTarget = GetComponent<MissionObject_Target>();
         huntTarget?.InvokeOnTargetKilled();
     }

@@ -1,9 +1,11 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 public class MissionManager : MonoBehaviour
 {
     public static MissionManager instance;
     public Mission currentMission;
+
+    public bool isMissionCompleted; // Cờ để lưu trạng thái nhiệm vụ
 
     private void Awake()
     {
@@ -12,7 +14,7 @@ public class MissionManager : MonoBehaviour
 
     private void Start()
     {
-        Invoke(nameof(StartMission), 2); 
+        Invoke(nameof(StartMission), 2);
     }
 
     private void Update()
@@ -22,11 +24,30 @@ public class MissionManager : MonoBehaviour
 
     private void StartMission()
     {
-       currentMission.StartMission();
+        currentMission.StartMission();
     }
 
     public bool CompleteMission()
     {
-       return currentMission.MissionCompleted();
+        if (isMissionCompleted)
+        {
+            Debug.Log("Mission already completed.");
+            return false;
+        }
+
+        if (currentMission.MissionCompleted())
+        {
+            isMissionCompleted = true;
+            return true;
+        }
+
+        Debug.Log("Mission not completed yet.");
+        return false;
+    }
+
+
+    public bool IsMissionCompleted()
+    {
+        return isMissionCompleted;
     }
 }

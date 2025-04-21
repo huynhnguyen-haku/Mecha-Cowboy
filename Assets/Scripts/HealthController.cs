@@ -1,3 +1,5 @@
+﻿using System;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class HealthController : MonoBehaviour
@@ -55,5 +57,28 @@ public class HealthController : MonoBehaviour
     public bool PlayerShouldDie()
     {
         return currentHealth <= 0;
+    }
+
+    public virtual void SetHealthToZero()
+    {
+        currentHealth = 0;
+        isDead = true;
+
+        // Chuyển sang DeadState nếu kẻ địch có EnemyStateMachine
+        if (TryGetComponent(out Enemy enemy))
+        {
+            if (enemy.stateMachine != null)
+            {
+                // Sử dụng DeadState đã có thay vì tạo mới
+                if (enemy is Enemy_Range rangeEnemy)
+                {
+                    enemy.stateMachine.ChangeState(rangeEnemy.deadState);
+                }
+                else if (enemy is Enemy_Melee meleeEnemy)
+                {
+                    enemy.stateMachine.ChangeState(meleeEnemy.deadState);
+                }
+            }
+        }
     }
 }
