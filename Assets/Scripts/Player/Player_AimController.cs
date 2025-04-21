@@ -73,16 +73,19 @@ public class Player_AimController : MonoBehaviour
         Vector3 laserDirection = player.weapon.BullectDirection();
         Vector3 endPoint = gunPoint.position + laserDirection * gunDistance;
 
+        // Perform a raycast to detect obstacles
         if (Physics.Raycast(gunPoint.position, laserDirection, out RaycastHit hitInfo, gunDistance))
         {
             endPoint = hitInfo.point;
             laserTipLength = 0;
         }
 
+        // Update the laser positions
         aimLaser.SetPosition(0, gunPoint.position);
         aimLaser.SetPosition(1, endPoint);
         aimLaser.SetPosition(2, endPoint + laserDirection * laserTipLength);
     }
+
     private void UpdateAimPosition()
     {
         Transform target = Target();
@@ -102,6 +105,7 @@ public class Player_AimController : MonoBehaviour
         if (!isAimingPrecisly)
             aim.position = new Vector3(aim.position.x, transform.position.y + 1, aim.position.z);
     }
+
 
     public Transform Target()
     {

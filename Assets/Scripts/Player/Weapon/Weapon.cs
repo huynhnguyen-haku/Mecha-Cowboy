@@ -6,7 +6,8 @@ public enum WeaponType
     Revolver,
     Rifle,
     Shotgun,
-    Sniper
+    Sniper,
+    Minigun
 }
 
 public enum ShotType
