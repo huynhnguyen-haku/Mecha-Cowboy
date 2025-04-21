@@ -5,7 +5,6 @@ public class MissionManager : MonoBehaviour
     public static MissionManager instance;
     public Mission currentMission;
 
-    public bool isMissionCompleted; // Cờ để lưu trạng thái nhiệm vụ
 
     private void Awake()
     {
@@ -22,32 +21,7 @@ public class MissionManager : MonoBehaviour
         currentMission?.UpdateMission();
     }
 
-    private void StartMission()
-    {
-        currentMission.StartMission();
-    }
+    public void StartMission() => currentMission.StartMission();
 
-    public bool CompleteMission()
-    {
-        if (isMissionCompleted)
-        {
-            Debug.Log("Mission already completed.");
-            return false;
-        }
-
-        if (currentMission.MissionCompleted())
-        {
-            isMissionCompleted = true;
-            return true;
-        }
-
-        Debug.Log("Mission not completed yet.");
-        return false;
-    }
-
-
-    public bool IsMissionCompleted()
-    {
-        return isMissionCompleted;
-    }
+    public bool MissionCompleted() => currentMission.MissionCompleted();
 }

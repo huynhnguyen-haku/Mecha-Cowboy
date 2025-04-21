@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class Mission_LastDefense : Mission
 {
-    public bool isDefenceStarted;
+    public bool isDefenceStarted = false;
 
     [Header("Mission Details")]
     public float defenseDuration = 120;
@@ -30,20 +30,20 @@ public class Mission_LastDefense : Mission
         isDefenceStarted = false;
     }
 
-    public override bool MissionCompleted()
-    {
-        if (isDefenceStarted == false)
-        {
-            StartDefenceEvent();
-            return true;
-        }
-        return defenseTimer <= 0;
-    }
 
     public override void StartMission()
     {
         defensePoint = FindObjectOfType<MissionEnd_Trigger>().transform.position;
         respawnPoints = new List<Transform>(ClosestPoints(numberOfRespawnPoints));
+    }
+    public override bool MissionCompleted()
+    {
+        if (isDefenceStarted == false)
+        {
+            StartDefenceEvent();
+            return false;
+        }
+        return defenseTimer < 0;
     }
 
     public override void UpdateMission()
@@ -68,25 +68,6 @@ public class Mission_LastDefense : Mission
 
         defenceTimerText = System.TimeSpan.FromSeconds(defenseTimer).ToString("mm':'ss");
         Debug.Log(defenceTimerText);
-    }
-
-
-    private void CreateNewEnemies(int number)
-    {
-
-        for (int i = 0; i < number; i++)
-        {
-            int randomEnemyIndex = Random.Range(0, enemyPrefabs.Length);
-            int randomRespawnIndex = Random.Range(0, respawnPoints.Count);
-
-            Transform randomRespawnPoint = respawnPoints[randomRespawnIndex];
-            GameObject randomEnemy = enemyPrefabs[randomEnemyIndex];
-
-            randomEnemy.GetComponent<Enemy>().arrgresssionRange = 100;
-            ObjectPool.instance.GetObject(randomEnemy, randomRespawnPoint);
-        }
-
-        if (enemyPrefabs.Length == 0 || respawnPoints.Count == 0) return;
     }
 
     private void StartDefenceEvent()
@@ -114,6 +95,22 @@ public class Mission_LastDefense : Mission
         Debug.Log("Defense mission ended. All enemies have been defeated.");
     }
 
+
+
+    private void CreateNewEnemies(int number)
+    {
+        for (int i = 0; i < number; i++)
+        {
+            int randomEnemyIndex = Random.Range(0, enemyPrefabs.Length);
+            int randomRespawnIndex = Random.Range(0, respawnPoints.Count);
+
+            Transform randomRespawnPoint = respawnPoints[randomRespawnIndex];
+            GameObject randomEnemy = enemyPrefabs[randomEnemyIndex];
+
+            randomEnemy.GetComponent<Enemy>().arrgresssionRange = 100;
+            ObjectPool.instance.GetObject(randomEnemy, randomRespawnPoint);
+        }
+    }
 
     private List<Transform> ClosestPoints(int number)
     {

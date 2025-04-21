@@ -11,18 +11,12 @@ public class MissionEnd_Trigger : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject != player) return;
-
-        // Kiểm tra trạng thái nhiệm vụ trước khi hoàn thành
-        if (MissionManager.instance.IsMissionCompleted())
-        {
-            Debug.Log("Mission already completed. No further action taken.");
+        if (other.gameObject != player)
             return;
-        }
 
-        if (MissionManager.instance.CompleteMission())
+        if (MissionManager.instance.MissionCompleted())
         {
-            Debug.Log("Mission Completed");
+            Debug.Log("Level completed!");
         }
     }
 }
