@@ -12,6 +12,7 @@ public class Mission_HuntingTarget : Mission
     public override void StartMission()
     {
         remainingTargets = numberOfTarget;
+        UpdateMissionUI();
         MissionObject_Target.OnTargetKilled += ReduceRemainingTargets;
 
         List<Enemy> validEnemies = new List<Enemy>();
@@ -45,11 +46,20 @@ public class Mission_HuntingTarget : Mission
     private void ReduceRemainingTargets()
     {
         remainingTargets--;
+        UpdateMissionUI();
+
         if (remainingTargets <= 0)
         {
+            UI.instance.inGameUI.UpdateMissionUI("Target eliminated. Get to the evacuation point to complete mission");
             MissionObject_Target.OnTargetKilled -= ReduceRemainingTargets;
         }
     }
+    private void UpdateMissionUI()
+    {
+        string missionText = "Eliminate " + numberOfTarget + " " + enemyType.ToString() + " enemies";
+        string missionDetails = "Remaining: " + remainingTargets;
 
+        UI.instance.inGameUI.UpdateMissionUI(missionText, missionDetails);
+    }
 }
 

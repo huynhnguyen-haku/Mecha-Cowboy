@@ -4,11 +4,16 @@ using UnityEngine;
 
 public class Mission_CarDelivery : Mission
 {
-    private bool isCarDelivered;
+    public bool isCarDelivered;
     public override void StartMission()
     {
 
         FindObjectOfType<MissionObject_CarDeliveryZone>(true).gameObject.SetActive(true);
+
+        string missionText = "Find a functiuonal car";
+        string missionDetails = "Get to the car and drive it to the specified parking area";
+
+        UI.instance.inGameUI.UpdateMissionUI(missionText, missionDetails);
 
         isCarDelivered = false;
         MissionObject_Car.OnCarDelivery += CompleteCarDelivery;
@@ -33,6 +38,10 @@ public class Mission_CarDelivery : Mission
     {
         isCarDelivered = true;
         MissionObject_Car.OnCarDelivery -= CompleteCarDelivery;
+
+        string missionText = "Car delivered.";
+        string missionDetails = "Get to the evacuation point to complete mission";
+        UI.instance.inGameUI.UpdateMissionUI(missionText, missionDetails);
     }
 
 }

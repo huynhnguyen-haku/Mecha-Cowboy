@@ -1,5 +1,6 @@
 using NUnit.Framework;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -11,9 +12,19 @@ public class UI_InGame : MonoBehaviour
     [Header("Weapon Slots")]
     [SerializeField] private UI_WeaponSlot[] weaponSlots_UI;
 
+    [Header("Mission")]
+    [SerializeField] private TextMeshProUGUI missionText;
+    [SerializeField] private TextMeshProUGUI missionDetai;
+
     private void Awake()
     {
         weaponSlots_UI = GetComponentsInChildren<UI_WeaponSlot>();
+    }
+
+    public void UpdateMissionUI(string mission, string missionDetails = "")
+    {
+        missionText.text = mission;
+        missionDetai.text = missionDetails;
     }
 
     public void UpdateWeaponUI(List<Weapon> weaponSlots, Weapon currentWeapon)
