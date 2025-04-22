@@ -20,7 +20,11 @@ public class Mission_Timer : Mission
             Debug.Log("Game over");
         }
         string timeText = System.TimeSpan.FromSeconds(currentTime).ToString("mm':'ss");
-        Debug.Log(timeText);
+
+        string missionText = "Get to the airplane before the time run out.";
+        string missionDetails = "Time Left: " + timeText;
+
+        UI.instance.inGameUI.UpdateMissionUI(missionText, missionDetails);
     }
 
     public override bool MissionCompleted()

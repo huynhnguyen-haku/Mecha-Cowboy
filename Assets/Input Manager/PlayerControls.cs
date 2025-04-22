@@ -207,6 +207,15 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Toggle Mission UI"",
+                    ""type"": ""Button"",
+                    ""id"": ""94f0c762-e908-4b36-90cc-9a5ba3cec178"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -394,6 +403,17 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Interact"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""59096252-3e59-49f9-a024-ccb706987b0a"",
+                    ""path"": ""<Keyboard>/h"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Toggle Mission UI"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -994,6 +1014,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         m_Character_Reload = m_Character.FindAction("Reload", throwIfNotFound: true);
         m_Character_ToggleBurstMode = m_Character.FindAction("Toggle Burst Mode", throwIfNotFound: true);
         m_Character_Interact = m_Character.FindAction("Interact", throwIfNotFound: true);
+        m_Character_ToggleMissionUI = m_Character.FindAction("Toggle Mission UI", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -1100,6 +1121,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     private readonly InputAction m_Character_Reload;
     private readonly InputAction m_Character_ToggleBurstMode;
     private readonly InputAction m_Character_Interact;
+    private readonly InputAction m_Character_ToggleMissionUI;
     /// <summary>
     /// Provides access to input actions defined in input action map "Character".
     /// </summary>
@@ -1163,6 +1185,10 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "Character/Interact".
         /// </summary>
         public InputAction @Interact => m_Wrapper.m_Character_Interact;
+        /// <summary>
+        /// Provides access to the underlying input action "Character/ToggleMissionUI".
+        /// </summary>
+        public InputAction @ToggleMissionUI => m_Wrapper.m_Character_ToggleMissionUI;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -1228,6 +1254,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @Interact.started += instance.OnInteract;
             @Interact.performed += instance.OnInteract;
             @Interact.canceled += instance.OnInteract;
+            @ToggleMissionUI.started += instance.OnToggleMissionUI;
+            @ToggleMissionUI.performed += instance.OnToggleMissionUI;
+            @ToggleMissionUI.canceled += instance.OnToggleMissionUI;
         }
 
         /// <summary>
@@ -1278,6 +1307,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @Interact.started -= instance.OnInteract;
             @Interact.performed -= instance.OnInteract;
             @Interact.canceled -= instance.OnInteract;
+            @ToggleMissionUI.started -= instance.OnToggleMissionUI;
+            @ToggleMissionUI.performed -= instance.OnToggleMissionUI;
+            @ToggleMissionUI.canceled -= instance.OnToggleMissionUI;
         }
 
         /// <summary>
@@ -1669,6 +1701,13 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnInteract(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "Toggle Mission UI" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnToggleMissionUI(InputAction.CallbackContext context);
     }
     /// <summary>
     /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "UI" which allows adding and removing callbacks.

@@ -29,6 +29,7 @@ public class Player : MonoBehaviour
     private void OnEnable()
     {
         controls.Enable();
+        controls.Character.ToggleMissionUI.performed += ctx => UI.instance.inGameUI.ToggleMissionUI();
     }
 
     private void OnDisable()

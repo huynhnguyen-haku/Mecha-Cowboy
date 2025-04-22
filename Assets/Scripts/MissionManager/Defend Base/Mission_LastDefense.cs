@@ -29,7 +29,7 @@ public class Mission_LastDefense : Mission
     private void OnEnable()
     {
         isDefenceStarted = false;
-        isMissionCompleted = false; 
+        isMissionCompleted = false;
     }
 
     public override void StartMission()
@@ -39,6 +39,8 @@ public class Mission_LastDefense : Mission
 
         defensePoint = FindObjectOfType<MissionObject_BaseToDefend>().transform.position;
         respawnPoints = new List<Transform>(ClosestPoints(numberOfRespawnPoints));
+
+        UI.instance.inGameUI.UpdateMissionUI("Get to the base that need help.");
     }
 
     public override bool MissionCompleted()
@@ -58,8 +60,13 @@ public class Mission_LastDefense : Mission
     {
         if (isDefenceStarted == false || isMissionCompleted) return;
 
-        defenseTimer -= Time.deltaTime;
         waveTimer -= Time.deltaTime;
+
+        if (defenseTimer > 0)
+        {
+            defenseTimer -= Time.deltaTime;
+        }
+
 
         if (defenseTimer <= 0)
         {
@@ -74,7 +81,10 @@ public class Mission_LastDefense : Mission
         }
 
         defenceTimerText = System.TimeSpan.FromSeconds(defenseTimer).ToString("mm':'ss");
-        Debug.Log(defenceTimerText);
+
+        string missionText = "Pick up the heavy machine gun to defend the base.";
+        string missionDetails = "Time Left: " + defenceTimerText;
+        UI.instance.inGameUI.UpdateMissionUI(missionText, missionDetails);
     }
 
     private void StartDefenceEvent()
@@ -82,6 +92,8 @@ public class Mission_LastDefense : Mission
         waveTimer = 0.5f;
         defenseTimer = defenseDuration;
         isDefenceStarted = true;
+
+
     }
 
     private void EndDefenceEvent()

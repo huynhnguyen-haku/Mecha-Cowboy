@@ -13,12 +13,23 @@ public class UI_InGame : MonoBehaviour
     [SerializeField] private UI_WeaponSlot[] weaponSlots_UI;
 
     [Header("Mission")]
+    [SerializeField] private GameObject missionUIParent;
+    [SerializeField] private GameObject missionGuide;
     [SerializeField] private TextMeshProUGUI missionText;
     [SerializeField] private TextMeshProUGUI missionDetai;
+
+    private bool MissionUIActive = true;
 
     private void Awake()
     {
         weaponSlots_UI = GetComponentsInChildren<UI_WeaponSlot>();
+    }
+    
+    public void ToggleMissionUI()
+    {
+        MissionUIActive = !MissionUIActive;
+        missionUIParent.SetActive(MissionUIActive);
+        missionGuide.SetActive(!MissionUIActive);
     }
 
     public void UpdateMissionUI(string mission, string missionDetails = "")
