@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weaponName: Reberca
   weaponType: 3
-  bulletDamage: 20
+  bulletDamage: 40
   shotType: 0
   bulletsPerShot: 5
   fireRate: 150
@@ -33,3 +33,4 @@ MonoBehaviour:
   burst_BulletsPerShot: 0
   burst_FireRate: 0
   burst_FireDelay: 0.1
+  weaponIcon: {fileID: 1613465637, guid: 3477fe9a26e0faa42b5a9b5b258229c1, type: 3}

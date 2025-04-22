@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weaponName: Cowboy Bolt
   weaponType: 1
-  bulletDamage: 20
+  bulletDamage: 30
   shotType: 0
   bulletsPerShot: 1
   fireRate: 150
@@ -33,3 +33,4 @@ MonoBehaviour:
   burst_BulletsPerShot: 0
   burst_FireRate: 0
   burst_FireDelay: 0.1
+  weaponIcon: {fileID: -521392656, guid: 3477fe9a26e0faa42b5a9b5b258229c1, type: 3}

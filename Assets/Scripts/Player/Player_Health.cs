@@ -22,6 +22,8 @@ public class Player_Health : HealthController
         {
             Die();
         }
+
+        UI.instance.inGameUI.UpdateHealthUI(currentHealth, maxHealth);
     }
 
     private void Die()

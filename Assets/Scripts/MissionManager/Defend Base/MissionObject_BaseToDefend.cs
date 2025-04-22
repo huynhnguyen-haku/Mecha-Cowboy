@@ -16,7 +16,7 @@ public class MissionObject_BaseToDefend : MonoBehaviour
 
         if (MissionManager.instance.MissionCompleted())
         {
-            Debug.Log("Start Mission");
+            Debug.Log("Mission Complete");
         }
     }
 }

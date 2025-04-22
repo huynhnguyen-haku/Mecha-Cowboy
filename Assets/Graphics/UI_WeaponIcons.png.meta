@@ -110,13 +110,35 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: UI_WeaponIcons_Pistol
+      name: UI_WeaponIcons_0
       rect:
         serializedVersion: 2
-        x: 13
-        y: 851
-        width: 938
-        height: 219
+        x: 9
+        y: 850
+        width: 945
+        height: 223
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 1, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 54231b049b94a3b429f067207536b35c
+      internalID: -930626539
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_WeaponIcons_1
+      rect:
+        serializedVersion: 2
+        x: 967
+        y: 850
+        width: 945
+        height: 225
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -125,118 +147,96 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e32f941b86a0a6748aaee333badf66e0
-      internalID: 351250029
+      spriteID: a922574107551a34dae36df4e04c481b
+      internalID: 1613465637
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: UI_WeaponIcons_Revolver
+      name: UI_WeaponIcons_2
       rect:
         serializedVersion: 2
-        x: 14
-        y: 616
-        width: 936
-        height: 214
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 1d04f5d39869df448b57fd804f2698bf
-      internalID: -148591112
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: UI_WeaponIcons_Rifle
-      rect:
-        serializedVersion: 2
-        x: 9
-        y: 371
-        width: 941
-        height: 219
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 9f1803f74122e7a4e9768a560b520062
-      internalID: -1153673929
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: UI_WeaponIcons_Sniper
-      rect:
-        serializedVersion: 2
-        x: 9
-        y: 128
-        width: 942
+        x: 10
+        y: 611
+        width: 944
         height: 224
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 57e580d1297197a46a2a51329e45200a
-      internalID: -69989564
+      spriteID: 8223176bc8a0d9d4a9ea5f746a2893c0
+      internalID: -521392656
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: UI_WeaponIcons_Shotgun
+      name: UI_WeaponIcons_3
       rect:
         serializedVersion: 2
-        x: 972
-        y: 856
-        width: 935
-        height: 214
+        x: 964
+        y: 611
+        width: 949
+        height: 231
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e5a5ef98a4eaea743b55fe6143fcf23f
-      internalID: 842642775
+      spriteID: ac6220b9a1f64614fa5bc289f2242469
+      internalID: 2129644612
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: UI_WeaponIcons_Minigun
+      name: UI_WeaponIcons_4
       rect:
         serializedVersion: 2
-        x: 968
-        y: 571
-        width: 943
-        height: 253
+        x: 7
+        y: 367
+        width: 945
+        height: 226
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 9457ef248b217b549b679f7ce5b45557
-      internalID: -734187634
+      spriteID: 24ecd879db9c2d945a2deb8d6f3ed05f
+      internalID: 948876784
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_WeaponIcons_6
+      rect:
+        serializedVersion: 2
+        x: 8
+        y: 129
+        width: 945
+        height: 225
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f2aca779c3902a244aafab2914e5d881
+      internalID: 1437709514
       vertices: []
       indices: 
       edges: []
@@ -255,12 +255,13 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      UI_WeaponIcons_Minigun: -734187634
-      UI_WeaponIcons_Pistol: 351250029
-      UI_WeaponIcons_Revolver: -148591112
-      UI_WeaponIcons_Rifle: -1153673929
-      UI_WeaponIcons_Shotgun: 842642775
-      UI_WeaponIcons_Sniper: -69989564
+      UI_WeaponIcons_0: -930626539
+      UI_WeaponIcons_1: 1613465637
+      UI_WeaponIcons_2: -521392656
+      UI_WeaponIcons_3: 2129644612
+      UI_WeaponIcons_4: 948876784
+      UI_WeaponIcons_5: 67841700
+      UI_WeaponIcons_6: 1437709514
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

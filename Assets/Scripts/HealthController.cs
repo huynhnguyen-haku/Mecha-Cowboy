@@ -78,6 +78,10 @@ public class HealthController : MonoBehaviour
                 {
                     enemy.stateMachine.ChangeState(meleeEnemy.deadState);
                 }
+                else if (enemy is Enemy_Boss bossEnemy)
+                {
+                    enemy.stateMachine.ChangeState(bossEnemy.deadState);
+                }
             }
         }
     }

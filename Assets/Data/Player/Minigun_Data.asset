@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weaponName: Heavy Machinegun
   weaponType: 5
-  bulletDamage: 12
+  bulletDamage: 15
   shotType: 1
   bulletsPerShot: 1
   fireRate: 2000
@@ -33,3 +33,4 @@ MonoBehaviour:
   burst_BulletsPerShot: 3
   burst_FireRate: 100
   burst_FireDelay: 0.1
+  weaponIcon: {fileID: 2129644612, guid: 3477fe9a26e0faa42b5a9b5b258229c1, type: 3}

@@ -45,6 +45,11 @@ public class Player_WeaponController : MonoBehaviour
         }
     }
 
+    public void UpdateWeaponUI()
+    {
+        UI.instance.inGameUI.UpdateWeaponUI(weaponSlots, currentWeapon);
+    }
+
     #region Slot Management - Equip, Pickup, Drop, Ready
     private void EquipStartingWeapon()
     {
@@ -61,6 +66,7 @@ public class Player_WeaponController : MonoBehaviour
         currentWeapon = weaponSlots[i];
         player.weaponVisuals.PlayWeaponEquipAnimation();
         CameraManager.instance.ChangeCameraDistance(currentWeapon.cameraDistance);
+        UpdateWeaponUI();
     }
 
     public void PickupWeapon(Weapon newWeapon)
@@ -88,6 +94,7 @@ public class Player_WeaponController : MonoBehaviour
 
         weaponSlots.Add(newWeapon);
         player.weaponVisuals.SwitchOnBackupWeaponModels();
+        UpdateWeaponUI();
     }
 
     private void DropWeapon()
@@ -128,6 +135,7 @@ public class Player_WeaponController : MonoBehaviour
                 SetWeaponReady(true);
         }
     }
+
     private void Shot()
     {
         if (player.health.playerIsDead)
@@ -153,9 +161,11 @@ public class Player_WeaponController : MonoBehaviour
         FireSingleBullet();
         TriggerEnemyDodge();
     }
+
     private void FireSingleBullet()
     {
         currentWeapon.bulletsInMagazine--;
+        UpdateWeaponUI();
 
         GameObject bullet = ObjectPool.instance.GetObject(bulletPrefab, GunPoint());
         Rigidbody rbBullet = bullet.GetComponent<Rigidbody>();
@@ -170,7 +180,7 @@ public class Player_WeaponController : MonoBehaviour
         rbBullet.mass = REFERENCE_BULLET_SPEED / bulletSpeed;
         rbBullet.linearVelocity = bulletsDirection * bulletSpeed;
     }
-    private void Reload()
+    private void Reload() // This only used for playing reload animation (the real one is in Animation event)
     {
         SetWeaponReady(false);
         player.weaponVisuals.PlayReloadAnimation();

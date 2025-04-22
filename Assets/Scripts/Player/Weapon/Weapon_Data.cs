@@ -41,4 +41,7 @@ public class Weapon_Data : ScriptableObject
     public int burst_BulletsPerShot;
     public int burst_FireRate;
     public float burst_FireDelay = 0.1f;
+
+    [Header("Weapon Icon")]
+    public Sprite weaponIcon;
 }

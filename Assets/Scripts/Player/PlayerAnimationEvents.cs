@@ -11,12 +11,13 @@ public class PlayerAnimationEvents : MonoBehaviour
         weaponController = GetComponentInParent<Player_WeaponController>();
     }
 
-    public void ReloadIsOver()
+    public void ReloadIsOver() // This is real reload method
     {
         weaponVisualController.MaximizeRigWeight();
         weaponController.CurrentWeapon().RefillBullets();
 
         weaponController.SetWeaponReady(true);
+        weaponController.UpdateWeaponUI();
     }
     public void ReturnRig()
     {
