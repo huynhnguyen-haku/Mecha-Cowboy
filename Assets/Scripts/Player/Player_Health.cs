@@ -31,7 +31,7 @@ public class Player_Health : HealthController
 
         playerIsDead = true;
         player.anim.enabled = false;
-        player.ragdoll.RagdollActive(true);
         player.aim.aimLaser.enabled = false;
+        player.ragdoll.RagdollActive(true);
     }
 }

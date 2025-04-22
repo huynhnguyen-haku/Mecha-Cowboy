@@ -16,8 +16,8 @@ MonoBehaviour:
   missionDescription: Nah
   isDefenceStarted: 0
   isMissionCompleted: 0
-  defenseDuration: 15
-  timeBetweenWaves: 5
+  defenseDuration: 60
+  timeBetweenWaves: 15
   numberOfRespawnPoints: 2
   respawnPoints:
   - {fileID: 0}

@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Interactable : MonoBehaviour
 {
@@ -7,9 +7,6 @@ public class Interactable : MonoBehaviour
     protected MeshRenderer meshRenderer;
 
     protected Player_WeaponController weaponController;
-
-
-
 
     private void Start()
     {

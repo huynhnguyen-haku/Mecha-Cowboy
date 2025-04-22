@@ -130,6 +130,9 @@ public class Player_WeaponController : MonoBehaviour
     }
     private void Shot()
     {
+        if (player.health.playerIsDead)
+            return;
+
         if (WeaponReady() == false)
             return;
 
