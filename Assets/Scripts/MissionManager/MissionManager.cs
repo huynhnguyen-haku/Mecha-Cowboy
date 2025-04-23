@@ -11,14 +11,16 @@ public class MissionManager : MonoBehaviour
         instance = this;
     }
 
-    private void Start()
-    {
-        Invoke(nameof(StartMission), 2);
-    }
 
     private void Update()
     {
         currentMission?.UpdateMission();
+    }
+
+    public void SetCurrentMission(Mission newMission)
+    {
+        currentMission = newMission;
+        StartMission(); // Temporarily start the mission immediately after setting it
     }
 
     public void StartMission() => currentMission.StartMission();

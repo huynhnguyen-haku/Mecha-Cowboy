@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d7a223680a8df1646aafe9daca912989, type: 3}
   m_Name: Defense - Mission
   m_EditorClassIdentifier: 
-  missionName: Nah
-  missionDescription: Nah
+  missionName: Defense Base
+  missionDescription: Defense Base
   isDefenceStarted: 0
-  isMissionCompleted: 1
+  isMissionCompleted: 0
   defenseDuration: 60
   timeBetweenWaves: 5
   numberOfRespawnPoints: 2

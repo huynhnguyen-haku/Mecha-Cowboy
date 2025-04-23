@@ -9,6 +9,7 @@ public class UI : MonoBehaviour
 
     [SerializeField] private GameObject[] UIElements;
 
+
     private void Awake()
     {
         instance = this;
@@ -23,6 +24,11 @@ public class UI : MonoBehaviour
         }
 
         uiElementToActivate.SetActive(true);
+    }
+
+    public void SwitchToInGameUI()
+    {
+        SwitchTo(inGameUI.gameObject);
     }
 
     public void QuitGame()
