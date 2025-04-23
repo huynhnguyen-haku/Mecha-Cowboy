@@ -27,5 +27,6 @@ public class UI_WeaponSlot : MonoBehaviour
         weaponIcon.sprite = myWeapon.weaponData.weaponIcon;
 
         ammoText.text = myWeapon.bulletsInMagazine + "/" + myWeapon.TotalReserveAmmo;
+        ammoText.color = Color.white;
     }
 }
