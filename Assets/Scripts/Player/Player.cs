@@ -12,6 +12,7 @@ public class Player : MonoBehaviour
     public Player_Health health { get; private set; }
     public Ragdoll ragdoll { get; private set; } 
     public Animator anim { get; private set; }
+    public bool controlsEnabled { get; private set; } 
 
     private void Awake()
     {
@@ -30,10 +31,16 @@ public class Player : MonoBehaviour
     {
         controls.Enable();
         controls.Character.ToggleMissionUI.performed += ctx => UI.instance.inGameUI.ToggleMissionUI();
+        controls.Character.TogglePauseUI.performed += ctx => UI.instance.TogglePauseUI();
     }
 
     private void OnDisable()
     {
         controls.Disable();
+    }
+
+    public void SetControlsEnabled(bool enabled)
+    {
+        controlsEnabled = enabled;
     }
 }

@@ -1,6 +1,7 @@
 using NUnit.Framework;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -22,6 +23,12 @@ public class GameManager : MonoBehaviour
         LevelGenerator.instance.InitializeGeneration();
 
         // We start selected mission in a LevelGenerator script, after we done with level creation
+    }
+
+    public void RestartScene()
+    {
+        // Restart the scene
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
     private void SetDefaultWeapon()

@@ -43,6 +43,9 @@ public class Player_AimController : MonoBehaviour
         if (player.health.playerIsDead)
             return;
 
+        if (!player.controlsEnabled)
+            return;
+
         if (Input.GetKeyDown(KeyCode.P))
             isAimingPrecisly = !isAimingPrecisly; // Toggle aiming mode, switch between aiming normaly and precisly
 

@@ -7,6 +7,7 @@ public class UI : MonoBehaviour
 
     public UI_InGame inGameUI { get; private set; }
     public UI_WeaponSelection weaponSelection { get; private set; }
+    public GameObject pauseUI;
 
     [SerializeField] private GameObject[] UIElements;
 
@@ -16,6 +17,11 @@ public class UI : MonoBehaviour
         instance = this;
         inGameUI = GetComponentInChildren<UI_InGame>(true);
         weaponSelection = GetComponentInChildren<UI_WeaponSelection>(true);
+    }
+
+    private void Start()
+    {
+        AssignInputUI();
     }
 
     public void SwitchTo(GameObject uiElementToActivate)
@@ -45,5 +51,34 @@ public class UI : MonoBehaviour
         {
             Application.Quit();
         }
+    }
+
+    public void RestartGame()
+    {
+        GameManager.instance.RestartScene();    
+    }
+
+    public void TogglePauseUI()
+    {
+        bool gamePaused = pauseUI.activeSelf;
+
+        if (gamePaused)
+        {
+            SwitchTo(inGameUI.gameObject);
+            ControlsManager.instance.SwitchToCharacterControls();
+            Time.timeScale = 1;
+        }
+        else
+        {
+            SwitchTo(pauseUI);
+            ControlsManager.instance.SwitchToUIControls();
+            Time.timeScale = 0;
+        }
+    }
+
+    private void AssignInputUI()
+    {
+        PlayerControls controls = GameManager.instance.player.controls;
+        controls.UI.TogglePauseUI.performed += ctx => TogglePauseUI();
     }
 }
