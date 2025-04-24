@@ -63,6 +63,7 @@ public class Ammo_PickUp : Interactable
             return;
 
         weapon.TotalReserveAmmo += amount;
+        weaponController.UpdateWeaponUI();
     }
 
 

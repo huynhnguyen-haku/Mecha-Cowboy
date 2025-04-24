@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weaponName: Alaska 47
   weaponType: 2
-  bulletDamage: 20
+  bulletDamage: 18
   shotType: 1
   bulletsPerShot: 1
   fireRate: 600
@@ -34,3 +34,4 @@ MonoBehaviour:
   burst_FireRate: 100
   burst_FireDelay: 0.1
   weaponIcon: {fileID: 948876784, guid: 3477fe9a26e0faa42b5a9b5b258229c1, type: 3}
+  weaponInfo: 

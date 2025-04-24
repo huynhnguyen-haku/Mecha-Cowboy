@@ -14,6 +14,7 @@ public class Health_Pickup : Interactable
             if (playerHealth != null)
             {
                 RestoreHealth(playerHealth);
+                playerHealth.UpdateHealthUI();
             }
         }
         ObjectPool.instance.ReturnObject(gameObject);
@@ -22,6 +23,7 @@ public class Health_Pickup : Interactable
     private void RestoreHealth(Player_Health playerHealth)
     {
         playerHealth.HealHeath(healthAmount);
+
         Debug.Log($"[Health_Pickup] Player restored {healthAmount} health.");
     }
 }

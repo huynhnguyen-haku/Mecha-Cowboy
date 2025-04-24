@@ -37,6 +37,11 @@ public class HealthController : MonoBehaviour
         }
     }
 
+    public void UpdateHealthUI()
+    {
+        UI.instance.inGameUI.UpdateHealthUI(currentHealth, maxHealth);
+    }
+
     // Used for enemy
     public bool EnemyShouldDie()
     {
