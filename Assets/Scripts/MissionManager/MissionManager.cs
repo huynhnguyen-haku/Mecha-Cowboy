@@ -20,7 +20,6 @@ public class MissionManager : MonoBehaviour
     public void SetCurrentMission(Mission newMission)
     {
         currentMission = newMission;
-        StartMission(); // Temporarily start the mission immediately after setting it
     }
 
     public void StartMission() => currentMission.StartMission();

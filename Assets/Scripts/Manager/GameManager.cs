@@ -16,7 +16,15 @@ public class GameManager : MonoBehaviour
         player = FindObjectOfType<Player>();
     }
 
-    public void SetDefaultWeapon()
+    public void GameStart()
+    {
+        SetDefaultWeapon();
+        LevelGenerator.instance.InitializeGeneration();
+
+        // We start selected mission in a LevelGenerator script, after we done with level creation
+    }
+
+    private void SetDefaultWeapon()
     {
         List<Weapon_Data> newList = UI.instance.weaponSelection.SelectedWeaponData();
         player.weapon.SetDefaultWeapon(newList);

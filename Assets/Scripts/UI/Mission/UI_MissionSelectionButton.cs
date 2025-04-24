@@ -33,7 +33,6 @@ public class UI_MissionSelectionButton : UI_Button
     {
         base.OnPointerDown(eventData);
         MissionManager.instance.SetCurrentMission(myMission);
-        UI.instance.SwitchToInGameUI();
     }
 
     public override void OnPointerExit(PointerEventData eventData)

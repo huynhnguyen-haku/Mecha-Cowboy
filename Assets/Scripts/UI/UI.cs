@@ -28,9 +28,11 @@ public class UI : MonoBehaviour
         uiElementToActivate.SetActive(true);
     }
 
-    public void SwitchToInGameUI()
+
+    public void StartGame()
     {
         SwitchTo(inGameUI.gameObject);
+        GameManager.instance.GameStart();
     }
 
     public void QuitGame()
