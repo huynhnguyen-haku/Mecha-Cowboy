@@ -35,5 +35,7 @@ public class Player_Health : HealthController
         player.anim.enabled = false;
         player.aim.aimLaser.enabled = false;
         player.ragdoll.RagdollActive(true);
+
+        GameManager.instance.GameOver();
     }
 }

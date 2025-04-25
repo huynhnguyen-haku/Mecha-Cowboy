@@ -17,6 +17,7 @@ public class Mission_Timer : Mission
         currentTime -= Time.deltaTime;
         if (currentTime < 0)
         {
+
         }
         string timeText = System.TimeSpan.FromSeconds(currentTime).ToString("mm':'ss");
 
