@@ -27,7 +27,7 @@ public class GameManager : MonoBehaviour
 
     public void RestartScene()
     {
-        // Restart the scene
+        // Restart the scene from the main menu
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
@@ -36,6 +36,13 @@ public class GameManager : MonoBehaviour
         TimeManager.instance.SlowMotionFor(2);
         UI.instance.ShowGameOverUI();
         CameraManager.instance.ChangeCameraDistance(5);
+    }
+
+    public void CompleteGame()
+    {
+        UI.instance.DisplayVictoryScreenUI();
+        ControlsManager.instance.controls.Character.Disable(); // Prevent player from moving
+        player.health.currentHealth += 999; // Set player health to max just in case
     }
 
     private void SetDefaultWeapon()
