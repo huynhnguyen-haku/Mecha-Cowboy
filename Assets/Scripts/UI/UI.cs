@@ -1,5 +1,6 @@
-using Unity.VisualScripting.FullSerializer.Internal.Converters;
+using System.Collections;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class UI : MonoBehaviour
 {
@@ -11,6 +12,9 @@ public class UI : MonoBehaviour
     public GameObject pauseUI;
 
     [SerializeField] private GameObject[] UIElements;
+
+    [Header("Fade Image")]
+    [SerializeField] private Image fadeImage;
 
 
     private void Awake()
@@ -24,6 +28,7 @@ public class UI : MonoBehaviour
     private void Start()
     {
         AssignInputUI();
+        StartCoroutine(ChangeImageAlpha(0, 1.5f, null));
     }
 
     public void SwitchTo(GameObject uiElementToActivate)
@@ -39,8 +44,7 @@ public class UI : MonoBehaviour
 
     public void StartGame()
     {
-        SwitchTo(inGameUI.gameObject);
-        GameManager.instance.GameStart();
+        StartCoroutine(StartGameSequence());
     }
 
     public void QuitGame()
@@ -57,7 +61,7 @@ public class UI : MonoBehaviour
 
     public void RestartGame()
     {
-        GameManager.instance.RestartScene();    
+        StartCoroutine(ChangeImageAlpha(1, 1f, GameManager.instance.RestartScene));
     }
 
     public void ShowGameOverUI(string message = "Game Over")
@@ -80,7 +84,7 @@ public class UI : MonoBehaviour
         {
             SwitchTo(pauseUI);
             ControlsManager.instance.SwitchToUIControls();
-            TimeManager.instance.PauseTime();   
+            TimeManager.instance.PauseTime();
         }
     }
 
@@ -88,5 +92,34 @@ public class UI : MonoBehaviour
     {
         PlayerControls controls = GameManager.instance.player.controls;
         controls.UI.TogglePauseUI.performed += ctx => TogglePauseUI();
+    }
+
+    private IEnumerator StartGameSequence()
+    {
+        StartCoroutine(ChangeImageAlpha(1, 1, null));
+        yield return new WaitForSeconds(1f);
+        SwitchTo(inGameUI.gameObject);
+        GameManager.instance.GameStart();
+        StartCoroutine(ChangeImageAlpha(0, 1f, null));
+    }
+
+    private IEnumerator ChangeImageAlpha(float targetAlpha, float duration, System.Action onComplete)
+    {
+        float timeElapsed = 0f;
+        Color currentColor = fadeImage.color;
+        float startAlpha = currentColor.a;
+
+        while (timeElapsed < duration)
+        {
+            timeElapsed += Time.deltaTime;
+            float newAlpha = Mathf.Lerp(startAlpha, targetAlpha, timeElapsed / duration);
+
+            fadeImage.color = new Color(currentColor.r, currentColor.g, currentColor.b, newAlpha);
+            yield return null;
+        }
+
+        fadeImage.color = new Color(currentColor.r, currentColor.g, currentColor.b, targetAlpha);
+
+        onComplete?.Invoke();
     }
 }
