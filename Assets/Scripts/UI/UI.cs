@@ -70,6 +70,8 @@ public class UI : MonoBehaviour
         gameOverUI.ShowGameOverMessage(message);
     }
 
+    public void StartLevelGeneration() => LevelGenerator.instance.InitializeGeneration();
+
     public void TogglePauseUI()
     {
         bool gamePaused = pauseUI.activeSelf;

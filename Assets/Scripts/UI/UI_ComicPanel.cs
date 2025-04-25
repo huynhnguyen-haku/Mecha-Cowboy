@@ -24,7 +24,7 @@ public class UI_ComicPanel : MonoBehaviour, IPointerDownHandler
         if (isComicFinished) 
             return;
 
-        StartCoroutine(ChangeImageAlpha(1, 1.5f, ShowNextImage));
+        StartCoroutine(ChangeImageAlpha(1, 2.5f, ShowNextImage));
     }
 
     private IEnumerator ChangeImageAlpha(float targetAlpha, float duration, System.Action onComplete)
