@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -13,10 +13,14 @@ public class Mission_HuntingTarget : Mission
     {
         remainingTargets = numberOfTarget;
         UpdateMissionUI();
+
+        // Hủy đăng ký sự kiện trước khi đăng ký lại để tránh trùng lặp
+        MissionObject_Target.OnTargetKilled -= ReduceRemainingTargets;
         MissionObject_Target.OnTargetKilled += ReduceRemainingTargets;
 
         List<Enemy> validEnemies = new List<Enemy>();
 
+        // Tìm tất cả các enemy phù hợp với loại enemyType
         foreach (Enemy enemy in LevelGenerator.instance.GetEnemyList())
         {
             if (enemy.enemyType == enemyType)
@@ -25,35 +29,45 @@ public class Mission_HuntingTarget : Mission
             }
         }
 
-        for (int i = 0; i < numberOfTarget; i++)
+        // Gắn MissionObject_Target cho tất cả các enemy phù hợp
+        foreach (Enemy enemy in validEnemies)
         {
-            if (validEnemies.Count <= 0)
+            if (enemy.GetComponent<MissionObject_Target>() == null)
             {
-                return;
+                enemy.gameObject.AddComponent<MissionObject_Target>();
             }
-
-            int randomIndex = Random.Range(0, validEnemies.Count);
-            validEnemies[randomIndex].AddComponent<MissionObject_Target>();
-            validEnemies.RemoveAt(randomIndex);
         }
+
+        // Debug để kiểm tra số lượng enemy được gắn script
+        Debug.Log($"Total valid enemies with type {enemyType}: {validEnemies.Count}");
     }
+
 
     public override bool MissionCompleted()
     {
         return remainingTargets <= 0;
     }
 
+
     private void ReduceRemainingTargets()
     {
         remainingTargets--;
         UpdateMissionUI();
 
+        // Kiểm tra nếu tất cả các target đã bị tiêu diệt
         if (remainingTargets <= 0)
         {
+            // Cập nhật UI để thông báo hoàn thành nhiệm vụ
             UI.instance.inGameUI.UpdateMissionUI("Target eliminated. Get to the evacuation point to complete mission");
+
+            // Hủy đăng ký sự kiện để tránh lỗi
             MissionObject_Target.OnTargetKilled -= ReduceRemainingTargets;
+
+            // Đánh dấu nhiệm vụ là hoàn thành
+            Debug.Log("Mission completed!");
         }
     }
+
     private void UpdateMissionUI()
     {
         string missionText = "Eliminate " + numberOfTarget + " " + enemyType.ToString() + " enemies";
