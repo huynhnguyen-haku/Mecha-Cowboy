@@ -31,6 +31,11 @@ public class UI : MonoBehaviour
     {
         AssignInputUI();
         StartCoroutine(ChangeImageAlpha(0, 1.5f, null));
+
+        if (GameManager.instance.quickStart)
+        {
+            StartGame();
+        }
     }
 
     public void SwitchTo(GameObject uiElementToActivate)
@@ -115,11 +120,18 @@ public class UI : MonoBehaviour
 
     private IEnumerator StartGameSequence()
     {
-        StartCoroutine(ChangeImageAlpha(1, 1, null));
-        yield return new WaitForSeconds(1f);
+        // Those comments are for testing purposes, we can skip the weapon selection screen and start the game directly
+        // Remember to remove this in the final build
+
+        //StartCoroutine(ChangeImageAlpha(1, 1, null));
+        //yield return new WaitForSeconds(1f);
+
+        yield return null;  //Remove this
         SwitchTo(inGameUI.gameObject);
         GameManager.instance.GameStart();
-        StartCoroutine(ChangeImageAlpha(0, 1f, null));
+
+        //StartCoroutine(ChangeImageAlpha(0, 1f, null));
+        StartCoroutine(ChangeImageAlpha(0, 0.01f, null));  // Remove this
     }
 
     private IEnumerator ChangeImageAlpha(float targetAlpha, float duration, System.Action onComplete)

@@ -11,6 +11,10 @@ public class GameManager : MonoBehaviour
     [Header("Settings")]
     public bool friendlyFire;
 
+    // For testing purposes, we can skip the weapon selection screen and start the game directly
+    [Space]
+    public bool quickStart;    // Remove this in the final build
+
     private void Awake()
     {
         instance = this;
@@ -20,7 +24,6 @@ public class GameManager : MonoBehaviour
     public void GameStart()
     {
         SetDefaultWeapon();
-        LevelGenerator.instance.InitializeGeneration();
 
         // We start selected mission in a LevelGenerator script, after we done with level creation
     }

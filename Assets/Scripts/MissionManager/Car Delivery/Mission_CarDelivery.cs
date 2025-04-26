@@ -46,6 +46,6 @@ public class Mission_CarDelivery : Mission
 
     public override MissionType GetMissionType()
     {
-        return MissionType.Default;
+        return MissionType.CarDelivery;
     }
 }

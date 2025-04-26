@@ -11,6 +11,7 @@ public class UI_SelectedWeaponWindow : MonoBehaviour
 
     private void Start()
     {
+        weaponData = null;
         UpdateSlotInfo(null);
     }
 

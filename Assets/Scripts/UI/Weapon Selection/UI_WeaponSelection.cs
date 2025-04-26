@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class UI_WeaponSelection : MonoBehaviour
 {
+    [SerializeField] private GameObject nextUIElementToActivate;
     public UI_SelectedWeaponWindow[] selectedWeapon;
 
     [Header("Warning Info")]
@@ -41,6 +42,23 @@ public class UI_WeaponSelection : MonoBehaviour
         }
         return selectedData;
     }
+
+    public void ConfirmWeaponSelection()
+    {
+        if (HasSelectedWeapon())
+        {
+            UI.instance.SwitchTo(nextUIElementToActivate);
+
+            // Generate level part here so there won't be any issues with weapon selection
+            UI.instance.StartLevelGeneration();
+        }
+        else
+        {
+            ShowWarningMessage("Please select at least one weapon.");
+        }
+    }
+
+    private bool HasSelectedWeapon() => SelectedWeaponData().Count > 0;
 
     public UI_SelectedWeaponWindow FindEmptySlot()
     {
