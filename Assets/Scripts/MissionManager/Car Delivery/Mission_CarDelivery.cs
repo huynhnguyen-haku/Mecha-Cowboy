@@ -44,4 +44,8 @@ public class Mission_CarDelivery : Mission
         UI.instance.inGameUI.UpdateMissionUI(missionText, missionDetails);
     }
 
+    public override MissionType GetMissionType()
+    {
+        return MissionType.Default;
+    }
 }

@@ -3,6 +3,9 @@ using UnityEngine;
 
 public class LevelPart : MonoBehaviour
 {
+    [Header("Mission Compatibility")]
+    public List<MissionType> missionTypes;
+
     [Header("Intersection Check")]
     [SerializeField] private LayerMask intersectionLayer;
     [SerializeField] private Collider[] intersectionCheckColliders;

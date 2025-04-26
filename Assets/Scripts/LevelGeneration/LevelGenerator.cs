@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Unity.AI.Navigation;
 using UnityEngine;
 
@@ -6,12 +6,11 @@ public class LevelGenerator : MonoBehaviour
 {
     public static LevelGenerator instance;
 
-
     // Level parts  
-    [SerializeField] private List<Transform> levelParts;
-    [SerializeField] private Transform lastLevelPart;
-    private List<Transform> currentLevelParts;
-    private List<Transform> generatedLevelParts = new List<Transform>();
+    [SerializeField] private List<Transform> levelParts; // Tất cả các LevelPart
+    [SerializeField] private Transform lastLevelPart; // Phần cuối của màn chơi
+    private List<Transform> currentLevelParts; // Các LevelPart được lọc theo MissionType
+    private List<Transform> generatedLevelParts = new List<Transform>(); // Các LevelPart đã được tạo
 
     // Snap points  
     [SerializeField] private SnapPoint nextSnapPoint;
@@ -54,7 +53,6 @@ public class LevelGenerator : MonoBehaviour
             {
                 FinishGeneration();
             }
-
         }
     }
 
@@ -63,7 +61,22 @@ public class LevelGenerator : MonoBehaviour
     {
         nextSnapPoint = defaultSnapPoint;
         generationOver = false;
-        currentLevelParts = new List<Transform>(levelParts);
+
+        // Lọc danh sách LevelPart theo MissionType
+        MissionType currentMissionType = MissionManager.instance.currentMission.GetMissionType();
+        currentLevelParts = new List<Transform>();
+
+        foreach (Transform part in levelParts)
+        {
+            LevelPart levelPartScript = part.GetComponent<LevelPart>();
+            if (levelPartScript != null && levelPartScript.missionTypes.Contains(currentMissionType))
+            {
+                currentLevelParts.Add(part);
+            }
+        }
+
+        // Debug để kiểm tra danh sách đã lọc
+        Debug.Log($"Filtered LevelParts for MissionType {currentMissionType}: {currentLevelParts.Count} parts found.");
 
         ClearGeneratedLevelParts();
     }
@@ -76,7 +89,6 @@ public class LevelGenerator : MonoBehaviour
         foreach (Transform part in generatedLevelParts)
             Destroy(part.gameObject);
 
-
         generatedLevelParts = new List<Transform>();
         enemyList = new List<Enemy>();
     }
@@ -85,7 +97,6 @@ public class LevelGenerator : MonoBehaviour
     {
         generationOver = true;
         GenerateNextLevelPart();
-
 
         foreach (Enemy enemy in enemyList)
         {
@@ -100,11 +111,21 @@ public class LevelGenerator : MonoBehaviour
     private void GenerateNextLevelPart()
     {
         Transform newPart = null;
-        if (generationOver)
-            newPart = Instantiate(lastLevelPart);
 
+        if (generationOver)
+        {
+            newPart = Instantiate(lastLevelPart);
+        }
         else
+        {
             newPart = Instantiate(ChooseRandomPart());
+        }
+
+        if (newPart == null)
+        {
+            Debug.LogError("No LevelPart could be generated. Check your MissionType filtering.");
+            return;
+        }
 
         generatedLevelParts.Add(newPart);
 
@@ -123,8 +144,13 @@ public class LevelGenerator : MonoBehaviour
 
     private Transform ChooseRandomPart()
     {
-        int randomIndex = Random.Range(0, currentLevelParts.Count);
+        if (currentLevelParts.Count == 0)
+        {
+            Debug.LogError("No LevelParts available to generate. Check your MissionType filtering.");
+            return null;
+        }
 
+        int randomIndex = Random.Range(0, currentLevelParts.Count);
         Transform chosenPart = currentLevelParts[randomIndex];
         currentLevelParts.RemoveAt(randomIndex);
 

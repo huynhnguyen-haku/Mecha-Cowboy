@@ -29,4 +29,9 @@ public class Misson_KeyFind : Mission
         
         UI.instance.inGameUI.UpdateMissionUI("Key Found! \n Now go to the airplane to escape.");
     }
+
+    public override MissionType GetMissionType()
+    {
+        return MissionType.FindingKey;
+    }
 }

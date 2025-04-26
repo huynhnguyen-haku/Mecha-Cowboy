@@ -32,4 +32,8 @@ public class Mission_Timer : Mission
         return currentTime > 0;
     }
 
+    public override MissionType GetMissionType()
+    {
+        return MissionType.Default;
+    }
 }

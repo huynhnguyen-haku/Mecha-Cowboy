@@ -159,4 +159,9 @@ public class Mission_LastDefense : Mission
 
         return closestPoints;
     }
+
+    public override MissionType GetMissionType()
+    {
+        return MissionType.LastDefense;
+    }
 }

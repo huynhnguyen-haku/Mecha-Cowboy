@@ -13,6 +13,7 @@ public abstract class Mission : ScriptableObject
     {
 
     }
+    public abstract MissionType GetMissionType();
 
 
 }
