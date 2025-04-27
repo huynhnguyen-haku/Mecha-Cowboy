@@ -1718,7 +1718,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 0
-  turnSensitivity: 30
+  turnSensitivity: 45
   centerOfMass: {fileID: 1633392286}
   currentSpeed: 0
   maxSpeed: 10
@@ -1726,6 +1726,9 @@ MonoBehaviour:
   motorForce: 1800
   brakeSensitivity: 5
   brakeForce: 5000
+  frontDriftFactor: 0.5
+  rearDriftFactor: 0.5
+  driftDuration: 1
 --- !u!54 &76787113
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -32916,7 +32919,7 @@ WheelCollider:
     m_ExtremumValue: 1
     m_AsymptoteSlip: 0.8
     m_AsymptoteValue: 0.5
-    m_Stiffness: 1
+    m_Stiffness: 0.95
   m_SidewaysFriction:
     m_ExtremumSlip: 0.2
     m_ExtremumValue: 1
@@ -58446,7 +58449,7 @@ WheelCollider:
     m_ExtremumValue: 1
     m_AsymptoteSlip: 0.8
     m_AsymptoteValue: 0.5
-    m_Stiffness: 1
+    m_Stiffness: 0.95
   m_SidewaysFriction:
     m_ExtremumSlip: 0.2
     m_ExtremumValue: 1

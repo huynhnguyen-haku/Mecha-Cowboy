@@ -10,7 +10,7 @@ public class Car_Controller : MonoBehaviour
 
     public float speed;
 
-    public float turnSensitivity;
+    [Range(30, 60)][SerializeField] private float turnSensitivity;
 
     [Header("Car Settings")]
     [SerializeField] private Transform centerOfMass;
@@ -18,14 +18,20 @@ public class Car_Controller : MonoBehaviour
     [Header("Engine Settings")]
     public float currentSpeed;
 
-    [Range(7, 12)] public float maxSpeed;
-    [Range(0.5f, 5)] public float accelerationRate;
-    [Range(1500, 3000)] public float motorForce = 1500f;
+    [Range(7, 12)][SerializeField] private float maxSpeed;
+    [Range(0.5f, 5)][SerializeField] private float accelerationRate;
+    [Range(1500, 3000)][SerializeField] private float motorForce = 1500f;
 
     [Header("Brake Settings")]
     private bool isBraking;
-    [Range(4, 10)] public float brakeSensitivity =5;
+    [Range(4, 10)] public float brakeSensitivity = 5;
     [Range(4000, 6000)] public float brakeForce = 5000;
+
+    [Header("Drift Settings")]
+    [Range(0, 1)][SerializeField] private float frontDriftFactor = 0.5f;
+    [Range(0, 1)][SerializeField] private float rearDriftFactor = 0.5f;
+    [SerializeField] private float driftDuration = 1;
+    private float driftTimer;
 
     private Car_Wheel[] wheels;
 
@@ -48,11 +54,26 @@ public class Car_Controller : MonoBehaviour
         HandleSteering();
         HandleBraking();
         HandleSpeedLimit();
+
+        if (isBraking)
+        {
+            HandleDrift();
+        }
+        else
+        {
+            StopDrift();
+        }
     }
 
     private void Update()
     {
-        speed = rb.linearVelocity.magnitude; 
+        speed = rb.linearVelocity.magnitude;
+        driftTimer -= Time.deltaTime;
+        if (driftTimer < 0)
+        {
+            isBraking = false;
+        }
+
     }
 
 
@@ -64,6 +85,11 @@ public class Car_Controller : MonoBehaviour
         foreach (var wheel in wheels)
         {
             if (wheel.axleType == AxelType.Rear) // Apply motor torque to rear wheels
+            {
+                wheel.cd.motorTorque = motorTorqueValue;
+            }
+
+            if (wheel.axleType == AxelType.Front)// Apply motor torque to front wheels
             {
                 wheel.cd.motorTorque = motorTorqueValue;
             }
@@ -97,10 +123,31 @@ public class Car_Controller : MonoBehaviour
 
         foreach (var wheel in wheels)
         {
-            if (wheel.axleType == AxelType.Rear) // Apply brake force to rear wheels, may be adjusted to front wheel
+            if (wheel.axleType == AxelType.Rear) // Apply brake force to front wheels, may be adjusted to rear wheel
             {
                 wheel.cd.brakeTorque = currentBrakeTorque;
             }
+        }
+    }
+
+    private void HandleDrift()
+    {
+        foreach (var wheel in wheels)
+        {
+            bool frontWheel = wheel.axleType == AxelType.Front;
+            float driftFactor = frontWheel ? frontDriftFactor : rearDriftFactor;
+
+            WheelFrictionCurve sidewaysFriction = wheel.cd.sidewaysFriction;
+            sidewaysFriction.stiffness *= (1 - driftFactor);
+            wheel.cd.sidewaysFriction = sidewaysFriction;
+        }
+    }
+
+    private void StopDrift()
+    {
+        foreach (var wheel in wheels)
+        {
+            wheel.RestoreDefaultStiffness();
         }
     }
 
@@ -137,7 +184,11 @@ public class Car_Controller : MonoBehaviour
             turnInput = 0;
         };
 
-        controls.Car.Brake.performed += ctx => isBraking = true;
+        controls.Car.Brake.performed += ctx =>
+        {
+            isBraking = true;
+            driftTimer = driftDuration;
+        };
         controls.Car.Brake.canceled += ctx => isBraking = false;
     }
 }
