@@ -1,4 +1,5 @@
 ﻿using System;
+using UnityEditor.Build;
 using UnityEngine;
 using UnityEngine.XR;
 
@@ -43,6 +44,7 @@ public class Car_Controller : MonoBehaviour
     [Range(0, 1)][SerializeField] private float rearDriftFactor = 0.5f;
     [SerializeField] private float driftDuration = 1;
     private float driftTimer;
+    private bool isDrifting;
 
     private Car_Wheel[] wheels;
 
@@ -66,7 +68,7 @@ public class Car_Controller : MonoBehaviour
         HandleBraking();
         HandleSpeedLimit();
 
-        if (isBraking)
+        if (isDrifting)
         {
             HandleDrift();
         }
@@ -82,7 +84,7 @@ public class Car_Controller : MonoBehaviour
         driftTimer -= Time.deltaTime;
         if (driftTimer < 0)
         {
-            isBraking = false;
+            isDrifting = false;
         }
 
     }
@@ -233,6 +235,7 @@ public class Car_Controller : MonoBehaviour
         controls.Car.Brake.performed += ctx =>
         {
             isBraking = true;
+            isDrifting = true;
             driftTimer = driftDuration;
         };
         controls.Car.Brake.canceled += ctx => isBraking = false;
