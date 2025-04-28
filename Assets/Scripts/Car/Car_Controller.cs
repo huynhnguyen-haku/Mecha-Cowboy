@@ -4,8 +4,11 @@ using UnityEngine;
 using UnityEngine.XR;
 
 public enum DriveType { FrontWheelDrive, RearWheelDrive, AllWheelDrive }
+
+[RequireComponent(typeof(Rigidbody))]
 public class Car_Controller : MonoBehaviour
 {
+    private bool carActive;
     private PlayerControls controls;
     private Rigidbody rb;
     private float moveInput;
@@ -30,8 +33,8 @@ public class Car_Controller : MonoBehaviour
     public float currentSpeed;
 
     [Range(7, 12)][SerializeField] private float maxSpeed = 7;
-    [Range(0.5f, 5)][SerializeField] private float accelerationRate = 2;
-    [Range(1500, 3000)][SerializeField] private float motorForce = 1500f;
+    [Range(0.5f, 10)][SerializeField] private float accelerationRate = 2;
+    [Range(1500, 5000)][SerializeField] private float motorForce = 1500f;
 
     [Header("Brake Settings")]
     public bool isBraking;
@@ -62,6 +65,8 @@ public class Car_Controller : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (!carActive) return;
+
         HandleWheelAnimation();
         HandleDriving();
         HandleSteering();
@@ -80,6 +85,9 @@ public class Car_Controller : MonoBehaviour
 
     private void Update()
     {
+        if (!carActive)
+            return;
+
         speed = rb.linearVelocity.magnitude;
         driftTimer -= Time.deltaTime;
         if (driftTimer < 0)
@@ -216,6 +224,10 @@ public class Car_Controller : MonoBehaviour
         }
     }
 
+    public void ActivateCar(bool active)
+    {
+        carActive = active;
+    }
 
     private void AssignInputEvents()
     {
@@ -239,5 +251,12 @@ public class Car_Controller : MonoBehaviour
             driftTimer = driftDuration;
         };
         controls.Car.Brake.canceled += ctx => isBraking = false;
+    }
+
+    [ContextMenu("Focus Camera On Car")]
+    public void TestThiosCar()
+    {
+        ActivateCar(true);
+        CameraManager.instance.ChangeCameraTarget(transform, 12);
     }
 }
