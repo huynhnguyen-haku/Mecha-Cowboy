@@ -3,7 +3,8 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 3
-  tags: []
+  tags:
+  - ExitPoint
   layers:
   - Default
   - TransparentFX
@@ -20,7 +21,7 @@ TagManager:
   - Enemy_Ability
   - IntersectionCheck
   - ZoneLimit
-  - 
+  - ObstacleCheck
   - 
   - 
   - 

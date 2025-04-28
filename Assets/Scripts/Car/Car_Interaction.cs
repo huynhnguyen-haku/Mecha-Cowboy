@@ -60,12 +60,11 @@ public class Car_Interaction : Interactable
             var trigger = exitPoint.GetComponent<ExitPointTrigger>();
             if (trigger != null && !trigger.isBlocked)
             {
-                return exitPoint.position; // Trả về điểm thoát không bị chặn
+                return exitPoint.position; 
             }
         }
 
-        // Nếu tất cả các điểm đều bị chặn, hiển thị cảnh báo và trả về vị trí fallback
         Debug.LogWarning("No valid exit point found. Returning fallback position.");
-        return transform.position + transform.right * 2; // Vị trí fallback (bên phải xe)
+        return transform.position + transform.right * 2; 
     }
 }

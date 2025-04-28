@@ -1002,7 +1002,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &33791770
 Transform:
   m_ObjectHideFlags: 0
@@ -1955,12 +1955,12 @@ MonoBehaviour:
   accelerationRate: 6
   motorForce: 2000
   isBraking: 0
-  frontBrakeSensitivity: 0
-  backBrakeSensitivity: 5
+  frontBrakeSensitivity: 4
+  backBrakeSensitivity: 8
   brakeForce: 5000
   frontDriftFactor: 0.5
   rearDriftFactor: 0.5
-  driftDuration: 1.25
+  driftDuration: 1
 --- !u!54 &76787113
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -5072,7 +5072,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weaponType: 4
-  equipAnimationType: 0
+  equipAnimationType: 1
   holdType: 3
   gunPoint: {fileID: 307380335}
   holdPoint: {fileID: 1509343177}
@@ -6026,9 +6026,9 @@ GameObject:
   - component: {fileID: 385268871}
   - component: {fileID: 385268872}
   - component: {fileID: 385268873}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: ExitPoint_2
-  m_TagString: Untagged
+  m_TagString: ExitPoint
   m_Icon: {fileID: -5397416234189338067, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -6228,9 +6228,9 @@ GameObject:
   - component: {fileID: 390826130}
   - component: {fileID: 390826131}
   - component: {fileID: 390826132}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: ExitPoint_1
-  m_TagString: Untagged
+  m_TagString: ExitPoint
   m_Icon: {fileID: -5397416234189338067, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -15786,7 +15786,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1132215891}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: ExitPoints
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -15801,8 +15801,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1132215890}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.002, y: 0, z: 0.169}
+  m_LocalRotation: {x: -0, y: 0.000000029802319, z: -0, w: 1}
+  m_LocalPosition: {x: -0.0020683804, y: 0, z: 0.16914685}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -20861,7 +20861,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1617053222
 Transform:
   m_ObjectHideFlags: 0
@@ -25845,7 +25845,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1991623698
 Transform:
   m_ObjectHideFlags: 0
@@ -27272,7 +27272,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weaponType: 2
-  equipAnimationType: 0
+  equipAnimationType: 1
   holdType: 1
   gunPoint: {fileID: 1414927825}
   holdPoint: {fileID: 1394994266}
@@ -27642,7 +27642,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weaponType: 5
-  equipAnimationType: 0
+  equipAnimationType: 1
   holdType: 2
   gunPoint: {fileID: 215633241}
   holdPoint: {fileID: 1876100571}
