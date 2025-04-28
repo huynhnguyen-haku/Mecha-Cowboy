@@ -1,14 +1,12 @@
 ﻿using System;
-using UnityEditor.Build;
 using UnityEngine;
-using UnityEngine.XR;
 
 public enum DriveType { FrontWheelDrive, RearWheelDrive, AllWheelDrive }
 
 [RequireComponent(typeof(Rigidbody))]
 public class Car_Controller : MonoBehaviour
 {
-    private bool carActive;
+    public bool carActive { get; private set; }
     private PlayerControls controls;
     private Rigidbody rb;
     private float moveInput;
@@ -57,7 +55,7 @@ public class Car_Controller : MonoBehaviour
         wheels = GetComponentsInChildren<Car_Wheel>();
 
         controls = ControlsManager.instance.controls;
-        ControlsManager.instance.SwitchToCarControls();
+        //ControlsManager.instance.SwitchToCarControls();
 
         AssignInputEvents();
         SetupDefaultValues();
@@ -251,6 +249,8 @@ public class Car_Controller : MonoBehaviour
             driftTimer = driftDuration;
         };
         controls.Car.Brake.canceled += ctx => isBraking = false;
+
+        controls.Car.EnterExit.performed += ctx => GetComponent<Car_Interaction>().ExitCar();
     }
 
     [ContextMenu("Focus Camera On Car")]

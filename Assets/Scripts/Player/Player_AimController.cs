@@ -57,6 +57,14 @@ public class Player_AimController : MonoBehaviour
         UpdateCameraPosition();
     }
 
+    public void EnableLaserAim(bool enable) => aimLaser.enabled = enable;
+
+    public Transform GetAimCameraTarget()
+    {
+        cameraTarget.position = player.transform.position;
+        return cameraTarget;
+    }
+
     private void UpdateAimVisual()
     {
         aimLaser.enabled = player.weapon.WeaponReady(); // Enable laser only when weapon is ready

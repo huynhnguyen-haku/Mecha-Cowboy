@@ -3,8 +3,8 @@
 public class Interactable : MonoBehaviour
 {
     [SerializeField] private Material highlightMaterial;
-    protected Material defaultMaterial;
-    protected MeshRenderer meshRenderer;
+    [SerializeField] protected Material defaultMaterial;
+    [SerializeField] protected MeshRenderer meshRenderer;
 
     protected Player_WeaponController weaponController;
 
