@@ -105,6 +105,8 @@ public class Enemy : MonoBehaviour
 
     public virtual void GetHit(int damage)
     {
+        EnterBattleMode();
+
         health.ReduceHealth(damage);
 
         if (health.EnemyShouldDie())
@@ -112,7 +114,6 @@ public class Enemy : MonoBehaviour
             Die();
         }
 
-        EnterBattleMode();
     }
 
 
@@ -152,6 +153,12 @@ public class Enemy : MonoBehaviour
     public virtual void Die()
     {
         dropController.DropItems();
+
+        anim.enabled = false;
+        agent.isStopped = true;
+        agent.enabled = false;
+        ragdoll.RagdollActive(true);
+
         MissionObject_Target huntTarget = GetComponent<MissionObject_Target>();
         huntTarget?.InvokeOnTargetKilled();
     }

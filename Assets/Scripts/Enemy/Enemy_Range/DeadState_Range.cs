@@ -14,18 +14,10 @@ public class DeadState_Range : EnemyState
     public override void Enter()
     {
         base.Enter();
-
         if (enemy.throwGrenadeState.finishedThrowing == false)
         {
             enemy.ThrowGrenade();
         }
-
-        interactionDisabled = false;
-        enemy.anim.enabled = false;
-        enemy.agent.isStopped = true;
-
-        enemy.ragdoll.RagdollActive(true);
-
         stateTimer = 1.5f;
     }
 

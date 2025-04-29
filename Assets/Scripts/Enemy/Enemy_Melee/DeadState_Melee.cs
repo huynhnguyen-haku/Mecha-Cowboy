@@ -14,13 +14,6 @@ public class DeadState_Melee : EnemyState
     public override void Enter()
     {
         base.Enter();
-
-        interactionDisabled = false;
-        enemy.anim.enabled = false;
-        enemy.agent.isStopped = true;
-
-        enemy.ragdoll.RagdollActive(true);
-
         stateTimer = 1.5f;
     }
 
@@ -32,17 +25,6 @@ public class DeadState_Melee : EnemyState
     public override void Update()
     {
         base.Update();
-        //DisableInteraction();
-    }
-
-    private void DisableInteraction()
-    {
-        if (stateTimer <= 0 && interactionDisabled == false)
-        {
-            interactionDisabled = true;
-            enemy.ragdoll.RagdollActive(false);
-            enemy.ragdoll.ColliderActive(false);
-        }
     }
 }
 

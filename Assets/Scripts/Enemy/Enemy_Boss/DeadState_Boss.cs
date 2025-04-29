@@ -15,29 +15,11 @@ public class DeadState_Boss : EnemyState
         base.Enter();
 
         enemy.abilityState.DisableFlamethrower();
-
-        interactionDisabled = false;
-        enemy.anim.enabled = false;
-        enemy.agent.isStopped = true;
-
-        enemy.ragdoll.RagdollActive(true);
-
         stateTimer = 1.5f;
     }
 
     public override void Update()
     {
         base.Update();
-        //DisableInteraction();
-    }
-
-    private void DisableInteraction()
-    {
-        if (stateTimer <= 0 && interactionDisabled == false)
-        {
-            interactionDisabled = true;
-            enemy.ragdoll.RagdollActive(false);
-            enemy.ragdoll.ColliderActive(false);
-        }
     }
 }

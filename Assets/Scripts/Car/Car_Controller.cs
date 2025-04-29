@@ -6,9 +6,9 @@ public enum DriveType { FrontWheelDrive, RearWheelDrive, AllWheelDrive }
 [RequireComponent(typeof(Rigidbody))]
 public class Car_Controller : MonoBehaviour
 {
+    public Rigidbody rb { get; private set; }
     public bool carActive { get; private set; }
     private PlayerControls controls;
-    private Rigidbody rb;
     private float moveInput;
     private float turnInput;
 
