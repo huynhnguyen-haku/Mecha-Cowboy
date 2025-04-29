@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Ragdoll : MonoBehaviour
 {
@@ -13,11 +13,6 @@ public class Ragdoll : MonoBehaviour
         ragdollRigidbodies = GetComponentsInChildren<Rigidbody>();
 
         RagdollActive(false);
-
-        foreach (Rigidbody rigidbody in ragdollRigidbodies)
-        {
-            rigidbody.interpolation = RigidbodyInterpolation.Interpolate;
-        }
     }
 
     public void RagdollActive(bool active)

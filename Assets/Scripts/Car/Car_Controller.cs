@@ -48,15 +48,18 @@ public class Car_Controller : MonoBehaviour
     private bool isDrifting;
 
     private Car_Wheel[] wheels;
+    private UI ui;
 
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
         wheels = GetComponentsInChildren<Car_Wheel>();
+        ui = UI.instance;
 
         controls = ControlsManager.instance.controls;
         //ControlsManager.instance.SwitchToCarControls();
 
+        ActivateCar(false);
         AssignInputEvents();
         SetupDefaultValues();
     }
@@ -87,6 +90,8 @@ public class Car_Controller : MonoBehaviour
             return;
 
         speed = rb.linearVelocity.magnitude;
+        ui.inGameUI.UpdateSpeedText(Mathf.RoundToInt(speed * 10) + "km/h");
+
         driftTimer -= Time.deltaTime;
         if (driftTimer < 0)
         {
@@ -225,6 +230,20 @@ public class Car_Controller : MonoBehaviour
     public void ActivateCar(bool active)
     {
         carActive = active;
+
+        if (!active)
+            rb.constraints = RigidbodyConstraints.FreezeAll;
+
+        if (active)
+            rb.constraints = RigidbodyConstraints.None;
+    }
+
+    public void BreakCar()
+    {
+        motorForce = 0;
+        isDrifting = true;
+        frontDriftFactor = 0.9f;
+        rearDriftFactor = 0.9f;
     }
 
     private void AssignInputEvents()

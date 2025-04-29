@@ -6,6 +6,9 @@ using UnityEngine.UI;
 
 public class UI_InGame : MonoBehaviour
 {
+    [SerializeField] private GameObject characterUI;
+    [SerializeField] private GameObject carUI;
+
     [Header("Health Bar")]
     [SerializeField] private Image healthBar;
 
@@ -18,13 +21,29 @@ public class UI_InGame : MonoBehaviour
     [SerializeField] private TextMeshProUGUI missionText;
     [SerializeField] private TextMeshProUGUI missionDetai;
 
+    [Header("Car")]
+    [SerializeField] private Image carHealthBar;
+    [SerializeField] private TextMeshProUGUI carSpeedText;
+
     private bool MissionUIActive = true;
 
     private void Awake()
     {
         weaponSlots_UI = GetComponentsInChildren<UI_WeaponSlot>();
     }
-    
+
+    public void SwitchToCharacterUI()
+    {
+        characterUI.SetActive(true);
+        carUI.SetActive(false);
+    }
+
+    public void SwitchToCarUI()
+    {
+        characterUI.SetActive(false);
+        carUI.SetActive(true);
+    }
+
     public void ToggleMissionUI()
     {
         MissionUIActive = !MissionUIActive;
@@ -57,5 +76,15 @@ public class UI_InGame : MonoBehaviour
     public void UpdateHealthUI(float currenHealth, float maxHealth)
     {
         healthBar.fillAmount = currenHealth / maxHealth;
+    }
+
+    public void UpdateCarHealthUI(float currentCarHealth, float maxCarHealth)
+    {
+        carHealthBar.fillAmount = currentCarHealth / maxCarHealth;
+    }
+
+    public void UpdateSpeedText(string text)
+    {
+        carSpeedText.text = text;
     }
 }

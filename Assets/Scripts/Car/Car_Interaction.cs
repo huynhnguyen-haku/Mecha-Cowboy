@@ -2,6 +2,8 @@
 
 public class Car_Interaction : Interactable
 {
+    private Car_HealthController carHealthController;
+
     private Car_Controller carController;
     private Transform player;
 
@@ -12,6 +14,7 @@ public class Car_Interaction : Interactable
 
     private void Start()
     {
+        carHealthController = GetComponent<Car_HealthController>();
         carController = GetComponent<Car_Controller>();
         player = GameManager.instance.player.transform;
     }
@@ -25,6 +28,7 @@ public class Car_Interaction : Interactable
     private void EnterCar()
     {
         ControlsManager.instance.SwitchToCarControls();
+        carHealthController.UpdateCarHealthUI();
         carController.ActivateCar(true);
 
         defaultPlayerScale = player.localScale.x;
