@@ -30,7 +30,7 @@ public class Car_Controller : MonoBehaviour
     [Header("Engine Settings")]
     public float currentSpeed;
 
-    [Range(7, 12)][SerializeField] private float maxSpeed = 7;
+    [Range(4, 12)][SerializeField] private float maxSpeed = 7;
     [Range(0.5f, 10)][SerializeField] private float accelerationRate = 2;
     [Range(1500, 5000)][SerializeField] private float motorForce = 1500f;
 
