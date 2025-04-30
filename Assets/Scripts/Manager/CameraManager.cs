@@ -43,11 +43,12 @@ public class CameraManager : MonoBehaviour
         transposer.m_CameraDistance = Mathf.Lerp(currentDistance, targetCameraDistance, distanceChangeRate * Time.deltaTime);
     }
 
-    public void ChangeCameraDistance(float distance) => transposer.m_CameraDistance = distance;
+    public void ChangeCameraDistance(float distance) => targetCameraDistance = distance;
 
-    public void ChangeCameraTarget(Transform target, float cameraDistance = 10)
+    public void ChangeCameraTarget(Transform target, float cameraDistance = 10, float newLookAheadTime = 0)
     {
         virtualCamera.Follow = target;
+        transposer.m_LookaheadTime = newLookAheadTime;
         ChangeCameraDistance(cameraDistance);
     }
 

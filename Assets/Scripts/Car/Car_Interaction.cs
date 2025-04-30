@@ -37,7 +37,7 @@ public class Car_Interaction : Interactable
         player.transform.parent = transform;
         player.transform.localPosition = Vector3.up / 2;
 
-        CameraManager.instance.ChangeCameraTarget(transform);
+        CameraManager.instance.ChangeCameraTarget(transform, 12, 0.5f);
     }
 
     public void ExitCar()
@@ -53,7 +53,7 @@ public class Car_Interaction : Interactable
         ControlsManager.instance.SwitchToCharacterControls();
         Player_AimController aim = GameManager.instance.player.aim;
 
-        CameraManager.instance.ChangeCameraTarget(aim.GetAimCameraTarget());
+        CameraManager.instance.ChangeCameraTarget(aim.GetAimCameraTarget(), 8.5f);
     }
 
 
