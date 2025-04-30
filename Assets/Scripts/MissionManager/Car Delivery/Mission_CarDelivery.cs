@@ -18,9 +18,9 @@ public class Mission_CarDelivery : Mission
         isCarDelivered = false;
         MissionObject_Car.OnCarDelivery += CompleteCarDelivery;
 
-        Car[] cars = Object.FindObjectsByType<Car>(FindObjectsSortMode.None); // Find all objects with "Car" script Component  
+        Car_Controller[] cars = Object.FindObjectsByType<Car_Controller>(FindObjectsSortMode.None);
 
-        foreach (Car car in cars)
+        foreach (var car in cars)
         {
             if (car != null)
             {

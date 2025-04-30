@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ComponentTransfer : MonoBehaviour
 {
-
+    // This class is used only for wheels
     [ContextMenu("Transfer Components to Child")]
     public void TransferComponentsToChild()
     {

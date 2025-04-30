@@ -14,10 +14,10 @@ public class Car_Wheel : MonoBehaviour
     private void Awake()
     {
         cd = GetComponent<WheelCollider>();
-        if (model == null)
-        {
+
+        if (model == null)   
             model = GetComponentInChildren<MeshRenderer>().gameObject;
-        }
+        
     }
 
     public void SetDefaltStiffness(float newValue)

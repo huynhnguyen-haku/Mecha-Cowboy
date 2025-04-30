@@ -12,8 +12,18 @@ public class SnapPoint : MonoBehaviour
 
     private void Start()
     {
-        GetComponent<BoxCollider>().enabled = false; // Disable the collider to prevent unwanted interactions
-        GetComponent<MeshRenderer>().enabled = false;
+        BoxCollider boxCollider = gameObject.GetComponent<BoxCollider>();
+        MeshRenderer meshRenderer = gameObject.GetComponent<MeshRenderer>();
+
+        if (boxCollider != null)
+        {
+            boxCollider.enabled = false;
+        }
+
+        if (meshRenderer != null)
+        {
+            meshRenderer.enabled = false;
+        }
 
     }
     private void OnValidate()

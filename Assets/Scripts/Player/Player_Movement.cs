@@ -11,6 +11,7 @@ public class Player_Movement : MonoBehaviour
     [Header("Movement Settings")]
     private Vector3 moveDirection;
     public Vector2 moveInput { get; private set; }
+    public bool isInCar;
 
     private float verticalVelocity;
     private float speed;
@@ -37,6 +38,10 @@ public class Player_Movement : MonoBehaviour
     {
         if (player.health.playerIsDead)
             return;
+
+        if (isInCar)
+            return;
+
         ApplyMovement();
         ApplyRotation();
         AnimatorControllers();
