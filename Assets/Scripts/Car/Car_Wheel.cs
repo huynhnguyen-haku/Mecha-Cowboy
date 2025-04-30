@@ -7,14 +7,17 @@ public class Car_Wheel : MonoBehaviour
 {
     public AxelType axleType;
     public WheelCollider cd { get; private set; }
-    public GameObject model { get; private set; }
+    public GameObject model;
 
     private float defaultSideStiffness;
 
     private void Awake()
     {
         cd = GetComponent<WheelCollider>();
-        model = GetComponentInChildren<MeshRenderer>().gameObject;
+        if (model == null)
+        {
+            model = GetComponentInChildren<MeshRenderer>().gameObject;
+        }
     }
 
     public void SetDefaltStiffness(float newValue)
