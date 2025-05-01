@@ -5096,6 +5096,7 @@ MonoBehaviour:
   reloadSFX: {fileID: 1897157979}
   spinSFX: {fileID: 0}
   endSpinSFX: {fileID: 0}
+  minigunSpinner: {fileID: 0}
 --- !u!4 &319347702 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6681718201734782422, guid: a428da4338eee904a9f208f9f3d5010d, type: 3}
@@ -12315,6 +12316,7 @@ MonoBehaviour:
   reloadSFX: {fileID: 321325703}
   spinSFX: {fileID: 0}
   endSpinSFX: {fileID: 0}
+  minigunSpinner: {fileID: 0}
 --- !u!4 &828031934 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7919762238953238015, guid: be3bd8e0961573b40b8aa57a3c47ef12, type: 3}
@@ -22171,6 +22173,7 @@ MonoBehaviour:
   reloadSFX: {fileID: 425095373}
   spinSFX: {fileID: 0}
   endSpinSFX: {fileID: 0}
+  minigunSpinner: {fileID: 0}
 --- !u!4 &1640599947 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2333500906566299733, guid: 553cba07a57ddc84fb9be38911dc733b, type: 3}
@@ -23480,6 +23483,7 @@ MonoBehaviour:
   reloadSFX: {fileID: 1386752008}
   spinSFX: {fileID: 0}
   endSpinSFX: {fileID: 0}
+  minigunSpinner: {fileID: 0}
 --- !u!4 &1759658112 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 9217840732487771586, guid: ba80bd7ac7d8fbf49a267f9dab764084, type: 3}
@@ -28356,6 +28360,7 @@ MonoBehaviour:
   reloadSFX: {fileID: 977408619}
   spinSFX: {fileID: 0}
   endSpinSFX: {fileID: 0}
+  minigunSpinner: {fileID: 0}
 --- !u!4 &2063806119 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 311392636221982166, guid: 779db3eb523225d48ae1fcbea3c68fb3, type: 3}
@@ -28746,6 +28751,7 @@ MonoBehaviour:
   reloadSFX: {fileID: 1616319829}
   spinSFX: {fileID: 818076783}
   endSpinSFX: {fileID: 848880486}
+  minigunSpinner: {fileID: 346300756}
 --- !u!4 &2111941339 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7311182030172791085, guid: 4eeb021cdf0d2a444b697044db019b2c, type: 3}

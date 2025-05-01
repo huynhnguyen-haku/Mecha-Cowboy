@@ -1,5 +1,4 @@
-﻿using NUnit.Framework;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -30,10 +29,10 @@ public class Player_WeaponController : MonoBehaviour
     [SerializeField] private GameObject weaponPickupPrefab;
 
     [Header("Minigun")]
-    private bool isSpinning; 
+    private bool isSpinning;
     private bool isFireSFXPlaying;
-    private Coroutine spinCoroutine; 
-
+    private Coroutine spinCoroutine;
+    private Coroutine spinnerCoroutine; // Coroutine để quản lý việc xoay spinner
 
 
     private void Start()
@@ -129,8 +128,8 @@ public class Player_WeaponController : MonoBehaviour
 
     public void SetWeaponReady(bool ready)
     {
-         weaponReady = ready;
-    }      
+        weaponReady = ready;
+    }
 
     public bool WeaponReady() => weaponReady;
 
@@ -192,11 +191,18 @@ public class Player_WeaponController : MonoBehaviour
     {
         isSpinning = true;
 
-        // Play start spinning sfx
-        player.weaponVisuals.CurrentWeaponModel().spinSFX.Play();
-        yield return new WaitForSeconds(0.5f); 
+        // Spin up the minigun and play start spin sound
+        var spinSFX = player.weaponVisuals.CurrentWeaponModel().spinSFX;
+        if (spinSFX != null)
+            spinSFX.Play();
 
-        // Start firing and play fire sfx
+
+        var spinner = player.weaponVisuals.CurrentWeaponModel().minigunSpinner;
+        if (spinner != null)
+            spinnerCoroutine = StartCoroutine(SpinMinigunSpinner());
+
+        yield return new WaitForSeconds(0.5f);
+
         if (!isFireSFXPlaying)
         {
             var fireSFX = player.weaponVisuals.CurrentWeaponModel().fireSFX;
@@ -211,17 +217,36 @@ public class Player_WeaponController : MonoBehaviour
                 StopMinigunFire();
                 yield break;
             }
-
             FireSingleBullet();
             yield return new WaitForSeconds(60f / currentWeapon.fireRate);
         }
-
         StopMinigunFire();
+    }
+
+    private IEnumerator SpinMinigunSpinner()
+    {
+        var spinner = player.weaponVisuals.CurrentWeaponModel().minigunSpinner;
+
+        while (isSpinning)
+        {
+            if (spinner != null)
+                spinner.Rotate(0, 0, -1000f * Time.deltaTime);
+
+            yield return null;
+        }
     }
 
     private void StopMinigunFire()
     {
         isSpinning = false;
+
+        // Stop spinner and fireSFX
+        if (spinnerCoroutine != null)
+        {
+            StopCoroutine(spinnerCoroutine);
+            spinnerCoroutine = null;
+        }
+
         if (isFireSFXPlaying)
         {
             var fireSFX = player.weaponVisuals.CurrentWeaponModel().fireSFX;
@@ -229,8 +254,11 @@ public class Player_WeaponController : MonoBehaviour
             isFireSFXPlaying = false;
         }
 
-        // Play stop spinning sfx
-        player.weaponVisuals.CurrentWeaponModel().endSpinSFX.Play();
+        // Play end spin sound
+        var endSpinSFX = player.weaponVisuals.CurrentWeaponModel().endSpinSFX;
+        if (endSpinSFX != null)
+            endSpinSFX.Play();
+
     }
 
 
