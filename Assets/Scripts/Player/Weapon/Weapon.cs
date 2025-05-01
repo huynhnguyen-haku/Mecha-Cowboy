@@ -195,7 +195,7 @@ public class Weapon
         return false;
     }
 
-    private bool HaveEnoughBullet() => bulletsInMagazine > 0;
+    public bool HaveEnoughBullet() => bulletsInMagazine > 0;
 
     public void RefillBullets()
     {

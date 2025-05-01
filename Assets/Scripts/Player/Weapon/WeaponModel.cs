@@ -15,4 +15,9 @@ public class WeaponModel : MonoBehaviour
     [Header("Audio")]
     public AudioSource fireSFX;
     public AudioSource reloadSFX;
+
+    [Header("Minigun Audio")]
+    public AudioSource spinSFX;
+    public AudioSource endSpinSFX;
+    public Transform minigunSpinner;
 }

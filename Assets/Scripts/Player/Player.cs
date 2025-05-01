@@ -10,8 +10,10 @@ public class Player : MonoBehaviour
     public Player_WeaponVisuals weaponVisuals { get; private set; }
     public Player_Interaction interaction { get; private set; }
     public Player_Health health { get; private set; }
+    public Player_SFX sfx { get; private set; }
     public Ragdoll ragdoll { get; private set; } 
     public Animator anim { get; private set; }
+
     public bool controlsEnabled { get; private set; } 
 
     private void Awake()
@@ -22,6 +24,7 @@ public class Player : MonoBehaviour
         weaponVisuals = GetComponentInChildren<Player_WeaponVisuals>();
         interaction = GetComponent<Player_Interaction>();
         health = GetComponent<Player_Health>();
+        sfx = GetComponent<Player_SFX>();
         ragdoll = GetComponent<Ragdoll>();
         anim = GetComponentInChildren<Animator>();
         controls = ControlsManager.instance.controls;

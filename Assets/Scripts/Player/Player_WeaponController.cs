@@ -1,4 +1,4 @@
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -28,6 +28,13 @@ public class Player_WeaponController : MonoBehaviour
     [SerializeField] private int maxSlots = 3; // Max weapon slots
 
     [SerializeField] private GameObject weaponPickupPrefab;
+
+    [Header("Minigun")]
+    private bool isSpinning; 
+    private bool isFireSFXPlaying;
+    private Coroutine spinCoroutine; 
+
+
 
     private void Start()
     {
@@ -120,7 +127,11 @@ public class Player_WeaponController : MonoBehaviour
         droppedWeapon.GetComponent<Weapon_PickUp>().SetUpPickupWeapon(currentWeapon, player.transform);
     }
 
-    public void SetWeaponReady(bool ready) => weaponReady = ready;
+    public void SetWeaponReady(bool ready)
+    {
+         weaponReady = ready;
+    }      
+
     public bool WeaponReady() => weaponReady;
 
     #endregion
@@ -152,6 +163,16 @@ public class Player_WeaponController : MonoBehaviour
         if (currentWeapon.CanShot() == false)
             return;
 
+        if (currentWeapon.weaponType == WeaponType.Minigun)
+        {
+            if (!isSpinning)
+            {
+                // Start spinning up the minigun
+                spinCoroutine = StartCoroutine(SpinUpMinigun());
+            }
+            return;
+        }
+
         player.weaponVisuals.PlayFireAnimation();
 
         if (currentWeapon.shotType == ShotType.Single)
@@ -167,13 +188,62 @@ public class Player_WeaponController : MonoBehaviour
         TriggerEnemyDodge();
     }
 
+    private IEnumerator SpinUpMinigun()
+    {
+        isSpinning = true;
+
+        // Play start spinning sfx
+        player.weaponVisuals.CurrentWeaponModel().spinSFX.Play();
+        yield return new WaitForSeconds(0.5f); 
+
+        // Start firing and play fire sfx
+        if (!isFireSFXPlaying)
+        {
+            var fireSFX = player.weaponVisuals.CurrentWeaponModel().fireSFX;
+            fireSFX.Play();
+            isFireSFXPlaying = true;
+        }
+
+        while (isShooting && currentWeapon.weaponType == WeaponType.Minigun)
+        {
+            if (!currentWeapon.HaveEnoughBullet())
+            {
+                StopMinigunFire();
+                yield break;
+            }
+
+            FireSingleBullet();
+            yield return new WaitForSeconds(60f / currentWeapon.fireRate);
+        }
+
+        StopMinigunFire();
+    }
+
+    private void StopMinigunFire()
+    {
+        isSpinning = false;
+        if (isFireSFXPlaying)
+        {
+            var fireSFX = player.weaponVisuals.CurrentWeaponModel().fireSFX;
+            fireSFX.Stop();
+            isFireSFXPlaying = false;
+        }
+
+        // Play stop spinning sfx
+        player.weaponVisuals.CurrentWeaponModel().endSpinSFX.Play();
+    }
+
+
     private void FireSingleBullet()
     {
         currentWeapon.bulletsInMagazine--;
         UpdateWeaponUI();
 
-        // Play the fire sound effect using PlayOneShot
-        player.weaponVisuals.CurrentWeaponModel().fireSFX.PlayOneShot(player.weaponVisuals.CurrentWeaponModel().fireSFX.clip);
+        if (WeaponType.Shotgun == currentWeapon.weaponType)
+            player.weaponVisuals.CurrentWeaponModel().fireSFX.Play();
+
+        else if (WeaponType.Minigun != currentWeapon.weaponType)
+            player.weaponVisuals.CurrentWeaponModel().fireSFX.PlayOneShot(player.weaponVisuals.CurrentWeaponModel().fireSFX.clip);
 
         GameObject bullet = ObjectPool.instance.GetObject(bulletPrefab, GunPoint());
         Rigidbody rbBullet = bullet.GetComponent<Rigidbody>();
@@ -242,7 +312,7 @@ public class Player_WeaponController : MonoBehaviour
     }
     #endregion
 
-        #region Input Events
+    #region Input Events
 
     private void AssignInputEvents()
     {
@@ -267,6 +337,31 @@ public class Player_WeaponController : MonoBehaviour
                 Reload();
             }
         };
+        controls.Character.Fire.canceled += context =>
+        {
+            isShooting = false;
+
+            if (currentWeapon.weaponType == WeaponType.Minigun)
+            {
+                if (isSpinning)
+                {
+                    StopCoroutine(spinCoroutine);
+                    isSpinning = false;
+                    player.weaponVisuals.CurrentWeaponModel().endSpinSFX.Play();
+                }
+
+                if (isFireSFXPlaying)
+                {
+                    var fireSFX = player.weaponVisuals.CurrentWeaponModel().fireSFX;
+                    fireSFX.Stop();
+                    fireSFX.loop = false;
+                    isFireSFXPlaying = false;
+                }
+            }
+        };
+
+
+
     }
 
     #endregion

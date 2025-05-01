@@ -26,7 +26,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4304375820993687407, guid: b95db5b9c6d616a42978ba76cbc28ae4, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -1.7180023
+      value: -31.013004
       objectReference: {fileID: 0}
     - target: {fileID: 4304375820993687407, guid: b95db5b9c6d616a42978ba76cbc28ae4, type: 3}
       propertyPath: m_LocalPosition.y
@@ -34,7 +34,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4304375820993687407, guid: b95db5b9c6d616a42978ba76cbc28ae4, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -5.230996
+      value: 88.082344
       objectReference: {fileID: 0}
     - target: {fileID: 4304375820993687407, guid: b95db5b9c6d616a42978ba76cbc28ae4, type: 3}
       propertyPath: m_LocalRotation.w
@@ -67,6 +67,10 @@ PrefabInstance:
     - target: {fileID: 5765666782680054302, guid: b95db5b9c6d616a42978ba76cbc28ae4, type: 3}
       propertyPath: m_Name
       value: Enemy_Melee - Shield Variant
+      objectReference: {fileID: 0}
+    - target: {fileID: 5993417636701308321, guid: b95db5b9c6d616a42978ba76cbc28ae4, type: 3}
+      propertyPath: maxHealth
+      value: 200
       objectReference: {fileID: 0}
     - target: {fileID: 9077918941035197010, guid: b95db5b9c6d616a42978ba76cbc28ae4, type: 3}
       propertyPath: crystalAmount
