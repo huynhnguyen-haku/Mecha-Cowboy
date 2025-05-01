@@ -172,6 +172,9 @@ public class Player_WeaponController : MonoBehaviour
         currentWeapon.bulletsInMagazine--;
         UpdateWeaponUI();
 
+        // Play the fire sound effect using PlayOneShot
+        player.weaponVisuals.CurrentWeaponModel().fireSFX.PlayOneShot(player.weaponVisuals.CurrentWeaponModel().fireSFX.clip);
+
         GameObject bullet = ObjectPool.instance.GetObject(bulletPrefab, GunPoint());
         Rigidbody rbBullet = bullet.GetComponent<Rigidbody>();
 
@@ -185,10 +188,13 @@ public class Player_WeaponController : MonoBehaviour
         rbBullet.mass = REFERENCE_BULLET_SPEED / bulletSpeed;
         rbBullet.linearVelocity = bulletsDirection * bulletSpeed;
     }
+
+
     private void Reload() // This only used for playing reload animation (the real one is in Animation event)
     {
         SetWeaponReady(false);
         player.weaponVisuals.PlayReloadAnimation();
+        player.weaponVisuals.CurrentWeaponModel().reloadSFX.Play();
     }
     #endregion
 

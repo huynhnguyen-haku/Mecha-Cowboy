@@ -43,7 +43,7 @@ public class Player_WeaponVisuals : MonoBehaviour
 
     public void PlayReloadAnimation()
     {
-        float reloadSpeed = player.weapon.CurrentWeapon().reloadSpeed;
+        float reloadSpeed = player.weapon.CurrentWeapon().reloadSpeed/2;
 
         animator.SetTrigger("Reload");
         animator.SetFloat("ReloadSpeed", reloadSpeed);

@@ -14,14 +14,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weaponName: Heavy Machinegun
   weaponType: 5
-  bulletDamage: 15
+  bulletDamage: 12
   shotType: 1
   bulletsPerShot: 1
-  fireRate: 2000
+  fireRate: 1200
   bulletsInMagazine: 250
   magazineCapacity: 250
-  TotalReserveAmmo: 250
-  reloadSpeed: 1
+  TotalReserveAmmo: 0
+  reloadSpeed: 1.75
   equipSpeed: 1
   laserDistance: 8
   cameraDistance: 8
