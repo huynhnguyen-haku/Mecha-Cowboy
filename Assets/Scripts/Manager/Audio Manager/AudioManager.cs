@@ -3,19 +3,13 @@ using UnityEngine;
 public class AudioManager : MonoBehaviour
 {
     [SerializeField] private AudioSource[] bgm;
-
     [SerializeField] private bool playBgm;
 
     private int bgmIndex;
 
     private void Start()
     {
-        // Ensure all AudioSources have playOnAwake disabled at the start of the game
-        foreach (var audioSource in bgm)
-        {
-            audioSource.playOnAwake = false;
-            audioSource.Stop(); // Stop any audio that might have started playing
-        }
+        PlayBGM(0);
     }
 
     private void Update()

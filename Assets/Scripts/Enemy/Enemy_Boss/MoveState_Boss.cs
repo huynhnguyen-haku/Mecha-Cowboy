@@ -32,7 +32,7 @@ public class MoveState_Boss : EnemyState
         base.Update();
 
         actionTimer -= Time.deltaTime;
-        enemy.FaceTarget(GetNextPathPoint());
+        enemy.FaceTarget(enemy.agent.steeringTarget);
 
         if (enemy.inBattleMode)
         {

@@ -24,7 +24,7 @@ public class MoveState_Melee : EnemyState
     {
         base.Update();
 
-        enemy.FaceTarget(GetNextPathPoint());
+        enemy.FaceTarget(enemy.agent.steeringTarget);
 
         if (enemy.agent.remainingDistance <= enemy.agent.stoppingDistance + 0.05f)
         {

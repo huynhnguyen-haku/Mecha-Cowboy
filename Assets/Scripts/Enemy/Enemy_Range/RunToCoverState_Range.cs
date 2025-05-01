@@ -33,7 +33,7 @@ public class RunToCoverState_Range : EnemyState
     public override void Update()
     {
         base.Update();
-        enemy.FaceTarget(GetNextPathPoint());
+        enemy.FaceTarget(enemy.agent.steeringTarget);
 
         if (Vector3.Distance(enemy.transform.position, destination) < 0.5f)
         {

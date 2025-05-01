@@ -32,7 +32,7 @@ public class ChaseState_Melee : EnemyState
             stateMachine.ChangeState(enemy.attackState);
         }
 
-        enemy.FaceTarget(GetNextPathPoint());
+        enemy.FaceTarget(enemy.agent.steeringTarget);
 
         if (CanUpdateDestination())
         {

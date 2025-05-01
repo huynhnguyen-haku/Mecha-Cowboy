@@ -38,7 +38,7 @@ public class AdvancePlayerState_Range : EnemyState
         enemy.UpdateAimPosition();
 
         enemy.agent.SetDestination(enemy.player.transform.position);
-        enemy.FaceTarget(GetNextPathPoint());
+        enemy.FaceTarget(enemy.agent.steeringTarget);
 
         if (CanEnterBattleState() && enemy.IsSeeingPlayer())
         {
