@@ -2,10 +2,17 @@ using UnityEngine;
 
 public class AudioManager : MonoBehaviour
 {
+    public static AudioManager instance;
+
     [SerializeField] private AudioSource[] bgm;
 
     [SerializeField] private bool playBgm;
     [SerializeField] private int bgmIndex;
+
+    private void Awake()
+    {
+        instance = this;
+    }
 
     private void Start()
     {
@@ -21,6 +28,16 @@ public class AudioManager : MonoBehaviour
         {
             PlayRandomBGM();
         }
+    }
+
+    public void PlaySFX(AudioSource sfx, bool randomPitch = false, float minPitch = 0.85f, float maxPitch = 1.1f)
+    {
+        if (sfx == null)
+            return;
+
+        float pitch = Random.Range(minPitch, maxPitch);
+        sfx.pitch = pitch;
+        sfx.Play();
     }
 
     public void PlayBGM(int index)

@@ -47,6 +47,7 @@ public class Enemy : MonoBehaviour
     public Ragdoll ragdoll { get; private set; }
     public Enemy_Health health { get; private set; }
     public Enemy_DropController dropController { get; private set; }
+    public AudioManager audioManager { get; private set; }
 
 
     protected virtual void Awake()
@@ -64,6 +65,7 @@ public class Enemy : MonoBehaviour
     protected virtual void Start()
     {
         InitializePatrolPoints();
+        audioManager = AudioManager.instance;
     }
 
 
