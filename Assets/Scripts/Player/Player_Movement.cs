@@ -22,9 +22,17 @@ public class Player_Movement : MonoBehaviour
 
     private bool isRunning;
 
+    private AudioSource walkSFX;
+    private AudioSource runSFX;
+    private bool canPlayFootstepsSFX;
+
     private void Start()
     {
         player = GetComponent<Player>();
+
+        walkSFX = player.sfx.walkSFX;
+        runSFX = player.sfx.runSFX;
+        Invoke(nameof(EnableFootstepsSFX), 1f);
 
         controller = GetComponent<CharacterController>();
         animator = GetComponentInChildren<Animator>();
@@ -76,8 +84,34 @@ public class Player_Movement : MonoBehaviour
         ApplyGravity();
         if (moveDirection.magnitude > 0)
         {
+            PlayFootstepsSFX();
             controller.Move(moveDirection * Time.deltaTime * speed);
         }
+    }
+
+    private void EnableFootstepsSFX() => canPlayFootstepsSFX = true;
+
+    private void PlayFootstepsSFX()
+    {
+        if (!canPlayFootstepsSFX)
+            return;
+
+        if (isRunning)
+        {
+            if (runSFX.isPlaying == false)
+                runSFX.Play();
+        }
+        else
+        {
+            if (walkSFX.isPlaying == false)
+                walkSFX.Play();
+        }
+    }
+
+    private void StopFootstepsSFX()
+    {
+        walkSFX.Stop();
+        runSFX.Stop();
     }
 
     private void ApplyGravity()
@@ -98,7 +132,11 @@ public class Player_Movement : MonoBehaviour
         controls = player.controls;
 
         controls.Character.Movement.performed += ctx => moveInput = ctx.ReadValue<Vector2>();
-        controls.Character.Movement.canceled += ctx => moveInput = Vector2.zero;
+        controls.Character.Movement.canceled += ctx =>
+        {
+            StopFootstepsSFX();
+            moveInput = Vector2.zero;
+        };
 
         controls.Character.Sprint.performed += ctx =>
         {

@@ -3,9 +3,9 @@ using UnityEngine;
 public class AudioManager : MonoBehaviour
 {
     [SerializeField] private AudioSource[] bgm;
-    [SerializeField] private bool playBgm;
 
-    private int bgmIndex;
+    [SerializeField] private bool playBgm;
+    [SerializeField] private int bgmIndex;
 
     private void Start()
     {
@@ -17,8 +17,10 @@ public class AudioManager : MonoBehaviour
         if (playBgm == false && BgmIsPlaying())
             StopAllBGM();
 
-        else if (bgm[bgmIndex].isPlaying == false)
+        if(playBgm && bgm[bgmIndex].isPlaying == false)
+        {
             PlayRandomBGM();
+        }
     }
 
     public void PlayBGM(int index)
@@ -40,6 +42,7 @@ public class AudioManager : MonoBehaviour
     [ContextMenu("Play Random BGM")]
     public void PlayRandomBGM()
     {
+        StopAllBGM();
         bgmIndex = Random.Range(0, bgm.Length);
         PlayBGM(bgmIndex);
     }
