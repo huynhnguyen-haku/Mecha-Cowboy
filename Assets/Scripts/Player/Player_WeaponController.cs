@@ -191,17 +191,17 @@ public class Player_WeaponController : MonoBehaviour
     {
         isSpinning = true;
 
-        // Spin up the minigun and play start spin sound
+        // Play start spin sound
         var spinSFX = player.weaponVisuals.CurrentWeaponModel().spinSFX;
-        if (spinSFX != null)
+        if (spinSFX != null && !spinSFX.isPlaying)
             spinSFX.Play();
 
-
+        // Spin up the minigun
         var spinner = player.weaponVisuals.CurrentWeaponModel().minigunSpinner;
         if (spinner != null)
             spinnerCoroutine = StartCoroutine(SpinMinigunSpinner());
 
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(1f);
 
         if (!isFireSFXPlaying)
         {
@@ -254,13 +254,11 @@ public class Player_WeaponController : MonoBehaviour
             isFireSFXPlaying = false;
         }
 
-        // Play end spin sound
+        // Play overheat sound
         var endSpinSFX = player.weaponVisuals.CurrentWeaponModel().endSpinSFX;
-        if (endSpinSFX != null)
+        if (endSpinSFX != null && !endSpinSFX.isPlaying)
             endSpinSFX.Play();
-
     }
-
 
     private void FireSingleBullet()
     {
@@ -375,21 +373,21 @@ public class Player_WeaponController : MonoBehaviour
                 {
                     StopCoroutine(spinCoroutine);
                     isSpinning = false;
-                    player.weaponVisuals.CurrentWeaponModel().endSpinSFX.Play();
+                    var spinSFX = player.weaponVisuals.CurrentWeaponModel().spinSFX;
+                    spinSFX.Stop();
+
+                    var endSpinSFX = player.weaponVisuals.CurrentWeaponModel().endSpinSFX;
+                    endSpinSFX.Play();
                 }
 
                 if (isFireSFXPlaying)
                 {
+                    isFireSFXPlaying = false;
                     var fireSFX = player.weaponVisuals.CurrentWeaponModel().fireSFX;
                     fireSFX.Stop();
-                    fireSFX.loop = false;
-                    isFireSFXPlaying = false;
                 }
             }
         };
-
-
-
     }
 
     #endregion
