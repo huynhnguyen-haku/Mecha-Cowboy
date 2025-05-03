@@ -5005,6 +5005,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 120
   currentHealth: 0
+  lowHealthEffect: {fileID: 0}
 --- !u!114 &5444482884643385677
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5880,8 +5881,8 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: bb2e2714f962491428dcb0b38598b251, type: 3}
-  m_Resource: {fileID: 8300000, guid: bb2e2714f962491428dcb0b38598b251, type: 3}
+  m_audioClip: {fileID: 8300000, guid: ba0672ffccc5ec644bf0b5d4abfd8d15, type: 3}
+  m_Resource: {fileID: 8300000, guid: ba0672ffccc5ec644bf0b5d4abfd8d15, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
@@ -7944,8 +7945,8 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: a764377339b869e459f5e53fb9258f73, type: 3}
-  m_Resource: {fileID: 8300000, guid: a764377339b869e459f5e53fb9258f73, type: 3}
+  m_audioClip: {fileID: 8300000, guid: ca753f60ab0e98845b0d5ecfd5fddfa2, type: 3}
+  m_Resource: {fileID: 8300000, guid: ca753f60ab0e98845b0d5ecfd5fddfa2, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1

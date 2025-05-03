@@ -201,7 +201,7 @@ public class Player_WeaponController : MonoBehaviour
         if (spinner != null)
             spinnerCoroutine = StartCoroutine(SpinMinigunSpinner());
 
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(1.25f);
 
         if (!isFireSFXPlaying)
         {

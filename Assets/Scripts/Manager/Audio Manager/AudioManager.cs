@@ -1,3 +1,5 @@
+using System.Collections;
+using Unity.Hierarchy;
 using UnityEngine;
 
 public class AudioManager : MonoBehaviour
@@ -40,6 +42,13 @@ public class AudioManager : MonoBehaviour
         sfx.Play();
     }
 
+    public void ControlSFX_FadeAndDelay(AudioSource source, bool play, float targetVolume, float delay = 0, float fadeDuration = 1 )
+    {
+        if (source == null)
+            return;
+        StartCoroutine(ProcessSFX_FadeAndDelay(source, play, targetVolume, delay, fadeDuration));
+    }
+
     public void PlayBGM(int index)
     {
         StopAllBGM();
@@ -73,5 +82,35 @@ public class AudioManager : MonoBehaviour
         }
 
         return false;
+    }
+
+    private IEnumerator ProcessSFX_FadeAndDelay(AudioSource source, bool play, float targetVolume, float delay = 0, float fadeDuration = 1 )
+    {
+        yield return new WaitForSeconds(delay);
+
+        float startVolume = play ? 0 : source.volume;
+        float endVolume = play ? targetVolume : 0;
+        float elapsedTime = 0;
+
+        if (play)
+        {
+            source.volume = 0;
+            source.Play();
+        }
+
+        // Fade in or fade out over the duration
+        while (elapsedTime < fadeDuration)
+        {
+            elapsedTime += Time.deltaTime;
+            source.volume = Mathf.Lerp(startVolume, endVolume, elapsedTime / fadeDuration);
+            yield return null;
+        }
+
+        source.volume = endVolume;
+
+        if (play == false)
+        {
+            source.Stop();
+        }
     }
 }

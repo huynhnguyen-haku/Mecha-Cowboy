@@ -50,6 +50,7 @@ public class Car_Interaction : Interactable
             return;
 
         carController.ActivateCar(false);
+        carController.DecelerateCar();
 
         // Set bool for player movement
         GameManager.instance.player.GetComponent<Player_Movement>().isInCar = false;

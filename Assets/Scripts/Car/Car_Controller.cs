@@ -37,7 +37,7 @@ public class Car_Controller : MonoBehaviour
     [SerializeField] private float rearWheelTraction = 1;
 
     [Header("Engine Settings")]
-    public float currentSpeed;
+    private float currentSpeed;
 
     // Those 2 parameters are mile, not kilometer
     [Range(4, 20)]
@@ -100,7 +100,11 @@ public class Car_Controller : MonoBehaviour
     private void FixedUpdate()
     {
         if (!carActive)
+        {
+            // Slow down the car if not in use
+            DecelerateCar();
             return;
+        }
 
         HandleWheelAnimation();
         HandleDriving();
@@ -110,10 +114,21 @@ public class Car_Controller : MonoBehaviour
 
         if (isDrifting)
             HandleDrift();
-
         else
             StopDrift();
     }
+
+    public void DecelerateCar()
+    {
+        // Stop drifting 
+        StopDrift();
+        isDrifting = false;
+
+        // Slow down the car after exiting
+        rb.linearVelocity = Vector3.Lerp(rb.linearVelocity, Vector3.zero, Time.fixedDeltaTime * 2f);
+        rb.angularVelocity = Vector3.Lerp(rb.angularVelocity, Vector3.zero, Time.fixedDeltaTime * 2f);
+    }
+
 
     private void Update()
     {
@@ -260,6 +275,7 @@ public class Car_Controller : MonoBehaviour
         }
 
         DriftCarPS();
+        carSounds.HandleTireSqueal(true);
     }
 
     private void StopDrift()
@@ -268,7 +284,9 @@ public class Car_Controller : MonoBehaviour
             wheel.RestoreDefaultStiffness();
 
         DriftCarPS(false);
+        carSounds.HandleTireSqueal(false);
     }
+
 
     private void DriftCarPS(bool isDrifting = true)
     {
@@ -278,13 +296,11 @@ public class Car_Controller : MonoBehaviour
             {
                 RLWParticleSystem?.Play();
                 RRWParticleSystem?.Play();
-
             }
             else
             {
                 RLWParticleSystem?.Stop();
                 RRWParticleSystem?.Stop();
-
             }
         }
         catch (Exception ex)

@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Car_SFX : MonoBehaviour
 {
@@ -8,6 +7,8 @@ public class Car_SFX : MonoBehaviour
     [SerializeField] private AudioSource engineStart;
     [SerializeField] private AudioSource engineIdle;
     [SerializeField] private AudioSource engineStop;
+
+    [SerializeField] private AudioSource tireSqueal;
 
     private float minSpeed = 0;
     private float maxSpeed = 20;
@@ -20,7 +21,7 @@ public class Car_SFX : MonoBehaviour
     private void Start()
     {
         carController = GetComponent<Car_Controller>();
-        Invoke(nameof(EnAbleCarSFX), 1f);
+        Invoke(nameof(EnableCarSFX), 1f);
     }
 
     private void Update()
@@ -30,10 +31,7 @@ public class Car_SFX : MonoBehaviour
 
     private void UpdateEngineSFX()
     {
-        // Lấy giá trị tuyệt đối của tốc độ để đảm bảo luôn dương
         float currentSpeed = Mathf.Abs(carController.speed) / 3.6f;
-
-        // Tính toán pitch dựa trên tốc độ hiện tại
         float pitch = Mathf.Lerp(minPitch, maxPitch, currentSpeed / maxSpeed);
 
         // Áp dụng pitch cho âm thanh động cơ
@@ -48,28 +46,41 @@ public class Car_SFX : MonoBehaviour
 
         if (active)
         {
-            StartCoroutine(PlayEngineStartThenIdle());
+            engineStart.Play();
+            AudioManager.instance.ControlSFX_FadeAndDelay(engineIdle, true, 0.3f, 1);
         }
         else
         {
-            engineIdle.Stop();
+            AudioManager.instance.ControlSFX_FadeAndDelay(engineIdle, false, 0f, 0.25f);
             engineStop.Play();
         }
     }
 
-    private IEnumerator PlayEngineStartThenIdle()
+    public void HandleTireSqueal(bool isDrifting)
     {
-        // Play engine start sound
-        engineStart.Play();
+        if (!enableCarSFX || tireSqueal == null)
+            return;
 
-        // Wait for the engine start sound to finish
-        yield return new WaitForSeconds(engineStart.clip.length);
-
-        // Play engine idle sound
-        engineIdle.Play();
+        if (isDrifting)
+        {
+            // Chỉ phát âm thanh nếu nó chưa đang phát
+            if (!tireSqueal.isPlaying)
+            {
+                tireSqueal.volume = 0.3f; // Đảm bảo âm lượng được khôi phục
+                tireSqueal.Play();
+            }
+        }
+        else
+        {
+            // Fade out âm thanh tire squeal khi ngừng drift
+            if (tireSqueal.isPlaying)
+            {
+                AudioManager.instance.ControlSFX_FadeAndDelay(tireSqueal, false, 0f, 0.25f, 0.25f);
+            }
+        }
     }
 
-    private void EnAbleCarSFX()
+    private void EnableCarSFX()
     {
         enableCarSFX = true;
     }

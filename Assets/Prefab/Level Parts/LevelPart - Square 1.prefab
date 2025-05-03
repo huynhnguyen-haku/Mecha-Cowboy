@@ -13182,6 +13182,14 @@ PrefabInstance:
       propertyPath: arrgresssionRange
       value: 15
       objectReference: {fileID: 0}
+    - target: {fileID: 1833486535905556055, guid: 093a941a7c31db64e9ac47f66ef09c0d, type: 3}
+      propertyPath: m_audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: ca753f60ab0e98845b0d5ecfd5fddfa2, type: 3}
+    - target: {fileID: 6420721562341513255, guid: 093a941a7c31db64e9ac47f66ef09c0d, type: 3}
+      propertyPath: m_audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: ba0672ffccc5ec644bf0b5d4abfd8d15, type: 3}
     - target: {fileID: 9217994622515352337, guid: 093a941a7c31db64e9ac47f66ef09c0d, type: 3}
       propertyPath: m_LocalPosition.x
       value: -41.15085
@@ -20416,6 +20424,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 5209626423905257243}
     m_Modifications:
+    - target: {fileID: 428594955258426507, guid: 5fe01cf504556fa46924c625bf47d817, type: 3}
+      propertyPath: m_audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: ba0672ffccc5ec644bf0b5d4abfd8d15, type: 3}
     - target: {fileID: 2523341443481763773, guid: 5fe01cf504556fa46924c625bf47d817, type: 3}
       propertyPath: m_LocalPosition.x
       value: -27.348064
@@ -20460,6 +20472,10 @@ PrefabInstance:
       propertyPath: arrgresssionRange
       value: 10
       objectReference: {fileID: 0}
+    - target: {fileID: 5015192093017103099, guid: 5fe01cf504556fa46924c625bf47d817, type: 3}
+      propertyPath: m_audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: ca753f60ab0e98845b0d5ecfd5fddfa2, type: 3}
     - target: {fileID: 5478877348500432786, guid: 5fe01cf504556fa46924c625bf47d817, type: 3}
       propertyPath: m_Name
       value: Enemy_Range - Scout Variant
