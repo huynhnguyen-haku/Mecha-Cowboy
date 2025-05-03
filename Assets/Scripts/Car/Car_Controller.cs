@@ -6,6 +6,8 @@ public enum DriveType { FrontWheelDrive, RearWheelDrive, AllWheelDrive }
 [RequireComponent(typeof(Rigidbody))]
 public class Car_Controller : MonoBehaviour
 {
+    public Car_SFX carSounds { get; private set; }   
+
     public Rigidbody rb { get; private set; }
     private PlayerControls controls;
 
@@ -37,7 +39,8 @@ public class Car_Controller : MonoBehaviour
     [Header("Engine Settings")]
     public float currentSpeed;
 
-    [Range(4, 12)]
+    // Those 2 parameters are mile, not kilometer
+    [Range(4, 20)]
     [SerializeField] private float maxSpeed = 7;
 
     [Range(0.5f, 10)]
@@ -83,6 +86,7 @@ public class Car_Controller : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         wheels = GetComponentsInChildren<Car_Wheel>();
+        carSounds = GetComponent<Car_SFX>();
         ui = UI.instance;
 
         controls = ControlsManager.instance.controls;
@@ -317,6 +321,8 @@ public class Car_Controller : MonoBehaviour
     public void ActivateCar(bool active)
     {
         carActive = active;
+        if (carSounds != null)
+            carSounds.ActivateCarSFX(active);
     }
 
     // Make the car unable to move, sliding on the ground
