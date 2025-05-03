@@ -3279,6 +3279,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 1112037060287527094, guid: 7b15baba06982824f8e2d4a51089f786, type: 3}
+      propertyPath: frontLeftWheel
+      value: 
+      objectReference: {fileID: 1168501432}
+    - target: {fileID: 1112037060287527094, guid: 7b15baba06982824f8e2d4a51089f786, type: 3}
       propertyPath: RLWParticleSystem
       value: 
       objectReference: {fileID: 1769951130}
@@ -17393,6 +17397,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1164943127}
   m_CullTransparentMesh: 1
+--- !u!146 &1168501432 stripped
+WheelCollider:
+  m_CorrespondingSourceObject: {fileID: 8100305195635439271, guid: 7b15baba06982824f8e2d4a51089f786, type: 3}
+  m_PrefabInstance: {fileID: 178637973}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1171422129
 PrefabInstance:
   m_ObjectHideFlags: 0

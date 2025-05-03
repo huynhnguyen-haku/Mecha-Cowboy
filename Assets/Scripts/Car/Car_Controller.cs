@@ -14,6 +14,7 @@ public class Car_Controller : MonoBehaviour
     private float turnInput;
 
     public float speed;
+    private WheelCollider frontLeftWheel;
 
     [Range(30, 60)][SerializeField] private float turnSensitivity = 30;
 
@@ -85,6 +86,7 @@ public class Car_Controller : MonoBehaviour
         ui = UI.instance;
 
         controls = ControlsManager.instance.controls;
+        frontLeftWheel = wheels[3].cd;
 
         ActivateCar(false);
         AssignInputEvents();
@@ -114,8 +116,9 @@ public class Car_Controller : MonoBehaviour
         if (!carActive)
             return;
 
-        speed = rb.linearVelocity.magnitude;
-        ui.inGameUI.UpdateSpeedText(Mathf.RoundToInt(speed * 10) + "km/h");
+        // Car speed calculation
+        speed = (2 * Mathf.PI * frontLeftWheel.radius * frontLeftWheel.rpm * 60) / 1000;
+        UI.instance.inGameUI.UpdateSpeedText(Mathf.RoundToInt(speed) + " km/h");
 
         driftTimer -= Time.deltaTime;
         if (driftTimer < 0)
