@@ -7,39 +7,64 @@ public class HealthController : MonoBehaviour
     public int maxHealth;
     public int currentHealth;
     private bool isDead;
+    [SerializeField] private GameObject lowHealthEffect;
 
     protected virtual void Awake()
     {
         currentHealth = maxHealth;
+
+        // Check if lowHealthEffect is null before trying to disable it
+        if (lowHealthEffect != null)
+        {
+            lowHealthEffect.SetActive(false);
+        }
     }
 
     public virtual void ReduceHealth(int damage)
     {
         currentHealth -= damage;
+        UpdateHeathVFX();
     }
 
-    public virtual void IncreaseHealth()
-    {
-        currentHealth++;
-
-        if (currentHealth > maxHealth)
-        {
-            currentHealth = maxHealth;
-        }
-    }
-
-    public virtual void HealHeath(int amount)
+    public virtual void IncreaseHealth(int amount)
     {
         currentHealth += amount;
         if (currentHealth > maxHealth)
         {
             currentHealth = maxHealth;
         }
+        UpdateHeathVFX();
     }
 
     public void UpdateHealthUI()
     {
         UI.instance.inGameUI.UpdateHealthUI(currentHealth, maxHealth);
+    }
+
+    public void UpdateHeathVFX()
+    {
+        // Return early if lowHealthEffect is null
+        if (lowHealthEffect == null)
+        {
+            return;
+        }
+
+        // Enable VFX if health is below 50%
+        if (currentHealth < maxHealth * 0.5f)
+        {
+            if (!lowHealthEffect.activeSelf)
+            {
+                lowHealthEffect.SetActive(true);
+            }
+        }
+        // Disable VFX if health is 50% or above
+        else
+        {
+            if (lowHealthEffect.activeSelf)
+            {
+                lowHealthEffect.SetActive(false);
+            }
+        }
     }
 
     // Used for enemy
@@ -61,8 +86,14 @@ public class HealthController : MonoBehaviour
     // Used for player
     public bool PlayerShouldDie()
     {
+        // Only disable the low health effect if the player is dead
+        if (currentHealth <= 0 && lowHealthEffect != null)
+        {
+            lowHealthEffect.SetActive(false);
+        }
         return currentHealth <= 0;
     }
+
 
     public virtual void SetHealthToZero()
     {

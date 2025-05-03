@@ -22,7 +22,7 @@ public class Health_Pickup : Interactable
 
     private void RestoreHealth(Player_Health playerHealth)
     {
-        playerHealth.HealHeath(healthAmount);
+        playerHealth.IncreaseHealth(healthAmount);
 
         Debug.Log($"[Health_Pickup] Player restored {healthAmount} health.");
     }
