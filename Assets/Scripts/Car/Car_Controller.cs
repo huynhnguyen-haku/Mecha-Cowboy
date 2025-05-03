@@ -68,6 +68,11 @@ public class Car_Controller : MonoBehaviour
     private float driftTimer;
     private bool isDrifting;
 
+    [Header("Drift Effects")]
+    [SerializeField] private ParticleSystem RLWParticleSystem;
+    [SerializeField] private ParticleSystem RRWParticleSystem;
+
+
     private Car_Wheel[] wheels;
     private UI ui;
 
@@ -246,12 +251,39 @@ public class Car_Controller : MonoBehaviour
             sidewaysFriction.stiffness *= (1 - driftFactor);
             wheel.cd.sidewaysFriction = sidewaysFriction;
         }
+
+        DriftCarPS();
     }
 
     private void StopDrift()
     {
         foreach (var wheel in wheels)
             wheel.RestoreDefaultStiffness();
+
+        DriftCarPS(false);
+    }
+
+    private void DriftCarPS(bool isDrifting = true)
+    {
+        try
+        {
+            if (isDrifting)
+            {
+                RLWParticleSystem?.Play();
+                RRWParticleSystem?.Play();
+
+            }
+            else
+            {
+                RLWParticleSystem?.Stop();
+                RRWParticleSystem?.Stop();
+
+            }
+        }
+        catch (Exception ex)
+        {
+            Debug.LogWarning(ex);
+        }
     }
 
     #endregion
@@ -292,6 +324,5 @@ public class Car_Controller : MonoBehaviour
         frontDriftFactor = 0.9f;
         rearDriftFactor = 0.9f;
     }
-
     #endregion
 }
