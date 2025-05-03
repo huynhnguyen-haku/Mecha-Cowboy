@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 public class Enemy_Grenade : MonoBehaviour
@@ -60,6 +60,8 @@ public class Enemy_Grenade : MonoBehaviour
             }
             ApplyPhysicalForce(hit);
         }
+
+        ObjectPool.instance.ReturnObject(gameObject); // Return the grenade to the pool
     }
 
     private void ApplyPhysicalForce(Collider hit)
@@ -74,7 +76,7 @@ public class Enemy_Grenade : MonoBehaviour
         GameObject newFX = ObjectPool.instance.GetObject(explosionFX, transform);
 
         ObjectPool.instance.ReturnObject(gameObject); // Return the grenade  
-        ObjectPool.instance.ReturnObject(newFX, 1); // Return the explosion fx atfer 1s  
+        ObjectPool.instance.ReturnObject(newFX, 2); // Return the explosion fx atfer 1s  
     }
 
     public void SetupGrenade(LayerMask allyLayerMask, Vector3 target, float timeToTarget, float countdown, float impactPower, int grenadeDamage)

@@ -113,6 +113,14 @@ public class Enemy_Range : Enemy
     public void FireSingleBullet()
     {
         anim.SetTrigger("Fire");
+
+        // Play fire sfx
+        var fireSFX = visual.currentWeaponModel.GetComponent<Enemy_RangeWeaponModel>().fireSFX;
+        if (fireSFX != null)
+        {
+            fireSFX.Play();
+        }
+
         Vector3 bulletsDirection = (aim.position - gunPoint.position).normalized;
 
         GameObject newBullet = ObjectPool.instance.GetObject(bulletPrefab, gunPoint);
@@ -164,9 +172,7 @@ public class Enemy_Range : Enemy
         {
             Debug.LogError("No weapon data found for the specified weapon type.");
         }
-
     }
-
 
     #endregion
 
