@@ -127,6 +127,8 @@ public class Car_Controller : MonoBehaviour
         // Slow down the car after exiting
         rb.linearVelocity = Vector3.Lerp(rb.linearVelocity, Vector3.zero, Time.fixedDeltaTime * 2f);
         rb.angularVelocity = Vector3.Lerp(rb.angularVelocity, Vector3.zero, Time.fixedDeltaTime * 2f);
+
+        HandleWheelAnimation();
     }
 
 
