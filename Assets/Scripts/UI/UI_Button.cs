@@ -1,4 +1,4 @@
-using TMPro;
+﻿using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -32,11 +32,13 @@ public class UI_Button : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
     {
         if (Mathf.Abs(transform.lossyScale.x - targetScale.x) > 0.01f)
         {
-            float scaleValue = Mathf.Lerp(transform.localScale.x, targetScale.x, Time.deltaTime * scaleSpeed);
+            // Sử dụng Time.unscaledDeltaTime để đảm bảo hiệu ứng hoạt động khi game bị tạm dừng
+            float scaleValue = Mathf.Lerp(transform.localScale.x, targetScale.x, Time.unscaledDeltaTime * scaleSpeed);
 
             transform.localScale = new Vector3(scaleValue, scaleValue, scaleValue);
         }
     }
+
 
     public virtual void OnPointerEnter(PointerEventData eventData)
     {

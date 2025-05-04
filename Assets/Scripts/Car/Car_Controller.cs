@@ -217,7 +217,7 @@ public class Car_Controller : MonoBehaviour
             }
 
             // AWD Car
-            else
+            else if (driveType == DriveType.AllWheelDrive)
                 wheel.cd.motorTorque = motorTorqueValue;
         }
     }

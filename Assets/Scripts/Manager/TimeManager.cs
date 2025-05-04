@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using UnityEngine;
 
 public class TimeManager : MonoBehaviour
@@ -38,13 +38,20 @@ public class TimeManager : MonoBehaviour
     {
         timeAdjustRate = pauseRate;
         targetTimeScale = 0;
+
+        // Dừng nhân vật
+        GameManager.instance.player.movement.SetPaused(true);
     }
 
     public void ResumeTime()
     {
         timeAdjustRate = resumeRate;
         targetTimeScale = 1;
+
+        // Tiếp tục nhân vật
+        GameManager.instance.player.movement.SetPaused(false);
     }
+
 
     public void SlowMotionFor(float duration)
     {

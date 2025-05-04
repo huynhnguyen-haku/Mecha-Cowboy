@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Player_Movement : MonoBehaviour
 {
@@ -50,9 +50,24 @@ public class Player_Movement : MonoBehaviour
         if (isInCar)
             return;
 
+        if (!controller.enabled)
+            return;
+
         ApplyMovement();
         ApplyRotation();
         AnimatorControllers();
+    }
+
+    public void SetPaused(bool isPaused)
+    {
+        // Vô hiệu hóa CharacterController khi tạm dừng
+        controller.enabled = !isPaused;
+
+        // Dừng hoạt ảnh nếu cần
+        if (animator != null)
+        {
+            animator.speed = isPaused ? 0 : 1;
+        }
     }
 
     private void AnimatorControllers()

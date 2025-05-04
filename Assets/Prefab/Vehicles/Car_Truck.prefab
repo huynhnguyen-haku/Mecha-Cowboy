@@ -1202,7 +1202,7 @@ AudioSource:
   m_audioClip: {fileID: 8300000, guid: f632e2ace80a32e47a2c531f64901a50, type: 3}
   m_Resource: {fileID: 8300000, guid: f632e2ace80a32e47a2c531f64901a50, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 0.3
+  m_Volume: 0.2
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -1693,8 +1693,8 @@ MonoBehaviour:
   frontBrakeSensitivity: 10
   backBrakeSensitivity: 10
   brakeForce: 6000
-  frontDriftFactor: 0.2
-  rearDriftFactor: 0.2
+  frontDriftFactor: 1
+  rearDriftFactor: 1
   driftDuration: 0
   RLWParticleSystem: {fileID: 1350398172257802399}
   RRWParticleSystem: {fileID: 6017691543763419456}
