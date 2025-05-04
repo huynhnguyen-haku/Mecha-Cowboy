@@ -10,6 +10,8 @@ public class Car_SFX : MonoBehaviour
 
     [SerializeField] private AudioSource tireSqueal;
 
+    private float defaultEngineIdleVolume;
+
     private float minSpeed = 0;
     private float maxSpeed = 20;
 
@@ -21,6 +23,8 @@ public class Car_SFX : MonoBehaviour
     private void Start()
     {
         carController = GetComponent<Car_Controller>();
+
+        defaultEngineIdleVolume = engineIdle.volume;
         Invoke(nameof(EnableCarSFX), 1f);
     }
 
@@ -47,7 +51,7 @@ public class Car_SFX : MonoBehaviour
         if (active)
         {
             engineStart.Play();
-            AudioManager.instance.ControlSFX_FadeAndDelay(engineIdle, true, 0.3f, 1);
+            AudioManager.instance.ControlSFX_FadeAndDelay(engineIdle, true, defaultEngineIdleVolume, 0.75f, 0.75f);
         }
         else
         {
@@ -55,6 +59,7 @@ public class Car_SFX : MonoBehaviour
             engineStop.Play();
         }
     }
+
 
     public void HandleTireSqueal(bool isDrifting)
     {
@@ -66,7 +71,7 @@ public class Car_SFX : MonoBehaviour
             // Chỉ phát âm thanh nếu nó chưa đang phát
             if (!tireSqueal.isPlaying)
             {
-                tireSqueal.volume = 0.3f; // Đảm bảo âm lượng được khôi phục
+                tireSqueal.volume = 0.2f; 
                 tireSqueal.Play();
             }
         }

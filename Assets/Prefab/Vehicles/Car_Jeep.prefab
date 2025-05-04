@@ -194,7 +194,7 @@ MonoBehaviour:
   wheelsMass: 40
   frontWheelTraction: 1.5
   rearWheelTraction: 1.5
-  maxSpeed: 8
+  maxSpeed: 12.5
   accelerationRate: 4
   motorForce: 1800
   isBraking: 0
@@ -572,10 +572,10 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 771ce407ce807b74885ec23ebd1e6647, type: 3}
-  m_Resource: {fileID: 8300000, guid: 771ce407ce807b74885ec23ebd1e6647, type: 3}
+  m_audioClip: {fileID: 8300000, guid: bb4547b12a2dc5544bc90a0d6cfed265, type: 3}
+  m_Resource: {fileID: 8300000, guid: bb4547b12a2dc5544bc90a0d6cfed265, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 0.3
+  m_Volume: 0.5
   m_Pitch: 1
   Loop: 1
   Mute: 0
