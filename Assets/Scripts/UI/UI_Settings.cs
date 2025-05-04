@@ -1,4 +1,4 @@
-using TMPro;
+﻿using TMPro;
 using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.UI;
@@ -18,6 +18,8 @@ public class UI_Settings : MonoBehaviour
     [SerializeField] private TextMeshProUGUI musicSliderText;
     [SerializeField] private string bgmParameter;
 
+    [Header("Friendly Fire Settings")]
+    [SerializeField] private Toggle friendlyFireToggle;
 
     public void SfxSliderValue(float value)
     {
@@ -37,5 +39,46 @@ public class UI_Settings : MonoBehaviour
     {
         bool friendlyFire = GameManager.instance.friendlyFire;
         GameManager.instance.friendlyFire = !friendlyFire;
+
+        // Lưu ngay lập tức vào PlayerPrefs
+        int friendlyFireValue = GameManager.instance.friendlyFire ? 1 : 0;
+        PlayerPrefs.SetInt("FriendlyFire", friendlyFireValue);
+        PlayerPrefs.Save(); // Đảm bảo lưu ngay lập tức
     }
+
+
+    public void LoadSettingsValues()
+    {
+        // Kiểm tra nếu giá trị đã tồn tại trong PlayerPrefs
+        if (PlayerPrefs.HasKey("FriendlyFire"))
+        {
+            int friendlyFireValue = PlayerPrefs.GetInt("FriendlyFire");
+            friendlyFireToggle.isOn = friendlyFireValue == 1;
+        }
+        else
+        {
+            // Thiết lập giá trị mặc định nếu không tồn tại
+            friendlyFireToggle.isOn = false;
+            GameManager.instance.friendlyFire = false;
+        }
+
+        // Tải giá trị âm thanh
+        sfxSlider.value = PlayerPrefs.GetFloat(sfxParameter, 0.5f); // Giá trị mặc định là 0.5
+        musicSlider.value = PlayerPrefs.GetFloat(bgmParameter, 0.5f); // Giá trị mặc định là 0.5
+    }
+    private void OnDisable()
+    {
+        // Lưu Friendly Fire
+        bool friendlyFire = GameManager.instance.friendlyFire;
+        int friendlyFireValue = friendlyFire ? 1 : 0;
+        PlayerPrefs.SetInt("FriendlyFire", friendlyFireValue);
+
+        // Lưu âm thanh
+        PlayerPrefs.SetFloat(sfxParameter, sfxSlider.value);
+        PlayerPrefs.SetFloat(bgmParameter, musicSlider.value);
+
+        // Đảm bảo lưu ngay lập tức
+        PlayerPrefs.Save();
+    }
+
 }
