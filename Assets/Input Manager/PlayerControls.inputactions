@@ -395,6 +395,15 @@
                     "initialStateCheck": true
                 },
                 {
+                    "name": "Toggle Pause UI",
+                    "type": "Button",
+                    "id": "f0a6fc95-4a52-4215-8b9a-48dec145b822",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
                     "name": "Enter/Exit",
                     "type": "Button",
                     "id": "f3a75af0-0416-437b-b204-b8e9824fe484",
@@ -479,6 +488,17 @@
                     "action": "Movement",
                     "isComposite": false,
                     "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "5b33dcf9-6c37-44da-a679-0a7cfb6e305d",
+                    "path": "<Keyboard>/escape",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Toggle Pause UI",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 },
                 {
                     "name": "",

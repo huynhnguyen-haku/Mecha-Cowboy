@@ -189,6 +189,7 @@ public class Car_Controller : MonoBehaviour
 
         controls.Car.Brake.canceled += ctx => isBraking = false;
         controls.Car.EnterExit.performed += ctx => GetComponent<Car_Interaction>().ExitCar();
+        controls.Car.TogglePauseUI.performed += ctx => UI.instance.TogglePauseUI();
     }
 
     #endregion

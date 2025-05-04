@@ -481,6 +481,15 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": true
                 },
                 {
+                    ""name"": ""Toggle Pause UI"",
+                    ""type"": ""Button"",
+                    ""id"": ""f0a6fc95-4a52-4215-8b9a-48dec145b822"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
                     ""name"": ""Enter/Exit"",
                     ""type"": ""Button"",
                     ""id"": ""f3a75af0-0416-437b-b204-b8e9824fe484"",
@@ -565,6 +574,17 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""action"": ""Movement"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""5b33dcf9-6c37-44da-a679-0a7cfb6e305d"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Toggle Pause UI"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 },
                 {
                     ""name"": """",
@@ -666,6 +686,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         // Car
         m_Car = asset.FindActionMap("Car", throwIfNotFound: true);
         m_Car_Movement = m_Car.FindAction("Movement", throwIfNotFound: true);
+        m_Car_TogglePauseUI = m_Car.FindAction("Toggle Pause UI", throwIfNotFound: true);
         m_Car_EnterExit = m_Car.FindAction("Enter/Exit", throwIfNotFound: true);
         m_Car_Brake = m_Car.FindAction("Brake", throwIfNotFound: true);
     }
@@ -1097,6 +1118,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     private readonly InputActionMap m_Car;
     private List<ICarActions> m_CarActionsCallbackInterfaces = new List<ICarActions>();
     private readonly InputAction m_Car_Movement;
+    private readonly InputAction m_Car_TogglePauseUI;
     private readonly InputAction m_Car_EnterExit;
     private readonly InputAction m_Car_Brake;
     /// <summary>
@@ -1114,6 +1136,10 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "Car/Movement".
         /// </summary>
         public InputAction @Movement => m_Wrapper.m_Car_Movement;
+        /// <summary>
+        /// Provides access to the underlying input action "Car/TogglePauseUI".
+        /// </summary>
+        public InputAction @TogglePauseUI => m_Wrapper.m_Car_TogglePauseUI;
         /// <summary>
         /// Provides access to the underlying input action "Car/EnterExit".
         /// </summary>
@@ -1151,6 +1177,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @Movement.started += instance.OnMovement;
             @Movement.performed += instance.OnMovement;
             @Movement.canceled += instance.OnMovement;
+            @TogglePauseUI.started += instance.OnTogglePauseUI;
+            @TogglePauseUI.performed += instance.OnTogglePauseUI;
+            @TogglePauseUI.canceled += instance.OnTogglePauseUI;
             @EnterExit.started += instance.OnEnterExit;
             @EnterExit.performed += instance.OnEnterExit;
             @EnterExit.canceled += instance.OnEnterExit;
@@ -1171,6 +1200,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @Movement.started -= instance.OnMovement;
             @Movement.performed -= instance.OnMovement;
             @Movement.canceled -= instance.OnMovement;
+            @TogglePauseUI.started -= instance.OnTogglePauseUI;
+            @TogglePauseUI.performed -= instance.OnTogglePauseUI;
+            @TogglePauseUI.canceled -= instance.OnTogglePauseUI;
             @EnterExit.started -= instance.OnEnterExit;
             @EnterExit.performed -= instance.OnEnterExit;
             @EnterExit.canceled -= instance.OnEnterExit;
@@ -1417,6 +1449,13 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnMovement(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "Toggle Pause UI" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnTogglePauseUI(InputAction.CallbackContext context);
         /// <summary>
         /// Method invoked when associated input action "Enter/Exit" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
         /// </summary>

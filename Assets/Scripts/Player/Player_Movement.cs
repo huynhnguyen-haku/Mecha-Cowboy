@@ -60,15 +60,26 @@ public class Player_Movement : MonoBehaviour
 
     public void SetPaused(bool isPaused)
     {
-        // Vô hiệu hóa CharacterController khi tạm dừng
-        controller.enabled = !isPaused;
-
-        // Dừng hoạt ảnh nếu cần
-        if (animator != null)
+        // Nếu người chơi đang ở trong xe, không thay đổi trạng thái CharacterController
+        if (isInCar)
         {
-            animator.speed = isPaused ? 0 : 1;
+            Debug.Log("Player is in car, skipping CharacterController state change.");
+            return;
+        }
+
+        // Kiểm tra nếu CharacterController hợp lệ trước khi thay đổi trạng thái
+        if (controller != null && controller.enabled != !isPaused)
+        {
+            controller.enabled = !isPaused;
+
+            // Dừng hoạt ảnh nếu cần
+            if (animator != null)
+            {
+                animator.speed = isPaused ? 0 : 1;
+            }
         }
     }
+
 
     private void AnimatorControllers()
     {
