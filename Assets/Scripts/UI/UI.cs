@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -71,6 +71,7 @@ public class UI : MonoBehaviour
 
     public void RestartGame()
     {
+        TogglePauseUI(); // Close pause menu 
         StartCoroutine(ChangeImageAlpha(1, 1f, GameManager.instance.RestartScene));
     }
 
@@ -83,7 +84,23 @@ public class UI : MonoBehaviour
     public void StartLevelGeneration() => LevelGenerator.instance.InitializeGeneration();
 
     public void TogglePauseUI()
-    {
+    {    
+        // Nếu Pause Menu đang hoạt động, cho phép tự toggle
+        if (pauseUI.activeSelf)
+        {
+            SwitchTo(inGameUI.gameObject);
+            ControlsManager.instance.SwitchToCharacterControls();
+            TimeManager.instance.ResumeTime();
+            return;
+        }
+
+        // Kiểm tra nếu UI_InGame không được bật, không cho phép mở Pause Menu
+        if (!inGameUI.gameObject.activeSelf)
+        {
+            Debug.Log("Pause Menu is only available when In-Game UI is active.");
+            return;
+        }
+
         bool gamePaused = pauseUI.activeSelf;
 
         if (gamePaused)
@@ -155,7 +172,7 @@ public class UI : MonoBehaviour
 
         while (timeElapsed < duration)
         {
-            timeElapsed += Time.deltaTime;
+            timeElapsed += Time.deltaTime; 
             float newAlpha = Mathf.Lerp(startAlpha, targetAlpha, timeElapsed / duration);
 
             fadeImage.color = new Color(currentColor.r, currentColor.g, currentColor.b, newAlpha);
@@ -166,6 +183,7 @@ public class UI : MonoBehaviour
 
         onComplete?.Invoke();
     }
+
 
     [ContextMenu("Assign Audio Listeners to Button")]
     public void AssignAudioListenersToButton()
