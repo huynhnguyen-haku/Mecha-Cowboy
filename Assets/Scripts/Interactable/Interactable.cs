@@ -29,7 +29,7 @@ public class Interactable : MonoBehaviour
     }
 
 
-    public void Highlight(bool active)
+    public virtual void Highlight(bool active)
     {
         if (active)
         {

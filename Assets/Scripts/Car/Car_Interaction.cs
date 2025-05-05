@@ -3,7 +3,6 @@
 public class Car_Interaction : Interactable
 {
     private Car_HealthController carHealthController;
-
     private Car_Controller carController;
     private Transform player;
 
@@ -21,8 +20,19 @@ public class Car_Interaction : Interactable
 
     public override void Interact()
     {
+        if (carHealthController.carBroken)
+            return;
+
         base.Interact();
         EnterCar();
+    }
+
+    public override void Highlight(bool active)
+    {
+        if (carHealthController.carBroken)
+            return;
+
+        base.Highlight(active);
     }
 
     private void EnterCar()

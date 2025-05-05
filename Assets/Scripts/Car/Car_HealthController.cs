@@ -2,15 +2,17 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem.Interactions;
 
 public class Car_HealthController : MonoBehaviour, I_Damagable
 {
     private Car_Controller carController;
+    private Car_Interaction carInteraction;
 
     public int maxHealth;
     public int currentHealth;
 
-    private bool carBroken;
+    public bool carBroken;
 
     [Header("Explosion Setting")]
     [SerializeField] private int explosionDamage = 350;
@@ -82,6 +84,9 @@ public class Car_HealthController : MonoBehaviour, I_Damagable
         explosionFX.gameObject.SetActive(true);
         carController.rb.AddExplosionForce(explosionForce, explosionPoint.position, explosionRadius, explosionUpwardModifier, ForceMode.Impulse);
 
+        // Setup testing
+
+
         Explode();
     }
 
@@ -103,6 +108,15 @@ public class Car_HealthController : MonoBehaviour, I_Damagable
 
                 hit.GetComponentInChildren<Rigidbody>().
                     AddExplosionForce(explosionForce, explosionPoint.position, explosionRadius, explosionUpwardModifier, ForceMode.VelocityChange);
+            }
+        }
+
+        if (GameManager.instance.player.movement.isInCar)
+        {
+            Player_Health playerHealth = GameManager.instance.player.health;
+            if (playerHealth != null)
+            {
+                playerHealth.ReduceHealth(explosionDamage);
             }
         }
     }

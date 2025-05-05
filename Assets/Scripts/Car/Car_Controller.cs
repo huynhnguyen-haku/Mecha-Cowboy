@@ -121,8 +121,6 @@ public class Car_Controller : MonoBehaviour
             StopDrift();
     }
 
-
-
     public void DecelerateCar()
     {
         // Stop drifting 
@@ -135,8 +133,6 @@ public class Car_Controller : MonoBehaviour
 
         HandleWheelAnimation();
     }
-
-
     private void Update()
     {
         if (!carActive)
