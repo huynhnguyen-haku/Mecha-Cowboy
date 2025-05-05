@@ -225,6 +225,15 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Toggle Precise Aim"",
+                    ""type"": ""Button"",
+                    ""id"": ""f6a5ebf9-b4fb-4342-9d96-3795410098eb"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -434,6 +443,17 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Toggle Pause UI"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""70fae19e-c9c8-484f-a105-0c215a384e3b"",
+                    ""path"": ""<Mouse>/rightButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Toggle Precise Aim"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -680,6 +700,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         m_Character_Interact = m_Character.FindAction("Interact", throwIfNotFound: true);
         m_Character_ToggleMissionUI = m_Character.FindAction("Toggle Mission UI", throwIfNotFound: true);
         m_Character_TogglePauseUI = m_Character.FindAction("Toggle Pause UI", throwIfNotFound: true);
+        m_Character_TogglePreciseAim = m_Character.FindAction("Toggle Precise Aim", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_TogglePauseUI = m_UI.FindAction("Toggle Pause UI", throwIfNotFound: true);
@@ -786,6 +807,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     private readonly InputAction m_Character_Interact;
     private readonly InputAction m_Character_ToggleMissionUI;
     private readonly InputAction m_Character_TogglePauseUI;
+    private readonly InputAction m_Character_TogglePreciseAim;
     /// <summary>
     /// Provides access to input actions defined in input action map "Character".
     /// </summary>
@@ -858,6 +880,10 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         /// </summary>
         public InputAction @TogglePauseUI => m_Wrapper.m_Character_TogglePauseUI;
         /// <summary>
+        /// Provides access to the underlying input action "Character/TogglePreciseAim".
+        /// </summary>
+        public InputAction @TogglePreciseAim => m_Wrapper.m_Character_TogglePreciseAim;
+        /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
         public InputActionMap Get() { return m_Wrapper.m_Character; }
@@ -928,6 +954,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @TogglePauseUI.started += instance.OnTogglePauseUI;
             @TogglePauseUI.performed += instance.OnTogglePauseUI;
             @TogglePauseUI.canceled += instance.OnTogglePauseUI;
+            @TogglePreciseAim.started += instance.OnTogglePreciseAim;
+            @TogglePreciseAim.performed += instance.OnTogglePreciseAim;
+            @TogglePreciseAim.canceled += instance.OnTogglePreciseAim;
         }
 
         /// <summary>
@@ -984,6 +1013,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @TogglePauseUI.started -= instance.OnTogglePauseUI;
             @TogglePauseUI.performed -= instance.OnTogglePauseUI;
             @TogglePauseUI.canceled -= instance.OnTogglePauseUI;
+            @TogglePreciseAim.started -= instance.OnTogglePreciseAim;
+            @TogglePreciseAim.performed -= instance.OnTogglePreciseAim;
+            @TogglePreciseAim.canceled -= instance.OnTogglePreciseAim;
         }
 
         /// <summary>
@@ -1419,6 +1451,13 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnTogglePauseUI(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "Toggle Precise Aim" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnTogglePreciseAim(InputAction.CallbackContext context);
     }
     /// <summary>
     /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "UI" which allows adding and removing callbacks.

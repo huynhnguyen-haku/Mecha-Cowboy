@@ -123,7 +123,7 @@ public class UI : MonoBehaviour
         if (pauseUI.activeSelf)
         {
             SwitchTo(inGameUI.gameObject);
-
+            Cursor.visible = false;
             // Kiểm tra nếu người chơi đang ở trong xe
             if (GameManager.instance.player.movement.isInCar)
                 ControlsManager.instance.SwitchToCarControls(); // Khôi phục điều khiển xe
@@ -143,6 +143,7 @@ public class UI : MonoBehaviour
         }
 
         // Mở Pause Menu
+        Cursor.visible = true;
         SwitchTo(pauseUI);
         ControlsManager.instance.SwitchToUIControls();
         TimeManager.instance.PauseTime();

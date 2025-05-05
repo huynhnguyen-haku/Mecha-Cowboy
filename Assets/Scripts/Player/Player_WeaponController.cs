@@ -297,11 +297,11 @@ public class Player_WeaponController : MonoBehaviour
     #region Utility Methods
     public Vector3 BullectDirection()
     {
-        Transform aim = player.aim.Aim;
+        Transform aim = player.aim.Aim();
 
         Vector3 direction = (aim.position - GunPoint().position).normalized;
 
-        if (player.aim.CanAimPrecisly() == false && player.aim.Target() == null)
+        if (player.aim.CanAimPrecisly() == false)
             direction.y = 0;
 
         return direction;
