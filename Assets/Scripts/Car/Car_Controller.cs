@@ -12,6 +12,8 @@ public class Car_Controller : MonoBehaviour
     private PlayerControls controls;
 
     public bool carActive { get; private set; }
+    [SerializeField] private LayerMask whatIsGround;
+
     private float moveInput;
     private float turnInput;
 
@@ -107,6 +109,7 @@ public class Car_Controller : MonoBehaviour
         }
 
         HandleWheelAnimation();
+        ApplyTrailOnTheGround();
         HandleDriving();
         HandleSteering();
         HandleBraking();
@@ -117,6 +120,8 @@ public class Car_Controller : MonoBehaviour
         else
             StopDrift();
     }
+
+
 
     public void DecelerateCar()
     {
@@ -259,6 +264,44 @@ public class Car_Controller : MonoBehaviour
             wheel.cd.brakeTorque = currentBrakeTorque;
         }
     }
+
+    private void ApplyTrailOnTheGround()
+    {
+        foreach (var wheel in wheels)
+        {
+            // Chỉ bật TrailRenderer khi xe đang drifting và braking
+            if (isDrifting || isBraking)
+            {
+                WheelHit hit;
+
+                // Kiểm tra nếu bánh xe chạm đất và bề mặt thuộc lớp whatIsGround
+                if (wheel.cd.GetGroundHit(out hit) &&
+                    (whatIsGround == (whatIsGround | (1 << hit.collider.gameObject.layer))))
+                {
+                    if (wheel.trailRenderer != null)
+                    {
+                        wheel.trailRenderer.emitting = true;
+                    }
+                }
+                else
+                {
+                    if (wheel.trailRenderer != null)
+                    {
+                        wheel.trailRenderer.emitting = false;
+                    }
+                }
+            }
+            else
+            {
+                // Tắt TrailRenderer nếu không thỏa mãn điều kiện
+                if (wheel.trailRenderer != null)
+                {
+                    wheel.trailRenderer.emitting = false;
+                }
+            }
+        }
+    }
+
 
     #endregion
 
