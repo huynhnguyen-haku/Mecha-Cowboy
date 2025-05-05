@@ -392,6 +392,7 @@ public class Car_Controller : MonoBehaviour
     {
         motorForce = 0;
         isDrifting = true;
+        rb.linearDamping = 1;
         frontDriftFactor = 0.9f;
         rearDriftFactor = 0.9f;
     }
