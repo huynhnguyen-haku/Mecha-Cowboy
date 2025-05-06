@@ -45,7 +45,7 @@ public class Player_AimController : MonoBehaviour
         player = GetComponent<Player>();
         AssignInputEvents();
 
-        Cursor.visible = false; // Hide the cursor
+         // Hide the cursor
     }
 
     private void Update()

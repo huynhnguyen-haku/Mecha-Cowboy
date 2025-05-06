@@ -97,9 +97,8 @@ public class Enemy_Melee : Enemy
     {
         // This method is used to fix the bug where the enemy always uses the same attack
         if (attackList.Count > 0)
-        {
             attackData = attackList[Random.Range(0, attackList.Count)];
-        }
+        
     }
 
     protected override void Update()
@@ -140,11 +139,16 @@ public class Enemy_Melee : Enemy
     public override void Die()
     {
         base.Die();
+
+        if (meleeSFX != null && meleeSFX.deadSFX != null)
+            meleeSFX.deadSFX.Play();
+        
+
         if (stateMachine.currentState != deadState)
-        {
             stateMachine.ChangeState(deadState);
-        }
+        
     }
+
     public void UpdateAttackData()
     {
         currentWeapon = visual.currentWeaponModel.GetComponent<Enemy_WeaponModel>();

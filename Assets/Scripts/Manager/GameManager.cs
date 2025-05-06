@@ -25,14 +25,15 @@ public class GameManager : MonoBehaviour
     public void GameStart()
     {
         SetDefaultWeapon();
-
-        // We start selected mission in a LevelGenerator script, after we done with level creation
+        Cursor.visible = false;
+        // Start selected mission in a LevelGenerator script, after we done with level creation
     }
 
     public void RestartScene()
     {
         // Restart the scene from the main menu
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        Cursor.visible = true;
     }
 
     public void GameOver()
@@ -40,6 +41,7 @@ public class GameManager : MonoBehaviour
         TimeManager.instance.SlowMotionFor(2);
         UI.instance.ShowGameOverUI();
         CameraManager.instance.ChangeCameraDistance(5);
+        Cursor.visible = true;
     }
 
     public void CompleteGame()
@@ -47,6 +49,7 @@ public class GameManager : MonoBehaviour
         UI.instance.DisplayVictoryScreenUI();
         ControlsManager.instance.controls.Character.Disable(); // Prevent player from moving
         player.health.currentHealth += 999; // Set player health to max just in case
+        Cursor.visible = true;
     }
 
     private void SetDefaultWeapon()

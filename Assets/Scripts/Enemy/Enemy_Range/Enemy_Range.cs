@@ -7,6 +7,8 @@ public enum UnstoppablePerk { None, Unstoppable }
 public enum GrenadePerk { None, ThrowGrenade }
 public class Enemy_Range : Enemy
 {
+    public Enemy_RangeSFX rangeSFX;
+
     [Header("Enemy Perks")]
     public Enemy_RangeWeaponType weaponType;
     public CoverPerk coverPerk;
@@ -75,6 +77,8 @@ public class Enemy_Range : Enemy
         advancePlayerState = new AdvancePlayerState_Range(this, stateMachine, "Advance");
         throwGrenadeState = new ThrowGrenadeState_Range(this, stateMachine, "ThrowGrenade");
         deadState = new DeadState_Range(this, stateMachine, "Idle"); // Idle is used for placeholder
+
+        rangeSFX = GetComponent<Enemy_RangeSFX>();
     }
 
     protected override void Start()
@@ -95,17 +99,18 @@ public class Enemy_Range : Enemy
     protected override void Update()
     {
         base.Update();
-
         stateMachine.currentState.Update();
     }
 
     public override void Die()
     {
         base.Die();
+
+        if (rangeSFX != null && rangeSFX.deadSFX != null)
+            rangeSFX.deadSFX.Play();
+
         if (stateMachine.currentState != deadState)
-        {
             stateMachine.ChangeState(deadState);
-        }
     }
 
     #region Weapon Setup

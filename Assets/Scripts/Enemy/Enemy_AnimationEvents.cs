@@ -29,6 +29,7 @@ public class Enemy_AnimationEvents : MonoBehaviour
     {
         enemy.AbilityTrigger();
     }
+
     public void EnableIK() => enemy.visual.EnableIK(true, true, 1f);
 
     public void EnableWeaponModel()
@@ -45,7 +46,6 @@ public class Enemy_AnimationEvents : MonoBehaviour
     public void BeginMeleeAttackCheck()
     {
         enemy?.EnableMeleeAttack(true);
-
         enemy?.audioManager.PlaySFX(melee?.meleeSFX.slashSFX, true);
     }
 
