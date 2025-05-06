@@ -19,6 +19,8 @@ public class Car_Wheel : MonoBehaviour
         if (trailRenderer == null)
             trailRenderer = GetComponentInChildren<TrailRenderer>();
 
+        trailRenderer.emitting = false;
+
         if (model == null)   
             model = GetComponentInChildren<MeshRenderer>().gameObject;
         

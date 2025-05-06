@@ -52,7 +52,7 @@ public class Car_Controller : MonoBehaviour
     [SerializeField] private float motorForce = 1500f;
 
     [Header("Brake Settings")]
-    public bool isBraking;
+    public bool isBraking { get; private set; }
 
     [Range(0, 10)]
     public float frontBrakeSensitivity = 5;
@@ -72,7 +72,8 @@ public class Car_Controller : MonoBehaviour
 
     [SerializeField] private float driftDuration = 1;
     private float driftTimer;
-    private bool isDrifting;
+    public bool isDrifting {  get; private set; }
+    private bool canEmitTrails = true;
 
     [Header("Drift Effects")]
     [SerializeField] private ParticleSystem RLWParticleSystem;
@@ -123,16 +124,17 @@ public class Car_Controller : MonoBehaviour
 
     public void DecelerateCar()
     {
-        // Stop drifting 
+        // Stop drifting (for sfx and vfx)
         StopDrift();
         isDrifting = false;
 
         // Slow down the car after exiting
-        rb.linearVelocity = Vector3.Lerp(rb.linearVelocity, Vector3.zero, Time.fixedDeltaTime * 2f);
-        rb.angularVelocity = Vector3.Lerp(rb.angularVelocity, Vector3.zero, Time.fixedDeltaTime * 2f);
+        rb.linearVelocity = Vector3.Lerp(rb.linearVelocity, Vector3.zero, Time.fixedDeltaTime * 3f);
+        rb.angularVelocity = Vector3.Lerp(rb.angularVelocity, Vector3.zero, Time.fixedDeltaTime * 3f);
 
         HandleWheelAnimation();
     }
+
     private void Update()
     {
         if (!carActive)
@@ -263,6 +265,9 @@ public class Car_Controller : MonoBehaviour
 
     private void ApplyTrailOnTheGround()
     {
+        if (!canEmitTrails)
+            return;
+
         foreach (var wheel in wheels)
         {
             // Chỉ bật TrailRenderer khi xe đang drifting và braking
@@ -290,7 +295,7 @@ public class Car_Controller : MonoBehaviour
             else
             {
                 // Tắt TrailRenderer nếu không thỏa mãn điều kiện
-                if (wheel.trailRenderer != null)
+                if (wheel.trailRenderer != null )
                 {
                     wheel.trailRenderer.emitting = false;
                 }
@@ -327,6 +332,11 @@ public class Car_Controller : MonoBehaviour
 
         DriftCarPS(false);
         carSounds.HandleTireSqueal(false);
+
+        foreach (var wheel in wheels)
+        {
+            wheel.trailRenderer.emitting = false;
+        }
     }
 
 
@@ -381,11 +391,19 @@ public class Car_Controller : MonoBehaviour
         carActive = active;
         if (carSounds != null)
             carSounds.ActivateCarSFX(active);
+
     }
 
     // Make the car unable to move, sliding on the ground
     public void BreakCar()
     {
+        canEmitTrails = false; // Ensure that trail won't render while car is exploding
+
+        foreach (var wheel in wheels)
+        {
+            wheel.trailRenderer.emitting = false;
+        }
+
         motorForce = 0;
         isDrifting = true;
         rb.linearDamping = 1;

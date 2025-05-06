@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,7 +7,6 @@ using UnityEngine.InputSystem.Interactions;
 public class Car_HealthController : MonoBehaviour, I_Damagable
 {
     private Car_Controller carController;
-    private Car_Interaction carInteraction;
 
     public int maxHealth;
     public int currentHealth;
@@ -43,7 +42,10 @@ public class Car_HealthController : MonoBehaviour, I_Damagable
 
     public void UpdateCarHealthUI()
     {
-        UI.instance.inGameUI.UpdateCarHealthUI(currentHealth, maxHealth);
+        if (GameManager.instance.currentCar == carController)
+        {
+            UI.instance.inGameUI.UpdateCarHealthUI(currentHealth, maxHealth);
+        }
     }
 
 
@@ -74,8 +76,12 @@ public class Car_HealthController : MonoBehaviour, I_Damagable
     public void TakeDamage(int damage)
     {
         ReduceHealth(damage);
-        UpdateCarHealthUI();
+        if (GameManager.instance.currentCar == carController)
+        {
+            UpdateCarHealthUI();
+        }
     }
+
 
     private IEnumerator ExplosionCar(float delay)
     {
@@ -83,9 +89,6 @@ public class Car_HealthController : MonoBehaviour, I_Damagable
 
         explosionFX.gameObject.SetActive(true);
         carController.rb.AddExplosionForce(explosionForce, explosionPoint.position, explosionRadius, explosionUpwardModifier, ForceMode.Impulse);
-
-        // Setup testing
-
 
         Explode();
     }
@@ -106,20 +109,28 @@ public class Car_HealthController : MonoBehaviour, I_Damagable
 
                 damagable.TakeDamage(explosionDamage);
 
-                hit.GetComponentInChildren<Rigidbody>().
+                hit.GetComponentInChildren<Rigidbody>()?.
                     AddExplosionForce(explosionForce, explosionPoint.position, explosionRadius, explosionUpwardModifier, ForceMode.VelocityChange);
             }
         }
 
-        if (GameManager.instance.player.movement.isInCar)
+        // Kiểm tra khoảng cách giữa người chơi và vụ nổ
+        Transform playerTransform = GameManager.instance.player.transform;
+        float distanceToExplosion = Vector3.Distance(playerTransform.position, explosionPoint.position);
+
+        if (distanceToExplosion <= explosionRadius)
         {
-            Player_Health playerHealth = GameManager.instance.player.health;
-            if (playerHealth != null)
+            if (GameManager.instance.player.movement.isInCar)
             {
-                playerHealth.ReduceHealth(explosionDamage);
+                Player_Health playerHealth = GameManager.instance.player.health;
+                if (playerHealth != null)
+                {
+                    playerHealth.ReduceHealth(explosionDamage);
+                }
             }
         }
     }
+
 
     private void OnDrawGizmos()
     {

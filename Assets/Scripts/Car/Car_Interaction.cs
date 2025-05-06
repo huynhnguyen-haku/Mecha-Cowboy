@@ -38,10 +38,13 @@ public class Car_Interaction : Interactable
     private void EnterCar()
     {
         ControlsManager.instance.SwitchToCarControls();
-        carHealthController.UpdateCarHealthUI();
         carController.ActivateCar(true);
 
-        // Set bool for player movement
+        // Gán chiếc xe hiện tại vào GameManager
+        GameManager.instance.currentCar = carController;
+        carHealthController.UpdateCarHealthUI();
+
+        // Set bool cho player movement
         GameManager.instance.player.GetComponent<Player_Movement>().isInCar = true;
 
         defaultPlayerScale = player.localScale.x;
@@ -54,6 +57,7 @@ public class Car_Interaction : Interactable
         CameraManager.instance.ChangeCameraTarget(transform, 12, 0.5f);
     }
 
+
     public void ExitCar()
     {
         if (!carController.carActive)
@@ -61,6 +65,10 @@ public class Car_Interaction : Interactable
 
         carController.ActivateCar(false);
         carController.DecelerateCar();
+
+        // Set the car controller to null
+        GameManager.instance.currentCar = null;
+        Debug.Log($"Exiting car: {GameManager.instance.currentCar?.name}");
 
         // Set bool for player movement
         GameManager.instance.player.GetComponent<Player_Movement>().isInCar = false;

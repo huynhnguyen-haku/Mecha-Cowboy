@@ -7,6 +7,7 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
     public Player player;
+    public Car_Controller currentCar;
 
     [Header("Settings")]
     public bool friendlyFire;
