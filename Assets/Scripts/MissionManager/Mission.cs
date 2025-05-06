@@ -7,12 +7,11 @@ public abstract class Mission : ScriptableObject
     [TextArea]
     public string missionDescription;
 
+    public int reward;
+
     public abstract void StartMission();
     public abstract bool MissionCompleted();
-    public virtual void UpdateMission()
-    {
-
-    }
+    public virtual void UpdateMission() { }
     public abstract MissionType GetMissionType();
 
 

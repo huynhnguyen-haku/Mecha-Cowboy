@@ -9,6 +9,7 @@ public class Mission_Timer : Mission
 
     public override void StartMission()
     {
+        reward = 50;
         currentTime = time;
     }
 

@@ -1,4 +1,4 @@
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -8,6 +8,8 @@ public class GameManager : MonoBehaviour
     public static GameManager instance;
     public Player player;
     public Car_Controller currentCar;
+
+    public int playerMoney;
 
     [Header("Settings")]
     public bool friendlyFire;
@@ -20,7 +22,32 @@ public class GameManager : MonoBehaviour
     {
         instance = this;
         player = FindObjectOfType<Player>();
+        LoadPlayerMoney();
     }
+
+    // Testing areas
+    public void AddMoney(int amount)
+    {
+        playerMoney += amount;
+        Debug.Log($"Player received {amount} coins. Total money: {playerMoney}");
+
+        // Lưu số tiền vào PlayerPrefs
+        SavePlayerMoney();
+    }
+
+    private void SavePlayerMoney()
+    {
+        PlayerPrefs.SetInt("PlayerMoney", playerMoney);
+        PlayerPrefs.Save(); // Đảm bảo lưu ngay lập tức
+    }
+
+    private void LoadPlayerMoney()
+    {
+        // Tải số tiền từ PlayerPrefs, mặc định là 0 nếu chưa có
+        playerMoney = PlayerPrefs.GetInt("PlayerMoney", 0);
+        Debug.Log($"Loaded player money: {playerMoney}");
+    }
+    // End of testing areas
 
     public void GameStart()
     {

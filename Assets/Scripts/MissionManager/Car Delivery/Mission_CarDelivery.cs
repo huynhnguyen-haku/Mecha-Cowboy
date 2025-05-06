@@ -7,6 +7,7 @@ public class Mission_CarDelivery : Mission
     public bool isCarDelivered;
     public override void StartMission()
     {
+        reward = 100;
 
         FindObjectOfType<MissionObject_CarDeliveryZone>(true).gameObject.SetActive(true);
 
