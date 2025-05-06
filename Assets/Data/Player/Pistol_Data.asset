@@ -23,7 +23,6 @@ MonoBehaviour:
   TotalReserveAmmo: 40
   reloadSpeed: 2.25
   equipSpeed: 3
-  laserDistance: 6
   cameraDistance: 6
   minSpread: 0.25
   maxSpread: 2
@@ -35,3 +34,5 @@ MonoBehaviour:
   burst_FireDelay: 0.2
   weaponIcon: {fileID: -930626539, guid: 3477fe9a26e0faa42b5a9b5b258229c1, type: 3}
   weaponInfo: Basic gun for nerd
+  isUnlocked: 1
+  price: 100

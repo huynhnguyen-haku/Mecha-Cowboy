@@ -23,7 +23,6 @@ MonoBehaviour:
   TotalReserveAmmo: 100
   reloadSpeed: 2.5
   equipSpeed: 2
-  laserDistance: 6
   cameraDistance: 6
   minSpread: 10
   maxSpread: 10
@@ -35,3 +34,5 @@ MonoBehaviour:
   burst_FireDelay: 0.1
   weaponIcon: {fileID: 1613465637, guid: 3477fe9a26e0faa42b5a9b5b258229c1, type: 3}
   weaponInfo: Let's the show begin!!
+  isUnlocked: 0
+  price: 500

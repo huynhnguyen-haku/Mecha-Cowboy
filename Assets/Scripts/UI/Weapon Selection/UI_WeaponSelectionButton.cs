@@ -40,38 +40,18 @@ public class UI_WeaponSelectionButton : UI_Button
         emptySlot = null;
     }
 
-    //public override void OnPointerDown(PointerEventData eventData)
-    //{
-    //    base.OnPointerDown(eventData);
-    //    weaponIcon.color = Color.white;
-
-    //    bool isNoEmptySlotAvailable = weaponSelectionUI.FindEmptySlot() == null;
-    //    bool isWeaponTypeNotAssigned = weaponSelectionUI.FindSlotWithWeaponOfType(weaponData) == null;
-
-    //    if (isNoEmptySlotAvailable && isWeaponTypeNotAssigned)
-    //    {
-    //        weaponSelectionUI.ShowWarningMessage("No empty slot...");
-    //        return;
-    //    }
-
-    //    UI_SelectedWeaponWindow assignedWeaponSlot = weaponSelectionUI.FindSlotWithWeaponOfType(weaponData);
-    //    if (assignedWeaponSlot != null)
-    //    {
-    //        assignedWeaponSlot.SetWeaponSlot(null);
-    //    }
-    //    else
-    //    {
-    //        emptySlot = weaponSelectionUI.FindEmptySlot();
-    //        emptySlot?.SetWeaponSlot(weaponData);
-    //    }
-
-    //    emptySlot = null; // Important to reset the reference to avoid multiple updates
-    //}
-
     public override void OnPointerDown(PointerEventData eventData)
     {
         base.OnPointerDown(eventData);
         weaponIcon.color = Color.white;
+
+        if (!weaponData.isUnlocked)
+        {
+            // Mở UI xác nhận mua vũ khí
+            UI.instance.weaponConfirmation.SetupConfirmationUI(weaponData);
+            UI.instance.SwitchTo(UI.instance.weaponConfirmation.gameObject);
+            return;
+        }
 
         // Kiểm tra xem vũ khí đã được chọn trong slot nào chưa
         UI_SelectedWeaponWindow assignedWeaponSlot = weaponSelectionUI.FindSlotWithWeaponOfType(weaponData);
@@ -96,5 +76,4 @@ public class UI_WeaponSelectionButton : UI_Button
 
         emptySlot = null; // Reset lại tham chiếu
     }
-
 }

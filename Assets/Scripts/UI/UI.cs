@@ -10,6 +10,8 @@ public class UI : MonoBehaviour
     public UI_WeaponSelection weaponSelection { get; private set; }
     public UI_GameOver gameOverUI { get; private set; }
     public UI_Settings settingsUI { get; private set; }
+    public UI_WeaponConfirmation weaponConfirmation { get; private set; } // Thêm tham chiếu đến UI_WeaponConfirmation
+
 
     public GameObject victoryScreenUI;
     public GameObject pauseUI;
@@ -27,6 +29,7 @@ public class UI : MonoBehaviour
         weaponSelection = GetComponentInChildren<UI_WeaponSelection>(true);
         gameOverUI = GetComponentInChildren<UI_GameOver>(true);
         settingsUI = GetComponentInChildren<UI_Settings>(true);
+        weaponConfirmation = GetComponentInChildren<UI_WeaponConfirmation>(true); // Gán tham chiếu
     }
 
     private void Start()

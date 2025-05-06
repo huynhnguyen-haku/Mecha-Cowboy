@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 [CreateAssetMenu(fileName = "Weapon Data", menuName = "ScriptableObjects/Weapon Data", order = 1)]
 public class Weapon_Data : ScriptableObject
@@ -43,4 +43,8 @@ public class Weapon_Data : ScriptableObject
     [Header("Weapon Icon")]
     public Sprite weaponIcon;
     public string weaponInfo;
+
+    [Header("Unlock System")]
+    public bool isUnlocked = false; 
+    public int price = 100; 
 }

@@ -23,7 +23,6 @@ MonoBehaviour:
   TotalReserveAmmo: 30
   reloadSpeed: 1.4
   equipSpeed: 3
-  laserDistance: 6
   cameraDistance: 6
   minSpread: 0.2
   maxSpread: 2.5
@@ -35,3 +34,5 @@ MonoBehaviour:
   burst_FireDelay: 0.1
   weaponIcon: {fileID: -521392656, guid: 3477fe9a26e0faa42b5a9b5b258229c1, type: 3}
   weaponInfo: Punch like a heavyweight
+  isUnlocked: 0
+  price: 200

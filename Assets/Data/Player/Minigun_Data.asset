@@ -23,7 +23,6 @@ MonoBehaviour:
   TotalReserveAmmo: 0
   reloadSpeed: 1.75
   equipSpeed: 1
-  laserDistance: 8
   cameraDistance: 8
   minSpread: 5
   maxSpread: 10
@@ -35,3 +34,5 @@ MonoBehaviour:
   burst_FireDelay: 0.1
   weaponIcon: {fileID: 2129644612, guid: 3477fe9a26e0faa42b5a9b5b258229c1, type: 3}
   weaponInfo: How tf can u obtain this?
+  isUnlocked: 1
+  price: 100
