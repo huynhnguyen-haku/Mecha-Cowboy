@@ -25,8 +25,6 @@ public class Weapon_Data : ScriptableObject
     [Range(1, 3)]
     public float equipSpeed = 1;
     [Range(4, 8)]
-    public float laserDistance = 4;
-    [Range(4, 8)]
     public float cameraDistance = 6;
 
 

@@ -162,7 +162,7 @@ public class Weapon
 
         reloadSpeed = weapon_Data.reloadSpeed;
         equipSpeed = weapon_Data.equipSpeed;
-        laserDistance = weapon_Data.laserDistance;
+        laserDistance = 999;
         cameraDistance = weapon_Data.cameraDistance;
 
         minSpread = weapon_Data.minSpread;
