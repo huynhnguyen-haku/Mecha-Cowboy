@@ -9,6 +9,7 @@ public class Player_AimController : MonoBehaviour
 
     [Header("Aim Visual - Laser")]
     public LineRenderer aimLaser; // Change here to be accessible from other scripts
+    public GameObject aimTarget;
 
     [Header("Camera Controls")]
 
@@ -44,8 +45,6 @@ public class Player_AimController : MonoBehaviour
         cameraManager = CameraManager.instance;
         player = GetComponent<Player>();
         AssignInputEvents();
-
-         // Hide the cursor
     }
 
     private void Update()
@@ -78,6 +77,8 @@ public class Player_AimController : MonoBehaviour
         }
     }
     public void EnableLaserAim(bool enable) => aimLaser.enabled = enable;
+
+    public void EnableAimTarget(bool enable) => aimTarget.SetActive(enable);
 
     public Transform GetAimCameraTarget()
     {
@@ -176,7 +177,6 @@ public class Player_AimController : MonoBehaviour
         bool canMoveCamera = Vector3.Distance(cameraTarget.position, DesieredCameraPosition()) > 1f;
         if (!canMoveCamera)
             return;
-
 
         cameraTarget.position = Vector3.Lerp(cameraTarget.position, DesieredCameraPosition(), Time.deltaTime * cameraSensetivity);
     }

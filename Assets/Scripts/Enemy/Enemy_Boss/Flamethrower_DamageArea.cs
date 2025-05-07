@@ -34,7 +34,6 @@ public class Flamethrower_DamageArea : MonoBehaviour
             lastTimeDamage = Time.time;
             damageCooldown = enemy.flameDamageCooldown;
         }
-
     }
 
     public void StartExpandingCollider()

@@ -87,6 +87,7 @@ public class Player_WeaponController : MonoBehaviour
         if (WeaponInSlots(newWeapon.weaponType) != null)
         {
             WeaponInSlots(newWeapon.weaponType).TotalReserveAmmo += newWeapon.TotalReserveAmmo;
+            UpdateWeaponUI();
             return;
         }
 

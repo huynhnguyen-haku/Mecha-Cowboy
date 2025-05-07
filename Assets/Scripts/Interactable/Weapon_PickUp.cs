@@ -20,7 +20,6 @@ public class Weapon_PickUp : Interactable
     public void SetUpPickupWeapon(Weapon weapon, Transform transform)
     {
         oldWeapon = true;
-
         this.weapon = weapon;
         weaponData = weapon.weaponData;
 

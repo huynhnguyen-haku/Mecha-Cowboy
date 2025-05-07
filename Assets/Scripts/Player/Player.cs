@@ -47,5 +47,6 @@ public class Player : MonoBehaviour
         controlsEnabled = enabled;
         ragdoll.ColliderActive(enabled);
         aim.EnableLaserAim(enabled);
+        aim.EnableAimTarget(enabled);
     }
 }
