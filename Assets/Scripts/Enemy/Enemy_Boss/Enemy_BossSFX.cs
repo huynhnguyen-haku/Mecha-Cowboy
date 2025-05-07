@@ -7,4 +7,6 @@ public class Enemy_BossSFX : MonoBehaviour
     public AudioSource deadSFX;
 
     public AudioSource impactSFX;
+
+    public AudioSource flameSFX;
 }

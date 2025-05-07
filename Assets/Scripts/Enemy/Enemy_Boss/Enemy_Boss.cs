@@ -172,6 +172,7 @@ public class Enemy_Boss : Enemy
 
         flamethrower.Clear();
         flamethrower.Play();
+        bossSFX.flameSFX.Play(); // Play flamethrower sound effect
     }
 
     public void ActivateHammer()
