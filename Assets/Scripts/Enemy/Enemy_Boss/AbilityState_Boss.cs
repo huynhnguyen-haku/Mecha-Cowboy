@@ -49,6 +49,13 @@ public class AbilityState_Boss : EnemyState
             enemy.ActivateFlamethrower(true);
             enemy.bossVisual.DischargeBatteries();
             enemy.bossVisual.EnableWeaponTrail(false);
+
+            // Kích ho?t m? r?ng collider
+            Flamethrower_DamageArea damageArea = enemy.flamethrower.GetComponentInChildren<Flamethrower_DamageArea>();
+            if (damageArea != null)
+            {
+                damageArea.StartExpandingCollider();
+            }
         }
 
         if (enemy.weaponType == BossWeaponType.Hammer)
