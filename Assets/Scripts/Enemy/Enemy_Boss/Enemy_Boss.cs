@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 public enum BossWeaponType { Flamethrower, Hammer }
@@ -38,6 +38,7 @@ public class Enemy_Boss : Enemy
     public float impactRadius = 2.5f;
     public float impactPower = 10;
     public Transform impactPoint;
+    public ParticleSystem jumpAttackVFX; // Add new
     [Space]
     public float travelTimeToTarget = 1;
     public float jumpAttackCooldown = 10;
@@ -56,11 +57,15 @@ public class Enemy_Boss : Enemy
     public Enemy_BossVisual bossVisual { get; private set; }
     public DeadState_Boss deadState { get; private set; }
 
+    public Enemy_BossSFX bossSFX { get; private set; }
+
     #region Unity Methods
     protected override void Awake()
     {
         base.Awake();
         bossVisual = GetComponent<Enemy_BossVisual>();
+        bossSFX = GetComponent<Enemy_BossSFX>();
+
         idleState = new IdleState_Boss(this, stateMachine, "Idle");
         moveState = new MoveState_Boss(this, stateMachine, "Move");
         attackState = new AttackState_Boss(this, stateMachine, "Attack");
@@ -198,6 +203,8 @@ public class Enemy_Boss : Enemy
             impactPoint = transform;
 
         MassDamage(impactPoint.position, impactRadius, jumpAttackDamage);
+        bossSFX.impactSFX.Play(); // Play impact sound effect
+        jumpAttackVFX.Play(); // Play jump attack effect
     }
 
     private void MassDamage(Vector3 impactPoint, float impactRadius, int damage)
@@ -218,7 +225,6 @@ public class Enemy_Boss : Enemy
                 damagable.TakeDamage(damage);
             }
             ApplyPhysicalForce(impactPoint, impactRadius, hit);
-
         }
     }
 
@@ -255,6 +261,8 @@ public class Enemy_Boss : Enemy
     public override void Die()
     {
         base.Die();
+        bossSFX.deadSFX.Play();
+
         if (stateMachine.currentState != deadState)
         {
             stateMachine.ChangeState(deadState);
