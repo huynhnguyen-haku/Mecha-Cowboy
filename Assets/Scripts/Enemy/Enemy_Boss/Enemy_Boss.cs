@@ -189,9 +189,8 @@ public class Enemy_Boss : Enemy
             return false;
 
         if (Time.time > lastTimeJump + jumpAttackCooldown && IsPlayerInClearSight())
-        {
             return true;
-        }
+
         return false;
     }
 
@@ -219,9 +218,8 @@ public class Enemy_Boss : Enemy
             {
                 GameObject rootEntity = hit.transform.root.gameObject;
                 if (uniqueEntities.Add(rootEntity) == false)
-                {
                     continue;
-                }
+
                 damagable.TakeDamage(damage);
             }
             ApplyPhysicalForce(impactPoint, impactRadius, hit);
@@ -233,9 +231,7 @@ public class Enemy_Boss : Enemy
         Rigidbody rb = hit.GetComponent<Rigidbody>();
 
         if (rb != null)
-        {
             rb.AddExplosionForce(impactPower, impactPoint, impactRadius, upwardsMulti, ForceMode.Impulse);
-        }
     }
 
     public bool CanDoAbility()
@@ -246,9 +242,8 @@ public class Enemy_Boss : Enemy
             return false;
 
         if (Time.time > lastTimeAbility + abilityCooldown && playerWithinDistance)
-        {
             return true;
-        }
+
         return false;
     }
 
