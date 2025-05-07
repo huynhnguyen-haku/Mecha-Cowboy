@@ -46,7 +46,12 @@ public class Enemy_AnimationEvents : MonoBehaviour
     public void BeginMeleeAttackCheck()
     {
         enemy?.EnableMeleeAttack(true);
+
+        // Play melee attack sound effect
         enemy?.audioManager.PlaySFX(melee?.meleeSFX.slashSFX, true);
+
+        // Play boss melee attack sound effect
+        enemy?.audioManager.PlaySFX(boss?.bossSFX.slashSFX, true);
     }
 
     public void FinishMeleeAttackCheck()

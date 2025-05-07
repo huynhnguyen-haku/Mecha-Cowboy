@@ -90,7 +90,6 @@ public class Enemy_Melee : Enemy
 
         RandomizeFirstAttack();
         UpdateAttackData(); 
-
     }
 
     private void RandomizeFirstAttack()
@@ -139,14 +138,10 @@ public class Enemy_Melee : Enemy
     public override void Die()
     {
         base.Die();
-
-        if (meleeSFX != null && meleeSFX.deadSFX != null)
-            meleeSFX.deadSFX.Play();
+        meleeSFX.deadSFX.Play();
         
-
         if (stateMachine.currentState != deadState)
             stateMachine.ChangeState(deadState);
-        
     }
 
     public void UpdateAttackData()

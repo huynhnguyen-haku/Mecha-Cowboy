@@ -261,7 +261,7 @@ public class Enemy_Boss : Enemy
     public override void Die()
     {
         base.Die();
-        bossSFX.deadSFX.Play();
+        bossSFX.deadSFX.Play(); // Play death sound effect
 
         if (stateMachine.currentState != deadState)
         {
