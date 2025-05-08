@@ -12,7 +12,6 @@ public class Car_SFX : MonoBehaviour
 
     private float defaultEngineIdleVolume;
 
-    private float minSpeed = 0;
     private float maxSpeed = 20;
 
     public float minPitch = 0.75f;

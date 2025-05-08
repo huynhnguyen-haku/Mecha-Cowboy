@@ -29,7 +29,7 @@ public class MissionManager : MonoBehaviour
         if (currentMission != null && currentMission.MissionCompleted())
         {
             GameManager.instance.AddMoney(currentMission.reward); // Cộng tiền thưởng
-            Debug.Log($"Mission '{currentMission.missionName}' completed! Reward: {currentMission.reward} coins.");
+            Debug.Log($"Mission '{currentMission.missionName}' completed! Reward: {currentMission.reward} golds.");
             return true;
         }
         return false;

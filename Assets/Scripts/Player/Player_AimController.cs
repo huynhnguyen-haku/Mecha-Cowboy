@@ -80,6 +80,7 @@ public class Player_AimController : MonoBehaviour
             Time.timeScale = 1f;
         }
     }
+
     public void EnableLaserAim(bool enable) => aimLaser.enabled = enable;
 
     public void EnableAimTarget(bool enable) => aimTarget.SetActive(enable);
@@ -130,20 +131,19 @@ public class Player_AimController : MonoBehaviour
 
         Vector3 newAimPosition = isAimingPrecisly ? aim.position : transform.position;
 
-        // Giới hạn khoảng cách tối thiểu giữa aimTarget và người chơi
+        // Limit the distance between the aim target and the player
         Vector3 directionToAim = aim.position - transform.position;
         float distanceToAim = directionToAim.magnitude;
 
         if (distanceToAim < minAimDistance)
         {
-            // Đặt aimTarget ở khoảng cách tối thiểu
+            // Set the aim position to be at the minimum distance
             directionToAim.Normalize();
             aim.position = transform.position + directionToAim * minAimDistance;
         }
 
         aim.position = new Vector3(aim.position.x, newAimPosition.y + AdjustedOffsetY(), aim.position.z);
     }
-
 
     private float AdjustedOffsetY()
     {
@@ -155,8 +155,8 @@ public class Player_AimController : MonoBehaviour
         return offsetY;
     }
 
-
     public Transform Aim() => aim;
+
     public bool CanAimPrecisly() => isAimingPrecisly;
 
     public RaycastHit GetMouseHitInfo()

@@ -9,7 +9,16 @@ public class UI_WeaponConfirmation : MonoBehaviour
     [SerializeField] private TextMeshProUGUI weaponPriceText;
     [SerializeField] private TextMeshProUGUI confirmText;
 
+    [SerializeField] private TextMeshProUGUI playerMoney;
+
     private Weapon_Data currentWeaponData;
+    private GameManager gameManager;
+
+    private void Start()
+    {
+        gameManager = GameManager.instance;
+        playerMoney.text = $"Money: {gameManager.playerMoney} golds";
+    }
 
     public void SetupConfirmationUI(Weapon_Data weaponData)
     {
@@ -17,7 +26,7 @@ public class UI_WeaponConfirmation : MonoBehaviour
 
         weaponIcon.sprite = weaponData.weaponIcon;
         weaponNameText.text = weaponData.weaponName;
-        weaponPriceText.text = $"Price: {weaponData.price} coins";
+        weaponPriceText.text = $"Price: {weaponData.price} golds";
         confirmText.text = "Do you want to buy this weapon?";
     }
 
@@ -25,26 +34,26 @@ public class UI_WeaponConfirmation : MonoBehaviour
     {
         if (GameManager.instance.playerMoney >= currentWeaponData.price)
         {
-            // Tr? ti?n và m? khóa v? khí
+            // Pay and unlock the weapon
             GameManager.instance.AddMoney(-currentWeaponData.price);
             currentWeaponData.isUnlocked = true;
 
             Debug.Log($"Weapon {currentWeaponData.weaponName} unlocked!");
             confirmText.text = "Weapon unlocked!";
 
-            // Quay l?i UI Weapon Selection
+            // Back to weapon selection UI
             UI.instance.SwitchTo(UI.instance.weaponSelection.gameObject);
         }
         else
         {
-            // Không ?? ti?n
+            // Do not have enough money
             confirmText.text = "Not enough money!";
         }
     }
 
     public void ReturnToWeaponSelection()
     {
-        // Quay l?i UI Weapon Selection
+        // Back to weapon selection UI
         UI.instance.SwitchTo(UI.instance.weaponSelection.gameObject);
     }
 }

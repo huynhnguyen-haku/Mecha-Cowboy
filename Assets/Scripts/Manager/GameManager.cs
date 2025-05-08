@@ -29,7 +29,7 @@ public class GameManager : MonoBehaviour
     public void AddMoney(int amount)
     {
         playerMoney += amount;
-        Debug.Log($"Player received {amount} coins. Total money: {playerMoney}");
+        Debug.Log($"Player received {amount} golds. Total money: {playerMoney}");
 
         // Lưu số tiền vào PlayerPrefs
         SavePlayerMoney();
