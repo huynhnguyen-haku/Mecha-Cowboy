@@ -1,4 +1,4 @@
-using TMPro;
+﻿using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -27,6 +27,8 @@ public class UI_MissionSelectionButton : UI_Button
     {
         base.OnPointerEnter(eventData);
         missionSelection.SetMissionDescription(myMission.missionDescription);
+        missionSelection.SetMissionReward(myMission.reward);
+        missionSelection.SetMissionPreview(myMission.missionPreview); // Truyền hình ảnh minh họa
     }
 
     public override void OnPointerDown(PointerEventData eventData)
@@ -39,5 +41,7 @@ public class UI_MissionSelectionButton : UI_Button
     {
         base.OnPointerExit(eventData);
         missionSelection.SetMissionDescription("Choose a mission");
+        missionSelection.SetMissionReward(0);
+        missionSelection.SetMissionPreview(null); // Ẩn hình ảnh khi rời chuột
     }
 }

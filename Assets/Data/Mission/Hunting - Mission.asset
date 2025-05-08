@@ -14,5 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   missionName: Hunting Practice
   missionDescription: Time to train your skill. Hunt the specified target.
+  reward: 0
+  missionPreview: {fileID: -1974163846, guid: 7b5549492debae34b883b001d4cc1ec5, type: 3}
   numberOfTarget: 3
   enemyType: 0

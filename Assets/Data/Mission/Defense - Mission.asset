@@ -15,6 +15,7 @@ MonoBehaviour:
   missionName: Defense Base
   missionDescription: Our automated military truck has some problems. Protect it
     until it fix itself.
+  reward: 500
   isDefenceStarted: 0
   isMissionCompleted: 0
   defenseDuration: 60

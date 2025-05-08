@@ -9,6 +9,9 @@ public abstract class Mission : ScriptableObject
 
     public int reward;
 
+    [Header("Mission Preview")]
+    public Sprite missionPreview;
+
     public abstract void StartMission();
     public abstract bool MissionCompleted();
     public virtual void UpdateMission() { }
