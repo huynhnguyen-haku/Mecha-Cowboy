@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using UnityEngine;
 
 public class Player_AimController : MonoBehaviour
@@ -36,6 +36,10 @@ public class Player_AimController : MonoBehaviour
     [Header("Aim Layers")]
     [SerializeField] private LayerMask preciseAim;
     [SerializeField] private LayerMask regularAim;
+
+    [Header("Aim Distance Constraints")]
+    [SerializeField] private float minAimDistance = 1.5f; // Khoảng cách tối thiểu giữa aimTarget và người chơi
+
 
     private Vector2 mouseInput;
     private RaycastHit lastKnownMouseHit;
@@ -126,8 +130,20 @@ public class Player_AimController : MonoBehaviour
 
         Vector3 newAimPosition = isAimingPrecisly ? aim.position : transform.position;
 
+        // Giới hạn khoảng cách tối thiểu giữa aimTarget và người chơi
+        Vector3 directionToAim = aim.position - transform.position;
+        float distanceToAim = directionToAim.magnitude;
+
+        if (distanceToAim < minAimDistance)
+        {
+            // Đặt aimTarget ở khoảng cách tối thiểu
+            directionToAim.Normalize();
+            aim.position = transform.position + directionToAim * minAimDistance;
+        }
+
         aim.position = new Vector3(aim.position.x, newAimPosition.y + AdjustedOffsetY(), aim.position.z);
     }
+
 
     private float AdjustedOffsetY()
     {
