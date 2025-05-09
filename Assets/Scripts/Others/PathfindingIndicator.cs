@@ -3,7 +3,7 @@ using UnityEngine.AI;
 
 public class PathfindingIndicator : MonoBehaviour
 {
-    public Transform target; // Đích đến
+    private Transform target; // Đích đến (bỏ SerializeField vì sẽ gán động)
     public LineRenderer lineRenderer; // Component LineRenderer để vẽ đường dẫn
     public float updateInterval = 0; // Khoảng thời gian cập nhật đường đi
     public float heightOffset = 0.5f; // Độ cao thêm vào để đường dẫn không chìm vào mặt đất
@@ -43,11 +43,26 @@ public class PathfindingIndicator : MonoBehaviour
         }
     }
 
+    // Phương thức công khai để gán target động
+    public void SetTarget(Transform newTarget)
+    {
+        target = newTarget;
+        if (target != null)
+        {
+            Debug.Log("PathfindingIndicator: Target set to " + target.name);
+            UpdatePath(); // Cập nhật đường đi ngay lập tức khi gán target
+        }
+        else
+        {
+            Debug.LogWarning("PathfindingIndicator: Target is null!");
+            lineRenderer.positionCount = 0; // Xóa đường dẫn nếu không có target
+        }
+    }
+
     void UpdatePath()
     {
         if (NavMesh.CalculatePath(transform.position, target.position, NavMesh.AllAreas, path))
         {
-            // Làm mượt đường đi bằng cách thêm các điểm trung gian (tùy chọn)
             Vector3[] smoothedPoints = SmoothPath(path.corners);
             lineRenderer.positionCount = smoothedPoints.Length;
             for (int i = 0; i < smoothedPoints.Length; i++)
@@ -57,6 +72,7 @@ public class PathfindingIndicator : MonoBehaviour
         }
         else
         {
+            Debug.LogWarning("PathfindingIndicator: Could not calculate path to target.");
             lineRenderer.positionCount = 0;
         }
     }

@@ -7,7 +7,7 @@ public class LevelGenerator : MonoBehaviour
     public static LevelGenerator instance;
 
     [SerializeField] private NavMeshSurface navMeshSurface;
- 
+
     // Level parts  
     [SerializeField] private List<Transform> levelParts; // Tất cả các LevelPart
     [SerializeField] private Transform lastLevelPart; // Phần cuối của màn chơi
@@ -27,6 +27,9 @@ public class LevelGenerator : MonoBehaviour
     // Enemies  
     private List<Enemy> enemyList;
 
+    // Pathfinding Indicator
+    private PathfindingIndicator pathfindingIndicator; // Tham chiếu đến PathfindingIndicator
+
     private void Awake()
     {
         instance = this;
@@ -36,6 +39,11 @@ public class LevelGenerator : MonoBehaviour
     {
         enemyList = new List<Enemy>();
         defaultSnapPoint = nextSnapPoint;
+        pathfindingIndicator = FindObjectOfType<PathfindingIndicator>(); // Tìm PathfindingIndicator trong scene
+        if (pathfindingIndicator == null)
+        {
+            Debug.LogError("LevelGenerator: PathfindingIndicator not found in scene!");
+        }
     }
 
     private void Update()
@@ -106,6 +114,17 @@ public class LevelGenerator : MonoBehaviour
         {
             enemy.transform.parent = null;
             enemy.gameObject.SetActive(true);
+        }
+
+        // Tìm MissionComplete_Zone và gán cho PathfindingIndicator
+        GameObject missionCompleteZone = GameObject.Find("MissionComplete_Zone");
+        if (missionCompleteZone != null && pathfindingIndicator != null)
+        {
+            pathfindingIndicator.SetTarget(missionCompleteZone.transform);
+        }
+        else
+        {
+            Debug.LogWarning("LevelGenerator: Could not find MissionComplete_Zone or PathfindingIndicator is null!");
         }
 
         MissionManager.instance.StartMission();
