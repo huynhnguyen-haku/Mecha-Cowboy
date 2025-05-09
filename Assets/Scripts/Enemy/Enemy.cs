@@ -170,7 +170,6 @@ public class Enemy : MonoBehaviour
         if(health.EnemyShouldDie())
         {
             StartCoroutine(DeathImpactCourotine(force, hitpoint, rb));
-
         }
     }
 
