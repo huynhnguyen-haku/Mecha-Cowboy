@@ -8,6 +8,7 @@ public class Mission_CarDelivery : Mission
     public override void StartMission()
     {
         reward = 100;
+        isCarDelivered = false;
 
         FindObjectOfType<MissionObject_CarDeliveryZone>(true).gameObject.SetActive(true);
 
@@ -16,9 +17,7 @@ public class Mission_CarDelivery : Mission
 
         UI.instance.inGameUI.UpdateMissionUI(missionText, missionDetails);
 
-        isCarDelivered = false;
         MissionObject_Car.OnCarDelivery += CompleteCarDelivery;
-
         Car_Controller[] cars = Object.FindObjectsByType<Car_Controller>(FindObjectsSortMode.None);
 
         foreach (var car in cars)
