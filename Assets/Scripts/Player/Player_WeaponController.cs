@@ -86,7 +86,7 @@ public class Player_WeaponController : MonoBehaviour
         // If the weapon is already in the inventory, add the ammo to the existing weapon
         if (WeaponInSlots(newWeapon.weaponType) != null)
         {
-            WeaponInSlots(newWeapon.weaponType).TotalReserveAmmo += newWeapon.TotalReserveAmmo;
+            WeaponInSlots(newWeapon.weaponType).TotalReserveAmmo += newWeapon.bulletsInMagazine;
             UpdateWeaponUI();
             return;
         }
@@ -280,7 +280,7 @@ public class Player_WeaponController : MonoBehaviour
         Bullet bulletScript = bullet.GetComponent<Bullet>();
         bulletScript.BulletSetup(whatIsAlly, currentWeapon.bulletDamage, bulletImpactForce);
 
-        Vector3 bulletsDirection = currentWeapon.ApplySpread(BullectDirection());
+        Vector3 bulletsDirection = currentWeapon.ApplySpread(BulletDirection());
 
         rbBullet.mass = REFERENCE_BULLET_SPEED / bulletSpeed;
         rbBullet.linearVelocity = bulletsDirection * bulletSpeed;
@@ -296,7 +296,7 @@ public class Player_WeaponController : MonoBehaviour
     #endregion
 
     #region Utility Methods
-    public Vector3 BullectDirection()
+    public Vector3 BulletDirection()
     {
         Transform aim = player.aim.Aim();
         Vector3 direction = (aim.position - GunPoint().position).normalized;
@@ -323,7 +323,7 @@ public class Player_WeaponController : MonoBehaviour
     private void TriggerEnemyDodge()
     {
         Vector3 rayOrigin = GunPoint().position;
-        Vector3 rayDirection = BullectDirection();
+        Vector3 rayDirection = BulletDirection();
 
         if (Physics.Raycast(rayOrigin, rayDirection, out RaycastHit hit, Mathf.Infinity))
         {

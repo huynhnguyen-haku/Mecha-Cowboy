@@ -119,7 +119,7 @@ public class Player_AimController : MonoBehaviour
         float laserTipLength = 0.5f;
         float gunDistance = player.weapon.CurrentWeapon().laserDistance;
 
-        Vector3 laserDirection = player.weapon.BullectDirection();
+        Vector3 laserDirection = player.weapon.BulletDirection();
         Vector3 endPoint = gunPoint.position + laserDirection * gunDistance;
 
         if (Physics.Raycast(gunPoint.position, laserDirection, out RaycastHit hitInfo, gunDistance))
