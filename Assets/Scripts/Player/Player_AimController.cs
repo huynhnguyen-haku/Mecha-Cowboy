@@ -22,23 +22,10 @@ public class Player_AimController : MonoBehaviour
     [Range(3f, 5f)]
     [SerializeField] private float cameraSensetivity = 5;
 
-    [Header("Aim Controls")]
-    [SerializeField] private float preciseAimCameraDistance = 6;
-    [SerializeField] private float regularAimCameraDistance = 8;
-    [SerializeField] private float cameraChangeRate = 5;
-
-    [Header("Aim Offset")]
-    public bool isAimingPrecisly;
-    private float offsetY;
+    [Header("Aim Settings")]
     [SerializeField] private Transform aim;
-    [SerializeField] private float offsetChangeRate = 6;
-
-    [Header("Aim Layers")]
     [SerializeField] private LayerMask preciseAim;
-    [SerializeField] private LayerMask regularAim;
     [SerializeField] private LayerMask enemyLayer;
-
-    [Header("Aim Distance Constraints")]
     [SerializeField] private float minAimDistance = 1.5f;
 
     [Header("Lock-On Settings")]
@@ -78,20 +65,21 @@ public class Player_AimController : MonoBehaviour
         UpdateCameraPosition();
     }
 
-    private void TogglePreciseAim(bool enable)
-    {
-        isAimingPrecisly = !isAimingPrecisly;
-        Cursor.visible = false;
+    public Transform Aim() => aim;
 
-        if (enable)
+    private void ToggleLockOn(bool enable)
+    {
+        isLockedOn = enable;
+
+        if (isLockedOn)
         {
-            cameraManager.ChangeCameraDistance(preciseAimCameraDistance, cameraChangeRate);
-            Time.timeScale = 0.9f;
+            // Khi bật lock-on, tìm mục tiêu gần nhất
+            CheckLockOn();
         }
         else
         {
-            cameraManager.ChangeCameraDistance(regularAimCameraDistance, cameraChangeRate);
-            Time.timeScale = 1f;
+            // Khi tắt lock-on, hủy mục tiêu đã khóa
+            lockedEnemy = null;
         }
     }
 
@@ -157,16 +145,16 @@ public class Player_AimController : MonoBehaviour
     {
         if (isLockedOn && lockedEnemy != null)
         {
+            // Khi lock-on, aim sẽ theo mục tiêu đã khóa
             aim.position = lockedEnemy.position;
+            aimTarget.GetComponent<SpriteRenderer>().color = Color.red; // Đổi màu khi lock-on
         }
         else
         {
+            // Khi không lock-on, aim sẽ theo vị trí chuột
             aim.position = GetMouseHitInfo().point;
+            aimTarget.GetComponent<SpriteRenderer>().color = Color.white; // Màu mặc định
         }
-
-        CheckLockOn();
-
-        Vector3 newAimPosition = isAimingPrecisly ? aim.position : transform.position;
 
         Vector3 directionToAim = aim.position - transform.position;
         float distanceToAim = directionToAim.magnitude;
@@ -176,31 +164,13 @@ public class Player_AimController : MonoBehaviour
             directionToAim.Normalize();
             aim.position = transform.position + directionToAim * minAimDistance;
         }
-
-        if (isLockedOn)
-        {
-            aimTarget.GetComponent<SpriteRenderer>().color = Color.red; // Đổi màu khi lock-on
-        }
-        else
-        {
-            aimTarget.GetComponent<SpriteRenderer>().color = Color.white; // Màu mặc định
-        }
-
-        aim.position = new Vector3(aim.position.x, newAimPosition.y + AdjustedOffsetY(), aim.position.z);
     }
 
     private void CheckLockOn()
     {
-        if (isLockedOn && lockedEnemy != null)
+        if (!isLockedOn)
         {
-            Vector3 mousePos = GetMouseHitInfo().point;
-            float distanceToEnemy = Vector3.Distance(mousePos, lockedEnemy.position);
-
-            if (distanceToEnemy > lockOnBreakDistance)
-            {
-                isLockedOn = false;
-                lockedEnemy = null;
-            }
+            // Nếu lock-on bị tắt, không làm gì cả
             return;
         }
 
@@ -222,24 +192,9 @@ public class Player_AimController : MonoBehaviour
             if (closestEnemy != null)
             {
                 lockedEnemy = closestEnemy;
-                isLockedOn = true;
             }
         }
     }
-
-    private float AdjustedOffsetY()
-    {
-        if (isAimingPrecisly)
-            offsetY = Mathf.Lerp(offsetY, 0, Time.deltaTime * offsetChangeRate);
-        else
-            offsetY = Mathf.Lerp(offsetY, 1, Time.deltaTime * offsetChangeRate);
-
-        return offsetY;
-    }
-
-    public Transform Aim() => aim;
-
-    public bool CanAimPrecisly() => isAimingPrecisly;
 
     public RaycastHit GetMouseHitInfo()
     {
@@ -288,7 +243,7 @@ public class Player_AimController : MonoBehaviour
         controls.Character.Aim.performed += ctx => mouseInput = ctx.ReadValue<Vector2>();
         controls.Character.Aim.canceled += ctx => mouseInput = Vector2.zero;
 
-        controls.Character.TogglePreciseAim.performed += ctx => TogglePreciseAim(true);
-        controls.Character.TogglePreciseAim.canceled += ctx => TogglePreciseAim(false);
+        controls.Character.ToggleLockOn.performed += ctx => ToggleLockOn(true);
+        controls.Character.ToggleLockOn.canceled += ctx => ToggleLockOn(false);
     }
 }

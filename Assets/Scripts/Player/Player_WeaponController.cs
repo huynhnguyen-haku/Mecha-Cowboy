@@ -299,14 +299,11 @@ public class Player_WeaponController : MonoBehaviour
     public Vector3 BullectDirection()
     {
         Transform aim = player.aim.Aim();
-
         Vector3 direction = (aim.position - GunPoint().position).normalized;
-
-        if (player.aim.CanAimPrecisly() == false)
-            direction.y = 0;
 
         return direction;
     }
+
 
     public Transform GunPoint() => player.weaponVisuals.CurrentWeaponModel().gunPoint;
     public bool HasOneWeapon() => weaponSlots.Count <= 1;

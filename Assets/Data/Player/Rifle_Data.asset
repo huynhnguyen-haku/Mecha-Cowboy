@@ -24,9 +24,9 @@ MonoBehaviour:
   reloadSpeed: 2
   equipSpeed: 2
   cameraDistance: 7
-  minSpread: 0.3
-  maxSpread: 5
-  spreadIncreaseRate: 0.25
+  minSpread: 1
+  maxSpread: 8
+  spreadIncreaseRate: 0.5
   burstAvailable: 1
   burstActive: 0
   burst_BulletsPerShot: 3
@@ -34,5 +34,5 @@ MonoBehaviour:
   burst_FireDelay: 0.1
   weaponIcon: {fileID: 948876784, guid: 3477fe9a26e0faa42b5a9b5b258229c1, type: 3}
   weaponInfo: Fast and reliable
-  isUnlocked: 0
+  isUnlocked: 1
   price: 400

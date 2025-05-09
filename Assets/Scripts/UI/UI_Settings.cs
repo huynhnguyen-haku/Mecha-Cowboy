@@ -47,18 +47,6 @@ public class UI_Settings : MonoBehaviour
         PlayerPrefs.Save(); // Đảm bảo lưu ngay lập tức
     }
 
-    public void SetPreciseAimToggle()
-    {
-        bool isPreciseAim = Player_AimController.instance.isAimingPrecisly;
-        Player_AimController.instance.isAimingPrecisly = !isPreciseAim;
-
-        // Lưu ngay lập tức vào PlayerPrefs
-        int preciseAimValue = Player_AimController.instance.isAimingPrecisly ? 1 : 0;
-        PlayerPrefs.SetInt("PreciseAim", preciseAimValue);
-        PlayerPrefs.Save();
-    }
-
-
     public void LoadSettingsValues()
     {
         // Kiểm tra nếu giá trị đã tồn tại trong PlayerPrefs
