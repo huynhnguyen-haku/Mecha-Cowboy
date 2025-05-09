@@ -30,16 +30,5 @@ public class DeadState_Range : EnemyState
     public override void Update()
     {
         base.Update();
-        //DisableInteraction();
-    }
-
-    private void DisableInteraction()
-    {
-        if (stateTimer <= 0 && interactionDisabled == false)
-        {
-            interactionDisabled = true;
-            enemy.ragdoll.RagdollActive(false);
-            enemy.ragdoll.ColliderActive(false);
-        }
     }
 }

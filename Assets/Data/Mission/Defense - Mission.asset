@@ -17,10 +17,10 @@ MonoBehaviour:
     until it fix itself.
   reward: 150
   missionPreview: {fileID: -1254829206, guid: f5242cd4daa99d44fa81f5b0c3aba104, type: 3}
-  isDefenceStarted: 0
+  isDefenceStarted: 1
   isMissionCompleted: 0
-  defenseDuration: 60
-  timeBetweenWaves: 5
+  defenseDuration: 30
+  timeBetweenWaves: 10
   numberOfRespawnPoints: 2
   respawnPoints:
   - {fileID: 0}

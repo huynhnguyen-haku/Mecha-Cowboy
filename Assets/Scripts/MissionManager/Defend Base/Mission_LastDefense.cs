@@ -2,7 +2,6 @@
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "Last Defence Mission", menuName = "Mission/Last Defence - Mission")]
-
 public class Mission_LastDefense : Mission
 {
     public bool isDefenceStarted = false;
@@ -21,7 +20,6 @@ public class Mission_LastDefense : Mission
     private Vector3 defensePoint;
 
     [Space]
-
     public int numberOfEnemiesPerWave;
     public GameObject[] enemyPrefabs;
     private string defenceTimerText;
@@ -39,9 +37,28 @@ public class Mission_LastDefense : Mission
         if (isMissionCompleted)
             return; // Prevent starting the mission if it's already completed
 
-        defensePoint = FindObjectOfType<MissionObject_BaseToDefend>().transform.position;
-        respawnPoints = new List<Transform>(ClosestPoints(numberOfRespawnPoints));
+        // Tìm MissionObject_BaseToDefend và gán làm target cho PathfindingIndicator
+        MissionObject_BaseToDefend baseToDefend = FindObjectOfType<MissionObject_BaseToDefend>();
+        if (baseToDefend != null)
+        {
+            defensePoint = baseToDefend.transform.position;
+            PathfindingIndicator pathfindingIndicator = FindObjectOfType<PathfindingIndicator>();
+            if (pathfindingIndicator != null)
+            {
+                pathfindingIndicator.SetTarget(baseToDefend.transform);
+                Debug.Log("Mission_LastDefense: Set PathfindingIndicator target to MissionObject_BaseToDefend.");
+            }
+            else
+            {
+                Debug.LogWarning("Mission_LastDefense: PathfindingIndicator not found in scene!");
+            }
+        }
+        else
+        {
+            Debug.LogWarning("Mission_LastDefense: MissionObject_BaseToDefend not found in scene!");
+        }
 
+        respawnPoints = new List<Transform>(ClosestPoints(numberOfRespawnPoints));
         UI.instance.inGameUI.UpdateMissionUI("Get to the base that need help.");
     }
 
@@ -69,7 +86,6 @@ public class Mission_LastDefense : Mission
             defenseTimer -= Time.deltaTime;
         }
 
-
         if (defenseTimer <= 0)
         {
             EndDefenceEvent();
@@ -94,8 +110,6 @@ public class Mission_LastDefense : Mission
         waveTimer = 0.5f;
         defenseTimer = defenseDuration;
         isDefenceStarted = true;
-
-
     }
 
     private void EndDefenceEvent()

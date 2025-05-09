@@ -10291,6 +10291,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2219222864570099344, guid: 1c7ed68b6f2f7e14fab29213667d34ae, type: 3}
+      propertyPath: arrgresssionRange
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 7927049067197686440, guid: 1c7ed68b6f2f7e14fab29213667d34ae, type: 3}
       propertyPath: m_Name
       value: Enemy_Melee - Shield Variant

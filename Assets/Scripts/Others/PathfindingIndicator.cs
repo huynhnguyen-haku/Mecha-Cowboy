@@ -72,7 +72,6 @@ public class PathfindingIndicator : MonoBehaviour
         }
         else
         {
-            Debug.LogWarning("PathfindingIndicator: Could not calculate path to target.");
             lineRenderer.positionCount = 0;
         }
     }

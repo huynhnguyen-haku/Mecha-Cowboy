@@ -435,7 +435,6 @@ GameObject:
   m_Component:
   - component: {fileID: 2961092432926518290}
   - component: {fileID: 6458998931444780145}
-  - component: {fileID: 4746794662047922750}
   m_Layer: 0
   m_Name: LevelPart - EndPoint
   m_TagString: Untagged
@@ -485,38 +484,6 @@ MonoBehaviour:
   intersectionCheckColliders:
   - {fileID: 4562820879214340070}
   intersectionCheckParent: {fileID: 591222173713310556}
---- !u!114 &4746794662047922750
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 534961579171391477}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7a5ac11cc976e418e8d13136b07e1f52, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SerializedVersion: 0
-  m_AgentTypeID: 0
-  m_CollectObjects: 2
-  m_Size: {x: 10, y: 10, z: 10}
-  m_Center: {x: 0, y: 2, z: 0}
-  m_LayerMask:
-    serializedVersion: 2
-    m_Bits: 193
-  m_UseGeometry: 0
-  m_DefaultArea: 0
-  m_GenerateLinks: 1
-  m_IgnoreNavMeshAgent: 1
-  m_IgnoreNavMeshObstacle: 1
-  m_OverrideTileSize: 0
-  m_TileSize: 256
-  m_OverrideVoxelSize: 0
-  m_VoxelSize: 0.06666667
-  m_MinRegionArea: 2
-  m_NavMeshData: {fileID: 23800000, guid: d7373b69b3fcc414c8bd7547647edfed, type: 2}
-  m_BuildHeightMesh: 0
 --- !u!1 &1065656568733734325
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,6 +1,4 @@
-﻿using System;
-using Unity.VisualScripting;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class HealthController : MonoBehaviour
 {
@@ -15,9 +13,7 @@ public class HealthController : MonoBehaviour
 
         // Check if lowHealthEffect is null before trying to disable it
         if (lowHealthEffect != null)
-        {
             lowHealthEffect.SetActive(false);
-        }
     }
 
     public virtual void ReduceHealth(int damage)
@@ -30,9 +26,8 @@ public class HealthController : MonoBehaviour
     {
         currentHealth += amount;
         if (currentHealth > maxHealth)
-        {
             currentHealth = maxHealth;
-        }
+
         UpdateHeathVFX();
     }
 
@@ -45,25 +40,20 @@ public class HealthController : MonoBehaviour
     {
         // Return early if lowHealthEffect is null
         if (lowHealthEffect == null)
-        {
             return;
-        }
+
 
         // Enable VFX if health is below 50%
         if (currentHealth < maxHealth * 0.5f)
         {
             if (!lowHealthEffect.activeSelf)
-            {
                 lowHealthEffect.SetActive(true);
-            }
         }
         // Disable VFX if health is 50% or above
         else
         {
             if (lowHealthEffect.activeSelf)
-            {
                 lowHealthEffect.SetActive(false);
-            }
         }
     }
 
@@ -71,15 +61,14 @@ public class HealthController : MonoBehaviour
     public bool EnemyShouldDie()
     {
         if (isDead)
-        {
             return false;
-        }
 
         if (currentHealth <= 0)
         {
             isDead = true;
             return true;
         }
+
         return false;
     }
 
@@ -88,9 +77,8 @@ public class HealthController : MonoBehaviour
     {
         // Only disable the low health effect if the player is dead
         if (currentHealth <= 0 && lowHealthEffect != null)
-        {
             lowHealthEffect.SetActive(false);
-        }
+        
         return currentHealth <= 0;
     }
 
@@ -100,24 +88,20 @@ public class HealthController : MonoBehaviour
         currentHealth = 0;
         isDead = true;
 
-        // Chuyển sang DeadState nếu kẻ địch có EnemyStateMachine
         if (TryGetComponent(out Enemy enemy))
         {
+            enemy.Die();
             if (enemy.stateMachine != null)
             {
-                // Sử dụng DeadState đã có thay vì tạo mới
                 if (enemy is Enemy_Range rangeEnemy)
-                {
                     enemy.stateMachine.ChangeState(rangeEnemy.deadState);
-                }
+
                 else if (enemy is Enemy_Melee meleeEnemy)
-                {
                     enemy.stateMachine.ChangeState(meleeEnemy.deadState);
-                }
+
                 else if (enemy is Enemy_Boss bossEnemy)
-                {
                     enemy.stateMachine.ChangeState(bossEnemy.deadState);
-                }
+
             }
         }
     }

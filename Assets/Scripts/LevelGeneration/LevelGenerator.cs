@@ -116,15 +116,18 @@ public class LevelGenerator : MonoBehaviour
             enemy.gameObject.SetActive(true);
         }
 
-        // Tìm MissionComplete_Zone và gán cho PathfindingIndicator
-        GameObject missionCompleteZone = GameObject.Find("MissionComplete_Zone");
-        if (missionCompleteZone != null && pathfindingIndicator != null)
+        // Chỉ gán target đến MissionComplete_Zone nếu mission không phải LastDefense
+        if (MissionManager.instance.currentMission.GetMissionType() != MissionType.LastDefense)
         {
-            pathfindingIndicator.SetTarget(missionCompleteZone.transform);
-        }
-        else
-        {
-            Debug.LogWarning("LevelGenerator: Could not find MissionComplete_Zone or PathfindingIndicator is null!");
+            GameObject missionCompleteZone = GameObject.Find("MissionComplete_Zone");
+            if (missionCompleteZone != null && pathfindingIndicator != null)
+            {
+                pathfindingIndicator.SetTarget(missionCompleteZone.transform);
+            }
+            else
+            {
+                Debug.LogWarning("LevelGenerator: Could not find MissionComplete_Zone or PathfindingIndicator is null!");
+            }
         }
 
         MissionManager.instance.StartMission();
