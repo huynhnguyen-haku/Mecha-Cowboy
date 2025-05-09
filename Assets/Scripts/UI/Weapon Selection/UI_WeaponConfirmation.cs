@@ -37,6 +37,7 @@ public class UI_WeaponConfirmation : MonoBehaviour
             // Pay and unlock the weapon
             GameManager.instance.AddMoney(-currentWeaponData.price);
             currentWeaponData.isUnlocked = true;
+            currentWeaponData.SaveUnlockState(); // Lưu trạng thái qua WeaponUnlockManager
 
             Debug.Log($"Weapon {currentWeaponData.weaponName} unlocked!");
             confirmText.text = "Weapon unlocked!";
@@ -50,6 +51,7 @@ public class UI_WeaponConfirmation : MonoBehaviour
             confirmText.text = "Not enough money!";
         }
     }
+
 
     public void ReturnToWeaponSelection()
     {

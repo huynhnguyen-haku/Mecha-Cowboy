@@ -46,5 +46,22 @@ public class Weapon_Data : ScriptableObject
 
     [Header("Unlock System")]
     public bool isUnlocked = false; 
-    public int price = 100; 
+    public int price = 100;
+
+    public void SaveUnlockState()
+    {
+        if (WeaponUnlockManager.instance != null)
+        {
+            WeaponUnlockManager.instance.SaveWeaponState(this);
+        }
+    }
+
+    public void LoadUnlockState()
+    {
+        if (WeaponUnlockManager.instance != null)
+        {
+            WeaponUnlockManager.instance.LoadWeaponState(this);
+        }
+    }
+
 }

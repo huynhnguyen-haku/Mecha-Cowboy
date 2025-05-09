@@ -19,6 +19,11 @@ public class UI_WeaponSelectionButton : UI_Button
     {
         base.Start();
         weaponSelectionUI = GetComponentInParent<UI_WeaponSelection>();
+
+        // Load the unlock state of the weapon
+        weaponData.LoadUnlockState(); // Sử dụng weaponData thay vì currentWeaponData
+
+        // Update the weapon icon
         weaponIcon.sprite = weaponData.weaponIcon;
     }
 
