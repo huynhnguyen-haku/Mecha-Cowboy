@@ -221,6 +221,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   highlightMaterial: {fileID: 2100000, guid: ecec4012fd11b734896f267bef0a3825, type: 2}
+  defaultMaterial: {fileID: 0}
+  meshRenderer: {fileID: 0}
   boxType: 0
   smallBoxAmmo:
   - weaponType: 0
@@ -261,8 +263,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 1.5203921, y: 0.79028976, z: 1.1592242}
+  m_Center: {x: -0.027184665, y: 0.35340053, z: -0.05631119}
 --- !u!114 &6139086996144916041
 MonoBehaviour:
   m_ObjectHideFlags: 0

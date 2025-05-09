@@ -4,7 +4,7 @@ using UnityEngine;
 public class Misson_KeyFind : Mission
 {
     [SerializeField] private GameObject key;
-    private bool isKeyFound;
+    public bool isKeyFound;
     public override void StartMission()
     {
         reward = 200;

@@ -469,7 +469,7 @@ Transform:
   m_GameObject: {fileID: 4868657212275675379}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.548, y: 0, z: 3.26}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -495,8 +495,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.59544086, y: 0.43535623, z: 1.1232984}
-  m_Center: {x: 0.1745534, y: 0.22517334, z: 0.43048656}
+  m_Size: {x: 0.61095166, y: 0.7975563, z: 1.3203032}
+  m_Center: {x: 0.23496693, y: 0.29877824, z: 0.38225973}
 --- !u!114 &4440527406920645428
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -510,6 +510,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   highlightMaterial: {fileID: 2100000, guid: ecec4012fd11b734896f267bef0a3825, type: 2}
+  defaultMaterial: {fileID: 0}
+  meshRenderer: {fileID: 0}
   weaponData: {fileID: 11400000, guid: 3fd9443a95353424e93c61f81f4356ee, type: 2}
   weapon:
     weaponType: 0

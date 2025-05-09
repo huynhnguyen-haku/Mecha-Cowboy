@@ -714,8 +714,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.26810217, y: 1.4217002, z: 1.1958234}
-  m_Center: {x: 0.010884047, y: 0.7183454, z: 0.12076688}
+  m_Size: {x: 0.26810217, y: 0.21762872, z: 1.1958234}
+  m_Center: {x: 0.010884047, y: 0.11630964, z: 0.12076688}
 --- !u!114 &8731110649847749432
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -729,6 +729,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   highlightMaterial: {fileID: 2100000, guid: ecec4012fd11b734896f267bef0a3825, type: 2}
+  defaultMaterial: {fileID: 0}
+  meshRenderer: {fileID: 0}
   weaponData: {fileID: 11400000, guid: c8a5090540c8e5c48a00a5e7ba8a4034, type: 2}
   weapon:
     weaponType: 0
