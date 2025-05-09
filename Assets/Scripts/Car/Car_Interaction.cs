@@ -1,10 +1,13 @@
 ﻿using UnityEngine;
+using UnityEngine.AI;
 
 public class Car_Interaction : Interactable
 {
     private Car_HealthController carHealthController;
     private Car_Controller carController;
     private Transform player;
+    private PathfindingIndicator pathIndicator; // Tham chiếu đến PathfindingIndicator
+    private NavMeshObstacle carObstacle; // Tham chiếu đến NavMeshObstacle của xe
 
     private float defaultPlayerScale;
 
@@ -16,6 +19,8 @@ public class Car_Interaction : Interactable
         carHealthController = GetComponent<Car_HealthController>();
         carController = GetComponent<Car_Controller>();
         player = GameManager.instance.player.transform;
+        pathIndicator = player.GetComponent<PathfindingIndicator>(); // Tìm PathfindingIndicator trên người chơi
+        carObstacle = GetComponent<NavMeshObstacle>(); // Lấy NavMeshObstacle của xe
     }
 
     public override void Interact()
@@ -55,8 +60,13 @@ public class Car_Interaction : Interactable
         player.transform.localPosition = Vector3.up / 2;
 
         CameraManager.instance.ChangeCameraTarget(transform, 12, 0.5f);
-    }
 
+        // Tắt NavMeshObstacle khi lên xe
+        if (carObstacle != null)
+        {
+            carObstacle.enabled = false;
+        }
+    }
 
     public void ExitCar()
     {
@@ -68,7 +78,6 @@ public class Car_Interaction : Interactable
 
         // Set the car controller to null
         GameManager.instance.currentCar = null;
-        Debug.Log($"Exiting car: {GameManager.instance.currentCar?.name}");
 
         // Set bool for player movement
         GameManager.instance.player.GetComponent<Player_Movement>().isInCar = false;
@@ -81,6 +90,12 @@ public class Car_Interaction : Interactable
         Player_AimController aim = GameManager.instance.player.aim;
 
         CameraManager.instance.ChangeCameraTarget(aim.GetAimCameraTarget(), 8.5f);
+
+        // Bật lại NavMeshObstacle khi xuống xe
+        if (carObstacle != null)
+        {
+            carObstacle.enabled = true;
+        }
     }
 
     // Check if the exit doors is blocked.
@@ -91,10 +106,10 @@ public class Car_Interaction : Interactable
             var trigger = exitPoint.GetComponent<Door_ExitPoint>();
 
             if (trigger != null && !trigger.isBlocked)
-                return exitPoint.position; 
-            
+                return exitPoint.position;
+
         }
         // If both exit doors are blocked, return the default one.
-        return transform.position + transform.up * 2; 
+        return transform.position + transform.up * 2;
     }
 }

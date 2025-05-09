@@ -1118,6 +1118,7 @@ GameObject:
   - component: {fileID: 22133713}
   - component: {fileID: 22133714}
   - component: {fileID: 22133715}
+  - component: {fileID: 22133716}
   m_Layer: 8
   m_Name: Player
   m_TagString: Player
@@ -1371,6 +1372,24 @@ MonoBehaviour:
   rightFoot: {fileID: 4051225595643410592}
   checkRadius: 0.043
   rayDistance: 0.0015
+--- !u!114 &22133716
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 22133699}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3401ecfcfa8462f44951ad4164aa1765, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 1686745712}
+  lineRenderer: {fileID: 0}
+  updateInterval: 0
+  heightOffset: 0.5
+  startColor: {r: 0, g: 0.8, b: 1, a: 0.5019608}
+  endColor: {r: 0, g: 0.5, b: 1, a: 0.5}
 --- !u!1 &24950093
 GameObject:
   m_ObjectHideFlags: 0
@@ -6075,7 +6094,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7535362600356519313, guid: 7b15baba06982824f8e2d4a51089f786, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -39.465584
+      value: -25.49
       objectReference: {fileID: 0}
     - target: {fileID: 7535362600356519313, guid: 7b15baba06982824f8e2d4a51089f786, type: 3}
       propertyPath: m_LocalPosition.y
@@ -6083,7 +6102,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7535362600356519313, guid: 7b15baba06982824f8e2d4a51089f786, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 75.83576
+      value: 55.98
       objectReference: {fileID: 0}
     - target: {fileID: 7535362600356519313, guid: 7b15baba06982824f8e2d4a51089f786, type: 3}
       propertyPath: m_LocalRotation.w
@@ -16682,6 +16701,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 93908080223506712, guid: e5f7a37fbccb59e4da5e55053ffecd31, type: 3}
+      propertyPath: m_CarveOnlyStationary
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6419167400474118289, guid: e5f7a37fbccb59e4da5e55053ffecd31, type: 3}
       propertyPath: m_Name
       value: Car_Jeep
@@ -17680,7 +17703,7 @@ MonoBehaviour:
   currentCar: {fileID: 0}
   playerMoney: 0
   friendlyFire: 1
-  quickStart: 0
+  quickStart: 1
 --- !u!4 &1056934589
 Transform:
   m_ObjectHideFlags: 0
@@ -25625,7 +25648,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1676112206
 MonoBehaviour:
   m_ObjectHideFlags: 0
