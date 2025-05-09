@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class Player_AimController : MonoBehaviour
 {
+    public static Player_AimController instance;
+
     private Player player;
     private PlayerControls controls;
     private CameraManager cameraManager;
@@ -26,10 +28,10 @@ public class Player_AimController : MonoBehaviour
     [SerializeField] private float cameraChangeRate = 5;
 
     [Header("Aim Offset")]
-    [SerializeField] private Transform aim;
-    [SerializeField] private bool isAimingPrecisly;
-    [SerializeField] private float offsetChangeRate = 6;
+    public bool isAimingPrecisly;
     private float offsetY;
+    [SerializeField] private Transform aim;
+    [SerializeField] private float offsetChangeRate = 6;
 
     [Header("Aim Layers")]
     [SerializeField] private LayerMask preciseAim;
@@ -50,6 +52,8 @@ public class Player_AimController : MonoBehaviour
 
     private void Start()
     {
+        instance = this;
+
         cameraManager = CameraManager.instance;
         player = GetComponent<Player>();
         AssignInputEvents();

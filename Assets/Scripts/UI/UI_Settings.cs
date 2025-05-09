@@ -18,8 +18,9 @@ public class UI_Settings : MonoBehaviour
     [SerializeField] private TextMeshProUGUI musicSliderText;
     [SerializeField] private string bgmParameter;
 
-    [Header("Friendly Fire Settings")]
+    [Header("Fire Settings")]
     [SerializeField] private Toggle friendlyFireToggle;
+    [SerializeField] private Toggle preciseAimToggle;
 
     public void SfxSliderValue(float value)
     {
@@ -44,6 +45,17 @@ public class UI_Settings : MonoBehaviour
         int friendlyFireValue = GameManager.instance.friendlyFire ? 1 : 0;
         PlayerPrefs.SetInt("FriendlyFire", friendlyFireValue);
         PlayerPrefs.Save(); // Đảm bảo lưu ngay lập tức
+    }
+
+    public void SetPreciseAimToggle()
+    {
+        bool isPreciseAim = Player_AimController.instance.isAimingPrecisly;
+        Player_AimController.instance.isAimingPrecisly = !isPreciseAim;
+
+        // Lưu ngay lập tức vào PlayerPrefs
+        int preciseAimValue = Player_AimController.instance.isAimingPrecisly ? 1 : 0;
+        PlayerPrefs.SetInt("PreciseAim", preciseAimValue);
+        PlayerPrefs.Save();
     }
 
 
