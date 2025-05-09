@@ -6,6 +6,8 @@ public class LevelGenerator : MonoBehaviour
 {
     public static LevelGenerator instance;
 
+    [SerializeField] private NavMeshSurface navMeshSurface;
+ 
     // Level parts  
     [SerializeField] private List<Transform> levelParts; // Tất cả các LevelPart
     [SerializeField] private Transform lastLevelPart; // Phần cuối của màn chơi
@@ -97,6 +99,8 @@ public class LevelGenerator : MonoBehaviour
     {
         generationOver = true;
         GenerateNextLevelPart();
+
+        navMeshSurface.BuildNavMesh();
 
         foreach (Enemy enemy in enemyList)
         {
