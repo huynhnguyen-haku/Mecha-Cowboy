@@ -8,11 +8,10 @@ public class Player_AimController : MonoBehaviour
     private CameraManager cameraManager;
 
     [Header("Aim Visual - Laser")]
-    public LineRenderer aimLaser; // Change here to be accessible from other scripts
+    public LineRenderer aimLaser;
     public GameObject aimTarget;
 
     [Header("Camera Controls")]
-
     [SerializeField] private Transform cameraTarget;
     [Range(0.5f, 1)]
     [SerializeField] private float minCameraDistance = 1.5f;
@@ -26,7 +25,6 @@ public class Player_AimController : MonoBehaviour
     [SerializeField] private float regularAimCameraDistance = 8;
     [SerializeField] private float cameraChangeRate = 5;
 
-    
     [Header("Aim Offset")]
     [SerializeField] private Transform aim;
     [SerializeField] private bool isAimingPrecisly;
@@ -36,10 +34,16 @@ public class Player_AimController : MonoBehaviour
     [Header("Aim Layers")]
     [SerializeField] private LayerMask preciseAim;
     [SerializeField] private LayerMask regularAim;
+    [SerializeField] private LayerMask enemyLayer;
 
     [Header("Aim Distance Constraints")]
-    [SerializeField] private float minAimDistance = 1.5f; // Khoảng cách tối thiểu giữa aimTarget và người chơi
+    [SerializeField] private float minAimDistance = 1.5f;
 
+    [Header("Lock-On Settings")]
+    [SerializeField] private float lockOnRadius = 2f;
+    [SerializeField] private float lockOnBreakDistance = 3f;
+    private Transform lockedEnemy;
+    private bool isLockedOn;
 
     private Vector2 mouseInput;
     private RaycastHit lastKnownMouseHit;
@@ -49,6 +53,12 @@ public class Player_AimController : MonoBehaviour
         cameraManager = CameraManager.instance;
         player = GetComponent<Player>();
         AssignInputEvents();
+
+        // Đảm bảo aimTarget ban đầu được tắt nếu không cần thiết
+        if (aimTarget != null)
+        {
+            aimTarget.SetActive(false);
+        }
     }
 
     private void Update()
@@ -83,7 +93,13 @@ public class Player_AimController : MonoBehaviour
 
     public void EnableLaserAim(bool enable) => aimLaser.enabled = enable;
 
-    public void EnableAimTarget(bool enable) => aimTarget.SetActive(enable);
+    public void EnableAimTarget(bool enable)
+    {
+        if (aimTarget != null)
+        {
+            aimTarget.SetActive(enable);
+        }
+    }
 
     public Transform GetAimCameraTarget()
     {
@@ -95,14 +111,16 @@ public class Player_AimController : MonoBehaviour
     {
         aim.transform.rotation = Quaternion.LookRotation(Camera.main.transform.forward);
 
-        aimLaser.enabled = player.weapon.WeaponReady(); // Enable laser only when weapon is ready
+        aimLaser.enabled = player.weapon.WeaponReady();
         if (aimLaser.enabled == false)
+        {
+            EnableAimTarget(false); // Tắt aimTarget nếu không có laser
             return;
+        }
 
         WeaponModel weaponModel = player.weaponVisuals.CurrentWeaponModel();
         weaponModel.transform.LookAt(aim);
         weaponModel.gunPoint.LookAt(aim);
-
 
         Transform gunPoint = player.weapon.GunPoint();
 
@@ -112,37 +130,97 @@ public class Player_AimController : MonoBehaviour
         Vector3 laserDirection = player.weapon.BullectDirection();
         Vector3 endPoint = gunPoint.position + laserDirection * gunDistance;
 
-        // Perform a raycast to detect obstacles
         if (Physics.Raycast(gunPoint.position, laserDirection, out RaycastHit hitInfo, gunDistance))
         {
             endPoint = hitInfo.point;
             laserTipLength = 0;
         }
 
-        // Update the laser positions
         aimLaser.SetPosition(0, gunPoint.position);
         aimLaser.SetPosition(1, endPoint);
         aimLaser.SetPosition(2, endPoint + laserDirection * laserTipLength);
+
+        // Đảm bảo aimTarget hiển thị khi laser đang bật
+        EnableAimTarget(true);
+        if (aimTarget != null)
+        {
+            aimTarget.transform.position = aim.position; // Đồng bộ vị trí với aim
+            aimTarget.transform.rotation = Quaternion.LookRotation(Camera.main.transform.forward); // Xoay sprite để đối diện camera
+        }
     }
 
     private void UpdateAimPosition()
     {
-        aim.position = GetMouseHitInfo().point;
+        if (isLockedOn && lockedEnemy != null)
+        {
+            aim.position = lockedEnemy.position;
+        }
+        else
+        {
+            aim.position = GetMouseHitInfo().point;
+        }
+
+        CheckLockOn();
 
         Vector3 newAimPosition = isAimingPrecisly ? aim.position : transform.position;
 
-        // Limit the distance between the aim target and the player
         Vector3 directionToAim = aim.position - transform.position;
         float distanceToAim = directionToAim.magnitude;
 
         if (distanceToAim < minAimDistance)
         {
-            // Set the aim position to be at the minimum distance
             directionToAim.Normalize();
             aim.position = transform.position + directionToAim * minAimDistance;
         }
 
+        if (isLockedOn)
+        {
+            aimTarget.GetComponent<SpriteRenderer>().color = Color.red; // Đổi màu khi lock-on
+        }
+        else
+        {
+            aimTarget.GetComponent<SpriteRenderer>().color = Color.white; // Màu mặc định
+        }
+
         aim.position = new Vector3(aim.position.x, newAimPosition.y + AdjustedOffsetY(), aim.position.z);
+    }
+
+    private void CheckLockOn()
+    {
+        if (isLockedOn && lockedEnemy != null)
+        {
+            Vector3 mousePos = GetMouseHitInfo().point;
+            float distanceToEnemy = Vector3.Distance(mousePos, lockedEnemy.position);
+
+            if (distanceToEnemy > lockOnBreakDistance)
+            {
+                isLockedOn = false;
+                lockedEnemy = null;
+            }
+            return;
+        }
+
+        Collider[] enemies = Physics.OverlapSphere(aim.position, lockOnRadius, enemyLayer);
+        if (enemies.Length > 0)
+        {
+            Transform closestEnemy = null;
+            float closestDistance = float.MaxValue;
+            foreach (var enemy in enemies)
+            {
+                float distance = Vector3.Distance(aim.position, enemy.transform.position);
+                if (distance < closestDistance)
+                {
+                    closestDistance = distance;
+                    closestEnemy = enemy.transform;
+                }
+            }
+
+            if (closestEnemy != null)
+            {
+                lockedEnemy = closestEnemy;
+                isLockedOn = true;
+            }
+        }
     }
 
     private float AdjustedOffsetY()
@@ -197,7 +275,6 @@ public class Player_AimController : MonoBehaviour
         cameraTarget.position = Vector3.Lerp(cameraTarget.position, DesieredCameraPosition(), Time.deltaTime * cameraSensetivity);
     }
 
-
     #endregion
 
     private void AssignInputEvents()
@@ -209,6 +286,5 @@ public class Player_AimController : MonoBehaviour
 
         controls.Character.TogglePreciseAim.performed += ctx => TogglePreciseAim(true);
         controls.Character.TogglePreciseAim.canceled += ctx => TogglePreciseAim(false);
-
     }
 }
