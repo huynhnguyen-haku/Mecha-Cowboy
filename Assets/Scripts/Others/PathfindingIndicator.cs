@@ -7,8 +7,7 @@ public class PathfindingIndicator : MonoBehaviour
     public LineRenderer lineRenderer; // Component LineRenderer để vẽ đường dẫn
     public float updateInterval = 0; // Khoảng thời gian cập nhật đường đi
     public float heightOffset = 0.5f; // Độ cao thêm vào để đường dẫn không chìm vào mặt đất
-    public Color startColor = new Color(0, 0.8f, 1f, 1f); // Màu đầu (xanh dương nhạt)
-    public Color endColor = new Color(0, 0.5f, 1f, 0.5f); // Màu cuối (xanh dương nhạt với alpha thấp)
+
 
     private NavMeshPath path; // Đường đi được tính toán
     private float timer; // Bộ đếm thời gian để cập nhật đường đi
@@ -25,8 +24,7 @@ public class PathfindingIndicator : MonoBehaviour
             lineRenderer = gameObject.AddComponent<LineRenderer>();
             lineRenderer.material = new Material(Shader.Find("Sprites/Default"));
         }
-        lineRenderer.startColor = startColor;
-        lineRenderer.endColor = endColor;
+
         lineRenderer.startWidth = 0.15f;
         lineRenderer.endWidth = 0.1f;
         lineRenderer.positionCount = 0;
