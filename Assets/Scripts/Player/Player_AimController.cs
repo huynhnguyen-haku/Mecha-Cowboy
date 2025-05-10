@@ -24,8 +24,8 @@ public class Player_AimController : MonoBehaviour
 
     [Header("Aim Settings")]
     [SerializeField] private Transform aim;
-    [SerializeField] private LayerMask preciseAim;
-    [SerializeField] private LayerMask enemyLayer;
+    //[SerializeField] private LayerMask preciseAim;
+    [SerializeField] private LayerMask lockOnLayer;
     [SerializeField] private float minAimDistance = 1.5f;
 
     [Header("Lock-On Settings")]
@@ -174,7 +174,7 @@ public class Player_AimController : MonoBehaviour
             return;
         }
 
-        Collider[] enemies = Physics.OverlapSphere(aim.position, lockOnRadius, enemyLayer);
+        Collider[] enemies = Physics.OverlapSphere(aim.position, lockOnRadius, lockOnLayer);
         if (enemies.Length > 0)
         {
             Transform closestEnemy = null;
@@ -199,7 +199,7 @@ public class Player_AimController : MonoBehaviour
     public RaycastHit GetMouseHitInfo()
     {
         Ray ray = Camera.main.ScreenPointToRay(mouseInput);
-        if (Physics.Raycast(ray, out RaycastHit hitInfo, Mathf.Infinity, preciseAim))
+        if (Physics.Raycast(ray, out RaycastHit hitInfo, Mathf.Infinity/*, preciseAim*/))
         {
             lastKnownMouseHit = hitInfo;
             return hitInfo;

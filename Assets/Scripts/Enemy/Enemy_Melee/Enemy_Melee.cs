@@ -237,5 +237,11 @@ public class Enemy_Melee : Enemy
             weaponType = Enemy_MeleeWeaponType.Unarmed;
         }
     }
+
+    // Updated method to change the layer of a single GameObject without affecting its children
+    private void SetLayer(GameObject obj, int newLayer)
+    {
+        obj.layer = newLayer;
+    }
     #endregion
 }

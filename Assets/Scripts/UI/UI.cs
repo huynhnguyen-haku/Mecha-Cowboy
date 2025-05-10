@@ -86,40 +86,6 @@ public class UI : MonoBehaviour
 
     public void StartLevelGeneration() => LevelGenerator.instance.InitializeGeneration();
 
-    //public void TogglePauseUI()
-    //{    
-    //    // Nếu Pause Menu đang hoạt động, cho phép tự toggle
-    //    if (pauseUI.activeSelf)
-    //    {
-    //        SwitchTo(inGameUI.gameObject);
-    //        ControlsManager.instance.SwitchToCharacterControls();
-    //        TimeManager.instance.ResumeTime();
-    //        return;
-    //    }
-
-    //    // Kiểm tra nếu UI_InGame không được bật, không cho phép mở Pause Menu
-    //    if (!inGameUI.gameObject.activeSelf)
-    //    {
-    //        Debug.Log("Pause Menu is only available when In-Game UI is active.");
-    //        return;
-    //    }
-
-    //    bool gamePaused = pauseUI.activeSelf;
-
-    //    if (gamePaused)
-    //    {
-    //        SwitchTo(inGameUI.gameObject);
-    //        ControlsManager.instance.SwitchToCharacterControls();
-    //        TimeManager.instance.ResumeTime();
-    //    }
-    //    else
-    //    {
-    //        SwitchTo(pauseUI);
-    //        ControlsManager.instance.SwitchToUIControls();
-    //        TimeManager.instance.PauseTime();
-    //    }
-    //}
-
     public void TogglePauseUI()
     {
         // Nếu Pause Menu đang hoạt động, đóng menu và khôi phục trạng thái điều khiển

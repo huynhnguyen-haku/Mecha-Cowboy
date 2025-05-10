@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 
@@ -111,6 +111,20 @@ public class Enemy_Range : Enemy
 
         if (stateMachine.currentState != deadState)
             stateMachine.ChangeState(deadState);
+
+        SetLayerRecursively(gameObject, LayerMask.NameToLayer("Default"));
+    }
+
+
+    // Hàm đệ quy để chuyển layer của GameObject và tất cả các con của nó
+    private void SetLayerRecursively(GameObject obj, int newLayer)
+    {
+        obj.layer = newLayer;
+
+        foreach (Transform child in obj.transform)
+        {
+            SetLayerRecursively(child.gameObject, newLayer);
+        }
     }
 
     #region Weapon Setup
