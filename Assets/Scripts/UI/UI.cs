@@ -96,10 +96,10 @@ public class UI : MonoBehaviour
             // Kiểm tra nếu người chơi đang ở trong xe
             if (GameManager.instance.player.movement.isInCar)
                 ControlsManager.instance.SwitchToCarControls(); // Khôi phục điều khiển xe
-            
+
             else
                 ControlsManager.instance.SwitchToCharacterControls(); // Khôi phục điều khiển nhân vật
-            
+
             TimeManager.instance.ResumeTime();
             return;
         }
@@ -116,6 +116,11 @@ public class UI : MonoBehaviour
         SwitchTo(pauseUI);
         ControlsManager.instance.SwitchToUIControls();
         TimeManager.instance.PauseTime();
+    }
+
+    public void ToggleMinimap(bool isActive)
+    {
+        inGameUI.ToggleMinimap(isActive);
     }
 
 
@@ -174,7 +179,7 @@ public class UI : MonoBehaviour
 
         while (timeElapsed < duration)
         {
-            timeElapsed += Time.deltaTime; 
+            timeElapsed += Time.deltaTime;
             float newAlpha = Mathf.Lerp(startAlpha, targetAlpha, timeElapsed / duration);
 
             fadeImage.color = new Color(currentColor.r, currentColor.g, currentColor.b, newAlpha);

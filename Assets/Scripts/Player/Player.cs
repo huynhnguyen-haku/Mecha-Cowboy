@@ -35,6 +35,11 @@ public class Player : MonoBehaviour
         controls.Enable();
         controls.Character.ToggleMissionUI.performed += ctx => UI.instance.inGameUI.ToggleMissionUI();
         controls.Character.TogglePauseUI.performed += ctx => UI.instance.TogglePauseUI();
+        controls.Character.ToggleMinimap.performed += ctx => 
+        {
+            bool isMinimapActive = UI.instance.inGameUI.minimap.activeSelf;
+            UI.instance.ToggleMinimap(!isMinimapActive); 
+        };
     }
 
     private void OnDisable()

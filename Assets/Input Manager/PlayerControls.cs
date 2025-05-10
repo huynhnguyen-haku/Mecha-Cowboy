@@ -234,6 +234,15 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Toggle Minimap"",
+                    ""type"": ""Button"",
+                    ""id"": ""27a80233-dfe2-4f85-822e-381a600398bf"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -456,6 +465,17 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""action"": ""Toggle Lock On"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""37c5bc01-fe49-4c52-a7a9-68636f6aeb52"",
+                    ""path"": ""<Keyboard>/m"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Toggle Minimap"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -499,6 +519,15 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Toggle Minimap"",
+                    ""type"": ""Button"",
+                    ""id"": ""5aec1e7b-ef47-4b12-96e9-52a7e56a86ef"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 },
                 {
                     ""name"": ""Toggle Pause UI"",
@@ -594,6 +623,17 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""action"": ""Movement"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""4e9bbeb0-9d2d-4637-a9d0-384bceed0b90"",
+                    ""path"": ""<Keyboard>/m"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Toggle Minimap"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 },
                 {
                     ""name"": """",
@@ -701,12 +741,14 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         m_Character_ToggleMissionUI = m_Character.FindAction("Toggle Mission UI", throwIfNotFound: true);
         m_Character_TogglePauseUI = m_Character.FindAction("Toggle Pause UI", throwIfNotFound: true);
         m_Character_ToggleLockOn = m_Character.FindAction("Toggle Lock On", throwIfNotFound: true);
+        m_Character_ToggleMinimap = m_Character.FindAction("Toggle Minimap", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_TogglePauseUI = m_UI.FindAction("Toggle Pause UI", throwIfNotFound: true);
         // Car
         m_Car = asset.FindActionMap("Car", throwIfNotFound: true);
         m_Car_Movement = m_Car.FindAction("Movement", throwIfNotFound: true);
+        m_Car_ToggleMinimap = m_Car.FindAction("Toggle Minimap", throwIfNotFound: true);
         m_Car_TogglePauseUI = m_Car.FindAction("Toggle Pause UI", throwIfNotFound: true);
         m_Car_EnterExit = m_Car.FindAction("Enter/Exit", throwIfNotFound: true);
         m_Car_Brake = m_Car.FindAction("Brake", throwIfNotFound: true);
@@ -808,6 +850,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     private readonly InputAction m_Character_ToggleMissionUI;
     private readonly InputAction m_Character_TogglePauseUI;
     private readonly InputAction m_Character_ToggleLockOn;
+    private readonly InputAction m_Character_ToggleMinimap;
     /// <summary>
     /// Provides access to input actions defined in input action map "Character".
     /// </summary>
@@ -884,6 +927,10 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         /// </summary>
         public InputAction @ToggleLockOn => m_Wrapper.m_Character_ToggleLockOn;
         /// <summary>
+        /// Provides access to the underlying input action "Character/ToggleMinimap".
+        /// </summary>
+        public InputAction @ToggleMinimap => m_Wrapper.m_Character_ToggleMinimap;
+        /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
         public InputActionMap Get() { return m_Wrapper.m_Character; }
@@ -957,6 +1004,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @ToggleLockOn.started += instance.OnToggleLockOn;
             @ToggleLockOn.performed += instance.OnToggleLockOn;
             @ToggleLockOn.canceled += instance.OnToggleLockOn;
+            @ToggleMinimap.started += instance.OnToggleMinimap;
+            @ToggleMinimap.performed += instance.OnToggleMinimap;
+            @ToggleMinimap.canceled += instance.OnToggleMinimap;
         }
 
         /// <summary>
@@ -1016,6 +1066,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @ToggleLockOn.started -= instance.OnToggleLockOn;
             @ToggleLockOn.performed -= instance.OnToggleLockOn;
             @ToggleLockOn.canceled -= instance.OnToggleLockOn;
+            @ToggleMinimap.started -= instance.OnToggleMinimap;
+            @ToggleMinimap.performed -= instance.OnToggleMinimap;
+            @ToggleMinimap.canceled -= instance.OnToggleMinimap;
         }
 
         /// <summary>
@@ -1150,6 +1203,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     private readonly InputActionMap m_Car;
     private List<ICarActions> m_CarActionsCallbackInterfaces = new List<ICarActions>();
     private readonly InputAction m_Car_Movement;
+    private readonly InputAction m_Car_ToggleMinimap;
     private readonly InputAction m_Car_TogglePauseUI;
     private readonly InputAction m_Car_EnterExit;
     private readonly InputAction m_Car_Brake;
@@ -1168,6 +1222,10 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "Car/Movement".
         /// </summary>
         public InputAction @Movement => m_Wrapper.m_Car_Movement;
+        /// <summary>
+        /// Provides access to the underlying input action "Car/ToggleMinimap".
+        /// </summary>
+        public InputAction @ToggleMinimap => m_Wrapper.m_Car_ToggleMinimap;
         /// <summary>
         /// Provides access to the underlying input action "Car/TogglePauseUI".
         /// </summary>
@@ -1209,6 +1267,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @Movement.started += instance.OnMovement;
             @Movement.performed += instance.OnMovement;
             @Movement.canceled += instance.OnMovement;
+            @ToggleMinimap.started += instance.OnToggleMinimap;
+            @ToggleMinimap.performed += instance.OnToggleMinimap;
+            @ToggleMinimap.canceled += instance.OnToggleMinimap;
             @TogglePauseUI.started += instance.OnTogglePauseUI;
             @TogglePauseUI.performed += instance.OnTogglePauseUI;
             @TogglePauseUI.canceled += instance.OnTogglePauseUI;
@@ -1232,6 +1293,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @Movement.started -= instance.OnMovement;
             @Movement.performed -= instance.OnMovement;
             @Movement.canceled -= instance.OnMovement;
+            @ToggleMinimap.started -= instance.OnToggleMinimap;
+            @ToggleMinimap.performed -= instance.OnToggleMinimap;
+            @ToggleMinimap.canceled -= instance.OnToggleMinimap;
             @TogglePauseUI.started -= instance.OnTogglePauseUI;
             @TogglePauseUI.performed -= instance.OnTogglePauseUI;
             @TogglePauseUI.canceled -= instance.OnTogglePauseUI;
@@ -1458,6 +1522,13 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnToggleLockOn(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "Toggle Minimap" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnToggleMinimap(InputAction.CallbackContext context);
     }
     /// <summary>
     /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "UI" which allows adding and removing callbacks.
@@ -1488,6 +1559,13 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnMovement(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "Toggle Minimap" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnToggleMinimap(InputAction.CallbackContext context);
         /// <summary>
         /// Method invoked when associated input action "Toggle Pause UI" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
         /// </summary>

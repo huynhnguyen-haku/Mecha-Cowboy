@@ -9,6 +9,9 @@ public class UI_InGame : MonoBehaviour
     [SerializeField] private GameObject characterUI;
     [SerializeField] private GameObject carUI;
 
+    [Header("Minimap")]
+    public GameObject minimap;
+
     [Header("Health Bar")]
     [SerializeField] private Image healthBar;
 
@@ -86,5 +89,13 @@ public class UI_InGame : MonoBehaviour
     public void UpdateSpeedText(string text)
     {
         carSpeedText.text = text;
+    }
+
+    public void ToggleMinimap(bool isActive)
+    {
+        if (minimap != null)
+        {
+            minimap.SetActive(isActive);
+        }
     }
 }
