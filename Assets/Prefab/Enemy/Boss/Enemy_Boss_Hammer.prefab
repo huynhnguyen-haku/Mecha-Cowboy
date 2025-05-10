@@ -163,7 +163,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5eb2592a6c70a804498383ffe2182591, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damageMultiplier: 1
+  damageMultiplier: 0.75
 --- !u!1 &289863422941531494
 GameObject:
   m_ObjectHideFlags: 0
@@ -919,16 +919,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   whatIsAlly:
     serializedVersion: 2
-    m_Bits: 2048
+    m_Bits: 264192
   whatIsPlayer:
     serializedVersion: 2
-    m_Bits: 256
+    m_Bits: 257
   enemyType: 2
   idleTime: 3
-  arrgresssionRange: 100
-  walkSpeed: 1.75
-  runSpeed: 5
-  turnSpeed: 5
+  arrgresssionRange: 12
+  walkSpeed: 2
+  runSpeed: 6
+  turnSpeed: 6
   patrolPoints:
   - {fileID: 3859447169215783214}
   - {fileID: 4903968267682712470}
@@ -1006,7 +1006,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c9dcaefae6c9584880f103e99fc6df4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 2000
+  maxHealth: 3500
   currentHealth: 0
   lowHealthEffect: {fileID: 0}
 --- !u!114 &5830852370048814125
@@ -11314,7 +11314,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5eb2592a6c70a804498383ffe2182591, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damageMultiplier: 1
+  damageMultiplier: 0.75
 --- !u!1 &2815281149001469270
 GameObject:
   m_ObjectHideFlags: 0
@@ -11524,7 +11524,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5eb2592a6c70a804498383ffe2182591, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damageMultiplier: 1
+  damageMultiplier: 0.75
 --- !u!1 &3111182244757966580
 GameObject:
   m_ObjectHideFlags: 0
@@ -16764,7 +16764,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5eb2592a6c70a804498383ffe2182591, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damageMultiplier: 1
+  damageMultiplier: 0.75
 --- !u!1 &3691986791567681009
 GameObject:
   m_ObjectHideFlags: 0
@@ -27076,7 +27076,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5eb2592a6c70a804498383ffe2182591, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damageMultiplier: 2
+  damageMultiplier: 1.5
 --- !u!1 &4867812878727936043
 GameObject:
   m_ObjectHideFlags: 0
@@ -27520,7 +27520,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5eb2592a6c70a804498383ffe2182591, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damageMultiplier: 1
+  damageMultiplier: 0.75
 --- !u!1 &5618886998603043744
 GameObject:
   m_ObjectHideFlags: 0
@@ -48262,7 +48262,7 @@ GameObject:
   - component: {fileID: 2419181988304850763}
   - component: {fileID: 6526609779216855430}
   - component: {fileID: 8151589259019460357}
-  m_Layer: 11
+  m_Layer: 18
   m_Name: mixamorig:Spine
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -48391,7 +48391,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5eb2592a6c70a804498383ffe2182591, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damageMultiplier: 1
+  damageMultiplier: 0.75
 --- !u!1 &9013871301883281353
 GameObject:
   m_ObjectHideFlags: 0

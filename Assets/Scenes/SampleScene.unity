@@ -4134,7 +4134,7 @@ GameObject:
   - component: {fileID: 226461700}
   - component: {fileID: 226461703}
   m_Layer: 5
-  m_Name: 'Button - Select Weapon: Reberca'
+  m_Name: 'Button - Select Weapon: Doomhowl'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4502,7 +4502,7 @@ GameObject:
   - component: {fileID: 248112692}
   - component: {fileID: 248112695}
   m_Layer: 5
-  m_Name: 'Button - Select Weapon: Cowboy Bolt'
+  m_Name: 'Button - Select Weapon: Titan''s Wrath'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7072,43 +7072,43 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 121449944833223789, guid: 6f403c3694f7b4048a7ccf421b6648b0, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 46.354874
+      value: 46.34
       objectReference: {fileID: 0}
     - target: {fileID: 121449944833223789, guid: 6f403c3694f7b4048a7ccf421b6648b0, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -9.8099985
+      value: -9.68
       objectReference: {fileID: 0}
     - target: {fileID: 121449944833223789, guid: 6f403c3694f7b4048a7ccf421b6648b0, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -19.041471
+      value: -19.06
       objectReference: {fileID: 0}
     - target: {fileID: 121449944833223789, guid: 6f403c3694f7b4048a7ccf421b6648b0, type: 3}
       propertyPath: m_LocalRotation.w
-      value: -0.03837144
+      value: -0.03906799
       objectReference: {fileID: 0}
     - target: {fileID: 121449944833223789, guid: 6f403c3694f7b4048a7ccf421b6648b0, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0.020703739
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 121449944833223789, guid: 6f403c3694f7b4048a7ccf421b6648b0, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.99886703
+      value: 0.9992366
       objectReference: {fileID: 0}
     - target: {fileID: 121449944833223789, guid: 6f403c3694f7b4048a7ccf421b6648b0, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.019068303
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 121449944833223789, guid: 6f403c3694f7b4048a7ccf421b6648b0, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
-      value: 2.274
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 121449944833223789, guid: 6f403c3694f7b4048a7ccf421b6648b0, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 94.354
+      value: 184.478
       objectReference: {fileID: 0}
     - target: {fileID: 121449944833223789, guid: 6f403c3694f7b4048a7ccf421b6648b0, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: -2.288
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4223340647661345617, guid: 6f403c3694f7b4048a7ccf421b6648b0, type: 3}
       propertyPath: m_Name
@@ -7612,6 +7612,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 463316504}
   m_CullTransparentMesh: 1
+--- !u!23 &468648893 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 4384615379016230138, guid: a22f786ec1671af4e9308170949bf0b0, type: 3}
+  m_PrefabInstance: {fileID: 1753219915}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &471174386
 GameObject:
   m_ObjectHideFlags: 0
@@ -10013,7 +10018,7 @@ GameObject:
   - component: {fileID: 701565357}
   - component: {fileID: 701565360}
   m_Layer: 5
-  m_Name: 'Button - Select Weapon: Alaska 47'
+  m_Name: 'Button - Select Weapon: Stormpiercer'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -23207,7 +23212,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 938902852548956250, guid: a22f786ec1671af4e9308170949bf0b0, type: 3}
       propertyPath: m_Name
-      value: Pickup_Weapon - Hindenburg
+      value: Pickup_Weapon - Eclipse Lance
       objectReference: {fileID: 0}
     - target: {fileID: 2587703764330010846, guid: a22f786ec1671af4e9308170949bf0b0, type: 3}
       propertyPath: m_LocalPosition.x
@@ -23249,6 +23254,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7915705745774349090, guid: a22f786ec1671af4e9308170949bf0b0, type: 3}
+      propertyPath: meshRenderer
+      value: 
+      objectReference: {fileID: 468648893}
+    - target: {fileID: 7915705745774349090, guid: a22f786ec1671af4e9308170949bf0b0, type: 3}
+      propertyPath: defaultMaterial
+      value: 
+      objectReference: {fileID: 3758952881610933197, guid: c929b05bbdf9b584898b68656cba1b53, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -23992,7 +24005,7 @@ GameObject:
   - component: {fileID: 1804032008}
   - component: {fileID: 1804032011}
   m_Layer: 5
-  m_Name: 'Button - Select Weapon: Hindenburg'
+  m_Name: 'Button - Select Weapon: Eclipse Lance'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -24632,7 +24645,7 @@ GameObject:
   - component: {fileID: 1853680576}
   - component: {fileID: 1853680579}
   m_Layer: 5
-  m_Name: 'Button - Select Weapon: Glock 2077'
+  m_Name: 'Button - Select Weapon: Shadowfang'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 58354826785886d4fb98529b1feff3e1, type: 3}
   m_Name: Sniper_Data
   m_EditorClassIdentifier: 
-  weaponName: Hindenburg
+  weaponName: Eclipse Lance
   weaponType: 4
   bulletDamage: 180
   shotType: 0
@@ -34,5 +34,5 @@ MonoBehaviour:
   burst_FireDelay: 0.1
   weaponIcon: {fileID: 1437709514, guid: 3477fe9a26e0faa42b5a9b5b258229c1, type: 3}
   weaponInfo: Death...
-  isUnlocked: 0
+  isUnlocked: 1
   price: 600
