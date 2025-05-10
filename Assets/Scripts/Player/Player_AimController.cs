@@ -31,8 +31,8 @@ public class Player_AimController : MonoBehaviour
     [Header("Lock-On Settings")]
     [SerializeField] private float lockOnRadius = 2f;
     [SerializeField] private float lockOnBreakDistance = 3f;
-    private Transform lockedEnemy;
-    private bool isLockedOn;
+    public Transform lockedEnemy;
+    public bool isLockedOn;
 
     private Vector2 mouseInput;
     private RaycastHit lastKnownMouseHit;
@@ -63,6 +63,11 @@ public class Player_AimController : MonoBehaviour
         UpdateAimVisual();
         UpdateAimPosition();
         UpdateCameraPosition();
+
+        if (isLockedOn && lockedEnemy != null)
+        {
+            RotatePlayerTowardsLockedTarget();
+        }
     }
 
     public Transform Aim() => aim;
@@ -139,7 +144,15 @@ public class Player_AimController : MonoBehaviour
             aimTarget.transform.position = aim.position; // Đồng bộ vị trí với aim
             aimTarget.transform.rotation = Quaternion.LookRotation(Camera.main.transform.forward); // Xoay sprite để đối diện camera
         }
+
+        // Nếu đang lock-on, đảm bảo nòng súng hướng về mục tiêu lock-on
+        if (isLockedOn && lockedEnemy != null)
+        {
+            weaponModel.transform.LookAt(lockedEnemy.position);
+            weaponModel.gunPoint.LookAt(lockedEnemy.position);
+        }
     }
+
 
     private void UpdateAimPosition()
     {
@@ -195,6 +208,30 @@ public class Player_AimController : MonoBehaviour
             }
         }
     }
+
+    private void RotatePlayerTowardsLockedTarget()
+    {
+        if (lockedEnemy == null || player == null)
+            return;
+
+        // Lấy hướng từ người chơi đến mục tiêu lock-on
+        Vector3 directionToTarget = lockedEnemy.position - player.transform.position;
+        directionToTarget.y = 0; // Loại bỏ trục Y để chỉ xoay trên mặt phẳng XZ
+
+        if (directionToTarget.sqrMagnitude > 0.01f) // Kiểm tra nếu có hướng hợp lệ
+        {
+            // Tính toán góc quay
+            Quaternion targetRotation = Quaternion.LookRotation(directionToTarget);
+
+            // Xoay người chơi dần dần về phía mục tiêu
+            player.transform.rotation = Quaternion.Slerp(
+                player.transform.rotation,
+                targetRotation,
+                Time.deltaTime * 10f // Tốc độ xoay (có thể điều chỉnh)
+            );
+        }
+    }
+
 
     public RaycastHit GetMouseHitInfo()
     {

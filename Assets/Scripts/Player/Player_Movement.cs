@@ -95,6 +95,10 @@ public class Player_Movement : MonoBehaviour
 
     private void ApplyRotation()
     {
+        // Bỏ qua xoay nếu đang lock-on
+        if (player.aim.isLockedOn && player.aim.lockedEnemy != null)
+            return;
+
         Vector3 aimDirection = player.aim.GetMouseHitInfo().point - transform.position;
         aimDirection.y = 0;
         aimDirection.Normalize();
@@ -103,6 +107,7 @@ public class Player_Movement : MonoBehaviour
         // Smoothly rotate towards the target point.
         transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, turnSpeed * Time.deltaTime);
     }
+
 
     private void ApplyMovement()
     {
