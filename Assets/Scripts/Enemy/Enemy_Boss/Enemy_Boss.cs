@@ -96,17 +96,24 @@ public class Enemy_Boss : Enemy
     protected override void OnDrawGizmos()
     {
         base.OnDrawGizmos();
+
+        // Black is melee attack range to activate
+        Gizmos.color = Color.black;
         Gizmos.DrawWireSphere(transform.position, attackRange);
 
+        // White is jump attack min range to activate
         Gizmos.color = Color.white;
         Gizmos.DrawWireSphere(transform.position, minJumpDistanceRequired);
 
+        // Green is impact attack damage radius
         Gizmos.color = Color.green;
         Gizmos.DrawWireSphere(transform.position, impactRadius);
 
+        // Blue is for the skill of the boss
         Gizmos.color = Color.blue;
         Gizmos.DrawWireSphere(transform.position, minAbilityDistance);
 
+        // Yellow is for the attack hit check (if player stay inside, then it receives damage)
         Gizmos.color = Color.yellow;
         if (damagePoints.Length > 0)
         {
@@ -115,6 +122,7 @@ public class Enemy_Boss : Enemy
                 Gizmos.DrawWireSphere(damagePoint.position, attackCheckRadius);
             }
 
+            // Red is for the hammer attack only
             Gizmos.color = Color.cyan;
             Gizmos.DrawWireSphere(damagePoints[0].position, hammerCheckRadius);
         }

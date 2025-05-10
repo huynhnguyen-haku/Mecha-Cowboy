@@ -10447,7 +10447,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5eb2592a6c70a804498383ffe2182591, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damageMultiplier: 2
+  damageMultiplier: 1.5
 --- !u!1 &1158795575106356638
 GameObject:
   m_ObjectHideFlags: 0
@@ -10593,7 +10593,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5eb2592a6c70a804498383ffe2182591, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damageMultiplier: 1
+  damageMultiplier: 0.75
 --- !u!1 &1233181795288952321
 GameObject:
   m_ObjectHideFlags: 0
@@ -10850,7 +10850,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c9dcaefae6c9584880f103e99fc6df4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 2000
+  maxHealth: 4000
   currentHealth: 0
   lowHealthEffect: {fileID: 0}
 --- !u!114 &941173549283430709
@@ -16348,7 +16348,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5eb2592a6c70a804498383ffe2182591, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damageMultiplier: 1
+  damageMultiplier: 0.75
 --- !u!1 &2294321408014117806
 GameObject:
   m_ObjectHideFlags: 0
@@ -21332,7 +21332,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5eb2592a6c70a804498383ffe2182591, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damageMultiplier: 1
+  damageMultiplier: 0.75
 --- !u!1 &2534789639807484988
 GameObject:
   m_ObjectHideFlags: 0
@@ -32127,7 +32127,7 @@ GameObject:
   - component: {fileID: 3460669467723921982}
   - component: {fileID: 1205424831269001695}
   - component: {fileID: 5881117477732750760}
-  m_Layer: 11
+  m_Layer: 18
   m_Name: mixamorig:Spine
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -32256,7 +32256,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5eb2592a6c70a804498383ffe2182591, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damageMultiplier: 1
+  damageMultiplier: 0.75
 --- !u!1 &4670235610801425149
 GameObject:
   m_ObjectHideFlags: 0
@@ -32546,7 +32546,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5eb2592a6c70a804498383ffe2182591, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damageMultiplier: 1
+  damageMultiplier: 0.75
 --- !u!1 &6047725742725120465
 GameObject:
   m_ObjectHideFlags: 0
@@ -33027,7 +33027,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5eb2592a6c70a804498383ffe2182591, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damageMultiplier: 1
+  damageMultiplier: 0.75
 --- !u!1 &6536755860077420755
 GameObject:
   m_ObjectHideFlags: 0
