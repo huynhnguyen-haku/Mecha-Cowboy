@@ -1377,6 +1377,63 @@ MonoBehaviour:
   lineRenderer: {fileID: 1745905609}
   updateInterval: 0
   heightOffset: 2
+--- !u!1001 &24447063
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 3935729415682489807, guid: 960d338485c890c47ad6d910e0d92194, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -65.65626
+      objectReference: {fileID: 0}
+    - target: {fileID: 3935729415682489807, guid: 960d338485c890c47ad6d910e0d92194, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.29999828
+      objectReference: {fileID: 0}
+    - target: {fileID: 3935729415682489807, guid: 960d338485c890c47ad6d910e0d92194, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 77.241806
+      objectReference: {fileID: 0}
+    - target: {fileID: 3935729415682489807, guid: 960d338485c890c47ad6d910e0d92194, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3935729415682489807, guid: 960d338485c890c47ad6d910e0d92194, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3935729415682489807, guid: 960d338485c890c47ad6d910e0d92194, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3935729415682489807, guid: 960d338485c890c47ad6d910e0d92194, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3935729415682489807, guid: 960d338485c890c47ad6d910e0d92194, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3935729415682489807, guid: 960d338485c890c47ad6d910e0d92194, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3935729415682489807, guid: 960d338485c890c47ad6d910e0d92194, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6710769619524479166, guid: 960d338485c890c47ad6d910e0d92194, type: 3}
+      propertyPath: m_Name
+      value: Enemy_Melee - Boxing Variant
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 960d338485c890c47ad6d910e0d92194, type: 3}
 --- !u!1 &24950093
 GameObject:
   m_ObjectHideFlags: 0
@@ -14221,6 +14278,63 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!1001 &981547754
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4359757366572207339, guid: 9407b6350ccf19a4caff38c4cee59cae, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -58.26
+      objectReference: {fileID: 0}
+    - target: {fileID: 4359757366572207339, guid: 9407b6350ccf19a4caff38c4cee59cae, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.29999828
+      objectReference: {fileID: 0}
+    - target: {fileID: 4359757366572207339, guid: 9407b6350ccf19a4caff38c4cee59cae, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 74.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4359757366572207339, guid: 9407b6350ccf19a4caff38c4cee59cae, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7670674
+      objectReference: {fileID: 0}
+    - target: {fileID: 4359757366572207339, guid: 9407b6350ccf19a4caff38c4cee59cae, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4359757366572207339, guid: 9407b6350ccf19a4caff38c4cee59cae, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.6415665
+      objectReference: {fileID: 0}
+    - target: {fileID: 4359757366572207339, guid: 9407b6350ccf19a4caff38c4cee59cae, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4359757366572207339, guid: 9407b6350ccf19a4caff38c4cee59cae, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4359757366572207339, guid: 9407b6350ccf19a4caff38c4cee59cae, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -79.817
+      objectReference: {fileID: 0}
+    - target: {fileID: 4359757366572207339, guid: 9407b6350ccf19a4caff38c4cee59cae, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6286757198968117658, guid: 9407b6350ccf19a4caff38c4cee59cae, type: 3}
+      propertyPath: m_Name
+      value: Enemy_Melee - Fast Axe Thrower Variant
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 9407b6350ccf19a4caff38c4cee59cae, type: 3}
 --- !u!1 &992930968
 GameObject:
   m_ObjectHideFlags: 0
@@ -50058,3 +50172,5 @@ SceneRoots:
   - {fileID: 1916118374}
   - {fileID: 1753219915}
   - {fileID: 1496641346}
+  - {fileID: 24447063}
+  - {fileID: 981547754}

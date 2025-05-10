@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -68,7 +68,6 @@ public class Enemy : MonoBehaviour
         audioManager = AudioManager.instance;
     }
 
-
     protected virtual void Update()
     {
         if (ShouldEnterBattleMode())
@@ -77,16 +76,12 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    protected virtual void InitializePerk()
-    {
-
-    }
+    protected virtual void InitializePerk() { }
 
     public virtual void MakeEnemyStronger()
     {
         int addtionalHealth = Mathf.RoundToInt(health.currentHealth * 1.5f);
         health.currentHealth += addtionalHealth;
-
         transform.localScale = transform.localScale * 1.5f;
     }
 
@@ -99,25 +94,20 @@ public class Enemy : MonoBehaviour
         }
         return false;
     }
+
     public virtual void EnterBattleMode()
     {
         inBattleMode = true;
     }
 
-
     public virtual void GetHit(int damage)
     {
         EnterBattleMode();
-
         health.ReduceHealth(damage);
 
         if (health.EnemyShouldDie())
-        {
             Die();
-        }
-
     }
-
 
     public virtual void MeleeAttackCheck(Transform[] damagePoints, float attackCheckRadius, GameObject FX, int damage)
     {
@@ -129,11 +119,9 @@ public class Enemy : MonoBehaviour
             Collider[] detectedHits =
                 Physics.OverlapSphere(damagePoint.position, attackCheckRadius, whatIsPlayer);
 
-
-                for (int i = 0; i < detectedHits.Length; i++)
+            for (int i = 0; i < detectedHits.Length; i++)
             {
                 I_Damagable damagable = detectedHits[i].GetComponent<I_Damagable>();
-
                 if (damagable != null)
                 {
                     damagable.TakeDamage(damage);
@@ -167,10 +155,8 @@ public class Enemy : MonoBehaviour
 
     public virtual void BulletImpact(Vector3 force, Vector3 hitpoint, Rigidbody rb)
     {
-        if(health.EnemyShouldDie())
-        {
+        if (health.EnemyShouldDie())
             StartCoroutine(DeathImpactCourotine(force, hitpoint, rb));
-        }
     }
 
     private IEnumerator DeathImpactCourotine(Vector3 force, Vector3 hitpoint, Rigidbody rb)
@@ -195,7 +181,6 @@ public class Enemy : MonoBehaviour
         }
 
         float yRotation = Mathf.LerpAngle(currentEulerAngels.y, targetRotation.eulerAngles.y, turnSpeed * Time.deltaTime);
-
         transform.rotation = Quaternion.Euler(currentEulerAngels.x, yRotation, currentEulerAngels.z);
     }
 
@@ -215,9 +200,7 @@ public class Enemy : MonoBehaviour
         currentPatrolIndex++;
 
         if (currentPatrolIndex >= patrolPoints.Length)
-        {
             currentPatrolIndex = 0;
-        }
 
         return destination;
     }

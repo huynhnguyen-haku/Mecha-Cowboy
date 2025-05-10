@@ -115,6 +115,7 @@ public class Enemy_Melee : Enemy
         Gizmos.color = Color.blue;
         Gizmos.DrawWireSphere(transform.position, attackData.attackRange);
     }
+
     #endregion
 
     #region State Methods
@@ -143,11 +144,9 @@ public class Enemy_Melee : Enemy
         if (stateMachine.currentState != deadState)
             stateMachine.ChangeState(deadState);
 
-        // Chuyển layer của tất cả các GameObject (bao gồm cả con) sang Default
         SetLayerRecursively(gameObject, LayerMask.NameToLayer("Default"));
     }
 
-    // Hàm đệ quy để chuyển layer của GameObject và tất cả các con của nó
     private void SetLayerRecursively(GameObject obj, int newLayer)
     {
         obj.layer = newLayer;
