@@ -6,6 +6,9 @@ public class AdvancePlayerState_Range : EnemyState
     private Enemy_Range enemy;
     private Vector3 playerPosition;
 
+    private float footstepTimer;
+    private float footstepInterval;
+
     public float lastTimeAdvanced { get; private set; }
 
 
@@ -28,6 +31,10 @@ public class AdvancePlayerState_Range : EnemyState
             enemy.visual.EnableIK(true, false);
             stateTimer = enemy.advanceDuration;
         }
+
+        footstepInterval = CalculateFootstepInterval(enemy.agent.speed);
+        footstepTimer = 0f;
+        PlayFootstepSFX();
     }
 
     public override void Update()
@@ -44,6 +51,7 @@ public class AdvancePlayerState_Range : EnemyState
         {
             stateMachine.ChangeState(enemy.battleState);
         }
+        HandleFootstepSFX();
     }
 
     public override void Exit()
@@ -65,5 +73,28 @@ public class AdvancePlayerState_Range : EnemyState
             return closeEnoughToPlayer;
         }
 
+    }
+
+
+    // Footstep sfx
+    private void HandleFootstepSFX()
+    {
+        footstepTimer += Time.deltaTime;
+
+        if (footstepTimer >= footstepInterval)
+        {
+            footstepTimer = 0f;
+            PlayFootstepSFX();
+        }
+    }
+
+    private void PlayFootstepSFX()
+    {
+        enemy.rangeSFX.runSFX.PlayOneShot(enemy.rangeSFX.runSFX.clip);
+    }
+
+    private float CalculateFootstepInterval(float speed)
+    {
+        return Mathf.Clamp(1f / speed, 0.3f, 0.5f);
     }
 }

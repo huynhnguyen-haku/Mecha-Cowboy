@@ -5,6 +5,9 @@ public class RunToCoverState_Range : EnemyState
     private Enemy_Range enemy;
     private Vector3 destination;
 
+    private float footstepTimer;
+    private float footstepInterval;
+
     public float lastTimeTookCover { get; private set; }
 
     public RunToCoverState_Range(Enemy enemyBase, EnemyStateMachine stateMachine, string animBoolName) : base(enemyBase, stateMachine, animBoolName)
@@ -22,6 +25,10 @@ public class RunToCoverState_Range : EnemyState
         enemy.agent.isStopped = false;
         enemy.agent.speed = enemy.runSpeed;
         enemy.agent.SetDestination(destination);
+
+        footstepInterval = CalculateFootstepInterval(enemy.agent.speed);
+        footstepTimer = 0f;
+        PlayFootstepSFX();
     }
 
     public override void Exit()
@@ -40,5 +47,29 @@ public class RunToCoverState_Range : EnemyState
             Debug.Log("Reached cover");
             stateMachine.ChangeState(enemy.battleState);
         }
+        HandleFootstepSFX();
+    }
+
+
+    // Footstep sfx
+    private void HandleFootstepSFX()
+    {
+        footstepTimer += Time.deltaTime;
+
+        if (footstepTimer >= footstepInterval)
+        {
+            footstepTimer = 0f;
+            PlayFootstepSFX();
+        }
+    }
+
+    private void PlayFootstepSFX()
+    {
+        enemy.rangeSFX.runSFX.PlayOneShot(enemy.rangeSFX.runSFX.clip);
+    }
+
+    private float CalculateFootstepInterval(float speed)
+    {
+        return Mathf.Clamp(1f / speed, 0.3f, 0.5f);
     }
 }
