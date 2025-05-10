@@ -13,6 +13,7 @@ public class PathfindingIndicator : MonoBehaviour
     private NavMeshPath path; // Đường đi được tính toán
     private float timer; // Bộ đếm thời gian để cập nhật đường đi
 
+
     void Start()
     {
         // Khởi tạo NavMeshPath
