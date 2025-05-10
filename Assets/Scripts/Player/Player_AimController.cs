@@ -30,7 +30,6 @@ public class Player_AimController : MonoBehaviour
 
     [Header("Lock-On Settings")]
     [SerializeField] private float lockOnRadius = 2f;
-    [SerializeField] private float lockOnBreakDistance = 3f;
     public Transform lockedEnemy;
     public bool isLockedOn;
 

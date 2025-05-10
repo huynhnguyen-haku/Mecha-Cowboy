@@ -1,10 +1,12 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 public class ChaseState_Melee : EnemyState
 {
     private Enemy_Melee enemy;
+    private float lastTimeUpdateDestination;
 
-    private float lstTimeUpdateDestination;
+    private float footstepTimer; // Bộ đếm thời gian cho footstep
+    private float footstepInterval; // Khoảng thời gian giữa các bước chân
 
     public ChaseState_Melee(Enemy enemyBase, EnemyStateMachine stateMachine, string animBoolName) : base(enemyBase, stateMachine, animBoolName)
     {
@@ -16,6 +18,10 @@ public class ChaseState_Melee : EnemyState
         base.Enter();
         enemy.agent.speed = enemy.runSpeed;
         enemy.agent.isStopped = false;
+
+        footstepInterval = CalculateFootstepInterval(enemy.agent.speed); // Calculate the time between footsteps
+        footstepTimer = 0f; // Reset the timer
+        PlayFootstepSFX();
     }
 
     public override void Exit()
@@ -28,29 +34,48 @@ public class ChaseState_Melee : EnemyState
         base.Update();
 
         if (enemy.PlayerInAttackRange())
-        {
             stateMachine.ChangeState(enemy.attackState);
-        }
 
         enemy.FaceTarget(enemy.agent.steeringTarget);
 
         if (CanUpdateDestination())
-        {
             enemy.agent.SetDestination(enemy.player.transform.position);
+
+        HandleFootstepSFX();
+    }
+
+    private void HandleFootstepSFX()
+    {
+        footstepTimer += Time.deltaTime;
+
+        if (footstepTimer >= footstepInterval)
+        {
+            footstepTimer = 0f;
+            PlayFootstepSFX();
         }
     }
 
     private bool CanUpdateDestination()
     {
-        if (Time.time > lstTimeUpdateDestination + 0.25f)
+        if (Time.time > lastTimeUpdateDestination + 0.25f)
         {
-            lstTimeUpdateDestination = Time.time;
+            lastTimeUpdateDestination = Time.time;
             return true;
         }
         else
         {
             return false;
         }
+    }
+
+    private void PlayFootstepSFX()
+    {
+        enemy.meleeSFX.walkSFX.PlayOneShot(enemy.meleeSFX.runSFX.clip);
+    }
+
+    private float CalculateFootstepInterval(float speed)
+    {
+        return Mathf.Clamp(1f / speed, 0.3f, 0.5f);
     }
 }
 

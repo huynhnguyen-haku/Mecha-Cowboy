@@ -1,9 +1,12 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 public class MoveState_Melee : EnemyState
 {
     private Enemy_Melee enemy;
     private Vector3 destination;
+
+    private float footstepTimer;
+    private float footstepInterval; 
 
     public MoveState_Melee(Enemy enemyBase, EnemyStateMachine stateMachine, string animBoolName) : base(enemyBase, stateMachine, animBoolName)
     {
@@ -18,6 +21,10 @@ public class MoveState_Melee : EnemyState
         destination = enemy.GetPatrolDestination();
         enemy.agent.SetDestination(destination);
 
+        footstepInterval = CalculateFootstepInterval(enemy.agent.speed); 
+        footstepTimer = 0f;
+
+        PlayFootstepSFX();
     }
 
     public override void Update()
@@ -29,6 +36,29 @@ public class MoveState_Melee : EnemyState
         if (enemy.agent.remainingDistance <= enemy.agent.stoppingDistance + 0.05f)
         {
             stateMachine.ChangeState(enemy.idleState);
+            return;
         }
+        HandleFootstepSFX();
+    }
+
+    private void HandleFootstepSFX()
+    {
+        footstepTimer += Time.deltaTime;
+
+        if (footstepTimer >= footstepInterval)
+        {
+            footstepTimer = 0f;
+            PlayFootstepSFX();
+        }
+    }
+
+    private void PlayFootstepSFX()
+    {
+        enemy.meleeSFX.walkSFX.PlayOneShot(enemy.meleeSFX.walkSFX.clip);
+    }
+
+    private float CalculateFootstepInterval(float speed)
+    {
+        return Mathf.Clamp(1f / speed, 0.3f, 0.5f);
     }
 }
