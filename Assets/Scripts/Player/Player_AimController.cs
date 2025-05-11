@@ -26,7 +26,6 @@ public class Player_AimController : MonoBehaviour
     [SerializeField] private Transform aim;
     //[SerializeField] private LayerMask preciseAim;
     [SerializeField] private LayerMask lockOnLayer;
-    [SerializeField] private float minAimDistance = 1.5f;
 
     [Header("Lock-On Settings")]
     [SerializeField] private float lockOnRadius = 2f;
@@ -167,16 +166,8 @@ public class Player_AimController : MonoBehaviour
             aim.position = GetMouseHitInfo().point;
             aimTarget.GetComponent<SpriteRenderer>().color = Color.white; // Màu mặc định
         }
-
-        Vector3 directionToAim = aim.position - transform.position;
-        float distanceToAim = directionToAim.magnitude;
-
-        if (distanceToAim < minAimDistance)
-        {
-            directionToAim.Normalize();
-            aim.position = transform.position + directionToAim * minAimDistance;
-        }
     }
+
 
     private void CheckLockOn()
     {

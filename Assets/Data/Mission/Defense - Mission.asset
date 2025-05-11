@@ -19,8 +19,8 @@ MonoBehaviour:
     is complete.
   reward: 150
   missionPreview: {fileID: -1254829206, guid: f5242cd4daa99d44fa81f5b0c3aba104, type: 3}
-  isDefenceStarted: 0
-  isMissionCompleted: 1
+  isDefenceStarted: 1
+  isMissionCompleted: 0
   defenseDuration: 60
   timeBetweenWaves: 10
   numberOfRespawnPoints: 4
@@ -37,4 +37,4 @@ MonoBehaviour:
   - {fileID: 7927049067197686440, guid: 1c7ed68b6f2f7e14fab29213667d34ae, type: 3}
   - {fileID: 1162088541114011887, guid: 2f9faf8c92c3511429c7e3ec5c7f3cc6, type: 3}
   - {fileID: 5478877348500432786, guid: 5fe01cf504556fa46924c625bf47d817, type: 3}
-  - {fileID: 1216166525110586174, guid: 093a941a7c31db64e9ac47f66ef09c0d, type: 3}
+  - {fileID: 8483969353424229694, guid: fef72c593063d4f4c820645546a32c30, type: 3}

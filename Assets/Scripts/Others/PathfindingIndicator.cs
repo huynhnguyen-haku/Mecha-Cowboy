@@ -25,8 +25,7 @@ public class PathfindingIndicator : MonoBehaviour
             lineRenderer.material = new Material(Shader.Find("Sprites/Default"));
         }
 
-        lineRenderer.startWidth = 0.15f;
-        lineRenderer.endWidth = 0.1f;
+
         lineRenderer.positionCount = 0;
         lineRenderer.textureMode = LineTextureMode.Tile; // Đảm bảo texture lặp lại mượt mà
         lineRenderer.numCapVertices = 5; // Làm mượt hai đầu đường dẫn
