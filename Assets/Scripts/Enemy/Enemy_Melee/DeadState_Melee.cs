@@ -1,6 +1,4 @@
-using UnityEngine;
-
-public class DeadState_Melee : EnemyState
+﻿public class DeadState_Melee : EnemyState
 {
     private Enemy_Melee enemy;
 
@@ -15,6 +13,13 @@ public class DeadState_Melee : EnemyState
     {
         base.Enter();
         stateTimer = 1.5f;
+
+        // Dừng tất cả âm thanh bước chân
+        if (enemy.meleeSFX.walkSFX.isPlaying)
+            enemy.meleeSFX.walkSFX.Stop();
+
+        if (enemy.meleeSFX.runSFX.isPlaying)
+            enemy.meleeSFX.runSFX.Stop();
     }
 
     public override void Exit()

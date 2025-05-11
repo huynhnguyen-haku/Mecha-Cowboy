@@ -6,7 +6,7 @@ public class MoveState_Melee : EnemyState
     private Vector3 destination;
 
     private float footstepTimer;
-    private float footstepInterval; 
+    private float footstepInterval;
 
     public MoveState_Melee(Enemy enemyBase, EnemyStateMachine stateMachine, string animBoolName) : base(enemyBase, stateMachine, animBoolName)
     {
@@ -21,7 +21,7 @@ public class MoveState_Melee : EnemyState
         destination = enemy.GetPatrolDestination();
         enemy.agent.SetDestination(destination);
 
-        footstepInterval = CalculateFootstepInterval(enemy.agent.speed); 
+        footstepInterval = CalculateFootstepInterval(enemy.agent.speed);
         footstepTimer = 0f;
 
         PlayFootstepSFX();
@@ -54,8 +54,15 @@ public class MoveState_Melee : EnemyState
 
     private void PlayFootstepSFX()
     {
-        enemy.meleeSFX.walkSFX.PlayOneShot(enemy.meleeSFX.walkSFX.clip);
+        // Dừng âm thanh chạy nếu đang phát
+        if (enemy.meleeSFX.runSFX.isPlaying)
+            enemy.meleeSFX.runSFX.Stop();
+
+        // Phát âm thanh đi bộ nếu chưa phát
+        if (!enemy.meleeSFX.walkSFX.isPlaying)
+            enemy.meleeSFX.walkSFX.PlayOneShot(enemy.meleeSFX.walkSFX.clip);
     }
+
 
     private float CalculateFootstepInterval(float speed)
     {

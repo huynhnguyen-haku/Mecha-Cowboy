@@ -787,6 +787,10 @@ Transform:
   - {fileID: 2355050020907234165}
   - {fileID: 7974064862741917795}
   - {fileID: 7781856666412581021}
+  - {fileID: 1391375475933656320}
+  - {fileID: 8172468845053184542}
+  - {fileID: 8797282645124188232}
+  - {fileID: 5392248869416757613}
   m_Father: {fileID: 1961009257641033207}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4817748293728283045
@@ -14709,6 +14713,68 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2333500906566299733, guid: 553cba07a57ddc84fb9be38911dc733b, type: 3}
   m_PrefabInstance: {fileID: 1985773638807040287}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &1987536212600450268
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 8354096333878580396}
+    m_Modifications:
+    - target: {fileID: 637836831570876892, guid: ef9bcfb9587e66e438817d4f31bc56eb, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -21.199646
+      objectReference: {fileID: 0}
+    - target: {fileID: 637836831570876892, guid: ef9bcfb9587e66e438817d4f31bc56eb, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.8557863
+      objectReference: {fileID: 0}
+    - target: {fileID: 637836831570876892, guid: ef9bcfb9587e66e438817d4f31bc56eb, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 175.95747
+      objectReference: {fileID: 0}
+    - target: {fileID: 637836831570876892, guid: ef9bcfb9587e66e438817d4f31bc56eb, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.99999845
+      objectReference: {fileID: 0}
+    - target: {fileID: 637836831570876892, guid: ef9bcfb9587e66e438817d4f31bc56eb, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.0018078161
+      objectReference: {fileID: 0}
+    - target: {fileID: 637836831570876892, guid: ef9bcfb9587e66e438817d4f31bc56eb, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 637836831570876892, guid: ef9bcfb9587e66e438817d4f31bc56eb, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 637836831570876892, guid: ef9bcfb9587e66e438817d4f31bc56eb, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 637836831570876892, guid: ef9bcfb9587e66e438817d4f31bc56eb, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 637836831570876892, guid: ef9bcfb9587e66e438817d4f31bc56eb, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8471704889832070101, guid: ef9bcfb9587e66e438817d4f31bc56eb, type: 3}
+      propertyPath: m_Name
+      value: First Aid Kit
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: ef9bcfb9587e66e438817d4f31bc56eb, type: 3}
+--- !u!4 &1391375475933656320 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 637836831570876892, guid: ef9bcfb9587e66e438817d4f31bc56eb, type: 3}
+  m_PrefabInstance: {fileID: 1987536212600450268}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1992240526092039011
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -27868,6 +27934,68 @@ PrefabInstance:
 Transform:
   m_CorrespondingSourceObject: {fileID: 6417678472157433703, guid: 442d3daa594cd6e4ba6f6528af3ba4e3, type: 3}
   m_PrefabInstance: {fileID: 4756372460363774579}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &4760042018697588913
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 8354096333878580396}
+    m_Modifications:
+    - target: {fileID: 637836831570876892, guid: ef9bcfb9587e66e438817d4f31bc56eb, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 9.680115
+      objectReference: {fileID: 0}
+    - target: {fileID: 637836831570876892, guid: ef9bcfb9587e66e438817d4f31bc56eb, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.016652167
+      objectReference: {fileID: 0}
+    - target: {fileID: 637836831570876892, guid: ef9bcfb9587e66e438817d4f31bc56eb, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 123.17161
+      objectReference: {fileID: 0}
+    - target: {fileID: 637836831570876892, guid: ef9bcfb9587e66e438817d4f31bc56eb, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.99999845
+      objectReference: {fileID: 0}
+    - target: {fileID: 637836831570876892, guid: ef9bcfb9587e66e438817d4f31bc56eb, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.0018078161
+      objectReference: {fileID: 0}
+    - target: {fileID: 637836831570876892, guid: ef9bcfb9587e66e438817d4f31bc56eb, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 637836831570876892, guid: ef9bcfb9587e66e438817d4f31bc56eb, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 637836831570876892, guid: ef9bcfb9587e66e438817d4f31bc56eb, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 637836831570876892, guid: ef9bcfb9587e66e438817d4f31bc56eb, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 637836831570876892, guid: ef9bcfb9587e66e438817d4f31bc56eb, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8471704889832070101, guid: ef9bcfb9587e66e438817d4f31bc56eb, type: 3}
+      propertyPath: m_Name
+      value: First Aid Kit (3)
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: ef9bcfb9587e66e438817d4f31bc56eb, type: 3}
+--- !u!4 &5392248869416757613 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 637836831570876892, guid: ef9bcfb9587e66e438817d4f31bc56eb, type: 3}
+  m_PrefabInstance: {fileID: 4760042018697588913}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &4775172475951803860
 PrefabInstance:
@@ -47970,6 +48098,68 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 3743522531863544769, guid: 5dba20e68ca5b474aa5ca31627f7538a, type: 3}
   m_PrefabInstance: {fileID: 8251609547668310272}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &8272044669054439828
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 8354096333878580396}
+    m_Modifications:
+    - target: {fileID: 637836831570876892, guid: ef9bcfb9587e66e438817d4f31bc56eb, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -1.9277191
+      objectReference: {fileID: 0}
+    - target: {fileID: 637836831570876892, guid: ef9bcfb9587e66e438817d4f31bc56eb, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.5519985
+      objectReference: {fileID: 0}
+    - target: {fileID: 637836831570876892, guid: ef9bcfb9587e66e438817d4f31bc56eb, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 200.77403
+      objectReference: {fileID: 0}
+    - target: {fileID: 637836831570876892, guid: ef9bcfb9587e66e438817d4f31bc56eb, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.99999845
+      objectReference: {fileID: 0}
+    - target: {fileID: 637836831570876892, guid: ef9bcfb9587e66e438817d4f31bc56eb, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.0018078161
+      objectReference: {fileID: 0}
+    - target: {fileID: 637836831570876892, guid: ef9bcfb9587e66e438817d4f31bc56eb, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 637836831570876892, guid: ef9bcfb9587e66e438817d4f31bc56eb, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 637836831570876892, guid: ef9bcfb9587e66e438817d4f31bc56eb, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 637836831570876892, guid: ef9bcfb9587e66e438817d4f31bc56eb, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 637836831570876892, guid: ef9bcfb9587e66e438817d4f31bc56eb, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8471704889832070101, guid: ef9bcfb9587e66e438817d4f31bc56eb, type: 3}
+      propertyPath: m_Name
+      value: First Aid Kit (2)
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: ef9bcfb9587e66e438817d4f31bc56eb, type: 3}
+--- !u!4 &8797282645124188232 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 637836831570876892, guid: ef9bcfb9587e66e438817d4f31bc56eb, type: 3}
+  m_PrefabInstance: {fileID: 8272044669054439828}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &8275957120412828524
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -50634,6 +50824,68 @@ PrefabInstance:
 Transform:
   m_CorrespondingSourceObject: {fileID: 2003800335476279881, guid: c69955d85ed6c624c87899829b5f3739, type: 3}
   m_PrefabInstance: {fileID: 8758017848376114891}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &8768644974543033282
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 8354096333878580396}
+    m_Modifications:
+    - target: {fileID: 637836831570876892, guid: ef9bcfb9587e66e438817d4f31bc56eb, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 1.0736008
+      objectReference: {fileID: 0}
+    - target: {fileID: 637836831570876892, guid: ef9bcfb9587e66e438817d4f31bc56eb, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.58467954
+      objectReference: {fileID: 0}
+    - target: {fileID: 637836831570876892, guid: ef9bcfb9587e66e438817d4f31bc56eb, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 160.99059
+      objectReference: {fileID: 0}
+    - target: {fileID: 637836831570876892, guid: ef9bcfb9587e66e438817d4f31bc56eb, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.99999845
+      objectReference: {fileID: 0}
+    - target: {fileID: 637836831570876892, guid: ef9bcfb9587e66e438817d4f31bc56eb, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.0018078161
+      objectReference: {fileID: 0}
+    - target: {fileID: 637836831570876892, guid: ef9bcfb9587e66e438817d4f31bc56eb, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 637836831570876892, guid: ef9bcfb9587e66e438817d4f31bc56eb, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 637836831570876892, guid: ef9bcfb9587e66e438817d4f31bc56eb, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 637836831570876892, guid: ef9bcfb9587e66e438817d4f31bc56eb, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 637836831570876892, guid: ef9bcfb9587e66e438817d4f31bc56eb, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8471704889832070101, guid: ef9bcfb9587e66e438817d4f31bc56eb, type: 3}
+      propertyPath: m_Name
+      value: First Aid Kit (1)
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: ef9bcfb9587e66e438817d4f31bc56eb, type: 3}
+--- !u!4 &8172468845053184542 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 637836831570876892, guid: ef9bcfb9587e66e438817d4f31bc56eb, type: 3}
+  m_PrefabInstance: {fileID: 8768644974543033282}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &8773766605456224930
 PrefabInstance:

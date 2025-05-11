@@ -70,8 +70,15 @@ public class ChaseState_Melee : EnemyState
 
     private void PlayFootstepSFX()
     {
-        enemy.meleeSFX.walkSFX.PlayOneShot(enemy.meleeSFX.runSFX.clip);
+        // Dừng âm thanh đi bộ nếu đang phát
+        if (enemy.meleeSFX.walkSFX.isPlaying)
+            enemy.meleeSFX.walkSFX.Stop();
+
+        // Phát âm thanh chạy nếu chưa phát
+        if (!enemy.meleeSFX.runSFX.isPlaying)
+            enemy.meleeSFX.runSFX.PlayOneShot(enemy.meleeSFX.runSFX.clip);
     }
+
 
     private float CalculateFootstepInterval(float speed)
     {
