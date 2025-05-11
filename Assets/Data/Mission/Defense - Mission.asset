@@ -13,19 +13,23 @@ MonoBehaviour:
   m_Name: Defense - Mission
   m_EditorClassIdentifier: 
   missionName: Defense Base
-  missionDescription: Our automated military truck has some problems. Protect it
-    until it fix itself.
+  missionDescription: A zone has been occupied by infected robots. We have identified
+    the source of the malicious code and deployed it to eradicate all nearby enemies.
+    Head to the area to activate it, and defend it from incoming foes until the activation
+    is complete.
   reward: 150
   missionPreview: {fileID: -1254829206, guid: f5242cd4daa99d44fa81f5b0c3aba104, type: 3}
-  isDefenceStarted: 1
-  isMissionCompleted: 0
-  defenseDuration: 30
+  isDefenceStarted: 0
+  isMissionCompleted: 1
+  defenseDuration: 60
   timeBetweenWaves: 10
-  numberOfRespawnPoints: 2
+  numberOfRespawnPoints: 4
   respawnPoints:
   - {fileID: 0}
   - {fileID: 0}
-  numberOfEnemiesPerWave: 2
+  - {fileID: 0}
+  - {fileID: 0}
+  numberOfEnemiesPerWave: 4
   enemyPrefabs:
   - {fileID: 8978599588123965400, guid: 1ccd577960029fd45aaaaf9ca9da413b, type: 3}
   - {fileID: 6286757198968117658, guid: 9407b6350ccf19a4caff38c4cee59cae, type: 3}

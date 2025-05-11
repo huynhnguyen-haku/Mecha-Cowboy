@@ -5,7 +5,7 @@ using UnityEngine;
 public class Mission_LastDefense : Mission
 {
     public bool isDefenceStarted = false;
-    public bool isMissionCompleted = false; // New flag to track mission completion
+    public bool isMissionCompleted = false;
 
     [Header("Mission Details")]
     public float defenseDuration = 120;
@@ -35,7 +35,7 @@ public class Mission_LastDefense : Mission
         reward = 150;
 
         if (isMissionCompleted)
-            return; // Prevent starting the mission if it's already completed
+            return;
 
         // Tìm MissionObject_BaseToDefend và gán làm target cho PathfindingIndicator
         MissionObject_BaseToDefend baseToDefend = FindObjectOfType<MissionObject_BaseToDefend>();
@@ -59,13 +59,16 @@ public class Mission_LastDefense : Mission
         }
 
         respawnPoints = new List<Transform>(ClosestPoints(numberOfRespawnPoints));
-        UI.instance.inGameUI.UpdateMissionUI("Get to the base that need help.");
+
+        string missionText = "Head to the maicious code zone to active it.";
+        string missionDetails = "Tips: There are ammo boxes and powerful guns in nearby abandoned town.";
+        UI.instance.inGameUI.UpdateMissionUI(missionText, missionDetails);
     }
 
     public override bool MissionCompleted()
     {
         if (isMissionCompleted)
-            return true; // Return true if the mission is already completed
+            return true;
 
         if (isDefenceStarted == false)
         {
@@ -100,7 +103,7 @@ public class Mission_LastDefense : Mission
 
         defenceTimerText = System.TimeSpan.FromSeconds(defenseTimer).ToString("mm':'ss");
 
-        string missionText = "Pick up the heavy machine gun to defend the base.";
+        string missionText = "Reaced the malicious code zone. Activating...";
         string missionDetails = "Time Left: " + defenceTimerText;
         UI.instance.inGameUI.UpdateMissionUI(missionText, missionDetails);
     }
@@ -126,8 +129,10 @@ public class Mission_LastDefense : Mission
                 healthController.SetHealthToZero();
             }
         }
-        isMissionCompleted = true; // Mark the mission as completed
-        Debug.Log("Defense mission ended. All enemies have been defeated.");
+        isMissionCompleted = true;
+        string missionText = "The malicious code has been successfully activated. All enemies have been eliminated.";
+        string missionDetails = "Leave the area by aircraft and claim the well-earned rewards awaiting you!";
+        UI.instance.inGameUI.UpdateMissionUI(missionText, missionDetails);
     }
 
     private void CreateNewEnemies(int number)
@@ -140,8 +145,13 @@ public class Mission_LastDefense : Mission
             Transform randomRespawnPoint = respawnPoints[randomRespawnIndex];
             GameObject randomEnemy = enemyPrefabs[randomEnemyIndex];
 
-            randomEnemy.GetComponent<Enemy>().arrgresssionRange = 100;
-            ObjectPool.instance.GetObject(randomEnemy, randomRespawnPoint);
+            // Spawn enemy trước, sau đó thay đổi arrgresssionRange trên instance
+            GameObject spawnedEnemy = ObjectPool.instance.GetObject(randomEnemy, randomRespawnPoint);
+            Enemy enemyComponent = spawnedEnemy.GetComponent<Enemy>();
+            if (enemyComponent != null)
+            {
+                enemyComponent.arrgresssionRange = 100;
+            }
         }
     }
 
