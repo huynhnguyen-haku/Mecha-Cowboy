@@ -4,7 +4,9 @@ public class HealthController : MonoBehaviour
 {
     public int maxHealth;
     public int currentHealth;
+
     private bool isDead;
+    public static bool muteDeathSound = false; // Global flag to mute death sounds
     [SerializeField] private GameObject lowHealthEffect;
 
     protected virtual void Awake()
@@ -91,18 +93,6 @@ public class HealthController : MonoBehaviour
         if (TryGetComponent(out Enemy enemy))
         {
             enemy.Die();
-            if (enemy.stateMachine != null)
-            {
-                if (enemy is Enemy_Range rangeEnemy)
-                    enemy.stateMachine.ChangeState(rangeEnemy.deadState);
-
-                else if (enemy is Enemy_Melee meleeEnemy)
-                    enemy.stateMachine.ChangeState(meleeEnemy.deadState);
-
-                else if (enemy is Enemy_Boss bossEnemy)
-                    enemy.stateMachine.ChangeState(bossEnemy.deadState);
-
-            }
         }
     }
 }

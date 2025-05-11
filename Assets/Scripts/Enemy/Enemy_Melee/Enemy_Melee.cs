@@ -20,7 +20,7 @@ public enum EnemyMelee_Type { Regular, Shield, Dodge, AxeThrow }
 
 public class Enemy_Melee : Enemy
 {
-    public Enemy_MeleeSFX meleeSFX { get; private set; }    
+    public Enemy_MeleeSFX meleeSFX { get; private set; }
 
     #region States
     public IdleState_Melee idleState { get; private set; }
@@ -89,7 +89,7 @@ public class Enemy_Melee : Enemy
         visual.SetupVisual();
 
         RandomizeFirstAttack();
-        UpdateAttackData(); 
+        UpdateAttackData();
     }
 
     private void RandomizeFirstAttack()
@@ -97,7 +97,7 @@ public class Enemy_Melee : Enemy
         // This method is used to fix the bug where the enemy always uses the same attack
         if (attackList.Count > 0)
             attackData = attackList[Random.Range(0, attackList.Count)];
-        
+
     }
 
     protected override void Update()
@@ -139,7 +139,9 @@ public class Enemy_Melee : Enemy
     public override void Die()
     {
         base.Die();
-        meleeSFX.deadSFX.Play();
+
+        if (!HealthController.muteDeathSound) // Check if the death sound should be muted
+            meleeSFX.deadSFX.Play();
 
         if (stateMachine.currentState != deadState)
             stateMachine.ChangeState(deadState);
@@ -152,9 +154,8 @@ public class Enemy_Melee : Enemy
         obj.layer = newLayer;
 
         foreach (Transform child in obj.transform)
-        {
             SetLayerRecursively(child.gameObject, newLayer);
-        }
+
     }
 
 

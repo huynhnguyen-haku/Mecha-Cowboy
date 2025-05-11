@@ -72,7 +72,7 @@ public class Mission_LastDefense : Mission
 
         if (isDefenceStarted == false)
         {
-            StartDefenceEvent();
+            StartDefenseEvent();
             return false;
         }
         return false;
@@ -91,7 +91,7 @@ public class Mission_LastDefense : Mission
 
         if (defenseTimer <= 0)
         {
-            EndDefenceEvent();
+            EndDefenseEvent();
             return;
         }
 
@@ -108,16 +108,17 @@ public class Mission_LastDefense : Mission
         UI.instance.inGameUI.UpdateMissionUI(missionText, missionDetails);
     }
 
-    private void StartDefenceEvent()
+    private void StartDefenseEvent()
     {
         waveTimer = 0.5f;
         defenseTimer = defenseDuration;
         isDefenceStarted = true;
     }
 
-    private void EndDefenceEvent()
+    private void EndDefenseEvent()
     {
         isDefenceStarted = false;
+        HealthController.muteDeathSound = true;
 
         // Destroy all enemies in the scene
         Enemy[] allEnemies = FindObjectsOfType<Enemy>();
@@ -130,6 +131,8 @@ public class Mission_LastDefense : Mission
             }
         }
         isMissionCompleted = true;
+        HealthController.muteDeathSound = false;
+
         string missionText = "The malicious code has been successfully activated. All enemies have been eliminated.";
         string missionDetails = "Leave the area by aircraft and claim the well-earned rewards awaiting you!";
         UI.instance.inGameUI.UpdateMissionUI(missionText, missionDetails);
@@ -137,23 +140,29 @@ public class Mission_LastDefense : Mission
 
     private void CreateNewEnemies(int number)
     {
-        for (int i = 0; i < number; i++)
+        // Kiểm tra nếu số lượng enemy và số lượng spawn points không khớp
+        if (number != respawnPoints.Count)
         {
-            int randomEnemyIndex = Random.Range(0, enemyPrefabs.Length);
-            int randomRespawnIndex = Random.Range(0, respawnPoints.Count);
+            Debug.LogWarning("Number of enemies to spawn does not match the number of spawn points!");
+            return;
+        }
 
-            Transform randomRespawnPoint = respawnPoints[randomRespawnIndex];
-            GameObject randomEnemy = enemyPrefabs[randomEnemyIndex];
+        // Lặp qua từng spawn point và tạo enemy tương ứng
+        for (int i = 0; i < respawnPoints.Count; i++)
+        {
+            Transform spawnPoint = respawnPoints[i];
+            GameObject enemyPrefab = enemyPrefabs[i % enemyPrefabs.Length]; // Lấy enemy theo thứ tự, lặp lại nếu cần
 
-            // Spawn enemy trước, sau đó thay đổi arrgresssionRange trên instance
-            GameObject spawnedEnemy = ObjectPool.instance.GetObject(randomEnemy, randomRespawnPoint);
+            // Spawn enemy tại spawn point
+            GameObject spawnedEnemy = ObjectPool.instance.GetObject(enemyPrefab, spawnPoint);
             Enemy enemyComponent = spawnedEnemy.GetComponent<Enemy>();
             if (enemyComponent != null)
             {
-                enemyComponent.arrgresssionRange = 100;
+                enemyComponent.arrgresssionRange = 100; // Thiết lập aggression range
             }
         }
     }
+
 
     private List<Transform> ClosestPoints(int number)
     {

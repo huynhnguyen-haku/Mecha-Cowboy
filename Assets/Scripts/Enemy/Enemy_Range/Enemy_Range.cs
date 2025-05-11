@@ -2,7 +2,7 @@
 using UnityEngine;
 
 
-public enum CoverPerk { None, RunToCover, ChangeCover}
+public enum CoverPerk { None, RunToCover, ChangeCover }
 public enum UnstoppablePerk { None, Unstoppable }
 public enum GrenadePerk { None, ThrowGrenade }
 public class Enemy_Range : Enemy
@@ -106,7 +106,7 @@ public class Enemy_Range : Enemy
     {
         base.Die();
 
-        if (rangeSFX != null && rangeSFX.deadSFX != null)
+        if (!HealthController.muteDeathSound)
             rangeSFX.deadSFX.Play();
 
         if (stateMachine.currentState != deadState)
@@ -116,15 +116,13 @@ public class Enemy_Range : Enemy
     }
 
 
-    // Hàm đệ quy để chuyển layer của GameObject và tất cả các con của nó
     private void SetLayerRecursively(GameObject obj, int newLayer)
     {
         obj.layer = newLayer;
 
         foreach (Transform child in obj.transform)
-        {
             SetLayerRecursively(child.gameObject, newLayer);
-        }
+
     }
 
     #region Weapon Setup

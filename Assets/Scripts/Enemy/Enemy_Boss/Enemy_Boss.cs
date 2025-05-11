@@ -265,12 +265,13 @@ public class Enemy_Boss : Enemy
     public override void Die()
     {
         base.Die();
-        bossSFX.deadSFX.Play(); // Play death sound effect
+
+        if (!HealthController.muteDeathSound) 
+            bossSFX.deadSFX.Play(); 
 
         if (stateMachine.currentState != deadState)
-        {
             stateMachine.ChangeState(deadState);
-        }
+        
         SetLayerRecursively(gameObject, LayerMask.NameToLayer("Default"));
     }
 
@@ -280,9 +281,7 @@ public class Enemy_Boss : Enemy
         obj.layer = newLayer;
 
         foreach (Transform child in obj.transform)
-        {
             SetLayerRecursively(child.gameObject, newLayer);
-        }
     }
 
     #endregion
