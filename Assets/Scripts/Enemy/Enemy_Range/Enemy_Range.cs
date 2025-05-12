@@ -54,6 +54,9 @@ public class Enemy_Range : Enemy
     public Transform playerBody;
     public LayerMask whatToIgnore;
 
+    [Header("Minimap Icon")]
+    private GameObject minimapIcon;
+
 
     [SerializeField] List<Enemy_RangeWeaponData> avaiableWeaponData;
 
@@ -79,20 +82,27 @@ public class Enemy_Range : Enemy
         deadState = new DeadState_Range(this, stateMachine, "Idle"); // Idle is used for placeholder
 
         rangeSFX = GetComponent<Enemy_RangeSFX>();
+
+        // Add minimap icon
+        if (minimapIcon == null)
+        {
+            var minimapSprite = GetComponentInChildren<MinimapSprite>(true);
+            if (minimapSprite != null)
+                minimapIcon = minimapSprite.gameObject;
+        }
     }
 
     protected override void Start()
     {
         base.Start();
-
-        playerBody = player.GetComponent<Player>().playerBody;
-        aim.parent = null;
+        stateMachine.Initialize(idleState);
 
         InitializePerk();
-
-        stateMachine.Initialize(idleState);
         visual.SetupVisual();
+
         SetupWeapon();
+        aim.parent = null;
+        playerBody = player.GetComponent<Player>().playerBody;
     }
 
 
@@ -112,9 +122,11 @@ public class Enemy_Range : Enemy
         if (stateMachine.currentState != deadState)
             stateMachine.ChangeState(deadState);
 
-        SetLayerRecursively(gameObject, LayerMask.NameToLayer("Default"));
-    }
+        if (minimapIcon != null)
+            minimapIcon.SetActive(false);
 
+        SetLayerRecursively(gameObject, LayerMask.NameToLayer("Enemy"));
+    }
 
     private void SetLayerRecursively(GameObject obj, int newLayer)
     {

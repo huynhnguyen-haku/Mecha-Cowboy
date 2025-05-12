@@ -5,7 +5,7 @@ public class HealthController : MonoBehaviour
     public int maxHealth;
     public int currentHealth;
 
-    private bool isDead;
+    public bool isDead;
     public static bool muteDeathSound = false; // Global flag to mute death sounds
     [SerializeField] private GameObject lowHealthEffect;
 

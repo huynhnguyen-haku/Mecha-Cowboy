@@ -59,6 +59,10 @@ public class Enemy_Melee : Enemy
     public float axeThrowCooldown;
     private float lastAxeThrowTime;
     public Transform axeStartPoint;
+
+    [Header("Minimap Icon")]
+    private GameObject minimapIcon;
+
     [Space]
     [SerializeField] private GameObject meleeAttackFX;
     #endregion
@@ -78,6 +82,14 @@ public class Enemy_Melee : Enemy
 
         meleeSFX = GetComponent<Enemy_MeleeSFX>();
         lastDodgeTime = Time.realtimeSinceStartup;
+
+        // Add minimap icon
+        if (minimapIcon == null)
+        {
+            var minimapSprite = GetComponentInChildren<MinimapSprite>(true);
+            if (minimapSprite != null)
+                minimapIcon = minimapSprite.gameObject;
+        }
     }
 
     protected override void Start()
@@ -146,7 +158,10 @@ public class Enemy_Melee : Enemy
         if (stateMachine.currentState != deadState)
             stateMachine.ChangeState(deadState);
 
-        SetLayerRecursively(gameObject, LayerMask.NameToLayer("Default"));
+        if (minimapIcon != null)
+            minimapIcon.SetActive(false);
+
+        SetLayerRecursively(gameObject, LayerMask.NameToLayer("Enemy"));
     }
 
     private void SetLayerRecursively(GameObject obj, int newLayer)
@@ -155,7 +170,6 @@ public class Enemy_Melee : Enemy
 
         foreach (Transform child in obj.transform)
             SetLayerRecursively(child.gameObject, newLayer);
-
     }
 
 

@@ -865,6 +865,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 3500
   currentHealth: 0
+  isDead: 0
   lowHealthEffect: {fileID: 0}
 --- !u!114 &1108654750860139256
 MonoBehaviour:
