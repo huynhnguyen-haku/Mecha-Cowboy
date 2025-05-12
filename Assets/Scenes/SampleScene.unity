@@ -1146,7 +1146,7 @@ Transform:
   m_GameObject: {fileID: 22133699}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -44.42, y: 0, z: 74.41}
+  m_LocalPosition: {x: -44.42, y: 1.087, z: 74.41}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1272,6 +1272,9 @@ MonoBehaviour:
   maxCameraDistance: 3
   cameraSensetivity: 5
   aim: {fileID: 497049308}
+  aimLayer:
+    serializedVersion: 2
+    m_Bits: 268481
   lockOnLayer:
     serializedVersion: 2
     m_Bits: 262144
@@ -15056,7 +15059,7 @@ MonoBehaviour:
   currentCar: {fileID: 0}
   playerMoney: 0
   friendlyFire: 1
-  quickStart: 0
+  quickStart: 1
 --- !u!4 &1056934589
 Transform:
   m_ObjectHideFlags: 0
@@ -21356,6 +21359,63 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!1001 &1619028278
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4155492843585088322, guid: f156c9a503de9274e8d427fa70495926, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -43.07869
+      objectReference: {fileID: 0}
+    - target: {fileID: 4155492843585088322, guid: f156c9a503de9274e8d427fa70495926, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.9999993
+      objectReference: {fileID: 0}
+    - target: {fileID: 4155492843585088322, guid: f156c9a503de9274e8d427fa70495926, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 71.69178
+      objectReference: {fileID: 0}
+    - target: {fileID: 4155492843585088322, guid: f156c9a503de9274e8d427fa70495926, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4155492843585088322, guid: f156c9a503de9274e8d427fa70495926, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4155492843585088322, guid: f156c9a503de9274e8d427fa70495926, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4155492843585088322, guid: f156c9a503de9274e8d427fa70495926, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4155492843585088322, guid: f156c9a503de9274e8d427fa70495926, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4155492843585088322, guid: f156c9a503de9274e8d427fa70495926, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4155492843585088322, guid: f156c9a503de9274e8d427fa70495926, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5397177733421485852, guid: f156c9a503de9274e8d427fa70495926, type: 3}
+      propertyPath: m_Name
+      value: Pickup_Weapon - Doomhowl
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: f156c9a503de9274e8d427fa70495926, type: 3}
 --- !u!1 &1619418250
 GameObject:
   m_ObjectHideFlags: 0
@@ -42746,6 +42806,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 9106298794762838117}
     m_Modifications:
+    - target: {fileID: -1154444744878285815, guid: 85c5ba035e9c64a448c8327fa9804461, type: 3}
+      propertyPath: m_Convex
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3541317979279162026, guid: 85c5ba035e9c64a448c8327fa9804461, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.2
@@ -43167,7 +43231,7 @@ Transform:
   m_GameObject: {fileID: 6575580843634422641}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: -57.121468, y: -0.0000019073486, z: 30.535126}
+  m_LocalPosition: {x: -57.121468, y: 1, z: 30.535126}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -44179,7 +44243,7 @@ MonoBehaviour:
   m_OverrideVoxelSize: 0
   m_VoxelSize: 0.06666667
   m_MinRegionArea: 2
-  m_NavMeshData: {fileID: 23800000, guid: 2718c11c6fce8f44c865f300f87f5413, type: 2}
+  m_NavMeshData: {fileID: 0}
   m_BuildHeightMesh: 0
 --- !u!33 &8120732613972471703
 MeshFilter:
@@ -50000,3 +50064,4 @@ SceneRoots:
   - {fileID: 7026471975220682391}
   - {fileID: 993674907}
   - {fileID: 1916118374}
+  - {fileID: 1619028278}

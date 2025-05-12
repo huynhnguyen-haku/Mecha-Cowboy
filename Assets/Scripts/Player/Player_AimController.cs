@@ -24,7 +24,7 @@ public class Player_AimController : MonoBehaviour
 
     [Header("Aim Settings")]
     [SerializeField] private Transform aim;
-    //[SerializeField] private LayerMask preciseAim;
+    [SerializeField] private LayerMask aimLayer;
     [SerializeField] private LayerMask lockOnLayer;
 
     [Header("Lock-On Settings")]
@@ -226,7 +226,7 @@ public class Player_AimController : MonoBehaviour
     public RaycastHit GetMouseHitInfo()
     {
         Ray ray = Camera.main.ScreenPointToRay(mouseInput);
-        if (Physics.Raycast(ray, out RaycastHit hitInfo, Mathf.Infinity/*, preciseAim*/))
+        if (Physics.Raycast(ray, out RaycastHit hitInfo, Mathf.Infinity, aimLayer))
         {
             lastKnownMouseHit = hitInfo;
             return hitInfo;
