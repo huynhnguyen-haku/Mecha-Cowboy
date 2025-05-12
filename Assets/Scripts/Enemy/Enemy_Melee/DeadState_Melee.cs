@@ -2,8 +2,6 @@
 {
     private Enemy_Melee enemy;
 
-    private bool interactionDisabled;
-
     public DeadState_Melee(Enemy enemyBase, EnemyStateMachine stateMachine, string animBoolName) : base(enemyBase, stateMachine, animBoolName)
     {
         enemy = (Enemy_Melee)enemyBase;
@@ -14,7 +12,7 @@
         base.Enter();
         stateTimer = 1.5f;
 
-        // Dừng tất cả âm thanh bước chân
+        // Stop all footstep sounds
         if (enemy.meleeSFX.walkSFX.isPlaying)
             enemy.meleeSFX.walkSFX.Stop();
 

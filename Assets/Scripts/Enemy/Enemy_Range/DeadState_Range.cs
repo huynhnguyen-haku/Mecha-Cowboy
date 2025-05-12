@@ -4,8 +4,6 @@ public class DeadState_Range : EnemyState
 {
     private Enemy_Range enemy;
 
-    private bool interactionDisabled;
-
     public DeadState_Range(Enemy enemyBase, EnemyStateMachine stateMachine, string animBoolName) : base(enemyBase, stateMachine, animBoolName)
     {
         enemy = (Enemy_Range)enemyBase;
@@ -19,6 +17,13 @@ public class DeadState_Range : EnemyState
             enemy.ThrowGrenade();
         }
         stateTimer = 1.5f;
+
+        // Stop all footstep sounds
+        if (enemy.rangeSFX.walkSFX.isPlaying)
+            enemy.rangeSFX.walkSFX.Stop();
+
+        if (enemy.rangeSFX.runSFX.isPlaying)
+            enemy.rangeSFX.runSFX.Stop();
     }
 
     public override void Exit()

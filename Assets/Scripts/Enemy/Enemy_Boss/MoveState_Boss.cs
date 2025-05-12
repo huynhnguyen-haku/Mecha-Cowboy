@@ -42,37 +42,31 @@ public class MoveState_Boss : EnemyState
         if (enemy.inBattleMode)
         {
             if (ShouldSpeedUp())
-            {
-                SpeedUp();
-            }
+                SpeedUp(); // Chase player
+
 
             Vector3 playerPosition = enemy.player.position;
             enemy.agent.SetDestination(playerPosition);
 
             if (actionTimer < 0)
-            {
                 PerfomRandomAction();
-            }
+
+
             else if (enemy.PlayerInAttackRange())
-            {
                 stateMachine.ChangeState(enemy.attackState);
-            }
+
         }
         else
         {
             if (Vector3.Distance(enemy.transform.position, destination) < 0.25f)
-            {
                 stateMachine.ChangeState(enemy.idleState);
-            }
         }
-
-        HandleFootstepSFX(); // Xử lý âm thanh bước chân
+        HandleFootstepSFX();
     }
 
     private void HandleFootstepSFX()
     {
         footstepTimer += Time.deltaTime;
-
         if (footstepTimer >= footstepInterval)
         {
             footstepTimer = 0f;
@@ -84,19 +78,19 @@ public class MoveState_Boss : EnemyState
     {
         if (SpeedUpActive)
         {
-            enemy.bossSFX.runSFX.PlayOneShot(enemy.bossSFX.runSFX.clip); // Phát âm thanh chạy
+            enemy.bossSFX.walkSFX.Stop();
+            enemy.bossSFX.runSFX.PlayOneShot(enemy.bossSFX.runSFX.clip);
         }
         else
         {
-            enemy.bossSFX.walkSFX.PlayOneShot(enemy.bossSFX.walkSFX.clip); // Phát âm thanh đi bộ
+            enemy.bossSFX.runSFX.Stop();
+            enemy.bossSFX.walkSFX.PlayOneShot(enemy.bossSFX.walkSFX.clip);
         }
     }
 
     private float CalculateFootstepInterval(float speed)
-    {
-        // Tính khoảng thời gian giữa các bước chân dựa trên tốc độ di chuyển
-        return Mathf.Clamp(1f / speed, 0.3f, 0.5f); // Ví dụ: tốc độ càng cao thì khoảng cách giữa các bước chân càng ngắn
-    }
+        => Mathf.Clamp(1f / speed, 0.3f, 0.5f);
+
 
     private void SpeedReset()
     {
@@ -121,16 +115,27 @@ public class MoveState_Boss : EnemyState
         actionTimer = enemy.actionCooldown;
 
         if (Random.Range(0, 2) == 0)
-        {
-            ActiveSpecialAbility();
-        }
+            ActiveSpecialAbility(); // 50% xác suất thực hiện khả năng đặc biệt
+
         else
         {
             if (enemy.CanDoJumpAttack())
-                stateMachine.ChangeState(enemy.jumpAttackState);
-            // For hammer boss only
-            else if (enemy.weaponType == BossWeaponType.Hammer)
-                ActiveSpecialAbility();
+                stateMachine.ChangeState(enemy.jumpAttackState); // Ưu tiên nhảy tấn công nếu có thể
+
+            else
+            {
+                // Hành động mặc định dựa trên loại boss
+                switch (enemy.weaponType)
+                {
+                    case BossWeaponType.Hammer:
+                        ActiveSpecialAbility(); // Hammer thực hiện khả năng đặc biệt (đập búa)
+                        break;
+
+                    case BossWeaponType.Flamethrower:
+                        ActiveSpecialAbility(); // Flamethrower thực hiện khả năng đặc biệt (phun lửa)
+                        break;
+                }
+            }
         }
     }
 

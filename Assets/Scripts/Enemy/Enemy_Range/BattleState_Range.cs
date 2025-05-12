@@ -37,29 +37,20 @@ public class BattleState_Range : EnemyState
     {
         base.Update();
 
-
         if (enemy.IsSeeingPlayer())
-        {
             enemy.FaceTarget(enemy.aim.position);
-        }
 
         if (enemy.CanThrowGrenade())
-        {
             stateMachine.ChangeState(enemy.throwGrenadeState);
-        }
 
         if (HandleAdvancePlayer())
-        {
             stateMachine.ChangeState(enemy.advancePlayerState);
-        }
+
 
         ChangeCoverIfShould();
 
         if (stateTimer > 0)
-        {
             return;
-        }
-
 
         if (WeaponOutOfBullets())
         {
@@ -70,35 +61,25 @@ public class BattleState_Range : EnemyState
             }
 
             if (WeaponOnCooldown())
-            {
                 AttempToResetWeapon();
-            }
 
             return;
         }
 
         if (CanShoot() && enemy.IsAimingOnPlayer())
-        {
             Shoot();
-        }
-
     }
 
     private bool HandleAdvancePlayer()
     {
         if (enemy.IsUnstoppable())
-        {
             return false;
-        }
 
         return (enemy.IsPlayerInAgrressionRage() == false && ReadyToLeaveCover());
-
     }
+
     private bool ReadyToLeaveCover()
-    {
-        return Time.time > enemy.coverTime + enemy.runToCoverState.lastTimeTookCover;
-    }
-
+        => Time.time > enemy.coverTime + enemy.runToCoverState.lastTimeTookCover;
 
     #region Weapon System
 
@@ -108,25 +89,27 @@ public class BattleState_Range : EnemyState
         bulletsPerAttack = enemy.weaponData.GetRandomBulletPerAttack();
         weaponCooldown = enemy.weaponData.GetRandomWeaponCooldown();
     }
+
     private bool WeaponOnCooldown()
-    {
-        return Time.time > lastTimeShot + weaponCooldown;
-    }
+       => Time.time > lastTimeShot + weaponCooldown;
+    
+
     private bool WeaponOutOfBullets()
-    {
-        return bulletsShoot >= bulletsPerAttack;
-    }
+        => bulletsShoot >= bulletsPerAttack;
+
     private bool CanShoot()
     {
         float timeBetweenShots = 60f / enemy.weaponData.fireRate;
         return Time.time > lastTimeShot + timeBetweenShots;
     }
+
     private void Shoot()
     {
         enemy.FireSingleBullet();
         lastTimeShot = Time.time;
         bulletsShoot++;
     }
+
     private void SetupFirstAttack()
     {
         if (firstTimeAttack)
@@ -150,9 +133,8 @@ public class BattleState_Range : EnemyState
     }
 
     private bool IsPlayerClose()
-    {
-        return Vector3.Distance(enemy.transform.position, enemy.player.transform.position) < enemy.safeDistance;
-    }
+        => Vector3.Distance(enemy.transform.position, enemy.player.transform.position) < enemy.safeDistance;
+    
 
     private bool IsPlayerInClearSight()
     {
@@ -170,20 +152,16 @@ public class BattleState_Range : EnemyState
         if (enemy.coverPerk != CoverPerk.ChangeCover)
             return;
 
-
         // Check the cover every 0.5 seconds
         coverCheckTimer -= Time.deltaTime;
         if (coverCheckTimer < 0)
-        {
             coverCheckTimer = 0.5f;
-        }
+
 
         if (ReadyToChangeCover() && ReadyToLeaveCover())
         {
             if (enemy.CanGetCover())
-            {
                 stateMachine.ChangeState(enemy.runToCoverState);
-            }
         }
     }
 

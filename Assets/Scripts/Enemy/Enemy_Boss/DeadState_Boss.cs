@@ -3,7 +3,6 @@ using UnityEngine;
 public class DeadState_Boss : EnemyState
 {
     private Enemy_Boss enemy;
-    private bool interactionDisabled;
 
     public DeadState_Boss(Enemy enemyBase, EnemyStateMachine stateMachine, string animBoolName) : base(enemyBase, stateMachine, animBoolName)
     {
@@ -16,6 +15,13 @@ public class DeadState_Boss : EnemyState
 
         enemy.abilityState.DisableFlamethrower();
         stateTimer = 1.5f;
+
+        // Stop all footstep sounds
+        if (enemy.bossSFX.walkSFX.isPlaying)
+            enemy.bossSFX.walkSFX.Stop();
+
+        if (enemy.bossSFX.runSFX.isPlaying)
+            enemy.bossSFX.runSFX.Stop();
     }
 
     public override void Update()

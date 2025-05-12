@@ -65,7 +65,11 @@ public class RunToCoverState_Range : EnemyState
 
     private void PlayFootstepSFX()
     {
-        enemy.rangeSFX.runSFX.PlayOneShot(enemy.rangeSFX.runSFX.clip);
+        if (enemy.rangeSFX.walkSFX.isPlaying)
+            enemy.rangeSFX.walkSFX.Stop();
+
+        if (enemy.rangeSFX.runSFX.isPlaying)
+            enemy.rangeSFX.runSFX.PlayOneShot(enemy.rangeSFX.runSFX.clip);
     }
 
     private float CalculateFootstepInterval(float speed)

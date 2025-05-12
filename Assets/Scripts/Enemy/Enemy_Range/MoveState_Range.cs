@@ -59,7 +59,11 @@ public class MoveState_Range : EnemyState
 
     private void PlayFootstepSFX()
     {
-        enemy.rangeSFX.walkSFX.PlayOneShot(enemy.rangeSFX.walkSFX.clip);
+        if (enemy.rangeSFX.runSFX.isPlaying)
+            enemy.rangeSFX.runSFX.Stop();
+
+        if (enemy.rangeSFX.walkSFX.isPlaying)
+            enemy.rangeSFX.walkSFX.PlayOneShot(enemy.rangeSFX.walkSFX.clip);
     }
 
     private float CalculateFootstepInterval(float speed)
