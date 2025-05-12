@@ -1,9 +1,9 @@
-using System.Threading;
 using UnityEngine;
 
 public class AbilityState_Boss : EnemyState
 {
     private Enemy_Boss enemy;
+
     public AbilityState_Boss(Enemy enemyBase, EnemyStateMachine stateMachine, string animBoolName) : base(enemyBase, stateMachine, animBoolName)
     {
         enemy = (Enemy_Boss)enemyBase;
@@ -25,14 +25,10 @@ public class AbilityState_Boss : EnemyState
         enemy.FaceTarget(enemy.player.position);
 
         if (ShouldDisableFlamethrower())
-        {
             DisableFlamethrower();
-        }
 
         if (triggerCalled)
-        {
             stateMachine.ChangeState(enemy.moveState);
-        }
     }
 
     private bool ShouldDisableFlamethrower()
@@ -63,7 +59,6 @@ public class AbilityState_Boss : EnemyState
             enemy.ActivateHammer();
             enemy.bossVisual.EnableWeaponTrail(true);
         }
-
     }
 
     public override void Exit()

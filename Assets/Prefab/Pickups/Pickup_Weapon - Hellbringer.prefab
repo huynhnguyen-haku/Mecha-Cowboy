@@ -454,7 +454,7 @@ GameObject:
   - component: {fileID: 4440527406920645428}
   - component: {fileID: 2480782846201235187}
   m_Layer: 0
-  m_Name: Pickup_Weapon - Heavy Machinegun
+  m_Name: Pickup_Weapon - Hellbringer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -510,8 +510,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   highlightMaterial: {fileID: 2100000, guid: ecec4012fd11b734896f267bef0a3825, type: 2}
-  defaultMaterial: {fileID: 0}
-  meshRenderer: {fileID: 0}
+  defaultMaterial: {fileID: 3758952881610933197, guid: d2858e1f48611f643b7ba488af654dd9, type: 3}
+  meshRenderer: {fileID: 2471753519363306902}
   weaponData: {fileID: 11400000, guid: 3fd9443a95353424e93c61f81f4356ee, type: 2}
   weapon:
     weaponType: 0
