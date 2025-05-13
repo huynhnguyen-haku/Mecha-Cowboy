@@ -435,7 +435,7 @@ GameObject:
   - component: {fileID: 2961092432926518290}
   - component: {fileID: 6458998931444780145}
   m_Layer: 0
-  m_Name: LevelPart - EndPoint
+  m_Name: LevelPart - Park
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -477,7 +477,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 312edb2d398f63d4a8a6ba8848000a6d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  missionTypes: 03000000
+  missionTypes: 00000000
   intersectionLayer:
     serializedVersion: 2
     m_Bits: 8192

@@ -59,7 +59,7 @@ public class Car_Interaction : Interactable
         player.transform.parent = transform;
         player.transform.localPosition = Vector3.up / 2;
 
-        CameraManager.instance.ChangeCameraTarget(transform, 12, 0.5f);
+        CameraManager.instance.ChangeCameraTarget(transform, 16, 0.5f);
 
         // Tắt NavMeshObstacle khi lên xe
         if (carObstacle != null)
