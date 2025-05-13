@@ -5627,6 +5627,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Enemy_Melee - Boxing Variant
       objectReference: {fileID: 0}
+    - target: {fileID: 6710769619524479166, guid: 960d338485c890c47ad6d910e0d92194, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -5770,6 +5774,10 @@ PrefabInstance:
     - target: {fileID: 5478877348500432786, guid: 5fe01cf504556fa46924c625bf47d817, type: 3}
       propertyPath: m_Name
       value: Enemy_Range - Scout Variant
+      objectReference: {fileID: 0}
+    - target: {fileID: 5478877348500432786, guid: 5fe01cf504556fa46924c625bf47d817, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8980179823909219494, guid: 5fe01cf504556fa46924c625bf47d817, type: 3}
       propertyPath: m_LocalPosition.x
@@ -10973,7 +10981,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8978599588123965400, guid: 1ccd577960029fd45aaaaf9ca9da413b, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -11982,7 +11990,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1216166525110586174, guid: 093a941a7c31db64e9ac47f66ef09c0d, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1746395094359593027, guid: 093a941a7c31db64e9ac47f66ef09c0d, type: 3}
       propertyPath: arrgresssionRange
@@ -21155,6 +21163,10 @@ PrefabInstance:
     - target: {fileID: 1162088541114011887, guid: 2f9faf8c92c3511429c7e3ec5c7f3cc6, type: 3}
       propertyPath: m_Name
       value: Enemy_Range - Regular Variant
+      objectReference: {fileID: 0}
+    - target: {fileID: 1162088541114011887, guid: 2f9faf8c92c3511429c7e3ec5c7f3cc6, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9163916052926171328, guid: 2f9faf8c92c3511429c7e3ec5c7f3cc6, type: 3}
       propertyPath: m_LocalPosition.x
@@ -30987,7 +30999,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1298480775982079447, guid: b2cdc8d0b85c37042bd651947afb7373, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3859447169215783214, guid: b2cdc8d0b85c37042bd651947afb7373, type: 3}
       propertyPath: m_LocalPosition.x
@@ -31138,6 +31150,10 @@ PrefabInstance:
     - target: {fileID: 6286757198968117658, guid: 9407b6350ccf19a4caff38c4cee59cae, type: 3}
       propertyPath: m_Name
       value: Enemy_Melee - Fast Axe Thrower Variant
+      objectReference: {fileID: 0}
+    - target: {fileID: 6286757198968117658, guid: 9407b6350ccf19a4caff38c4cee59cae, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6860673904607022749, guid: 9407b6350ccf19a4caff38c4cee59cae, type: 3}
       propertyPath: m_LocalPosition.x
@@ -31901,6 +31917,10 @@ PrefabInstance:
     - target: {fileID: 7172100156523994304, guid: d651001e986a2f94281fd5753ac3b203, type: 3}
       propertyPath: m_Name
       value: Enemy_Melee - Regular Variant
+      objectReference: {fileID: 0}
+    - target: {fileID: 7172100156523994304, guid: d651001e986a2f94281fd5753ac3b203, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7746584829375400903, guid: d651001e986a2f94281fd5753ac3b203, type: 3}
       propertyPath: m_LocalPosition.x
@@ -40260,7 +40280,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8978599588123965400, guid: 1ccd577960029fd45aaaaf9ca9da413b, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -40599,6 +40619,10 @@ PrefabInstance:
     - target: {fileID: 7927049067197686440, guid: 1c7ed68b6f2f7e14fab29213667d34ae, type: 3}
       propertyPath: m_Name
       value: Enemy_Melee - Shield Variant
+      objectReference: {fileID: 0}
+    - target: {fileID: 7927049067197686440, guid: 1c7ed68b6f2f7e14fab29213667d34ae, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -41795,7 +41819,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1216166525110586174, guid: 093a941a7c31db64e9ac47f66ef09c0d, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2326198344726102026, guid: 093a941a7c31db64e9ac47f66ef09c0d, type: 3}
       propertyPath: m_LocalPosition.x
@@ -43853,6 +43877,10 @@ PrefabInstance:
     - target: {fileID: 1216166525110586174, guid: 093a941a7c31db64e9ac47f66ef09c0d, type: 3}
       propertyPath: m_Name
       value: Enemy_Range - Sniper Variant
+      objectReference: {fileID: 0}
+    - target: {fileID: 1216166525110586174, guid: 093a941a7c31db64e9ac47f66ef09c0d, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9217994622515352337, guid: 093a941a7c31db64e9ac47f66ef09c0d, type: 3}
       propertyPath: m_LocalPosition.x
@@ -49684,7 +49712,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7927049067197686440, guid: 1c7ed68b6f2f7e14fab29213667d34ae, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -53811,7 +53839,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5478877348500432786, guid: 5fe01cf504556fa46924c625bf47d817, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8980179823909219494, guid: 5fe01cf504556fa46924c625bf47d817, type: 3}
       propertyPath: m_LocalPosition.x

@@ -2389,6 +2389,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Enemy_Melee - Boxing Variant
       objectReference: {fileID: 0}
+    - target: {fileID: 6710769619524479166, guid: 960d338485c890c47ad6d910e0d92194, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -3029,6 +3033,10 @@ PrefabInstance:
     - target: {fileID: 5478877348500432786, guid: 5fe01cf504556fa46924c625bf47d817, type: 3}
       propertyPath: m_Name
       value: Enemy_Range - Scout Variant
+      objectReference: {fileID: 0}
+    - target: {fileID: 5478877348500432786, guid: 5fe01cf504556fa46924c625bf47d817, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8980179823909219494, guid: 5fe01cf504556fa46924c625bf47d817, type: 3}
       propertyPath: m_LocalPosition.x
@@ -4128,7 +4136,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1216166525110586174, guid: 093a941a7c31db64e9ac47f66ef09c0d, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9217994622515352337, guid: 093a941a7c31db64e9ac47f66ef09c0d, type: 3}
       propertyPath: m_LocalPosition.x
@@ -7713,7 +7721,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7927049067197686440, guid: 1c7ed68b6f2f7e14fab29213667d34ae, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -8301,7 +8309,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8978599588123965400, guid: 1ccd577960029fd45aaaaf9ca9da413b, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -10733,7 +10741,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1216166525110586174, guid: 093a941a7c31db64e9ac47f66ef09c0d, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9217994622515352337, guid: 093a941a7c31db64e9ac47f66ef09c0d, type: 3}
       propertyPath: m_LocalPosition.x
@@ -11053,7 +11061,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8978599588123965400, guid: 1ccd577960029fd45aaaaf9ca9da413b, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -12083,6 +12091,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Enemy_Melee - Fast Axe Thrower Variant
       objectReference: {fileID: 0}
+    - target: {fileID: 6286757198968117658, guid: 9407b6350ccf19a4caff38c4cee59cae, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -12863,6 +12875,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Enemy_Range - Regular Variant
       objectReference: {fileID: 0}
+    - target: {fileID: 1162088541114011887, guid: 2f9faf8c92c3511429c7e3ec5c7f3cc6, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2344248177426127835, guid: 2f9faf8c92c3511429c7e3ec5c7f3cc6, type: 3}
       propertyPath: m_LocalPosition.x
       value: -4.5
@@ -13543,7 +13559,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6944661724446719591, guid: 901e8d1af12fe1949b20262552dc5de3, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.8009796
+      value: 1.44
       objectReference: {fileID: 0}
     - target: {fileID: 6944661724446719591, guid: 901e8d1af12fe1949b20262552dc5de3, type: 3}
       propertyPath: m_LocalPosition.y
@@ -13551,7 +13567,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6944661724446719591, guid: 901e8d1af12fe1949b20262552dc5de3, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 16.86707
+      value: 17.73
       objectReference: {fileID: 0}
     - target: {fileID: 6944661724446719591, guid: 901e8d1af12fe1949b20262552dc5de3, type: 3}
       propertyPath: m_LocalRotation.w
@@ -13803,6 +13819,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Enemy_Melee - Shield Variant
       objectReference: {fileID: 0}
+    - target: {fileID: 7927049067197686440, guid: 1c7ed68b6f2f7e14fab29213667d34ae, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -14007,6 +14027,10 @@ PrefabInstance:
     - target: {fileID: 1162088541114011887, guid: 2f9faf8c92c3511429c7e3ec5c7f3cc6, type: 3}
       propertyPath: m_Name
       value: Enemy_Range - Regular Variant
+      objectReference: {fileID: 0}
+    - target: {fileID: 1162088541114011887, guid: 2f9faf8c92c3511429c7e3ec5c7f3cc6, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9163916052926171328, guid: 2f9faf8c92c3511429c7e3ec5c7f3cc6, type: 3}
       propertyPath: m_LocalPosition.x
@@ -14385,7 +14409,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2587703764330010846, guid: a22f786ec1671af4e9308170949bf0b0, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.170784
+      value: 0.52
       objectReference: {fileID: 0}
     - target: {fileID: 2587703764330010846, guid: a22f786ec1671af4e9308170949bf0b0, type: 3}
       propertyPath: m_LocalPosition.y
@@ -14393,7 +14417,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2587703764330010846, guid: a22f786ec1671af4e9308170949bf0b0, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 17.105959
+      value: 17.6
       objectReference: {fileID: 0}
     - target: {fileID: 2587703764330010846, guid: a22f786ec1671af4e9308170949bf0b0, type: 3}
       propertyPath: m_LocalRotation.w
@@ -14558,7 +14582,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7927049067197686440, guid: 1c7ed68b6f2f7e14fab29213667d34ae, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -15679,7 +15703,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 637836831570876892, guid: ef9bcfb9587e66e438817d4f31bc56eb, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -12.176811
+      value: -12.38
       objectReference: {fileID: 0}
     - target: {fileID: 637836831570876892, guid: ef9bcfb9587e66e438817d4f31bc56eb, type: 3}
       propertyPath: m_LocalPosition.y
@@ -15687,7 +15711,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 637836831570876892, guid: ef9bcfb9587e66e438817d4f31bc56eb, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -17.956955
+      value: -21.76
       objectReference: {fileID: 0}
     - target: {fileID: 637836831570876892, guid: ef9bcfb9587e66e438817d4f31bc56eb, type: 3}
       propertyPath: m_LocalRotation.w
@@ -16644,7 +16668,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8978599588123965400, guid: 1ccd577960029fd45aaaaf9ca9da413b, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -17222,6 +17246,10 @@ PrefabInstance:
     - target: {fileID: 8483969353424229694, guid: fef72c593063d4f4c820645546a32c30, type: 3}
       propertyPath: m_Name
       value: Enemy_Range - Unstoppable Variant
+      objectReference: {fileID: 0}
+    - target: {fileID: 8483969353424229694, guid: fef72c593063d4f4c820645546a32c30, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
