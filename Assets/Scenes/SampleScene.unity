@@ -15059,7 +15059,7 @@ MonoBehaviour:
   currentCar: {fileID: 0}
   playerMoney: 0
   friendlyFire: 1
-  quickStart: 1
+  quickStart: 0
 --- !u!4 &1056934589
 Transform:
   m_ObjectHideFlags: 0
@@ -21988,6 +21988,7 @@ MonoBehaviour:
   - {fileID: 7026471976089440365, guid: 0e61b6b7d285a9f4bb8e7e798bcdc748, type: 3}
   - {fileID: 8155945728179234221, guid: da9d94fce013a0f498725728579b4059, type: 3}
   - {fileID: 1961009257641033207, guid: ebdada50b9e90ac409a065fefa1ebb10, type: 3}
+  - {fileID: 1990789868430406224, guid: 1d7d46429e009bb4585eb449a59464bc, type: 3}
   lastLevelPart: {fileID: 7209848540829030844, guid: a5c59f60a920cdb47a6c0b47bea83cf2, type: 3}
   nextSnapPoint: {fileID: 8257417343851401818}
   generationCooldown: 0.25
