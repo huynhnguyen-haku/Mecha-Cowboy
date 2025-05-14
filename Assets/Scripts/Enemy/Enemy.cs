@@ -143,10 +143,16 @@ public class Enemy : MonoBehaviour
     public virtual void Die()
     {
         dropController.DropItems();
-
         anim.enabled = false;
+
+        if (agent == null)
+            return; // Enemy has died before
+
+
         agent.isStopped = true;
         agent.enabled = false;
+
+
         ragdoll.RagdollActive(true);
 
         MissionObject_Target huntTarget = GetComponent<MissionObject_Target>();

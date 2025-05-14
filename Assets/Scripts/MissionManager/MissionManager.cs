@@ -4,6 +4,8 @@ public class MissionManager : MonoBehaviour
 {
     public static MissionManager instance;
     public Mission currentMission;
+    private bool isMissionActive = false;
+
     private bool hasSetFinalTarget = false; // Flag để tránh gán target nhiều lần
 
     private void Awake()
@@ -13,29 +15,25 @@ public class MissionManager : MonoBehaviour
 
     private void Update()
     {
-        currentMission?.UpdateMission();
+        if (isMissionActive)
+            currentMission?.UpdateMission();
 
-        // Kiểm tra nếu mission là LastDefense và đã hoàn thành
-        if (currentMission != null && currentMission.GetMissionType() == MissionType.LastDefense && !hasSetFinalTarget)
+        if (currentMission != null && currentMission.MissionCompleted() && !hasSetFinalTarget)
         {
-            Mission_LastDefense lastDefenseMission = currentMission as Mission_LastDefense;
-            if (lastDefenseMission != null && lastDefenseMission.isMissionCompleted)
+            GameObject missionCompleteZone = GameObject.Find("MissionComplete_Zone");
+            PathfindingIndicator pathfindingIndicator = FindObjectOfType<PathfindingIndicator>();
+            if (missionCompleteZone != null && pathfindingIndicator != null)
             {
-                // Tìm MissionComplete_Zone và gán làm target
-                GameObject missionCompleteZone = GameObject.Find("MissionComplete_Zone");
-                PathfindingIndicator pathfindingIndicator = FindObjectOfType<PathfindingIndicator>();
-                if (missionCompleteZone != null && pathfindingIndicator != null)
-                {
-                    pathfindingIndicator.SetTarget(missionCompleteZone.transform);
-                    Debug.Log("MissionManager: LastDefense mission completed. Set PathfindingIndicator target to MissionComplete_Zone.");
-                    hasSetFinalTarget = true; // Đánh dấu để không gán lại
-                }
-                else
-                {
-                    Debug.LogWarning("MissionManager: Could not find MissionComplete_Zone or PathfindingIndicator is null!");
-                }
+                pathfindingIndicator.SetTarget(missionCompleteZone.transform);
+                Debug.Log("MissionManager: Mission completed. Set PathfindingIndicator target to MissionComplete_Zone.");
+                hasSetFinalTarget = true;
+            }
+            else
+            {
+                Debug.LogWarning("MissionManager: Could not find MissionComplete_Zone or PathfindingIndicator is null!");
             }
         }
+
     }
 
     public void SetCurrentMission(Mission newMission)
@@ -44,7 +42,11 @@ public class MissionManager : MonoBehaviour
         hasSetFinalTarget = false; // Reset flag khi bắt đầu mission mới
     }
 
-    public void StartMission() => currentMission.StartMission();
+    public void StartMission()
+    {
+        isMissionActive = true;
+        currentMission.StartMission();
+    }
 
     public bool MissionCompleted()
     {

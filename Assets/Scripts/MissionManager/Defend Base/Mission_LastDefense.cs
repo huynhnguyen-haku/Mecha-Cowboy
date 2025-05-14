@@ -67,15 +67,7 @@ public class Mission_LastDefense : Mission
 
     public override bool MissionCompleted()
     {
-        if (isMissionCompleted)
-            return true;
-
-        if (isDefenceStarted == false)
-        {
-            StartDefenseEvent();
-            return false;
-        }
-        return false;
+        return isMissionCompleted;
     }
 
     public override void UpdateMission()
@@ -108,7 +100,7 @@ public class Mission_LastDefense : Mission
         UI.instance.inGameUI.UpdateMissionUI(missionText, missionDetails);
     }
 
-    private void StartDefenseEvent()
+    public void StartDefenseEvent()
     {
         waveTimer = 0.5f;
         defenseTimer = defenseDuration;

@@ -5,26 +5,49 @@ using UnityEngine;
 public class Mission_CarDelivery : Mission
 {
     public bool isCarDelivered;
+
+    private void OnEnable()
+    {
+        isCarDelivered = false;
+    }
+
     public override void StartMission()
     {
         reward = 100;
-        isCarDelivered = false;
+
+        if (isCarDelivered)
+            return;
 
         FindObjectOfType<MissionObject_CarDeliveryZone>(true).gameObject.SetActive(true);
-
-        string missionText = "Find a functiuonal car";
-        string missionDetails = "Get to the car and drive it to the specified parking area";
-
-        UI.instance.inGameUI.UpdateMissionUI(missionText, missionDetails);
-
-        MissionObject_Car.OnCarDelivery += CompleteCarDelivery;
-        Car_Controller[] cars = Object.FindObjectsByType<Car_Controller>(FindObjectsSortMode.None);
-
-        foreach (var car in cars)
+        MissionObject_CarDeliveryZone deliveryZone = FindObjectOfType<MissionObject_CarDeliveryZone>();
+        if (deliveryZone != null)
         {
-            if (car != null)
+            PathfindingIndicator pathfindingIndicator = FindObjectOfType<PathfindingIndicator>();
+            if (pathfindingIndicator != null)
             {
-                car.gameObject.AddComponent<MissionObject_Car>();
+                pathfindingIndicator.SetTarget(deliveryZone.transform);
+                Debug.Log("Mission_CarDelivery: Set PathfindingIndicator target to MissionObject_CarDeliveryZone.");
+            }
+            else
+            {
+                Debug.LogWarning("Mission_CarDelivery: PathfindingIndicator not found in scene!");
+            }
+
+
+            string missionText = "Find a functiuonal car";
+            string missionDetails = "Get to the car and drive it to the specified parking area";
+
+            UI.instance.inGameUI.UpdateMissionUI(missionText, missionDetails);
+
+            MissionObject_Car.OnCarDelivery += CompleteCarDelivery;
+            Car_Controller[] cars = Object.FindObjectsByType<Car_Controller>(FindObjectsSortMode.None);
+
+            foreach (var car in cars)
+            {
+                if (car != null)
+                {
+                    car.gameObject.AddComponent<MissionObject_Car>();
+                }
             }
         }
     }
