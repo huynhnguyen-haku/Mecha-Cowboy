@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d8d46deda312f7c4093c751d2f0470fe, type: 3}
-  m_Name: Hunting - Mission
+  m_Name: Hunting - Melee
   m_EditorClassIdentifier: 
-  missionName: Hunting Practice
-  missionDescription: Time to train your skill. Hunt the specified target.
-  reward: 220
+  missionName: Iron Brawl
+  missionDescription: Get up close and personal with melee enemies.
+  reward: 800
   missionPreview: {fileID: -806602989, guid: 140ab97807f562345bae735f051fee13, type: 3}
   numberOfTarget: 12
-  enemyType: 1
+  enemyType: 0

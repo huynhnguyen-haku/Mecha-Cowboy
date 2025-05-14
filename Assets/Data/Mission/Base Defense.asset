@@ -10,14 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d7a223680a8df1646aafe9daca912989, type: 3}
-  m_Name: Defense - Mission
+  m_Name: Base Defense
   m_EditorClassIdentifier: 
-  missionName: Defense Base
-  missionDescription: A zone has been occupied by infected robots. We have identified
-    the source of the malicious code and deployed it to eradicate all nearby enemies.
-    Head to the area to activate it, and defend it from incoming foes until the activation
-    is complete.
-  reward: 150
+  missionName: Cyber Corruption
+  missionDescription: Unleash a virus to dismantle their defenses.
+  reward: 2000
   missionPreview: {fileID: -1254829206, guid: f5242cd4daa99d44fa81f5b0c3aba104, type: 3}
   isDefenceStarted: 0
   isMissionCompleted: 0

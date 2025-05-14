@@ -10,12 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8441ddcfb600dd244ba254f7cc091507, type: 3}
-  m_Name: Key - Mission
+  m_Name: Key Finding
   m_EditorClassIdentifier: 
-  missionName: The Key to Freedom
-  missionDescription: You must locate and defeat the key-holder to retrieve the key.
-    Be careful, as this enemy could be much stronger than nomal one.
-  reward: 200
+  missionName: Core Extraction
+  missionDescription: Hunt down and recover powerful enemy cores.
+  reward: 400
   missionPreview: {fileID: -1918913486, guid: e546b50d752417345977f3574f8ec241, type: 3}
   key: {fileID: 438324553830291184, guid: 46f02180e96a83649ba6dd8f7db0d314, type: 3}
   isKeyFound: 1

@@ -10,12 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a9b3e2ff82849ec4f811c4d3334ac3e7, type: 3}
-  m_Name: Timer - Mission
+  m_Name: Timer
   m_EditorClassIdentifier: 
-  missionName: Race Against Time
-  missionDescription: Your scanners have detected an approaching sandstorm. You have
-    less than 10 minutes to reach the airplane before conditions become too severe
-    for a safe takeoff.
-  reward: 50
+  missionName: Dust Storm Dash
+  missionDescription: Beat the clock and race to the finish before time runs out.
+  reward: 200
   missionPreview: {fileID: 1757984561, guid: d05b27f8d6169cc46b7d080f686425a5, type: 3}
   time: 600
