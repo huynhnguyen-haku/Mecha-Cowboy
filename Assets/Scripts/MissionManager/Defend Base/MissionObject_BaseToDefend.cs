@@ -19,7 +19,6 @@ public class MissionObject_BaseToDefend : MonoBehaviour
         if (mission != null && !mission.isDefenceStarted)
         {
             mission.StartDefenseEvent();
-            Debug.Log("MissionObject_BaseToDefend: Defense event started!");
         }
     }
 }

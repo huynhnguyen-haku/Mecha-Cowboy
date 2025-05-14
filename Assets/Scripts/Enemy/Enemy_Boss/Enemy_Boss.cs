@@ -46,6 +46,9 @@ public class Enemy_Boss : Enemy
     private float lastTimeJump;
     public float minJumpDistanceRequired;
 
+    [Header("Minimap Icon")]
+    private GameObject minimapIcon;
+
     [Space]
     [SerializeField] private LayerMask whatToIgnore;
 
@@ -63,6 +66,7 @@ public class Enemy_Boss : Enemy
     protected override void Awake()
     {
         base.Awake();
+
         bossVisual = GetComponent<Enemy_BossVisual>();
         bossSFX = GetComponent<Enemy_BossSFX>();
 
@@ -72,6 +76,13 @@ public class Enemy_Boss : Enemy
         jumpAttackState = new JumpAttackState_Boss(this, stateMachine, "JumpAttack");
         abilityState = new AbilityState_Boss(this, stateMachine, "Ability");
         deadState = new DeadState_Boss(this, stateMachine, "Idle");
+
+        if (minimapIcon == null)
+        {
+            var minimapSprite = GetComponentInChildren<MinimapSprite>(true);
+            if (minimapSprite != null)
+                minimapIcon = minimapSprite.gameObject;
+        }
     }
 
     protected override void Start()
@@ -266,13 +277,16 @@ public class Enemy_Boss : Enemy
     {
         base.Die();
 
-        if (!HealthController.muteDeathSound) 
-            bossSFX.deadSFX.Play(); 
+        if (!HealthController.muteDeathSound)
+            bossSFX.deadSFX.Play();
 
         if (stateMachine.currentState != deadState)
             stateMachine.ChangeState(deadState);
-        
-        SetLayerRecursively(gameObject, LayerMask.NameToLayer("Default"));
+
+        if (minimapIcon != null)
+            minimapIcon.SetActive(false);
+
+        SetLayerRecursively(gameObject, LayerMask.NameToLayer("Enemy"));
     }
 
     // Hàm đệ quy để chuyển layer của GameObject và tất cả các con của nó

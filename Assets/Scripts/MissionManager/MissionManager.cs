@@ -25,12 +25,7 @@ public class MissionManager : MonoBehaviour
             if (missionCompleteZone != null && pathfindingIndicator != null)
             {
                 pathfindingIndicator.SetTarget(missionCompleteZone.transform);
-                Debug.Log("MissionManager: Mission completed. Set PathfindingIndicator target to MissionComplete_Zone.");
                 hasSetFinalTarget = true;
-            }
-            else
-            {
-                Debug.LogWarning("MissionManager: Could not find MissionComplete_Zone or PathfindingIndicator is null!");
             }
         }
 

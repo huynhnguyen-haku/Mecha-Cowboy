@@ -72,6 +72,8 @@ public class Enemy_Melee : Enemy
     {
         base.Awake();
 
+        meleeSFX = GetComponent<Enemy_MeleeSFX>();
+
         idleState = new IdleState_Melee(this, stateMachine, "Idle");
         moveState = new MoveState_Melee(this, stateMachine, "Move");
         recoveryState = new RecoveryState_Melee(this, stateMachine, "Recovery");
@@ -80,9 +82,6 @@ public class Enemy_Melee : Enemy
         deadState = new DeadState_Melee(this, stateMachine, "Idle"); // We use ragdoll instead of animation
         abilityState = new AbilityState_Melee(this, stateMachine, "AxeThrow");
 
-        meleeSFX = GetComponent<Enemy_MeleeSFX>();
-        lastDodgeTime = Time.realtimeSinceStartup;
-
         // Add minimap icon
         if (minimapIcon == null)
         {
@@ -90,6 +89,8 @@ public class Enemy_Melee : Enemy
             if (minimapSprite != null)
                 minimapIcon = minimapSprite.gameObject;
         }
+
+        lastDodgeTime = Time.realtimeSinceStartup;
     }
 
     protected override void Start()
@@ -250,12 +251,6 @@ public class Enemy_Melee : Enemy
         {
             weaponType = Enemy_MeleeWeaponType.Unarmed;
         }
-    }
-
-    // Updated method to change the layer of a single GameObject without affecting its children
-    private void SetLayer(GameObject obj, int newLayer)
-    {
-        obj.layer = newLayer;
     }
     #endregion
 }

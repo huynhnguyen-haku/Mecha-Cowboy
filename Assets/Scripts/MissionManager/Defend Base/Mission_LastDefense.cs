@@ -46,11 +46,6 @@ public class Mission_LastDefense : Mission
             if (pathfindingIndicator != null)
             {
                 pathfindingIndicator.SetTarget(baseToDefend.transform);
-                Debug.Log("Mission_LastDefense: Set PathfindingIndicator target to MissionObject_BaseToDefend.");
-            }
-            else
-            {
-                Debug.LogWarning("Mission_LastDefense: PathfindingIndicator not found in scene!");
             }
         }
         else
@@ -135,7 +130,6 @@ public class Mission_LastDefense : Mission
         // Kiểm tra nếu số lượng enemy và số lượng spawn points không khớp
         if (number != respawnPoints.Count)
         {
-            Debug.LogWarning("Number of enemies to spawn does not match the number of spawn points!");
             return;
         }
 

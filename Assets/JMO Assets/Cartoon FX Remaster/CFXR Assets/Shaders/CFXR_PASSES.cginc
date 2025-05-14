@@ -866,7 +866,8 @@
 				grabPosUV.xy += screenDistortion;
 				half3 particleColor = SampleScreenTexture(grabPosUV).rgb;
 
-				#if defined(_DEBUG_VISUALIZE_DISTORTION)
+				#if defined(_
+_VISUALIZE_DISTORTION)
 					return half4(distortionTex.rg, 0, particleAlpha);
 				#endif
 

@@ -40,10 +40,6 @@ public class LevelGenerator : MonoBehaviour
         enemyList = new List<Enemy>();
         defaultSnapPoint = nextSnapPoint;
         pathfindingIndicator = FindObjectOfType<PathfindingIndicator>(); // Tìm PathfindingIndicator trong scene
-        if (pathfindingIndicator == null)
-        {
-            Debug.LogError("LevelGenerator: PathfindingIndicator not found in scene!");
-        }
     }
 
     private void Update()
@@ -124,10 +120,6 @@ public class LevelGenerator : MonoBehaviour
             {
                 pathfindingIndicator.SetTarget(missionCompleteZone.transform);
             }
-            else
-            {
-                Debug.LogWarning("LevelGenerator: Could not find MissionComplete_Zone or PathfindingIndicator is null!");
-            }
         }
 
         MissionManager.instance.StartMission();
@@ -139,19 +131,14 @@ public class LevelGenerator : MonoBehaviour
         Transform newPart = null;
 
         if (generationOver)
-        {
             newPart = Instantiate(lastLevelPart);
-        }
+
         else
-        {
             newPart = Instantiate(ChooseRandomPart());
-        }
 
         if (newPart == null)
-        {
-            Debug.LogError("No LevelPart could be generated. Check your MissionType filtering.");
             return;
-        }
+
 
         generatedLevelParts.Add(newPart);
 
@@ -171,11 +158,8 @@ public class LevelGenerator : MonoBehaviour
     private Transform ChooseRandomPart()
     {
         if (currentLevelParts.Count == 0)
-        {
-            Debug.LogError("No LevelParts available to generate. Check your MissionType filtering.");
             return null;
-        }
-
+        
         int randomIndex = Random.Range(0, currentLevelParts.Count);
         Transform chosenPart = currentLevelParts[randomIndex];
         currentLevelParts.RemoveAt(randomIndex);
