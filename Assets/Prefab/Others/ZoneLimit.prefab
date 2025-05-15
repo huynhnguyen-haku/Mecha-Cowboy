@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 402593886125282040}
   - component: {fileID: 6090902978574464079}
   - component: {fileID: 6378525211618357528}
+  - component: {fileID: -9143889686967964079}
   m_Layer: 0
   m_Name: ZoneLimit
   m_TagString: Untagged
@@ -126,6 +127,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7bba3c7839cbc374fa18fd43117215f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!208 &-9143889686967964079
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1943743039413598862}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.5, y: 0.5, z: 0.5}
+  m_MoveThreshold: 0.1
+  m_Carve: 0
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!1001 &3643506706504098230
 PrefabInstance:
   m_ObjectHideFlags: 0
