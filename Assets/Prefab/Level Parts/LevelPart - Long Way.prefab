@@ -275,7 +275,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &4647672409853481417
 Transform:
@@ -1162,7 +1162,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &1748135585348864036
 Transform:
@@ -1280,7 +1280,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &6682429365975854265
 Transform:
@@ -1389,7 +1389,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &1827813232362033525
 Transform:
@@ -1834,7 +1834,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &6448266705599964645
 Transform:
@@ -1921,7 +1921,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &5823451166067722068
 Transform:
@@ -2686,7 +2686,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &8442877814512917620
 Transform:
@@ -2827,7 +2827,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &2487624301021648473
 Transform:
@@ -3472,7 +3472,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &2677239273618398822
 Transform:
@@ -3581,7 +3581,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &4236398323217879792
 Transform:
@@ -3690,7 +3690,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &2218753302192650756
 Transform:
@@ -5948,6 +5948,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: tree_1
       objectReference: {fileID: 0}
+    - target: {fileID: 2107989782243728625, guid: f7e3f552162a5a04ea1335c65bfddf4f, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 2845242305350726252, guid: f7e3f552162a5a04ea1335c65bfddf4f, type: 3}
       propertyPath: m_LocalPosition.x
       value: -319.27838
@@ -6309,6 +6313,10 @@ PrefabInstance:
     - target: {fileID: 4062183906140455880, guid: f07cb2142e323794b81e87d599976d9d, type: 3}
       propertyPath: m_Name
       value: solar_panel_ground (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4062183906140455880, guid: f07cb2142e323794b81e87d599976d9d, type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 7772167253361347116, guid: f07cb2142e323794b81e87d599976d9d, type: 3}
       propertyPath: m_LocalPosition.x
@@ -7963,6 +7971,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: sandrock_7
       objectReference: {fileID: 0}
+    - target: {fileID: 6738590783789872390, guid: d9712bff72063394eb8a6c9bf30a03e3, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -9286,6 +9298,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5129847259257069066, guid: 661cbb3f394c5fc4194b3158c7bfea23, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 6912802800947923215, guid: 661cbb3f394c5fc4194b3158c7bfea23, type: 3}
       propertyPath: m_Name
       value: stool_wooden_2
@@ -9293,6 +9309,10 @@ PrefabInstance:
     - target: {fileID: 6912802800947923215, guid: 661cbb3f394c5fc4194b3158c7bfea23, type: 3}
       propertyPath: m_Layer
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6912802800947923215, guid: 661cbb3f394c5fc4194b3158c7bfea23, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 997157220216657124, guid: 661cbb3f394c5fc4194b3158c7bfea23, type: 3}
@@ -15334,6 +15354,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7987256786829919625, guid: 9025db8ef8884d242b542beb4f1217e4, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -15998,6 +16022,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: sandrock_4
       objectReference: {fileID: 0}
+    - target: {fileID: 3315499719146796830, guid: 69ec84a56f5cd0e4db34a6363e5e5c3a, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 4568410348560598870, guid: 69ec84a56f5cd0e4db34a6363e5e5c3a, type: 3}
       propertyPath: m_LocalPosition.x
       value: -280.2936
@@ -16584,6 +16612,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 893064630658471743, guid: 7f88b5395f258574b9324fcf47f0e9b9, type: 3}
       propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 893064630658471743, guid: 7f88b5395f258574b9324fcf47f0e9b9, type: 3}
+      propertyPath: m_StaticEditorFlags
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1873982622835175997, guid: 7f88b5395f258574b9324fcf47f0e9b9, type: 3}
@@ -20566,6 +20598,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: RV_trailer_4_white
       objectReference: {fileID: 0}
+    - target: {fileID: 2014611213229428035, guid: 032561de2457fde4e98c9167bcc8aa06, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 8133113193398035516, guid: 032561de2457fde4e98c9167bcc8aa06, type: 3}
       propertyPath: m_LocalPosition.x
       value: -292.85
@@ -24237,6 +24273,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: solar_panel_roof (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 7752894283196220797, guid: 0ac361a40c947ad48b30d4227e13e3c2, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -24738,6 +24778,10 @@ PrefabInstance:
     - target: {fileID: 7752894283196220797, guid: 0ac361a40c947ad48b30d4227e13e3c2, type: 3}
       propertyPath: m_Name
       value: solar_panel_roof
+      objectReference: {fileID: 0}
+    - target: {fileID: 7752894283196220797, guid: 0ac361a40c947ad48b30d4227e13e3c2, type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -25452,6 +25496,10 @@ PrefabInstance:
     - target: {fileID: 7319099280953206589, guid: 3f33b799739b7f64b9900fba96e11e20, type: 3}
       propertyPath: m_Name
       value: small_fridge
+      objectReference: {fileID: 0}
+    - target: {fileID: 7319099280953206589, guid: 3f33b799739b7f64b9900fba96e11e20, type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -27154,6 +27202,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: sofa_red
       objectReference: {fileID: 0}
+    - target: {fileID: 5255948093124337873, guid: e8390713dc11cd84faa326d6d02209c5, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -27975,6 +28027,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5129847259257069066, guid: 661cbb3f394c5fc4194b3158c7bfea23, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 6912802800947923215, guid: 661cbb3f394c5fc4194b3158c7bfea23, type: 3}
       propertyPath: m_Name
       value: stool_wooden_2 (2)
@@ -27982,6 +28038,10 @@ PrefabInstance:
     - target: {fileID: 6912802800947923215, guid: 661cbb3f394c5fc4194b3158c7bfea23, type: 3}
       propertyPath: m_Layer
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6912802800947923215, guid: 661cbb3f394c5fc4194b3158c7bfea23, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 997157220216657124, guid: 661cbb3f394c5fc4194b3158c7bfea23, type: 3}
@@ -28515,6 +28575,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 893064630658471743, guid: 7f88b5395f258574b9324fcf47f0e9b9, type: 3}
       propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 893064630658471743, guid: 7f88b5395f258574b9324fcf47f0e9b9, type: 3}
+      propertyPath: m_StaticEditorFlags
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1873982622835175997, guid: 7f88b5395f258574b9324fcf47f0e9b9, type: 3}
@@ -29694,6 +29758,10 @@ PrefabInstance:
     - target: {fileID: 4753554935696006476, guid: f870df45fe0ec214a8924239c76de8f9, type: 3}
       propertyPath: m_Name
       value: tree
+      objectReference: {fileID: 0}
+    - target: {fileID: 4753554935696006476, guid: f870df45fe0ec214a8924239c76de8f9, type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 6897816489430093984, guid: f870df45fe0ec214a8924239c76de8f9, type: 3}
       propertyPath: m_LocalPosition.x
@@ -31534,6 +31602,10 @@ PrefabInstance:
     - target: {fileID: 4062183906140455880, guid: f07cb2142e323794b81e87d599976d9d, type: 3}
       propertyPath: m_Name
       value: solar_panel_ground (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4062183906140455880, guid: f07cb2142e323794b81e87d599976d9d, type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 7772167253361347116, guid: f07cb2142e323794b81e87d599976d9d, type: 3}
       propertyPath: m_LocalPosition.x
@@ -35905,6 +35977,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: solar_panel_ground
       objectReference: {fileID: 0}
+    - target: {fileID: 4062183906140455880, guid: f07cb2142e323794b81e87d599976d9d, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 7772167253361347116, guid: f07cb2142e323794b81e87d599976d9d, type: 3}
       propertyPath: m_LocalPosition.x
       value: -315.82
@@ -39913,6 +39989,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: tree_2
       objectReference: {fileID: 0}
+    - target: {fileID: 6029972964339846576, guid: e985ae20af41dda46b2bc0397829c4d6, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -40451,6 +40531,10 @@ PrefabInstance:
     - target: {fileID: 7768495169901464022, guid: 9605eb1fa03b39b46ac7d84c5428c317, type: 3}
       propertyPath: m_Name
       value: mill
+      objectReference: {fileID: 0}
+    - target: {fileID: 7768495169901464022, guid: 9605eb1fa03b39b46ac7d84c5428c317, type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
