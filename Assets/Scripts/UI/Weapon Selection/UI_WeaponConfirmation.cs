@@ -28,6 +28,8 @@ public class UI_WeaponConfirmation : MonoBehaviour
         weaponNameText.text = weaponData.weaponName;
         weaponPriceText.text = $"Price: {weaponData.price} golds";
         confirmText.text = "Do you want to buy this weapon?";
+
+        playerMoney.text = $"Money: {GameManager.instance.playerMoney} golds";
     }
 
     public void ConfirmPurchase()
@@ -41,6 +43,8 @@ public class UI_WeaponConfirmation : MonoBehaviour
 
             Debug.Log($"Weapon {currentWeaponData.weaponName} unlocked!");
             confirmText.text = "Weapon unlocked!";
+
+            playerMoney.text = $"Money: {GameManager.instance.playerMoney} golds";
 
             // Back to weapon selection UI
             UI.instance.SwitchTo(UI.instance.weaponSelection.gameObject);

@@ -7,7 +7,6 @@ public class Misson_KeyFind : Mission
     public bool isKeyFound;
     public override void StartMission()
     {
-        reward = 200;
         isKeyFound = false;
 
         UI.instance.inGameUI.UpdateMissionUI("Find the Key-holder and retrive the key.");

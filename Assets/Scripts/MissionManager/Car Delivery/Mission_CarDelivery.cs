@@ -13,8 +13,6 @@ public class Mission_CarDelivery : Mission
 
     public override void StartMission()
     {
-        reward = 100;
-
         if (isCarDelivered)
             return;
 

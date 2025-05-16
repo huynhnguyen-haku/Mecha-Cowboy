@@ -32,8 +32,6 @@ public class Mission_LastDefense : Mission
 
     public override void StartMission()
     {
-        reward = 150;
-
         if (isMissionCompleted)
             return;
 

@@ -11,8 +11,6 @@ public class Mission_HuntingTarget : Mission
 
     public override void StartMission()
     {
-        reward = 220;
-
         remainingTargets = numberOfTarget;
         UpdateMissionUI();
 
