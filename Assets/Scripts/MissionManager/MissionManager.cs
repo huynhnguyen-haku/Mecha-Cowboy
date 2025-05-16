@@ -28,10 +28,6 @@ public class MissionManager : MonoBehaviour
                 hasSetFinalTarget = true;
                 Debug.Log("MissionManager: Set PathfindingIndicator target to MissionComplete_Zone after mission completion.");
             }
-            else
-            {
-                Debug.LogWarning("MissionManager: MissionComplete_Zone not found after mission completion!");
-            }
         }
     }
 

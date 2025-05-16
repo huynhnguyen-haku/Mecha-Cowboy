@@ -13,7 +13,6 @@ public class Mission_Timer : Mission
         currentTime = time; // Reset thời gian
         hasFailed = false; // Reset trạng thái thất bại
         isCompleted = false; // Reset trạng thái hoàn thành
-        Debug.Log("Mission_Timer: Reset state with time " + time + " seconds.");
     }
 
     public override void StartMission()
@@ -60,7 +59,6 @@ public class Mission_Timer : Mission
     public void MarkAsCompleted()
     {
         isCompleted = true;
-        Debug.Log("Mission_Timer: Marked as completed.");
     }
 
     public override MissionType GetMissionType()
