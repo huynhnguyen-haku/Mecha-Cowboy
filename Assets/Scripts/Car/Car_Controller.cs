@@ -399,7 +399,6 @@ public class Car_Controller : MonoBehaviour
 
     }
 
-    // Make the car unable to move, sliding on the ground
     public void BreakCar()
     {
         canEmitTrails = false; // Ensure that trail won't render while car is exploding
@@ -409,8 +408,10 @@ public class Car_Controller : MonoBehaviour
             wheel.trailRenderer.emitting = false;
         }
 
+        // Turn off car engine sound
+        carSounds.ActivateCarSFX(false);
+
         motorForce = 0;
-        isDrifting = true;
         rb.linearDamping = 1;
         frontDriftFactor = 0.9f;
         rearDriftFactor = 0.9f;
