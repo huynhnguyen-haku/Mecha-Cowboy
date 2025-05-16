@@ -16716,6 +16716,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 5209626423905257243}
     m_Modifications:
+    - target: {fileID: 188333380272224793, guid: f14841b09c52fdc4f93cf8dc865fb542, type: 3}
+      propertyPath: m_audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 2e3cf5793eea2204cb2c8f93717c3938, type: 3}
     - target: {fileID: 1297524382207299641, guid: f14841b09c52fdc4f93cf8dc865fb542, type: 3}
       propertyPath: m_Name
       value: Enemy_Boss_Flamethrower
@@ -16780,6 +16784,10 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: 4.17
       objectReference: {fileID: 0}
+    - target: {fileID: 6840859603735813798, guid: f14841b09c52fdc4f93cf8dc865fb542, type: 3}
+      propertyPath: m_audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 33d255937ea9cb74dbaf46d7a552672d, type: 3}
     - target: {fileID: 7919489221113089262, guid: f14841b09c52fdc4f93cf8dc865fb542, type: 3}
       propertyPath: m_LocalPosition.x
       value: -5.77

@@ -35006,6 +35006,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2427253270581321801, guid: b2cdc8d0b85c37042bd651947afb7373, type: 3}
+      propertyPath: m_audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 2e3cf5793eea2204cb2c8f93717c3938, type: 3}
     - target: {fileID: 3859447169215783214, guid: b2cdc8d0b85c37042bd651947afb7373, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.83
@@ -35038,6 +35042,10 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: -2.96
       objectReference: {fileID: 0}
+    - target: {fileID: 8335753815267895369, guid: b2cdc8d0b85c37042bd651947afb7373, type: 3}
+      propertyPath: m_audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 33d255937ea9cb74dbaf46d7a552672d, type: 3}
     - target: {fileID: 8939508681670332628, guid: b2cdc8d0b85c37042bd651947afb7373, type: 3}
       propertyPath: m_LocalPosition.x
       value: 11.046898
