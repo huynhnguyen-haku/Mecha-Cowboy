@@ -62,12 +62,12 @@ public class MoveState_Range : EnemyState
         if (enemy.rangeSFX.runSFX.isPlaying)
             enemy.rangeSFX.runSFX.Stop();
 
-        if (enemy.rangeSFX.walkSFX.isPlaying)
+        if (!enemy.rangeSFX.walkSFX.isPlaying)
             enemy.rangeSFX.walkSFX.PlayOneShot(enemy.rangeSFX.walkSFX.clip);
     }
 
     private float CalculateFootstepInterval(float speed)
     {
-        return Mathf.Clamp(1f / speed, 0.4f, 0.6f);
+        return Mathf.Clamp(1f / speed, 0.4f, 0.7f);
     }
 }

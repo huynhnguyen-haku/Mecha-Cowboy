@@ -82,7 +82,7 @@ public class ChaseState_Melee : EnemyState
 
     private float CalculateFootstepInterval(float speed)
     {
-        return Mathf.Clamp(1f / speed, 0.3f, 0.5f);
+        return Mathf.Clamp(1f / speed, 0.1f, 0.1f);
     }
 }
 
