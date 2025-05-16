@@ -16,23 +16,6 @@ public class TimeManager : MonoBehaviour
         instance = this;    
     }
 
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Q))
-        {
-            SlowMotionFor(1f);
-        }
-
-        if (Mathf.Abs(Time.timeScale - targetTimeScale) > 0.05f)
-        {
-            float adjustRate = Time.unscaledDeltaTime * timeAdjustRate;
-            Time.timeScale = Mathf.Lerp(Time.timeScale, targetTimeScale, adjustRate);
-        }
-        else
-        {
-            Time.timeScale = targetTimeScale;
-        }
-    }
 
     public void PauseTime()
     {

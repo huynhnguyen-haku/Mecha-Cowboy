@@ -20,7 +20,7 @@ MonoBehaviour:
   fireRate: 600
   bulletsInMagazine: 40
   magazineCapacity: 40
-  TotalReserveAmmo: 120
+  TotalReserveAmmo: 80
   reloadSpeed: 2
   equipSpeed: 2
   cameraDistance: 7
@@ -33,6 +33,6 @@ MonoBehaviour:
   burst_FireRate: 100
   burst_FireDelay: 0.1
   weaponIcon: {fileID: 948876784, guid: 3477fe9a26e0faa42b5a9b5b258229c1, type: 3}
-  weaponInfo: Fast and reliable
+  weaponInfo: Versatile weapon for mid-range targets
   isUnlocked: 0
   price: 400

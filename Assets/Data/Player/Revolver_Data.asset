@@ -20,7 +20,7 @@ MonoBehaviour:
   fireRate: 150
   bulletsInMagazine: 6
   magazineCapacity: 6
-  TotalReserveAmmo: 30
+  TotalReserveAmmo: 18
   reloadSpeed: 1.4
   equipSpeed: 3
   cameraDistance: 6
@@ -33,6 +33,6 @@ MonoBehaviour:
   burst_FireRate: 0
   burst_FireDelay: 0.1
   weaponIcon: {fileID: -521392656, guid: 3477fe9a26e0faa42b5a9b5b258229c1, type: 3}
-  weaponInfo: Punch like a heavyweight
+  weaponInfo: Classic six-shooter for close duels
   isUnlocked: 0
   price: 200
