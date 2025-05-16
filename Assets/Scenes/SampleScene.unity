@@ -11504,7 +11504,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 4a4016ecd4a9f144189f53d09b622067, type: 3}
+  m_Sprite: {fileID: 125989364, guid: 085fd821cbca5024e987ed51601853c0, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -15619,7 +15619,7 @@ MonoBehaviour:
   currentCar: {fileID: 0}
   playerMoney: 0
   friendlyFire: 1
-  quickStart: 1
+  quickStart: 0
 --- !u!4 &1056934589
 Transform:
   m_ObjectHideFlags: 0
@@ -20097,7 +20097,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 4a4016ecd4a9f144189f53d09b622067, type: 3}
+  m_Sprite: {fileID: 125989364, guid: 085fd821cbca5024e987ed51601853c0, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -23684,7 +23684,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 4a4016ecd4a9f144189f53d09b622067, type: 3}
+  m_Sprite: {fileID: 125989364, guid: 085fd821cbca5024e987ed51601853c0, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -25464,7 +25464,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 4a4016ecd4a9f144189f53d09b622067, type: 3}
+  m_Sprite: {fileID: 125989364, guid: 085fd821cbca5024e987ed51601853c0, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -30044,7 +30044,7 @@ VideoPlayer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2106593665}
   m_Enabled: 1
-  m_VideoClip: {fileID: 32900000, guid: 47187d640c8ebe34db80dbee19cc0881, type: 3}
+  m_VideoClip: {fileID: 32900000, guid: a955e7c18957f8c48a9fa424bcda4dbb, type: 3}
   m_TargetCameraAlpha: 1
   m_TargetCamera3DLayout: 0
   m_TargetCamera: {fileID: 0}
@@ -30559,7 +30559,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 4a4016ecd4a9f144189f53d09b622067, type: 3}
+  m_Sprite: {fileID: 125989364, guid: 085fd821cbca5024e987ed51601853c0, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -46262,7 +46262,7 @@ MonoBehaviour:
   m_OverrideVoxelSize: 0
   m_VoxelSize: 0.06666667
   m_MinRegionArea: 2
-  m_NavMeshData: {fileID: 23800000, guid: 2c8633f03463a1c49a5f3eaaeb6f67d4, type: 2}
+  m_NavMeshData: {fileID: 0}
   m_BuildHeightMesh: 0
 --- !u!33 &8120732613972471703
 MeshFilter:
