@@ -223,7 +223,7 @@ ParticleSystem:
       serializedVersion: 2
       minMaxState: 0
       minColor: {r: 1, g: 1, b: 1, a: 1}
-      maxColor: {r: 0.1372549, g: 0.48449346, b: 1, a: 1}
+      maxColor: {r: 1, g: 0.15686274, b: 0.17272279, a: 1}
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}
@@ -4900,7 +4900,7 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
---- !u!1 &5366602491860647172
+--- !u!1 &3442620064068576747
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -4908,22 +4908,22 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 451107173595394341}
-  - component: {fileID: 1093421796970544616}
+  - component: {fileID: 3022230935961886652}
+  - component: {fileID: 958618985199829340}
   m_Layer: 0
-  m_Name: Melee_Impact
+  m_Name: SFX_BulletImpact
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &451107173595394341
+--- !u!4 &3022230935961886652
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5366602491860647172}
+  m_GameObject: {fileID: 3442620064068576747}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
@@ -4932,20 +4932,20 @@ Transform:
   m_Children: []
   m_Father: {fileID: 2726506497666616090}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!82 &1093421796970544616
+--- !u!82 &958618985199829340
 AudioSource:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5366602491860647172}
+  m_GameObject: {fileID: 3442620064068576747}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 9e0530ac745ee504ebc931c5ba9b3143, type: 3}
-  m_Resource: {fileID: 8300000, guid: 9e0530ac745ee504ebc931c5ba9b3143, type: 3}
+  OutputAudioMixerGroup: {fileID: -6588009452513906657, guid: 580a2d6e80739904dbcbecb0db7b5ed8, type: 2}
+  m_audioClip: {fileID: 8300000, guid: 75adfe9a619833445a701305b983e548, type: 3}
+  m_Resource: {fileID: 8300000, guid: 75adfe9a619833445a701305b983e548, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0.3
+  m_Volume: 0.1
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -4954,7 +4954,7 @@ AudioSource:
   Priority: 128
   DopplerLevel: 1
   MinDistance: 1
-  MaxDistance: 3
+  MaxDistance: 7
   Pan2D: 0
   rolloffMode: 0
   BypassEffects: 0
@@ -4989,7 +4989,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -5252,7 +5252,7 @@ ParticleSystem:
       serializedVersion: 2
       minMaxState: 0
       minColor: {r: 1, g: 1, b: 1, a: 1}
-      maxColor: {r: 0.2235294, g: 0.4500815, b: 1, a: 0.34901962}
+      maxColor: {r: 1, g: 0.1273585, b: 0.14359336, a: 1}
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}
@@ -9940,9 +9940,9 @@ GameObject:
   - component: {fileID: 2726506497666616090}
   - component: {fileID: 7123953512753037803}
   - component: {fileID: 3076933345661044356}
-  - component: {fileID: -7897719140305047997}
+  - component: {fileID: 1876072615005512592}
   m_Layer: 0
-  m_Name: MeleeAttack_Impact
+  m_Name: Enemy_Bullet_Impact
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -9963,7 +9963,7 @@ Transform:
   m_Children:
   - {fileID: 598911197651021668}
   - {fileID: 2185932164658265402}
-  - {fileID: 451107173595394341}
+  - {fileID: 3022230935961886652}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
 --- !u!198 &7123953512753037803
@@ -10156,7 +10156,7 @@ ParticleSystem:
       serializedVersion: 2
       minMaxState: 0
       minColor: {r: 1, g: 1, b: 1, a: 1}
-      maxColor: {r: 0.15686275, g: 0.5568628, b: 1, a: 1}
+      maxColor: {r: 1, g: 0.15686274, b: 0.17272279, a: 1}
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}
@@ -14882,7 +14882,7 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
---- !u!114 &-7897719140305047997
+--- !u!114 &1876072615005512592
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -14894,7 +14894,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e7bc9a665c26284bad0595b45105d5b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sfx: {fileID: 0}
-  volume: 0.3
+  sfx: {fileID: 958618985199829340}
+  volume: 0.1
   minPitch: 0.85
   maxPitch: 1.1
