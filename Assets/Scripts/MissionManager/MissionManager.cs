@@ -53,4 +53,12 @@ public class MissionManager : MonoBehaviour
         }
         return false;
     }
+
+    public void ResetAfterCompletion()
+    {
+        currentMission = null;
+        isMissionActive = false;
+        hasSetFinalTarget = false;
+        Debug.Log("MissionManager: Reset after mission completion.");
+    }
 }

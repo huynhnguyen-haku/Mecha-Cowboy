@@ -18,14 +18,6 @@ public class PathfindingIndicator : MonoBehaviour
         // Khởi tạo NavMeshPath
         path = new NavMeshPath();
 
-        // Thiết lập LineRenderer
-        if (lineRenderer == null)
-        {
-            lineRenderer = gameObject.AddComponent<LineRenderer>();
-            lineRenderer.material = new Material(Shader.Find("Sprites/Default"));
-        }
-
-
         lineRenderer.positionCount = 0;
         lineRenderer.textureMode = LineTextureMode.Tile; // Đảm bảo texture lặp lại mượt mà
         lineRenderer.numCapVertices = 5; // Làm mượt hai đầu đường dẫn
@@ -59,6 +51,12 @@ public class PathfindingIndicator : MonoBehaviour
 
     void UpdatePath()
     {
+        if (target == null)
+        {
+            Debug.LogWarning("PathfindingIndicator: Target is null in UpdatePath!");
+            lineRenderer.positionCount = 0;
+            return;
+        }
         if (NavMesh.CalculatePath(transform.position, target.position, NavMesh.AllAreas, path))
         {
             Vector3[] smoothedPoints = SmoothPath(path.corners);
@@ -70,9 +68,11 @@ public class PathfindingIndicator : MonoBehaviour
         }
         else
         {
+            Debug.LogWarning("PathfindingIndicator: NavMesh.CalculatePath failed!");
             lineRenderer.positionCount = 0;
         }
     }
+
 
     Vector3[] SmoothPath(Vector3[] corners)
     {

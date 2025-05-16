@@ -25,7 +25,7 @@ public class Mission_Timer : Mission
     public override void UpdateMission()
     {
         if (isCompleted)
-            return; // Không cập nhật nếu đã thất bại hoặc hoàn thành
+            return; // Không cập nhật nếu đã hoàn thành
 
         if (currentTime > 0)
         {
@@ -38,13 +38,24 @@ public class Mission_Timer : Mission
         }
         else
         {
+            // Thời gian hết, mission thất bại
+            string missionText = "Time's up!";
+            string missionDetails = "Mission failed. Return to main menu to try again.";
+            UI.instance.inGameUI.UpdateMissionUI(missionText, missionDetails);
             GameManager.instance.GameOver(); // Kết thúc game khi thất bại
         }
     }
 
     public override bool MissionCompleted()
     {
-        return currentTime > 0;
+        return isCompleted && currentTime > 0; // Hoàn thành nếu được đánh dấu hoàn thành và thời gian còn
+    }
+
+    // Được gọi bởi MissionEnd_Trigger khi người chơi đến đích
+    public void MarkAsCompleted()
+    {
+        isCompleted = true;
+        Debug.Log("Mission_Timer: Marked as completed.");
     }
 
     public override MissionType GetMissionType()
