@@ -61,6 +61,16 @@ public class GameManager : MonoBehaviour
         // Restart the scene from the main menu
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         Cursor.visible = true;
+
+        PathfindingIndicator pathfindingIndicator = FindObjectOfType<PathfindingIndicator>();
+        if (pathfindingIndicator != null)
+        {
+            pathfindingIndicator.Reset();
+        }
+        else
+        {
+            Debug.LogWarning("GameManager: PathfindingIndicator not found during RestartScene!");
+        }
     }
 
     public void GameOver()

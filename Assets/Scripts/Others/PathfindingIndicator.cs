@@ -95,4 +95,12 @@ public class PathfindingIndicator : MonoBehaviour
 
         return smoothedPoints;
     }
+
+    public void Reset()
+    {
+        target = null;
+        timer = 0f;
+        lineRenderer.positionCount = 0; // Xóa đường dẫn cũ
+        Debug.Log("PathfindingIndicator: Reset state.");
+    }
 }

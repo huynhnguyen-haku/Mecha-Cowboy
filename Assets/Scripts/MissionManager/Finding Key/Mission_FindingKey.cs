@@ -5,10 +5,14 @@ public class Misson_KeyFind : Mission
 {
     [SerializeField] private GameObject key;
     public bool isKeyFound;
-    public override void StartMission()
+
+    private void OnEnable()
     {
         isKeyFound = false;
+    }
 
+    public override void StartMission()
+    {
         UI.instance.inGameUI.UpdateMissionUI("Find the Key-holder and retrive the key.");
 
         MissionObject_Key.OnKeyPickedUp += PickupKey;

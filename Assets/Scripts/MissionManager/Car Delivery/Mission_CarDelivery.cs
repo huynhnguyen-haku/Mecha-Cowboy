@@ -1,10 +1,10 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 [CreateAssetMenu(fileName = "Car Delivery Mission", menuName = "Mission/Car Delivery - Mission")]
 
 public class Mission_CarDelivery : Mission
 {
-    public bool isCarDelivered;
+    private bool isCarDelivered;
 
     private void OnEnable()
     {

@@ -18,17 +18,21 @@ public class MissionManager : MonoBehaviour
         if (isMissionActive)
             currentMission?.UpdateMission();
 
-        if (currentMission != null && currentMission.MissionCompleted() && !hasSetFinalTarget)
+        PathfindingIndicator pathfindingIndicator = FindObjectOfType<PathfindingIndicator>();
+        if (pathfindingIndicator != null && currentMission != null && currentMission.MissionCompleted() && !hasSetFinalTarget)
         {
             GameObject missionCompleteZone = GameObject.Find("MissionComplete_Zone");
-            PathfindingIndicator pathfindingIndicator = FindObjectOfType<PathfindingIndicator>();
-            if (missionCompleteZone != null && pathfindingIndicator != null)
+            if (missionCompleteZone != null)
             {
                 pathfindingIndicator.SetTarget(missionCompleteZone.transform);
                 hasSetFinalTarget = true;
+                Debug.Log("MissionManager: Set PathfindingIndicator target to MissionComplete_Zone after mission completion.");
+            }
+            else
+            {
+                Debug.LogWarning("MissionManager: MissionComplete_Zone not found after mission completion!");
             }
         }
-
     }
 
     public void SetCurrentMission(Mission newMission)
