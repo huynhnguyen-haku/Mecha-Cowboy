@@ -27,8 +27,10 @@ public class GameManager : MonoBehaviour
         instance = this;
         player = FindObjectOfType<Player>();
         LoadPlayerMoney();
+    }
 
-        // Khởi tạo trạng thái ban đầu và phát BGM
+    private void Start()
+    {
         UpdateGameState(GameState.MainMenu);
     }
 
@@ -118,19 +120,19 @@ public class GameManager : MonoBehaviour
         switch (currentGameState)
         {
             case GameState.MainMenu:
-                AudioManager.instance.PlayMainMenuBGM();
+                AudioManager.instance.PlayBGM(0); // Main Menu
                 break;
 
             case GameState.InGame:
-                AudioManager.instance.PlayRandomMissionBGM();
+                AudioManager.instance.PlayBGM(1); // Mission
                 break;
 
             case GameState.GameOver:
-                AudioManager.instance.PlayGameOverBGM();
+                AudioManager.instance.PlayBGM(2); // Game Over
                 break;
 
             case GameState.MissionComplete:
-                AudioManager.instance.PlayMissionCompleteBGM();
+                AudioManager.instance.PlayBGM(3); // Mission Complete
                 break;
         }
 

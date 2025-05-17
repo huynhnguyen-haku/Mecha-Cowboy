@@ -13,14 +13,9 @@ public class AudioManager : MonoBehaviour
 
     [SerializeField] private bool[] loopTracks; // Xác định track nào sẽ lặp lại (dành cho missionBGMs)
     [SerializeField] private bool playBgm;
+    [SerializeField] private float fadeDuration = 1f; // Thời gian fade mặc định (có thể điều chỉnh trong Inspector)
 
     private int currentMissionBGMIndex; // Theo dõi index của track mission hiện tại
-    private bool isTrackPlaying; // Theo dõi trạng thái phát
-    private bool isFading; // Theo dõi trạng thái fade để tránh xung đột
-
-    // Trạng thái hiện tại của BGM
-    private enum BGMState { None, MainMenu, Mission, GameOver, MissionComplete }
-    private BGMState currentBGMState = BGMState.None;
 
     private void Awake()
     {
@@ -32,6 +27,19 @@ public class AudioManager : MonoBehaviour
             Debug.LogWarning("AudioManager: One or more BGM sources are not assigned!");
         }
 
+        // Kiểm tra chi tiết mainMenuBGM
+        if (mainMenuBGM != null)
+        {
+            if (mainMenuBGM.clip == null)
+            {
+                Debug.LogWarning("AudioManager: MainMenuBGM AudioSource is assigned, but no audio clip is set!");
+            }
+            else
+            {
+                Debug.Log($"AudioManager: MainMenuBGM is assigned with clip {mainMenuBGM.clip.name}, volume: {mainMenuBGM.volume}, playOnAwake: {mainMenuBGM.playOnAwake}");
+            }
+        }
+
         // Đảm bảo loopTracks có cùng độ dài với missionBGMs
         if (loopTracks == null || loopTracks.Length != missionBGMs.Length)
         {
@@ -41,29 +49,11 @@ public class AudioManager : MonoBehaviour
 
     private void Start()
     {
-        PlayMainMenuBGM(); // Phát track main menu khi bắt đầu
-    }
-
-    private void Update()
-    {
-        // Chỉ kiểm tra nếu playBgm bật và không đang fade
-        if (playBgm && !isFading)
+        // Thử phát thủ công mainMenuBGM để kiểm tra
+        if (mainMenuBGM != null && mainMenuBGM.clip != null)
         {
-            // Nếu đang ở trạng thái mission và track hiện tại kết thúc (không lặp), phát track mới
-            if (currentBGMState == BGMState.Mission && isTrackPlaying && missionBGMs.Length > 0 && !missionBGMs[currentMissionBGMIndex].isPlaying && !loopTracks[currentMissionBGMIndex])
-            {
-                PlayRandomMissionBGM();
-            }
-
-            // Cập nhật trạng thái phát
-            AudioSource currentSource = GetCurrentPlayingBGM();
-            isTrackPlaying = (currentSource != null && currentSource.isPlaying);
-        }
-
-        // Nếu playBgm tắt, dừng BGM nếu đang phát
-        if (!playBgm && isTrackPlaying && !isFading)
-        {
-            StopAllBGM();
+            Debug.Log("AudioManager: Attempting to play MainMenuBGM manually in Start...");
+            mainMenuBGM.Play();
         }
     }
 
@@ -84,170 +74,160 @@ public class AudioManager : MonoBehaviour
         StartCoroutine(ProcessSFX_FadeAndDelay(source, play, targetVolume, delay, fadeDuration));
     }
 
-    // Phát BGM cho main menu
-    public void PlayMainMenuBGM(float fadeDuration = 1f)
+    // Phát BGM chung với crossfade
+    public void PlayBGM(int bgmType, float fadeDuration = 0f)
     {
-        if (mainMenuBGM == null)
+        AudioSource newSource = null;
+        string bgmTypeName = "";
+        switch (bgmType)
         {
-            Debug.LogWarning("AudioManager: Main menu BGM is not assigned!");
-            return;
+            case 0: // Main Menu
+                if (mainMenuBGM == null)
+                {
+                    Debug.LogWarning("AudioManager: Main menu BGM is not assigned!");
+                    return;
+                }
+                newSource = mainMenuBGM;
+                bgmTypeName = "Main Menu";
+                break;
+            case 1: // Mission (random)
+                if (missionBGMs == null || missionBGMs.Length == 0)
+                {
+                    Debug.LogWarning("AudioManager: No mission BGM tracks assigned!");
+                    return;
+                }
+                int newIndex = Random.Range(0, missionBGMs.Length);
+                while (newIndex == currentMissionBGMIndex && missionBGMs.Length > 1)
+                {
+                    newIndex = Random.Range(0, missionBGMs.Length);
+                }
+                currentMissionBGMIndex = newIndex;
+                newSource = missionBGMs[currentMissionBGMIndex];
+                bgmTypeName = "Mission";
+                break;
+            case 2: // Game Over
+                if (gameOverBGM == null)
+                {
+                    Debug.LogWarning("AudioManager: Game over BGM is not assigned!");
+                    return;
+                }
+                newSource = gameOverBGM;
+                bgmTypeName = "Game Over";
+                break;
+            case 3: // Mission Complete
+                if (missionCompleteBGM == null)
+                {
+                    Debug.LogWarning("AudioManager: Mission complete BGM is not assigned!");
+                    return;
+                }
+                newSource = missionCompleteBGM;
+                bgmTypeName = "Mission Complete";
+                break;
+            default:
+                Debug.LogWarning("AudioManager: Invalid BGM type!");
+                return;
         }
 
-        currentBGMState = BGMState.MainMenu;
-        StartCoroutine(CrossfadeToSingleBGM(mainMenuBGM, fadeDuration));
+        Debug.Log($"AudioManager: Playing BGM type {bgmTypeName}");
+        StartCoroutine(CrossfadeBGM(newSource, fadeDuration > 0 ? fadeDuration : this.fadeDuration));
     }
 
-    // Phát BGM ngẫu nhiên cho mission
-    public void PlayRandomMissionBGM(float fadeDuration = 1f)
-    {
-        if (missionBGMs == null || missionBGMs.Length == 0)
-        {
-            Debug.LogWarning("AudioManager: No mission BGM tracks assigned!");
-            return;
-        }
-
-        int newIndex = Random.Range(0, missionBGMs.Length);
-        // Tránh phát lại track hiện tại nếu có thể
-        while (newIndex == currentMissionBGMIndex && missionBGMs.Length > 1)
-        {
-            newIndex = Random.Range(0, missionBGMs.Length);
-        }
-        currentMissionBGMIndex = newIndex;
-
-        currentBGMState = BGMState.Mission;
-        StartCoroutine(CrossfadeToSingleBGM(missionBGMs[currentMissionBGMIndex], fadeDuration));
-    }
-
-    // Phát BGM khi game over
-    public void PlayGameOverBGM(float fadeDuration = 1f)
-    {
-        if (gameOverBGM == null)
-        {
-            Debug.LogWarning("AudioManager: Game over BGM is not assigned!");
-            return;
-        }
-
-        currentBGMState = BGMState.GameOver;
-        StartCoroutine(CrossfadeToSingleBGM(gameOverBGM, fadeDuration));
-    }
-
-    // Phát BGM khi mission complete
-    public void PlayMissionCompleteBGM(float fadeDuration = 1f)
-    {
-        if (missionCompleteBGM == null)
-        {
-            Debug.LogWarning("AudioManager: Mission complete BGM is not assigned!");
-            return;
-        }
-
-        currentBGMState = BGMState.MissionComplete;
-        StartCoroutine(CrossfadeToSingleBGM(missionCompleteBGM, fadeDuration));
-    }
-
-    public void StopAllBGM(float fadeDuration = 1f)
+    public void StopAllBGM(float fadeDuration = 0f)
     {
         AudioSource currentSource = GetCurrentPlayingBGM();
         if (currentSource != null)
         {
-            StartCoroutine(FadeOutBGM(currentSource, fadeDuration));
+            Debug.Log($"AudioManager: Stopping BGM {currentSource.name} with fade duration {fadeDuration}");
+            StartCoroutine(FadeOutBGM(currentSource, fadeDuration > 0 ? fadeDuration : this.fadeDuration));
         }
-        currentBGMState = BGMState.None;
     }
 
     private AudioSource GetCurrentPlayingBGM()
     {
-        if (currentBGMState == BGMState.MainMenu && mainMenuBGM != null && mainMenuBGM.isPlaying)
-            return mainMenuBGM;
-        if (currentBGMState == BGMState.Mission && missionBGMs.Length > 0 && missionBGMs[currentMissionBGMIndex].isPlaying)
-            return missionBGMs[currentMissionBGMIndex];
-        if (currentBGMState == BGMState.GameOver && gameOverBGM != null && gameOverBGM.isPlaying)
-            return gameOverBGM;
-        if (currentBGMState == BGMState.MissionComplete && missionCompleteBGM != null && missionCompleteBGM.isPlaying)
-            return missionCompleteBGM;
+        if (mainMenuBGM != null && mainMenuBGM.isPlaying) return mainMenuBGM;
+        for (int i = 0; i < missionBGMs.Length; i++)
+        {
+            if (missionBGMs[i] != null && missionBGMs[i].isPlaying) return missionBGMs[i];
+        }
+        if (gameOverBGM != null && gameOverBGM.isPlaying) return gameOverBGM;
+        if (missionCompleteBGM != null && missionCompleteBGM.isPlaying) return missionCompleteBGM;
         return null;
     }
 
-    private void StopAllTracksExcept(AudioSource excludeSource)
+    private void StopAllTracksExcept(AudioSource excludeSource, float fadeDuration)
     {
         if (mainMenuBGM != null && mainMenuBGM != excludeSource && mainMenuBGM.isPlaying)
         {
-            mainMenuBGM.Stop();
-            mainMenuBGM.volume = 1; // Reset volume
+            Debug.Log($"AudioManager: Fading out MainMenuBGM with duration {fadeDuration}");
+            StartCoroutine(FadeOutBGM(mainMenuBGM, fadeDuration));
         }
 
         for (int i = 0; i < missionBGMs.Length; i++)
         {
             if (missionBGMs[i] != null && missionBGMs[i] != excludeSource && missionBGMs[i].isPlaying)
             {
-                missionBGMs[i].Stop();
-                missionBGMs[i].volume = 1; // Reset volume
+                Debug.Log($"AudioManager: Fading out MissionBGM[{i}] with duration {fadeDuration}");
+                StartCoroutine(FadeOutBGM(missionBGMs[i], fadeDuration));
             }
         }
 
         if (gameOverBGM != null && gameOverBGM != excludeSource && gameOverBGM.isPlaying)
         {
-            gameOverBGM.Stop();
-            gameOverBGM.volume = 1; // Reset volume
+            Debug.Log($"AudioManager: Fading out GameOverBGM with duration {fadeDuration}");
+            StartCoroutine(FadeOutBGM(gameOverBGM, fadeDuration));
         }
 
         if (missionCompleteBGM != null && missionCompleteBGM != excludeSource && missionCompleteBGM.isPlaying)
         {
-            missionCompleteBGM.Stop();
-            missionCompleteBGM.volume = 1; // Reset volume
+            Debug.Log($"AudioManager: Fading out MissionCompleteBGM with duration {fadeDuration}");
+            StartCoroutine(FadeOutBGM(missionCompleteBGM, fadeDuration));
         }
     }
 
-    private IEnumerator CrossfadeToSingleBGM(AudioSource newSource, float fadeDuration)
+    private IEnumerator CrossfadeBGM(AudioSource newSource, float fadeDuration)
     {
-        if (isFading || newSource == null)
+        if (newSource == null)
+        {
+            Debug.LogWarning("AudioManager: CrossfadeBGM received a null AudioSource!");
             yield break;
+        }
 
-        isFading = true;
-
-        // Fade out track hiện tại nếu đang phát
+        // Lấy track hiện tại đang phát
         AudioSource oldSource = GetCurrentPlayingBGM();
 
-        // Dừng tất cả các track khác ngoại trừ track mới
-        StopAllTracksExcept(newSource);
+        // Fade out tất cả các track khác ngoại trừ track mới
+        StopAllTracksExcept(newSource, fadeDuration);
 
-        // Cài đặt track mới
+        // Cài đặt và phát track mới với fade-in
         newSource.volume = 0;
         newSource.loop = (newSource == missionBGMs[currentMissionBGMIndex]) ? loopTracks[currentMissionBGMIndex] : false;
+        Debug.Log($"AudioManager: Starting playback for {newSource.name}, loop: {newSource.loop}");
         newSource.Play();
 
         float elapsedTime = 0;
-
         while (elapsedTime < fadeDuration)
         {
             elapsedTime += Time.deltaTime;
             float t = elapsedTime / fadeDuration;
 
-            if (oldSource != null && oldSource != newSource)
-            {
-                oldSource.volume = Mathf.Lerp(oldSource.volume, 0, t);
-            }
+            // Fade-in track mới
             newSource.volume = Mathf.Lerp(0, 1, t);
 
             yield return null;
         }
 
-        if (oldSource != null && oldSource != newSource)
-        {
-            oldSource.Stop();
-            oldSource.volume = 1; // Reset volume
-        }
         newSource.volume = 1;
-
-        isFading = false;
-        isTrackPlaying = true;
+        Debug.Log($"AudioManager: Finished fading in {newSource.name}, volume: {newSource.volume}");
     }
 
-    private IEnumerator FadeOutBGM(AudioSource source, float fadeDuration = 1f)
+    private IEnumerator FadeOutBGM(AudioSource source, float fadeDuration)
     {
-        if (isFading || source == null)
+        if (source == null)
+        {
+            Debug.LogWarning("AudioManager: FadeOutBGM received a null AudioSource!");
             yield break;
+        }
 
-        isFading = true;
         float startVolume = source.volume;
 
         float elapsedTime = 0;
@@ -260,8 +240,7 @@ public class AudioManager : MonoBehaviour
 
         source.Stop();
         source.volume = startVolume; // Reset volume
-        isTrackPlaying = false;
-        isFading = false;
+        Debug.Log($"AudioManager: Finished fading out {source.name}, stopped and reset volume to {source.volume}");
     }
 
     private IEnumerator ProcessSFX_FadeAndDelay(AudioSource source, bool play, float targetVolume, float delay = 0, float fadeDuration = 1)
