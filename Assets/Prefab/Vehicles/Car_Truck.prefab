@@ -389,7 +389,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8198b5afe384bd24a9160c03a5bd7de4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minSpeedToDamage: 20
+  minSpeedToDamage: 6
   carDamage: 200
   impactForce: 150
   upwardsMulti: 2
@@ -1805,7 +1805,7 @@ MonoBehaviour:
   maxHealth: 600
   currentHealth: 0
   carBroken: 0
-  explosionDamage: 350
+  explosionDamage: 400
   explosionRadius: 4
   fireFX: {fileID: 4026768263351936659}
   explosionFX: {fileID: 779631668963954079}

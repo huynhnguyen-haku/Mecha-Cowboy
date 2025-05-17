@@ -11,8 +11,7 @@ public enum AmmoBoxType
 public struct AmmoData
 {
     public WeaponType weaponType;
-    [Range(10, 100)] public int minAmount;
-    [Range(10, 100)] public int maxAmount;
+    [Range(10, 100)] public int amount;
 }
 
 public class Ammo_PickUp : Interactable
@@ -39,23 +38,12 @@ public class Ammo_PickUp : Interactable
         foreach (AmmoData ammo in currentAmmoList)
         {
             Weapon weapon = weaponController.WeaponInSlots(ammo.weaponType);
-            AddBullets(weapon, GetBulletAmount(ammo));
+            AddBullets(weapon, ammo.amount);
         }
 
         ObjectPool.instance.ReturnObject(gameObject);
     }
 
-
-    private int GetBulletAmount(AmmoData ammoData)
-    {
-        float min = Mathf.Min(ammoData.minAmount, ammoData.maxAmount);
-        float max = Mathf.Max(ammoData.minAmount, ammoData.maxAmount);
-
-        float randomAmmoAmount = Random.Range(min, max);
-
-        // Round to the nearest whole number
-        return Mathf.RoundToInt(randomAmmoAmount); 
-    }
 
     private void AddBullets(Weapon weapon, int amount)
     {

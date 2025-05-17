@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weaponName: Titan's Wrath
   weaponType: 1
-  bulletDamage: 50
+  bulletDamage: 60
   shotType: 0
   bulletsPerShot: 1
   fireRate: 150
@@ -34,5 +34,5 @@ MonoBehaviour:
   burst_FireDelay: 0.1
   weaponIcon: {fileID: -521392656, guid: 3477fe9a26e0faa42b5a9b5b258229c1, type: 3}
   weaponInfo: Classic six-shooter for close duels
-  isUnlocked: 0
+  isUnlocked: 1
   price: 1000
