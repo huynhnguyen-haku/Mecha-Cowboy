@@ -7,6 +7,9 @@ public abstract class Mission : ScriptableObject
     [TextArea]
     public string missionDescription;
 
+    [TextArea]
+    public string missionObjective;
+
     public int reward;
 
     [Header("Mission Preview")]
@@ -16,6 +19,4 @@ public abstract class Mission : ScriptableObject
     public abstract bool MissionCompleted();
     public virtual void UpdateMission() { }
     public abstract MissionType GetMissionType();
-
-
 }

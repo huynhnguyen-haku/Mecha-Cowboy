@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Car Delivery
   m_EditorClassIdentifier: 
   missionName: Iron Horse Express
-  missionDescription: Deliver a pristine car to the customer, making sure it runs
-    like a well-oiled machine.
+  missionDescription: Deliver a car to the customer, making sure it runs like a well-oiled
+    machine.
+  missionObjective: 'Objective: Find and deliver a car.'
   reward: 1400
   missionPreview: {fileID: -1459823701, guid: 910aa9489bcd0054f9d89f9f871fae10, type: 3}
-  isCarDelivered: 0

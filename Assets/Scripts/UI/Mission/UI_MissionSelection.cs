@@ -6,12 +6,19 @@ using UnityEngine.Video;
 public class UI_MissionSelection : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI missionDescription;
+    [SerializeField] private TextMeshProUGUI missionObjective;
+
     [SerializeField] private TextMeshProUGUI missionReward;
     [SerializeField] private Image missionPreviewImage; // Hình ảnh minh họa
 
     public void SetMissionDescription(string description)
     {
         missionDescription.text = description;
+    }
+
+    public void SetMissionObjective(string objective)
+    {
+        missionObjective.text = objective;
     }
 
     public void SetMissionReward(int reward)

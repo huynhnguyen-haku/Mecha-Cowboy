@@ -13,7 +13,9 @@ MonoBehaviour:
   m_Name: Base Defense
   m_EditorClassIdentifier: 
   missionName: Cyber Corruption
-  missionDescription: Unleash a virus to dismantle their defenses.
+  missionDescription: Unleash a virus to dismantle their defenses. Once finished,
+    it will kill all enemies in the map.
+  missionObjective: 'Objective: Activate the virus.'
   reward: 1500
   missionPreview: {fileID: -1254829206, guid: f5242cd4daa99d44fa81f5b0c3aba104, type: 3}
   isDefenceStarted: 0

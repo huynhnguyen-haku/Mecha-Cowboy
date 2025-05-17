@@ -13,7 +13,9 @@ MonoBehaviour:
   m_Name: Key Finding
   m_EditorClassIdentifier: 
   missionName: Core Extraction
-  missionDescription: Hunt down and recover powerful enemy cores.
+  missionDescription: Hunt down and recover powerful enemy core. Be careful, enemy
+    who has it will be stronger.
+  missionObjective: 'Objective: Retrieve the giant core.'
   reward: 1000
   missionPreview: {fileID: -1918913486, guid: e546b50d752417345977f3574f8ec241, type: 3}
   key: {fileID: 438324553830291184, guid: 46f02180e96a83649ba6dd8f7db0d314, type: 3}
