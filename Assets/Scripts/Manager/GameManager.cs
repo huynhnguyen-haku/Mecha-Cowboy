@@ -16,13 +16,20 @@ public class GameManager : MonoBehaviour
 
     // For testing purposes, we can skip the weapon selection screen and start the game directly
     [Space]
-    public bool quickStart;    // Remove this in the final build
+    public bool quickStart; // Remove this in the final build
+
+    // Trạng thái game để quản lý BGM
+    private enum GameState { MainMenu, InGame, GameOver, MissionComplete }
+    private GameState currentGameState = GameState.MainMenu;
 
     private void Awake()
     {
         instance = this;
         player = FindObjectOfType<Player>();
         LoadPlayerMoney();
+
+        // Khởi tạo trạng thái ban đầu và phát BGM
+        UpdateGameState(GameState.MainMenu);
     }
 
     // Testing areas
@@ -53,11 +60,13 @@ public class GameManager : MonoBehaviour
     {
         SetDefaultWeapon();
         Cursor.visible = false;
-        AudioManager.instance.PlayRandomMissionBGM();
+        // Start selected mission in a LevelGenerator script, after we done with level creation
+        UpdateGameState(GameState.InGame);
     }
 
     public void RestartScene()
     {
+        // Restart the scene from the main menu
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         Cursor.visible = true;
 
@@ -71,7 +80,7 @@ public class GameManager : MonoBehaviour
             Debug.LogWarning("GameManager: PathfindingIndicator not found during RestartScene!");
         }
 
-        AudioManager.instance.PlayMainMenuBGM();
+        UpdateGameState(GameState.MainMenu);
     }
 
     public void GameOver()
@@ -80,8 +89,7 @@ public class GameManager : MonoBehaviour
         UI.instance.ShowGameOverUI();
         CameraManager.instance.ChangeCameraDistance(5);
         Cursor.visible = true;
-        // Phát nhạc nền Game Over
-        AudioManager.instance.PlayGameOverBGM();
+        UpdateGameState(GameState.GameOver);
     }
 
     public void CompleteGame()
@@ -90,14 +98,42 @@ public class GameManager : MonoBehaviour
         ControlsManager.instance.controls.Character.Disable(); // Prevent player from moving
         player.health.currentHealth += 999; // Set player health to max just in case
         Cursor.visible = true;
-
-        // Play nhạc hoàn thành mission
-        AudioManager.instance.PlayMissionCompleteBGM();
+        UpdateGameState(GameState.MissionComplete);
     }
 
     private void SetDefaultWeapon()
     {
         List<Weapon_Data> newList = UI.instance.weaponSelection.SelectedWeaponData();
         player.weapon.SetDefaultWeapon(newList);
+    }
+
+    private void UpdateGameState(GameState newState)
+    {
+        if (currentGameState == newState)
+            return;
+
+        currentGameState = newState;
+
+        // Phát BGM dựa trên trạng thái game
+        switch (currentGameState)
+        {
+            case GameState.MainMenu:
+                AudioManager.instance.PlayMainMenuBGM();
+                break;
+
+            case GameState.InGame:
+                AudioManager.instance.PlayRandomMissionBGM();
+                break;
+
+            case GameState.GameOver:
+                AudioManager.instance.PlayGameOverBGM();
+                break;
+
+            case GameState.MissionComplete:
+                AudioManager.instance.PlayMissionCompleteBGM();
+                break;
+        }
+
+        Debug.Log($"GameManager: Updated state to {currentGameState}");
     }
 }
