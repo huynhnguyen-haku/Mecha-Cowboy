@@ -53,12 +53,11 @@ public class GameManager : MonoBehaviour
     {
         SetDefaultWeapon();
         Cursor.visible = false;
-        // Start selected mission in a LevelGenerator script, after we done with level creation
+        AudioManager.instance.PlayRandomMissionBGM();
     }
 
     public void RestartScene()
     {
-        // Restart the scene from the main menu
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         Cursor.visible = true;
 
@@ -71,6 +70,8 @@ public class GameManager : MonoBehaviour
         {
             Debug.LogWarning("GameManager: PathfindingIndicator not found during RestartScene!");
         }
+
+        AudioManager.instance.PlayMainMenuBGM();
     }
 
     public void GameOver()
@@ -79,6 +80,8 @@ public class GameManager : MonoBehaviour
         UI.instance.ShowGameOverUI();
         CameraManager.instance.ChangeCameraDistance(5);
         Cursor.visible = true;
+        // Phát nhạc nền Game Over
+        AudioManager.instance.PlayGameOverBGM();
     }
 
     public void CompleteGame()
@@ -87,6 +90,9 @@ public class GameManager : MonoBehaviour
         ControlsManager.instance.controls.Character.Disable(); // Prevent player from moving
         player.health.currentHealth += 999; // Set player health to max just in case
         Cursor.visible = true;
+
+        // Play nhạc hoàn thành mission
+        AudioManager.instance.PlayMissionCompleteBGM();
     }
 
     private void SetDefaultWeapon()

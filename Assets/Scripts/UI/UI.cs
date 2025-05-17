@@ -82,6 +82,8 @@ public class UI : MonoBehaviour
     {
         SwitchTo(gameOverUI.gameObject);
         gameOverUI.ShowGameOverMessage(message);
+
+
     }
 
     public void StartLevelGeneration() => LevelGenerator.instance.InitializeGeneration();

@@ -41,6 +41,8 @@ public class MissionManager : MonoBehaviour
     {
         isMissionActive = true;
         currentMission.StartMission();
+
+        // Play random mission BGM
     }
 
     public bool MissionCompleted()
