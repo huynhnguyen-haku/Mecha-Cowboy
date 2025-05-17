@@ -32,7 +32,7 @@ public class Mission_CarDelivery : Mission
             }
 
 
-            string missionText = "Find a functiuonal car";
+            string missionText = "Find a functional car";
             string missionDetails = "Get to the car and drive it to the specified parking area";
 
             UI.instance.inGameUI.UpdateMissionUI(missionText, missionDetails);
@@ -61,7 +61,7 @@ public class Mission_CarDelivery : Mission
         MissionObject_Car.OnCarDelivery -= CompleteCarDelivery;
 
         string missionText = "Car delivered.";
-        string missionDetails = "Get to the evacuation point to complete mission";
+        string missionDetails = "Now go to the airplane to complete the mission.";
         UI.instance.inGameUI.UpdateMissionUI(missionText, missionDetails);
     }
 

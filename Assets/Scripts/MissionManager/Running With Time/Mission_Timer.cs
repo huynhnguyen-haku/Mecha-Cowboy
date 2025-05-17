@@ -41,6 +41,7 @@ public class Mission_Timer : Mission
             // Thời gian hết, mission thất bại
             string missionText = "Time's up!";
             string missionDetails = "Mission failed. Return to main menu to try again.";
+
             UI.instance.inGameUI.UpdateMissionUI(missionText, missionDetails);
             GameManager.instance.GameOver(); // Kết thúc game khi thất bại
         }

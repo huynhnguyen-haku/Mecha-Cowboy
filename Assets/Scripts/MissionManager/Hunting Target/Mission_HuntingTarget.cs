@@ -58,7 +58,10 @@ public class Mission_HuntingTarget : Mission
         if (remainingTargets <= 0)
         {
             // Cập nhật UI để thông báo hoàn thành nhiệm vụ
-            UI.instance.inGameUI.UpdateMissionUI("Target eliminated. Get to the evacuation point to complete mission");
+
+            string missionText = "Target eliminated.";
+            string missionDetails = "Now go to the airplane to complete the mission.";
+            UI.instance.inGameUI.UpdateMissionUI(missionText, missionDetails);
 
             // Hủy đăng ký sự kiện để tránh lỗi
             MissionObject_Target.OnTargetKilled -= ReduceRemainingTargets;

@@ -13,7 +13,9 @@ public class Misson_KeyFind : Mission
 
     public override void StartMission()
     {
-        UI.instance.inGameUI.UpdateMissionUI("Find the Key-holder and retrive the key.");
+        string missionText = "Find the enemy and retrieve the core.";
+        string missionDetails = "Tip: The enemy who has core installed is much bigger than normal one.";
+        UI.instance.inGameUI.UpdateMissionUI(missionText, missionDetails);
 
         MissionObject_Key.OnKeyPickedUp += PickupKey;
 
@@ -32,8 +34,10 @@ public class Misson_KeyFind : Mission
     {
         isKeyFound = true;
         MissionObject_Key.OnKeyPickedUp -= PickupKey;
-        
-        UI.instance.inGameUI.UpdateMissionUI("Key Found! \n Now go to the airplane to escape.");
+
+        string missionText = "Core Found!";
+        string missionDetails = "Now go to the airplane to complete the mission.";
+        UI.instance.inGameUI.UpdateMissionUI(missionText, missionDetails);
     }
 
     public override MissionType GetMissionType()

@@ -53,8 +53,8 @@ public class Mission_LastDefense : Mission
 
         respawnPoints = new List<Transform>(ClosestPoints(numberOfRespawnPoints));
 
-        string missionText = "Head to the maicious code zone to active it.";
-        string missionDetails = "Tips: There are ammo boxes and powerful guns in nearby abandoned town.";
+        string missionText = "Head to the enemy main base to activate the virus.";
+        string missionDetails = "Tip: There are ammo boxes and powerful guns in nearby abandoned town.";
         UI.instance.inGameUI.UpdateMissionUI(missionText, missionDetails);
     }
 
@@ -88,7 +88,7 @@ public class Mission_LastDefense : Mission
 
         defenceTimerText = System.TimeSpan.FromSeconds(defenseTimer).ToString("mm':'ss");
 
-        string missionText = "Reaced the malicious code zone. Activating...";
+        string missionText = "Activating. Please standby...";
         string missionDetails = "Time Left: " + defenceTimerText;
         UI.instance.inGameUI.UpdateMissionUI(missionText, missionDetails);
     }
@@ -118,8 +118,8 @@ public class Mission_LastDefense : Mission
         isMissionCompleted = true;
         HealthController.muteDeathSound = false;
 
-        string missionText = "The malicious code has been successfully activated. All enemies have been eliminated.";
-        string missionDetails = "Leave the area by aircraft and claim the well-earned rewards awaiting you!";
+        string missionText = "The virus has been installed.";
+        string missionDetails = "Now go to the airplane to complete the mission.";
         UI.instance.inGameUI.UpdateMissionUI(missionText, missionDetails);
     }
 

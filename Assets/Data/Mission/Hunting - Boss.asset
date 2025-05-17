@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   missionName: Titanfall Showdown
   missionDescription: Face off against the ultimate mechanical menace.
-  missionObjective: 'Objective: Eliminate 1 enemy boss.'
+  missionObjective: 'Objective: Eliminate 2 boss enemies.'
   reward: 2000
   missionPreview: {fileID: 476190043, guid: da12acd6f429ced4889f00deef2f965b, type: 3}
-  numberOfTarget: 1
+  numberOfTarget: 2
   enemyType: 2
