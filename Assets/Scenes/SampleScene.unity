@@ -6068,7 +6068,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 330585543}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.5, y: -0, z: -0, w: 0.8660254}
+  m_LocalRotation: {x: 0.5, y: 0, z: 0, w: 0.8660254}
   m_LocalPosition: {x: -40.899998, y: 5.486153, z: 69.59}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -45078,7 +45078,7 @@ GameObject:
   - component: {fileID: 2134865497611087227}
   - component: {fileID: 8017156743514623215}
   m_Layer: 0
-  m_Name: LevelPart - Enter Test
+  m_Name: LevelPart - Enter
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
