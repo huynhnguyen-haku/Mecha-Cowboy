@@ -65,10 +65,13 @@ public class HealthController : MonoBehaviour
         if (isDead)
             return false;
 
-        if (currentHealth <= 0 && lowHealthEffect != null)
+        if (currentHealth <= 0)
         {
             isDead = true;
-            lowHealthEffect.SetActive(false);
+
+            if (lowHealthEffect != null)
+               lowHealthEffect.SetActive(false);
+
             return true;
         }
 
