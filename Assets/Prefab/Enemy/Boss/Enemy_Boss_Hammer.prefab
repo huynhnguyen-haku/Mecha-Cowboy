@@ -1081,10 +1081,10 @@ MonoBehaviour:
   flameDamageCooldown: 0
   flamethrowDuration: 5
   flamethrower: {fileID: 3869373627449024422}
-  hammerActiveDamage: 20
+  hammerActiveDamage: 15
   activationPrefab: {fileID: 2965222256817593503, guid: a164e676dbbd6e54587237e619372c98, type: 3}
   hammerCheckRadius: 1.25
-  jumpAttackDamage: 25
+  jumpAttackDamage: 40
   impactRadius: 2.5
   impactPower: 15
   impactPoint: {fileID: 1231677513210380480}
@@ -1139,7 +1139,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c9dcaefae6c9584880f103e99fc6df4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 3500
+  maxHealth: 3200
   currentHealth: 0
   isDead: 0
   lowHealthEffect: {fileID: 0}

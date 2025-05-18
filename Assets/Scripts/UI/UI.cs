@@ -37,11 +37,6 @@ public class UI : MonoBehaviour
         AssignInputUI();
         StartCoroutine(ChangeImageAlpha(0, 1.5f, null));
         settingsUI.LoadSettingsValues();
-
-        if (GameManager.instance.quickStart)
-        {
-            StartGame();
-        }
     }
 
     public void SwitchTo(GameObject uiElementToActivate)
@@ -149,28 +144,15 @@ public class UI : MonoBehaviour
 
     private IEnumerator StartGameSequence()
     {
-        bool quickStart = GameManager.instance.quickStart;
-
-        if (quickStart == false)
-        {
-            fadeImage.color = Color.black;
-            StartCoroutine(ChangeImageAlpha(1, 1, null));
-            yield return new WaitForSeconds(1f);
-        }
+        fadeImage.color = Color.black;
+        StartCoroutine(ChangeImageAlpha(1, 1, null));
+        yield return new WaitForSeconds(1f);
 
         yield return null;
         SwitchTo(inGameUI.gameObject);
         GameManager.instance.GameStart();
 
-        if (quickStart)
-        {
-            StartCoroutine(ChangeImageAlpha(0, 0.1f, null));
-        }
-        else
-        {
-            StartCoroutine(ChangeImageAlpha(0, 1f, null));
-        }
-
+        StartCoroutine(ChangeImageAlpha(0, 1f, null));
     }
 
     private IEnumerator ChangeImageAlpha(float targetAlpha, float duration, System.Action onComplete)

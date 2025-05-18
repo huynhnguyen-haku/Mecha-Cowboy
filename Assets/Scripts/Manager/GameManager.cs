@@ -14,9 +14,6 @@ public class GameManager : MonoBehaviour
     [Header("Settings")]
     public bool friendlyFire;
 
-    // For testing purposes, we can skip the weapon selection screen and start the game directly
-    [Space]
-    public bool quickStart; // Remove this in the final build
 
     // Trạng thái game để quản lý BGM
     private enum GameState { MainMenu, InGame, GameOver, MissionComplete }
