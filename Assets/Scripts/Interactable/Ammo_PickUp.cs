@@ -11,7 +11,7 @@ public enum AmmoBoxType
 public struct AmmoData
 {
     public WeaponType weaponType;
-    [Range(10, 100)] public int amount;
+    [Range(10, 250)] public int amount;
 }
 
 public class Ammo_PickUp : Interactable

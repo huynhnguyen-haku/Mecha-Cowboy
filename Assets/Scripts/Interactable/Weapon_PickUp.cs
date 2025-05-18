@@ -23,7 +23,7 @@ public class Weapon_PickUp : Interactable
         this.weapon = weapon;
         weaponData = weapon.weaponData;
 
-        this.transform.position = transform.position + transform.forward;
+        this.transform.position = transform.position;
     }
 
     [ContextMenu("Update Weapon Model")]

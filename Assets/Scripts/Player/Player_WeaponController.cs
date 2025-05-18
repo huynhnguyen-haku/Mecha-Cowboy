@@ -86,7 +86,7 @@ public class Player_WeaponController : MonoBehaviour
         // If the weapon is already in the inventory, add the ammo to the existing weapon
         if (WeaponInSlots(newWeapon.weaponType) != null)
         {
-            WeaponInSlots(newWeapon.weaponType).TotalReserveAmmo += newWeapon.bulletsInMagazine;
+            WeaponInSlots(newWeapon.weaponType).TotalReserveAmmo += newWeapon.TotalReserveAmmo;
             UpdateWeaponUI();
             return;
         }

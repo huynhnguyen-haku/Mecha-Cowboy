@@ -232,11 +232,13 @@ MonoBehaviour:
     amount: 0
   bigBoxAmmo:
   - weaponType: 3
-    amount: 50
+    amount: 100
   - weaponType: 2
-    amount: 80
+    amount: 120
   - weaponType: 4
-    amount: 10
+    amount: 20
+  - weaponType: 5
+    amount: 100
   boxModel:
   - {fileID: 4626878356011058820}
   - {fileID: 5725525479371860914}

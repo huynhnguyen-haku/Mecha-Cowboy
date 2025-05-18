@@ -45,8 +45,8 @@ public class HealthController : MonoBehaviour
             return;
 
 
-        // Enable VFX if health is below 50%
-        if (currentHealth < maxHealth * 0.5f)
+        // Enable VFX if health is below 25%
+        if (currentHealth < maxHealth * 0.25f)
         {
             if (!lowHealthEffect.activeSelf)
                 lowHealthEffect.SetActive(true);
@@ -65,9 +65,10 @@ public class HealthController : MonoBehaviour
         if (isDead)
             return false;
 
-        if (currentHealth <= 0)
+        if (currentHealth <= 0 && lowHealthEffect != null)
         {
             isDead = true;
+            lowHealthEffect.SetActive(false);
             return true;
         }
 
