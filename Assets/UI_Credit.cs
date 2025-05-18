@@ -4,7 +4,7 @@ public class UI_Credit : MonoBehaviour
 {
     [SerializeField] private RectTransform creditText;
 
-    private float scrollSpeed = 100f;
+    private float scrollSpeed = 150f;
     private bool isScrolling = true;
     private Vector2 startPosition; // Vị trí ban đầu của creditText
 
