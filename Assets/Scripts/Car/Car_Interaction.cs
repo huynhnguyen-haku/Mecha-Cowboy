@@ -6,7 +6,7 @@ public class Car_Interaction : Interactable
     private Car_HealthController carHealthController;
     private Car_Controller carController;
     private Transform player;
-    private PathfindingIndicator pathIndicator; // Tham chiếu đến PathfindingIndicator
+    //private PathfindingIndicator pathIndicator; // Tham chiếu đến PathfindingIndicator
     private NavMeshObstacle carObstacle; // Tham chiếu đến NavMeshObstacle của xe
 
     private float defaultPlayerScale;
@@ -19,7 +19,7 @@ public class Car_Interaction : Interactable
         carHealthController = GetComponent<Car_HealthController>();
         carController = GetComponent<Car_Controller>();
         player = GameManager.instance.player.transform;
-        pathIndicator = player.GetComponent<PathfindingIndicator>(); // Tìm PathfindingIndicator trên người chơi
+        //pathIndicator = player.GetComponent<PathfindingIndicator>(); // Tìm PathfindingIndicator trên người chơi
         carObstacle = GetComponent<NavMeshObstacle>(); // Lấy NavMeshObstacle của xe
     }
 

@@ -90,14 +90,19 @@ public class UI : MonoBehaviour
         {
             SwitchTo(inGameUI.gameObject);
             Cursor.visible = false;
-            // Kiểm tra nếu người chơi đang ở trong xe
             if (GameManager.instance.player.movement.isInCar)
-                ControlsManager.instance.SwitchToCarControls(); // Khôi phục điều khiển xe
-
+                ControlsManager.instance.SwitchToCarControls();
             else
-                ControlsManager.instance.SwitchToCharacterControls(); // Khôi phục điều khiển nhân vật
+                ControlsManager.instance.SwitchToCharacterControls();
 
             TimeManager.instance.ResumeTime();
+            // Làm mới trạng thái tương tác
+            Player_Interaction playerInteraction = GameManager.instance.player.GetComponent<Player_Interaction>();
+            if (playerInteraction != null)
+            {
+                playerInteraction.GetInteractables().Clear(); // Xóa tất cả interactables
+                playerInteraction.UpdateClosestInteracble(); // Cập nhật lại
+            }
             return;
         }
 
