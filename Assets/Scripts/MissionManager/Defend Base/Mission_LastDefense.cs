@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 [CreateAssetMenu(fileName = "Last Defence Mission", menuName = "Mission/Last Defence - Mission")]
 public class Mission_LastDefense : Mission
@@ -110,9 +111,13 @@ public class Mission_LastDefense : Mission
         foreach (var enemy in allEnemies)
         {
             HealthController healthController = enemy.GetComponent<HealthController>();
-            if (healthController != null)
+            if (healthController != null && !healthController.isDead) // Chỉ xử lý enemy chưa chết
             {
-                healthController.SetHealthToZero();
+                NavMeshAgent agent = enemy.GetComponent<NavMeshAgent>();
+                if (agent != null && agent.enabled) // Chỉ xử lý enemy có agent đang enabled
+                {
+                    healthController.SetHealthToZero();
+                }
             }
         }
         isMissionCompleted = true;

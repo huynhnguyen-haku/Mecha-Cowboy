@@ -148,10 +148,11 @@ public class Enemy : MonoBehaviour
         if (agent == null)
             return; // Enemy has died before
 
-
-        agent.isStopped = true;
+        if (agent.enabled) // Chỉ gọi isStopped nếu agent đang enabled
+        {
+            agent.isStopped = true;
+        }
         agent.enabled = false;
-
 
         ragdoll.RagdollActive(true);
 
