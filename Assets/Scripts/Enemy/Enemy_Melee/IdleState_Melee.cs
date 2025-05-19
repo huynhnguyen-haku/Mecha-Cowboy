@@ -9,10 +9,10 @@ public class IdleState_Melee : EnemyState
         enemy = (Enemy_Melee)enemyBase;
     }
 
+    #region State Lifecycle Methods
     public override void Enter()
     {
         base.Enter();
-
         stateTimer = enemyBase.idleTime;
     }
 
@@ -24,10 +24,9 @@ public class IdleState_Melee : EnemyState
     public override void Update()
     {
         base.Update();
-        
         if (stateTimer <= 0)
-        {
+            // Change to move state when idle time is over
             stateMachine.ChangeState(enemy.moveState);
-        }
     }
+    #endregion
 }

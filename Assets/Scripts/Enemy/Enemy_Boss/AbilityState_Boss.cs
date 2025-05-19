@@ -25,11 +25,13 @@ public class AbilityState_Boss : EnemyState
     {
         base.Update();
 
+        // Face the player while activating the ability
         enemy.FaceTarget(enemy.player.position);
 
         if (ShouldDisableFlamethrower())
             DisableFlamethrower();
 
+        // Active animation trigger (in animation) to change state
         if (triggerCalled)
             stateMachine.ChangeState(enemy.moveState);
     }

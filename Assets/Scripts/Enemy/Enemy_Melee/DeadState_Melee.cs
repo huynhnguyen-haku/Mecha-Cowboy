@@ -7,6 +7,7 @@
         enemy = (Enemy_Melee)enemyBase;
     }
 
+    #region State Lifecycle Methods
     public override void Enter()
     {
         base.Enter();
@@ -29,5 +30,6 @@
     {
         base.Update();
     }
+    #endregion
 }
 

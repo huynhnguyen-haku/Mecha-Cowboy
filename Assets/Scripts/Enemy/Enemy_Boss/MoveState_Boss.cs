@@ -22,7 +22,6 @@ public class MoveState_Boss : EnemyState
     public override void Enter()
     {
         base.Enter();
-
         SpeedReset();
         enemy.agent.isStopped = false;
 
@@ -37,9 +36,8 @@ public class MoveState_Boss : EnemyState
     public override void Update()
     {
         base.Update();
-
         actionTimer -= Time.deltaTime;
-        enemy.FaceTarget(enemy.agent.steeringTarget); // Face the current patrol point or target
+        enemy.FaceTarget(enemy.agent.steeringTarget);
 
         if (enemy.inBattleMode)
         {
@@ -51,13 +49,16 @@ public class MoveState_Boss : EnemyState
             enemy.agent.SetDestination(playerPosition);
 
             if (actionTimer < 0)
+                // Perform a random action: jump attack or special ability
                 PerfomRandomAction();
+
             else if (enemy.PlayerInAttackRange())
+                // Switch to the attack state
                 stateMachine.ChangeState(enemy.attackState);
         }
         else
         {
-            // Patrol mode: Transition to idle state when close to destination
+            // Patrol mode: Change to idle state when close to destination
             if (Vector3.Distance(enemy.transform.position, destination) < 0.25f)
                 stateMachine.ChangeState(enemy.idleState);
         }

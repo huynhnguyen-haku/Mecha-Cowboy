@@ -3,16 +3,18 @@
 public class ChaseState_Melee : EnemyState
 {
     private Enemy_Melee enemy;
-    private float lastTimeUpdateDestination;
 
-    private float footstepTimer; // Bộ đếm thời gian cho footstep
-    private float footstepInterval; // Khoảng thời gian giữa các bước chân
+    [Header("Chase State Parameters")]
+    private float lastTimeUpdateDestination; // Tracks the last time the destination was updated
+    private float footstepTimer; // Timer for footstep sound effects
+    private float footstepInterval; // Interval between footstep sounds
 
     public ChaseState_Melee(Enemy enemyBase, EnemyStateMachine stateMachine, string animBoolName) : base(enemyBase, stateMachine, animBoolName)
     {
         enemy = (Enemy_Melee)enemyBase;
     }
 
+    #region State Lifecycle Methods
     public override void Enter()
     {
         base.Enter();
@@ -24,26 +26,30 @@ public class ChaseState_Melee : EnemyState
         PlayFootstepSFX();
     }
 
-    public override void Exit()
-    {
-        base.Exit();
-    }
-
     public override void Update()
     {
         base.Update();
-
-        if (enemy.PlayerInAttackRange())
-            stateMachine.ChangeState(enemy.attackState);
-
         enemy.FaceTarget(enemy.agent.steeringTarget);
 
+        if (enemy.PlayerInAttackRange())
+            // Switch to the attack state
+            stateMachine.ChangeState(enemy.attackState);
+
         if (CanUpdateDestination())
+            // If the destination can be updated, set it to the player's position
             enemy.agent.SetDestination(enemy.player.transform.position);
 
         HandleFootstepSFX();
     }
 
+    public override void Exit()
+    {
+        base.Exit();
+    }
+    #endregion
+
+    #region Footstep Sound Effects
+    // Manage footstep sound effects timing
     private void HandleFootstepSFX()
     {
         footstepTimer += Time.deltaTime;
@@ -55,6 +61,26 @@ public class ChaseState_Melee : EnemyState
         }
     }
 
+    // Play the appropriate footstep sound effect for running
+    private void PlayFootstepSFX()
+    {
+        // Stop walk sound if playing
+        if (enemy.meleeSFX.walkSFX.isPlaying)
+            enemy.meleeSFX.walkSFX.Stop();
+
+        // Play run sound if not already playing
+        if (!enemy.meleeSFX.runSFX.isPlaying)
+            enemy.meleeSFX.runSFX.PlayOneShot(enemy.meleeSFX.runSFX.clip);
+    }
+
+    private float CalculateFootstepInterval(float speed)
+    {
+        return Mathf.Clamp(1f / speed, 0.1f, 0.1f);
+    }
+    #endregion
+
+    #region Destination Logic
+    // Determine if the destination should be updated
     private bool CanUpdateDestination()
     {
         if (Time.time > lastTimeUpdateDestination + 0.25f)
@@ -67,22 +93,5 @@ public class ChaseState_Melee : EnemyState
             return false;
         }
     }
-
-    private void PlayFootstepSFX()
-    {
-        // Dừng âm thanh đi bộ nếu đang phát
-        if (enemy.meleeSFX.walkSFX.isPlaying)
-            enemy.meleeSFX.walkSFX.Stop();
-
-        // Phát âm thanh chạy nếu chưa phát
-        if (!enemy.meleeSFX.runSFX.isPlaying)
-            enemy.meleeSFX.runSFX.PlayOneShot(enemy.meleeSFX.runSFX.clip);
-    }
-
-
-    private float CalculateFootstepInterval(float speed)
-    {
-        return Mathf.Clamp(1f / speed, 0.1f, 0.1f);
-    }
+    #endregion
 }
-

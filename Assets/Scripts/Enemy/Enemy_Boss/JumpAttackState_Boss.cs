@@ -56,7 +56,7 @@ public class JumpAttackState_Boss : EnemyState
             enemy.transform.position = Vector3.MoveTowards(myPosition, lastPlayerPosition, jumpAttackMovementSpeed * Time.deltaTime);
         }
 
-        // Transition to move state when the jump attack is complete
+        // Change to move state when the jump attack is complete
         if (triggerCalled)
         {
             stateMachine.ChangeState(enemy.moveState);

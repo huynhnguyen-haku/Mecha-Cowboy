@@ -15,28 +15,28 @@ public class AttackState_Boss : EnemyState
     public override void Enter()
     {
         base.Enter();
+        enemy.bossVisual.EnableWeaponTrail(true);
 
         // Randomize the attack animation based on the number of attack animations available
         enemy.anim.SetFloat("AttackIndex", Random.Range(0, enemy.attackAnimationCount));
         enemy.agent.isStopped = true;
-
         stateTimer = 1f;
-        enemy.bossVisual.EnableWeaponTrail(true);
     }
 
     public override void Update()
     {
         base.Update();
-
         if (stateTimer > 0)
             enemy.FaceTarget(enemy.player.position, 20);
 
         if (triggerCalled)
         {
             if (enemy.PlayerInAttackRange())
+                // Change to idle state, then to attack state again
                 stateMachine.ChangeState(enemy.idleState);
 
             else
+                // Chase the player if not in attack range
                 stateMachine.ChangeState(enemy.moveState);
         }
     }
@@ -44,7 +44,8 @@ public class AttackState_Boss : EnemyState
     public override void Exit()
     {
         base.Exit();
-
+        // Store the last attack time
+        // This is used to speed up the boss if conditions meet
         lastTimeAttack = Time.time;
         enemy.bossVisual.EnableWeaponTrail(false);
     }

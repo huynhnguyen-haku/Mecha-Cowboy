@@ -20,11 +20,11 @@ public class IdleState_Boss : EnemyState
     {
         base.Update();
 
-        // If player is in attack range and enemy is in battle mode, transition to attack state
+        // If player is in attack range and enemy is in battle mode, change to attack state
         if (enemy.inBattleMode && enemy.PlayerInAttackRange())
             stateMachine.ChangeState(enemy.attackState);
 
-        // Transition to move state when idle time is over
+        // Change to move state when idle time is over
         if (stateTimer < 0)
             stateMachine.ChangeState(enemy.moveState);
     }
