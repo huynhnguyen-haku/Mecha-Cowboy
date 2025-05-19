@@ -5,21 +5,21 @@ public class Enemy_BossVisual : MonoBehaviour
     private Enemy_Boss enemy;
 
     [Header("Jump Attack Visual")]
-    [SerializeField] private float landingOffset = 1; // Offset for landing zone placement
-    [SerializeField] private ParticleSystem landingZoneFX; // Particle effect for landing zone
-    [SerializeField] private GameObject[] weaponTrails; // Array of weapon trail objects
+    [SerializeField] private float landingOffset = 1;
+    [SerializeField] private ParticleSystem landingZoneFX;
+    [SerializeField] private GameObject[] weaponTrails;
 
     [Header("Flamethrower Battery")]
-    [SerializeField] private GameObject[] batteries; // Array of battery game objects
-    [SerializeField] private float initialBatteryCharge = 0.2f; // Initial scale of batteries
+    [SerializeField] private GameObject[] batteries;
+    [SerializeField] private float initialBatteryCharge = 0.2f;
 
     [Space]
-
-    private float dischargeSpeed; // Speed at which batteries discharge
-    private float rechargeSpeed; // Speed at which batteries recharge
-    private bool isRecharging; // Tracks if batteries are recharging
+    private float dischargeSpeed;
+    private float rechargeSpeed;
+    private bool isRecharging;
 
     #region Unity Methods
+
     private void Awake()
     {
         enemy = GetComponent<Enemy_Boss>();
@@ -37,7 +37,8 @@ public class Enemy_BossVisual : MonoBehaviour
     #endregion
 
     #region Visual Effects Methods
-    // Enable the weapon trail effect
+
+    // Enable or disable weapon trail effects
     public void EnableWeaponTrail(bool active)
     {
         if (weaponTrails.Length <= 0)
@@ -50,7 +51,7 @@ public class Enemy_BossVisual : MonoBehaviour
         }
     }
 
-    // Set up the landing zone effect for the boss jump attack
+    // Place and play the landing zone effect for jump attack
     public void PlaceLandingZone(Vector3 target)
     {
         Vector3 direction = target - transform.position;
@@ -67,7 +68,8 @@ public class Enemy_BossVisual : MonoBehaviour
     #endregion
 
     #region Battery Management
-    // Update the scale of the batteries based on their charge state
+
+    // Update battery scale based on charge/discharge state
     private void UpdateBatteriesScale()
     {
         if (batteries.Length <= 0)
@@ -83,12 +85,12 @@ public class Enemy_BossVisual : MonoBehaviour
                 battery.transform.localScale = new Vector3(0.15f, newScaleY, 0.15f);
 
                 if (battery.transform.localScale.y <= 0)
-                    battery.SetActive(false); // Deactivate the battery when it is empty
+                    battery.SetActive(false); // Deactivate when empty
             }
         }
     }
 
-    // Reset the batteries to their initial state
+    // Reset batteries to initial state and start recharging
     public void ResetBatteries()
     {
         isRecharging = true;
@@ -99,7 +101,7 @@ public class Enemy_BossVisual : MonoBehaviour
             battery.SetActive(true);
     }
 
-    // Start discharging the batteries when the flamethrower is activated
+    // Start discharging batteries (used when flamethrower is active)
     public void DischargeBatteries()
     {
         isRecharging = false;

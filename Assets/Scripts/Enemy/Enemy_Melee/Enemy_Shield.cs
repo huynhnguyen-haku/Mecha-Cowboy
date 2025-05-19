@@ -2,8 +2,8 @@ using UnityEngine;
 
 public class Enemy_Shield : MonoBehaviour, I_Damagable
 {
-    private Enemy_Melee enemy; // Reference to the parent enemy
-    [SerializeField] private int durability; // Current durability of the shield
+    private Enemy_Melee enemy; 
+    [SerializeField] private int durability; 
 
     #region Unity Methods
     public void Awake()

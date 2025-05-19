@@ -10,6 +10,7 @@ public class IdleState_Boss : EnemyState
     }
 
     #region State Lifecycle Methods
+
     public override void Enter()
     {
         base.Enter();
@@ -20,11 +21,11 @@ public class IdleState_Boss : EnemyState
     {
         base.Update();
 
-        // If player is in attack range and enemy is in battle mode, change to attack state
+        // Switch to attack state if player is in range and boss is in battle mode
         if (enemy.inBattleMode && enemy.PlayerInAttackRange())
             stateMachine.ChangeState(enemy.attackState);
 
-        // Change to move state when idle time is over
+        // Switch to move state when idle timer runs out
         if (stateTimer < 0)
             stateMachine.ChangeState(enemy.moveState);
     }

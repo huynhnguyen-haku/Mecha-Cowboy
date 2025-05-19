@@ -4,14 +4,13 @@ public class MoveState_Boss : EnemyState
 {
     private Enemy_Boss enemy;
 
-    [Header("Move State")]
-    private Vector3 destination; // The destination for the boss to move toward
-    private float actionTimer; // Timer for performing random actions
-    private float timeBeforeSpeedUp = 5f; // Time before the boss speeds up when chasing the player
-    private bool SpeedUpActive; // Tracks if the boss is in speed-up mode
+    private Vector3 destination;
+    private float actionTimer;
+    private float timeBeforeSpeedUp = 5f;
+    private bool SpeedUpActive;
 
-    private float footstepTimer; // Timer for footstep sound effects
-    private float footstepInterval; // Interval between footstep sounds
+    private float footstepTimer;
+    private float footstepInterval;
 
     public MoveState_Boss(Enemy enemyBase, EnemyStateMachine stateMachine, string animBoolName) : base(enemyBase, stateMachine, animBoolName)
     {
@@ -19,6 +18,7 @@ public class MoveState_Boss : EnemyState
     }
 
     #region State Lifecycle Methods
+
     public override void Enter()
     {
         base.Enter();
@@ -30,7 +30,7 @@ public class MoveState_Boss : EnemyState
         actionTimer = enemy.actionCooldown;
 
         footstepInterval = CalculateFootstepInterval(enemy.agent.speed);
-        footstepTimer = 0f; // Reset the footstep timer
+        footstepTimer = 0f;
     }
 
     public override void Update()
@@ -41,7 +41,7 @@ public class MoveState_Boss : EnemyState
 
         if (enemy.inBattleMode)
         {
-            // In battle mode: Chase the player and perform actions
+            // In battle mode: chase player and perform actions
             if (ShouldSpeedUp())
                 SpeedUp();
 
@@ -49,16 +49,14 @@ public class MoveState_Boss : EnemyState
             enemy.agent.SetDestination(playerPosition);
 
             if (actionTimer < 0)
-                // Perform a random action: jump attack or special ability
-                PerfomRandomAction();
+                PerfomRandomAction(); // Try jump attack or special ability
 
             else if (enemy.PlayerInAttackRange())
-                // Switch to the attack state
-                stateMachine.ChangeState(enemy.attackState);
+                stateMachine.ChangeState(enemy.attackState); // Attack if in range
         }
         else
         {
-            // Patrol mode: Change to idle state when close to destination
+            // Patrol mode: switch to idle when close to destination
             if (Vector3.Distance(enemy.transform.position, destination) < 0.25f)
                 stateMachine.ChangeState(enemy.idleState);
         }
@@ -68,6 +66,7 @@ public class MoveState_Boss : EnemyState
     #endregion
 
     #region Footstep Sound Effects
+
     private void HandleFootstepSFX()
     {
         footstepTimer += Time.deltaTime;
@@ -78,7 +77,7 @@ public class MoveState_Boss : EnemyState
         }
     }
 
-    // Play the appropriate footstep sound effect based on the current speed
+    // Play walk or run SFX based on speed state
     private void PlayFootstepSFX()
     {
         if (SpeedUpActive)
@@ -93,18 +92,17 @@ public class MoveState_Boss : EnemyState
         }
     }
 
-    // Calculate the interval between footstep sounds based on speed
     private float CalculateFootstepInterval(float speed)
         => Mathf.Clamp(1f / speed, 0.3f, 0.5f);
     #endregion
 
     #region Speed Control Methods
+
     private void SpeedReset()
     {
         SpeedUpActive = false;
-        enemy.anim.SetFloat("MoveIndex", 0); // Set the move index to 0 for walking animation
+        enemy.anim.SetFloat("MoveIndex", 0); // Walk animation
         enemy.agent.speed = enemy.walkSpeed;
-
         footstepInterval = CalculateFootstepInterval(enemy.walkSpeed);
     }
 
@@ -112,12 +110,11 @@ public class MoveState_Boss : EnemyState
     {
         SpeedUpActive = true;
         enemy.agent.speed = enemy.runSpeed;
-        enemy.anim.SetFloat("MoveIndex", 1); // Set the move index to 1 for running animation
-
+        enemy.anim.SetFloat("MoveIndex", 1); // Run animation
         footstepInterval = CalculateFootstepInterval(enemy.runSpeed);
     }
 
-    // Determine if the boss should speed up based on time since last attack
+    // True if enough time has passed since last attack to speed up
     private bool ShouldSpeedUp()
     {
         if (SpeedUpActive)
@@ -131,33 +128,35 @@ public class MoveState_Boss : EnemyState
     #endregion
 
     #region Action Logic
+
+    // Decide whether to use special ability or jump attack
     private void PerfomRandomAction()
     {
         actionTimer = enemy.actionCooldown;
 
         if (Random.Range(0, 2) == 0)
-            ActiveSpecialAbility(); // 50% chance to perform a special ability
+            ActiveSpecialAbility(); // 50% chance to use special ability
         else
         {
             if (enemy.CanDoJumpAttack())
-                stateMachine.ChangeState(enemy.jumpAttackState); // Prioritize jump attack if possible
-
+                stateMachine.ChangeState(enemy.jumpAttackState); // Prioritize jump attack
             else
             {
                 switch (enemy.weaponType)
                 {
                     case BossWeaponType.Hammer:
-                        ActiveSpecialAbility(); // Perform hammer special ability
+                        ActiveSpecialAbility();  // Use hammer ability
                         break;
 
                     case BossWeaponType.Flamethrower:
-                        ActiveSpecialAbility(); // Perform flamethrower special ability
+                        ActiveSpecialAbility(); // Use flamethrower ability
                         break;
                 }
             }
         }
     }
 
+    // Switch to ability state if possible
     private void ActiveSpecialAbility()
     {
         if (enemy.CanDoAbility())

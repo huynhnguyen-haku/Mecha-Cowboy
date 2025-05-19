@@ -6,11 +6,12 @@ public class Flamethrower_DamageArea : MonoBehaviour
     private Enemy_Boss enemy;
     private CapsuleCollider capsuleCollider;
 
-    private float damageCooldown; // Cooldown between damage ticks
-    private float lastTimeDamage; // Last time damage was dealt
-    private int flameDamage; // Damage dealt by the flamethrower
+    private float damageCooldown;
+    private float lastTimeDamage;
+    private int flameDamage;
 
     #region Unity Methods
+
     private void Awake()
     {
         enemy = GetComponentInParent<Enemy_Boss>();
@@ -19,11 +20,10 @@ public class Flamethrower_DamageArea : MonoBehaviour
         capsuleCollider = GetComponent<CapsuleCollider>();
     }
 
-    // Called when another collider stays within the trigger
-    // This is used to deal damage to player and other enemies
+    // Deal damage to entities inside the trigger area at intervals
     private void OnTriggerStay(Collider other)
     {
-        if (enemy.flamethrowerActive == false)
+        if (!enemy.flamethrowerActive)
             return;
 
         if (Time.time - lastTimeDamage < damageCooldown)
@@ -40,13 +40,14 @@ public class Flamethrower_DamageArea : MonoBehaviour
     #endregion
 
     #region Collider Expansion
-    // Start expanding the collider of the flamethrower damage area
+
+    // Start expanding the collider for the flamethrower damage area
     public void StartExpandingCollider()
     {
         StartCoroutine(ExpandCollider());
     }
 
-    // Coroutine to expand the collider over time
+    // Gradually expand the collider's height and center over time
     private IEnumerator ExpandCollider()
     {
         float duration = 1.5f;
@@ -63,16 +64,23 @@ public class Flamethrower_DamageArea : MonoBehaviour
             elapsedTime += Time.deltaTime;
             float t = elapsedTime / duration;
 
-            // Lerp for height and center
             capsuleCollider.height = Mathf.Lerp(startHeight, targetHeight, t);
-            capsuleCollider.center = new Vector3(capsuleCollider.center.x, capsuleCollider.center.y, Mathf.Lerp(startCenterZ, targetCenterZ, t));
+            capsuleCollider.center = new Vector3(
+                capsuleCollider.center.x,
+                capsuleCollider.center.y,
+                Mathf.Lerp(startCenterZ, targetCenterZ, t)
+            );
 
             yield return null;
         }
 
-        // Make sure the collider is set to the target values at the end
+        // Ensure final values are set
         capsuleCollider.height = targetHeight;
-        capsuleCollider.center = new Vector3(capsuleCollider.center.x, capsuleCollider.center.y, targetCenterZ);
+        capsuleCollider.center = new Vector3(
+            capsuleCollider.center.x,
+            capsuleCollider.center.y,
+            targetCenterZ
+        );
     }
     #endregion
 }

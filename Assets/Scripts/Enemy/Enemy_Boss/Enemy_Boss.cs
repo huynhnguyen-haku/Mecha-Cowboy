@@ -6,72 +6,71 @@ public enum BossWeaponType { Flamethrower, Hammer }
 public class Enemy_Boss : Enemy
 {
     #region Fields and Properties
+
     [Header("Abilities")]
-    public float minAbilityDistance; // Minimum distance required to use an ability
-    public float abilityCooldown; // Cooldown time for abilities
-    private float lastTimeAbility; // Last time an ability was used
+    public float minAbilityDistance;
+    public float abilityCooldown;
+    private float lastTimeAbility;
 
     [Header("Attack")]
-    [SerializeField] private int meleeAttackDamage; // Damage dealt by melee attacks
-    [SerializeField] private Transform[] damagePoints; // Points to check for melee attack damage
-    [SerializeField] private float attackCheckRadius; // Radius to check for attack hits
-    [SerializeField] private GameObject meleeAttackFX; // Visual effect for melee attacks
+    [SerializeField] private int meleeAttackDamage;
+    [SerializeField] private Transform[] damagePoints;
+    [SerializeField] private float attackCheckRadius;
+    [SerializeField] private GameObject meleeAttackFX;
 
     [Header("Boss Detail")]
-    public BossWeaponType weaponType; // Type of weapon the boss uses
-    public float attackRange; // Range within which the boss can attack
-    public float actionCooldown = 10; // Cooldown for random actions
-    public int attackAnimationCount; // Number of attack animations available
+    public BossWeaponType weaponType;
+    public float attackRange;
+    public float actionCooldown = 10;
+    public int attackAnimationCount;
 
     [Header("Flamethrower")]
-    public int flameDamage; // Damage dealt by flamethrower
-    public float flameDamageCooldown; // Cooldown between flamethrower damage ticks
-    public float flamethrowDuration; // Duration of the flamethrower activation
-    public ParticleSystem flamethrower; // Particle system for flamethrower effect
-    public bool flamethrowerActive { get; private set; } // Tracks if flamethrower is active
+    public int flameDamage;
+    public float flameDamageCooldown;
+    public float flamethrowDuration;
+    public ParticleSystem flamethrower;
+    public bool flamethrowerActive { get; private set; }
 
     [Header("Hammer")]
-    public int hammerActiveDamage; // Damage dealt by hammer attack
-    public GameObject activationPrefab; // Prefab for hammer activation effect
-    [SerializeField] private float hammerCheckRadius; // Radius for hammer attack damage check
+    public int hammerActiveDamage;
+    public GameObject activationPrefab;
+    [SerializeField] private float hammerCheckRadius;
 
     [Header("Jump Attack")]
-    public int jumpAttackDamage; // Damage dealt by jump attack
-    public float impactRadius = 2.5f; // Radius of the jump attack impact
-    public float impactPower = 10; // Force applied by jump attack impact
-    public Transform impactPoint; // Point where the jump attack impacts
-    public ParticleSystem jumpAttackVFX; // Visual effect for jump attack
+    public int jumpAttackDamage;
+    public float impactRadius = 2.5f;
+    public float impactPower = 10;
+    public Transform impactPoint;
+    public ParticleSystem jumpAttackVFX;
 
     [Space]
-
-    public float travelTimeToTarget = 1; // Time taken to reach the target during jump attack
-    public float jumpAttackCooldown = 10; // Cooldown time for jump attack
-    [SerializeField] private float upwardsMulti = 10; // Multiplier for upward force in impact
-    private float lastTimeJump; // Last time a jump attack was performed
-    public float minJumpDistanceRequired; // Minimum distance required for a jump attack
+    public float travelTimeToTarget = 1;
+    public float jumpAttackCooldown = 10;
+    [SerializeField] private float upwardsMulti = 10;
+    private float lastTimeJump;
+    public float minJumpDistanceRequired;
 
     [Header("Minimap Icon")]
-    private GameObject minimapIcon; // Reference to the minimap icon
+    private GameObject minimapIcon;
 
     [Space]
+    [SerializeField] private LayerMask whatToIgnore;
 
-    [SerializeField] private LayerMask whatToIgnore; 
-
-    public IdleState_Boss idleState { get; private set; } 
-    public MoveState_Boss moveState { get; private set; } 
-    public AttackState_Boss attackState { get; private set; } 
-    public JumpAttackState_Boss jumpAttackState { get; private set; } 
-    public AbilityState_Boss abilityState { get; private set; } 
-    public DeadState_Boss deadState { get; private set; } 
-    public Enemy_BossVisual bossVisual { get; private set; } 
-    public Enemy_BossSFX bossSFX { get; private set; } 
+    public IdleState_Boss idleState { get; private set; }
+    public MoveState_Boss moveState { get; private set; }
+    public AttackState_Boss attackState { get; private set; }
+    public JumpAttackState_Boss jumpAttackState { get; private set; }
+    public AbilityState_Boss abilityState { get; private set; }
+    public DeadState_Boss deadState { get; private set; }
+    public Enemy_BossVisual bossVisual { get; private set; }
+    public Enemy_BossSFX bossSFX { get; private set; }
     #endregion
 
     #region Unity Methods
+
     protected override void Awake()
     {
         base.Awake();
-
         bossVisual = GetComponent<Enemy_BossVisual>();
         bossSFX = GetComponent<Enemy_BossSFX>();
 
@@ -82,6 +81,7 @@ public class Enemy_Boss : Enemy
         abilityState = new AbilityState_Boss(this, stateMachine, "Ability");
         deadState = new DeadState_Boss(this, stateMachine, "Idle");
 
+        // Setup minimap icon if available
         if (minimapIcon == null)
         {
             var minimapSprite = GetComponentInChildren<MinimapSprite>(true);
@@ -111,28 +111,25 @@ public class Enemy_Boss : Enemy
     {
         base.OnDrawGizmos();
 
-        Gizmos.color = Color.black;         // Black is melee attack range to activate
+        // Visualize important boss ranges in the editor
+        Gizmos.color = Color.black;
         Gizmos.DrawWireSphere(transform.position, attackRange);
 
-        Gizmos.color = Color.white;        // White is jump attack min range to activate
+        Gizmos.color = Color.white;
         Gizmos.DrawWireSphere(transform.position, minJumpDistanceRequired);
 
-        Gizmos.color = Color.green;        // Green is impact attack damage radius
+        Gizmos.color = Color.green;
         Gizmos.DrawWireSphere(transform.position, impactRadius);
 
-        Gizmos.color = Color.blue;        // Blue is for the skill of the boss
+        Gizmos.color = Color.blue;
         Gizmos.DrawWireSphere(transform.position, minAbilityDistance);
 
-        Gizmos.color = Color.yellow;        // Yellow is for the attack hit check (if player stays inside, then it receives damage)
-
+        Gizmos.color = Color.yellow;
         if (damagePoints.Length > 0)
         {
             foreach (var damagePoint in damagePoints)
-            {
                 Gizmos.DrawWireSphere(damagePoint.position, attackCheckRadius);
-            }
 
-            // Red is for the hammer attack only
             Gizmos.color = Color.cyan;
             Gizmos.DrawWireSphere(damagePoints[0].position, hammerCheckRadius);
         }
@@ -140,6 +137,7 @@ public class Enemy_Boss : Enemy
     #endregion
 
     #region Battle Mode Methods
+
     public override void EnterBattleMode()
     {
         if (inBattleMode)
@@ -149,13 +147,13 @@ public class Enemy_Boss : Enemy
         stateMachine.ChangeState(moveState);
     }
 
-    // Checks if the player is within attack range (to perform melee attacks)
+    // True if player is within melee attack range
     public bool PlayerInAttackRange()
     {
         return Vector3.Distance(transform.position, player.position) < attackRange;
     }
 
-    // Checks if the player is in clear sight of the boss (to perform jump attacks/chase)
+    // True if player is in clear sight (for jump attacks/chase)
     public bool IsPlayerInClearSight()
     {
         Vector3 myPosition = transform.position + new Vector3(0, 1.5f, 0);
@@ -163,16 +161,14 @@ public class Enemy_Boss : Enemy
         Vector3 directionToPlayer = (playerPosition - myPosition).normalized;
 
         if (Physics.Raycast(myPosition, directionToPlayer, out RaycastHit hit, 100, ~whatToIgnore))
-        {
-            if (hit.transform.root == player.root)
-                return true;
-        }
+            return hit.transform.root == player.root;
+
         return false;
     }
     #endregion
 
     #region Attack Methods
-    // Activates or deactivates the flamethrower
+
     public void ActivateFlamethrower(bool activate)
     {
         flamethrowerActive = activate;
@@ -195,7 +191,6 @@ public class Enemy_Boss : Enemy
         bossSFX.flameSFX.Play();
     }
 
-    // Activates the hammer attack
     public void ActivateHammer()
     {
         GameObject newActivation = ObjectPool.instance.GetObject(activationPrefab, impactPoint);
@@ -204,7 +199,7 @@ public class Enemy_Boss : Enemy
         MassDamage(damagePoints[0].position, hammerCheckRadius, hammerActiveDamage);
     }
 
-    // Checks if the boss can perform a jump attack
+    // True if boss can perform a jump attack
     public bool CanDoJumpAttack()
     {
         float distanceToPlayer = Vector3.Distance(transform.position, player.position);
@@ -218,20 +213,17 @@ public class Enemy_Boss : Enemy
         return false;
     }
 
-    // Executes the jump attack impact
+    // Execute jump attack impact
     public void JumpImpact()
     {
-        Transform impactPoint = this.impactPoint;
-
-        if (impactPoint == null)
-            impactPoint = transform;
+        Transform impactPoint = this.impactPoint ?? transform;
 
         MassDamage(impactPoint.position, impactRadius, jumpAttackDamage);
         bossSFX.impactSFX.Play();
         jumpAttackVFX.Play();
     }
 
-    // Deals damage to all entities within the impact radius
+    // Deal damage to all entities within impact radius
     private void MassDamage(Vector3 impactPoint, float impactRadius, int damage)
     {
         HashSet<GameObject> uniqueEntities = new HashSet<GameObject>();
@@ -243,7 +235,7 @@ public class Enemy_Boss : Enemy
             if (damagable != null)
             {
                 GameObject rootEntity = hit.transform.root.gameObject;
-                if (uniqueEntities.Add(rootEntity) == false)
+                if (!uniqueEntities.Add(rootEntity))
                     continue;
 
                 damagable.TakeDamage(damage);
@@ -252,35 +244,34 @@ public class Enemy_Boss : Enemy
         }
     }
 
-    // Applies physical force to entities within the impact radius
+    // Apply explosion force to entities in impact radius
     private void ApplyPhysicalForce(Vector3 impactPoint, float impactRadius, Collider hit)
     {
         Rigidbody rb = hit.GetComponent<Rigidbody>();
-
         if (rb != null)
             rb.AddExplosionForce(impactPower, impactPoint, impactRadius, upwardsMulti, ForceMode.Impulse);
     }
 
-    // Checks if the boss can perform an ability
+    // True if boss can use ability (e.g. flamethrower)
     public bool CanDoAbility()
     {
         bool playerWithinDistance = Vector3.Distance(transform.position, player.position) < minAbilityDistance;
 
-        if (playerWithinDistance == false)
+        if (!playerWithinDistance)
             return false;
 
-        if (Time.time > lastTimeAbility + abilityCooldown && playerWithinDistance)
+        if (Time.time > lastTimeAbility + abilityCooldown)
             return true;
 
         return false;
     }
 
     public void SetAbilityOnCooldown() => lastTimeAbility = Time.time;
-
     public void SetJumpAttackOnCooldown() => lastTimeJump = Time.time;
     #endregion
 
     #region Damage Methods
+
     public override void Die()
     {
         base.Die();
@@ -294,14 +285,13 @@ public class Enemy_Boss : Enemy
         if (minimapIcon != null)
             minimapIcon.SetActive(false);
 
-        // Change layer for enemy's lock-on part
         SetLayerRecursively(gameObject, LayerMask.NameToLayer("Enemy"));
     }
 
+    // Set layer for this object and all children
     private void SetLayerRecursively(GameObject obj, int newLayer)
     {
         obj.layer = newLayer;
-
         foreach (Transform child in obj.transform)
             SetLayerRecursively(child.gameObject, newLayer);
     }
