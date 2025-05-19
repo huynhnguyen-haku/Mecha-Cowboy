@@ -2,34 +2,27 @@ using UnityEngine;
 
 public class Enemy_WeaponModel : MonoBehaviour
 {
-    public Enemy_MeleeWeaponType weaponType;
-    public AnimatorOverrideController overrideController;
-    public Enemy_MeleeWeaponData weaponData;   
+    public Enemy_MeleeWeaponType weaponType; // Type of weapon
+    public AnimatorOverrideController overrideController; // Override controller for animations
+    public Enemy_MeleeWeaponData weaponData; // Data associated with the weapon
 
-    [SerializeField] private GameObject[] trailEffects;
+    [SerializeField] private GameObject[] trailEffects; // Array of trail effect objects
 
     [Header("Damage Attributes")]
-    public Transform[] damagePoints;
-    public float attackCheckRadius;
+    public Transform[] damagePoints; // Points to check for damage
+    public float attackCheckRadius; // Radius for attack damage checks
 
+    #region Unity Methods
     [ContextMenu("Assign Damage Points")]
     private void GetDamagePoints()
     {
         damagePoints = new Transform[trailEffects.Length];
         for (int i = 0; i < trailEffects.Length; i++)
-        {
             damagePoints[i] = trailEffects[i].transform;
-        }
+        
     }
 
-    public void EnableTrailEffect(bool enable)
-    {
-        foreach (var effect in trailEffects)
-        {
-            effect.SetActive(enable);
-        }
-    }
-
+    // Draw gizmos in the editor for debugging
     private void OnDrawGizmos()
     {
         if (damagePoints.Length > 0)
@@ -41,4 +34,14 @@ public class Enemy_WeaponModel : MonoBehaviour
             }
         }
     }
+    #endregion
+
+    #region Visual Effects Methods
+    // Enable trail effects
+    public void EnableTrailEffect(bool enable)
+    {
+        foreach (var effect in trailEffects)
+            effect.SetActive(enable);
+    }
+    #endregion
 }
