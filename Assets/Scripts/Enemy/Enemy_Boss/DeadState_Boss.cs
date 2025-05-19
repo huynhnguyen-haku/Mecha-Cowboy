@@ -9,10 +9,12 @@ public class DeadState_Boss : EnemyState
         enemy = (Enemy_Boss)enemyBase;
     }
 
+    #region State Lifecycle Methods
     public override void Enter()
     {
         base.Enter();
 
+        // Disable flamethrower if active
         enemy.abilityState.DisableFlamethrower();
         stateTimer = 1.5f;
 
@@ -28,4 +30,5 @@ public class DeadState_Boss : EnemyState
     {
         base.Update();
     }
+    #endregion
 }

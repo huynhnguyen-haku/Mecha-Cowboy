@@ -4,21 +4,22 @@ public class Enemy_BossVisual : MonoBehaviour
 {
     private Enemy_Boss enemy;
 
-    [Header("Visual")]
-    [SerializeField] private float landingOffset = 1;
-    [SerializeField] private ParticleSystem landingZoneFX;
-    [SerializeField] private GameObject[] weaponTrails;
+    [Header("Jump Attack Visual")]
+    [SerializeField] private float landingOffset = 1; // Offset for landing zone placement
+    [SerializeField] private ParticleSystem landingZoneFX; // Particle effect for landing zone
+    [SerializeField] private GameObject[] weaponTrails; // Array of weapon trail objects
 
-    [Header("Battery")]
-    [SerializeField] private GameObject[] batteries;
-    [SerializeField] private float initialBatteryCharge = 0.2f;
+    [Header("Flamethrower Battery")]
+    [SerializeField] private GameObject[] batteries; // Array of battery game objects
+    [SerializeField] private float initialBatteryCharge = 0.2f; // Initial scale of batteries
 
-    private float dischargeSpeed;
-    private float rechargeSpeed;
+    [Space]
 
-    private bool isRecharging;
+    private float dischargeSpeed; // Speed at which batteries discharge
+    private float rechargeSpeed; // Speed at which batteries recharge
+    private bool isRecharging; // Tracks if batteries are recharging
 
-
+    #region Unity Methods
     private void Awake()
     {
         enemy = GetComponent<Enemy_Boss>();
@@ -29,11 +30,14 @@ public class Enemy_BossVisual : MonoBehaviour
         ResetBatteries();
     }
 
-
     private void Update()
     {
         UpdateBatteriesScale();
     }
+    #endregion
+
+    #region Visual Effects Methods
+    // Enable the weapon trail effect
     public void EnableWeaponTrail(bool active)
     {
         if (weaponTrails.Length <= 0)
@@ -42,16 +46,16 @@ public class Enemy_BossVisual : MonoBehaviour
         foreach (var trail in weaponTrails)
         {
             if (trail != null)
-            {
                 trail.SetActive(active);
-            }
         }
     }
 
+    // Set up the landing zone effect for the boss jump attack
     public void PlaceLandingZone(Vector3 target)
     {
         Vector3 direction = target - transform.position;
         Vector3 offset = direction.normalized * landingOffset;
+
         landingZoneFX.transform.position = target + offset;
         landingZoneFX.Clear();
 
@@ -60,7 +64,10 @@ public class Enemy_BossVisual : MonoBehaviour
 
         landingZoneFX.Play();
     }
+    #endregion
 
+    #region Battery Management
+    // Update the scale of the batteries based on their charge state
     private void UpdateBatteriesScale()
     {
         if (batteries.Length <= 0)
@@ -76,13 +83,12 @@ public class Enemy_BossVisual : MonoBehaviour
                 battery.transform.localScale = new Vector3(0.15f, newScaleY, 0.15f);
 
                 if (battery.transform.localScale.y <= 0)
-                {
-                    battery.SetActive(false); // Deactivate the battery when it is empty, so no error will occur
-                }
+                    battery.SetActive(false); // Deactivate the battery when it is empty
             }
         }
     }
 
+    // Reset the batteries to their initial state
     public void ResetBatteries()
     {
         isRecharging = true;
@@ -90,13 +96,13 @@ public class Enemy_BossVisual : MonoBehaviour
         dischargeSpeed = initialBatteryCharge / (enemy.flamethrowDuration * 0.75f);
 
         foreach (GameObject battery in batteries)
-        {
             battery.SetActive(true);
-        }
     }
 
+    // Start discharging the batteries when the flamethrower is activated
     public void DischargeBatteries()
     {
         isRecharging = false;
     }
+    #endregion
 }

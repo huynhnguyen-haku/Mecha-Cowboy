@@ -20,15 +20,19 @@ public class Enemy_RangeWeaponData : ScriptableObject
     public float bulletSpeed = 20;
     public float weaponSpread = 0.1f;
 
+    // Set random number of bullets per attack
     public int GetRandomBulletPerAttack()
     {
         return Random.Range(minBulletPerAttack, maxBulletPerAttack);
     }
+
+    // Set random reload time
     public float GetRandomWeaponCooldown()
     {
         return Random.Range(minWeaponCooldown, maxWeaponCooldown);
     }
 
+    // Apply weapon spread to the bullet direction
     public Vector3 ApplyWeaponSpread(Vector3 originalDirection)
     {
         float randomizedValue = UnityEngine.Random.Range(-weaponSpread, weaponSpread);

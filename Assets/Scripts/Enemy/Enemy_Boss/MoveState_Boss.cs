@@ -3,20 +3,22 @@
 public class MoveState_Boss : EnemyState
 {
     private Enemy_Boss enemy;
-    private Vector3 destination;
 
-    private float actionTimer;
-    private float timeBeforeSpeedUp = 5;
-    private bool SpeedUpActive;
+    [Header("Move State")]
+    private Vector3 destination; // The destination for the boss to move toward
+    private float actionTimer; // Timer for performing random actions
+    private float timeBeforeSpeedUp = 5f; // Time before the boss speeds up when chasing the player
+    private bool SpeedUpActive; // Tracks if the boss is in speed-up mode
 
-    private float footstepTimer; // Bộ đếm thời gian cho footstep
-    private float footstepInterval; // Khoảng thời gian giữa các bước chân
+    private float footstepTimer; // Timer for footstep sound effects
+    private float footstepInterval; // Interval between footstep sounds
 
     public MoveState_Boss(Enemy enemyBase, EnemyStateMachine stateMachine, string animBoolName) : base(enemyBase, stateMachine, animBoolName)
     {
         this.enemy = (Enemy_Boss)enemyBase;
     }
 
+    #region State Lifecycle Methods
     public override void Enter()
     {
         base.Enter();
@@ -28,8 +30,8 @@ public class MoveState_Boss : EnemyState
         enemy.agent.SetDestination(destination);
         actionTimer = enemy.actionCooldown;
 
-        footstepInterval = CalculateFootstepInterval(enemy.agent.speed); // Tính khoảng thời gian giữa các bước chân
-        footstepTimer = 0f; // Đặt lại bộ đếm thời gian
+        footstepInterval = CalculateFootstepInterval(enemy.agent.speed);
+        footstepTimer = 0f; // Reset the footstep timer
     }
 
     public override void Update()
@@ -37,33 +39,35 @@ public class MoveState_Boss : EnemyState
         base.Update();
 
         actionTimer -= Time.deltaTime;
-        enemy.FaceTarget(enemy.agent.steeringTarget);
+        enemy.FaceTarget(enemy.agent.steeringTarget); // Face the current patrol point or target
 
         if (enemy.inBattleMode)
         {
+            // In battle mode: Chase the player and perform actions
             if (ShouldSpeedUp())
-                SpeedUp(); // Chase player
-
+                SpeedUp(); // Chase the player
 
             Vector3 playerPosition = enemy.player.position;
             enemy.agent.SetDestination(playerPosition);
 
             if (actionTimer < 0)
                 PerfomRandomAction();
-
-
             else if (enemy.PlayerInAttackRange())
                 stateMachine.ChangeState(enemy.attackState);
-
         }
         else
         {
+            // Patrol mode: Transition to idle state when close to destination
             if (Vector3.Distance(enemy.transform.position, destination) < 0.25f)
                 stateMachine.ChangeState(enemy.idleState);
         }
+
         HandleFootstepSFX();
     }
+    #endregion
 
+    #region Footstep Sound Effects
+    // Manage footstep sound effects timing
     private void HandleFootstepSFX()
     {
         footstepTimer += Time.deltaTime;
@@ -74,6 +78,7 @@ public class MoveState_Boss : EnemyState
         }
     }
 
+    // Play the appropriate footstep sound effect based on the current speed
     private void PlayFootstepSFX()
     {
         if (SpeedUpActive)
@@ -88,74 +93,79 @@ public class MoveState_Boss : EnemyState
         }
     }
 
+    // Calculate the interval between footstep sounds based on speed
     private float CalculateFootstepInterval(float speed)
         => Mathf.Clamp(1f / speed, 0.3f, 0.5f);
+    #endregion
 
-
+    #region Speed Control Methods
+    // Reset the boss's speed to walking speed
     private void SpeedReset()
     {
         SpeedUpActive = false;
-        enemy.anim.SetFloat("MoveIndex", 0); // Set the move index to 0, so boss will walk normally
+        enemy.anim.SetFloat("MoveIndex", 0); // Set the move index to 0 for walking animation
         enemy.agent.speed = enemy.walkSpeed;
 
-        footstepInterval = CalculateFootstepInterval(enemy.walkSpeed); // Cập nhật khoảng thời gian bước chân
+        footstepInterval = CalculateFootstepInterval(enemy.walkSpeed);
     }
 
+    // Increase the boss's speed to running speed
     private void SpeedUp()
     {
         SpeedUpActive = true;
         enemy.agent.speed = enemy.runSpeed;
-        enemy.anim.SetFloat("MoveIndex", 1); // Set the move index to 1, so boss will run
+        enemy.anim.SetFloat("MoveIndex", 1); // Set the move index to 1 for running animation
 
-        footstepInterval = CalculateFootstepInterval(enemy.runSpeed); // Cập nhật khoảng thời gian bước chân
+        footstepInterval = CalculateFootstepInterval(enemy.runSpeed);
     }
 
+    // Determine if the boss should speed up based on time since last attack
+    private bool ShouldSpeedUp()
+    {
+        if (SpeedUpActive)
+            return false;
+
+        if (Time.time > enemy.attackState.lastTimeAttack + timeBeforeSpeedUp)
+            return true;
+
+        return false;
+    }
+    #endregion
+
+    #region Action Logic
+    // Perform a random action based on the boss's abilities
     private void PerfomRandomAction()
     {
         actionTimer = enemy.actionCooldown;
 
         if (Random.Range(0, 2) == 0)
-            ActiveSpecialAbility(); // 50% xác suất thực hiện khả năng đặc biệt
-
+            ActiveSpecialAbility(); // 50% chance to perform a special ability
         else
         {
             if (enemy.CanDoJumpAttack())
-                stateMachine.ChangeState(enemy.jumpAttackState); // Ưu tiên nhảy tấn công nếu có thể
-
+                stateMachine.ChangeState(enemy.jumpAttackState); // Prioritize jump attack if possible
             else
             {
-                // Hành động mặc định dựa trên loại boss
+                // Default action based on the boss's weapon type
                 switch (enemy.weaponType)
                 {
                     case BossWeaponType.Hammer:
-                        ActiveSpecialAbility(); // Hammer thực hiện khả năng đặc biệt (đập búa)
+                        ActiveSpecialAbility(); // Perform hammer special ability
                         break;
 
                     case BossWeaponType.Flamethrower:
-                        ActiveSpecialAbility(); // Flamethrower thực hiện khả năng đặc biệt (phun lửa)
+                        ActiveSpecialAbility(); // Perform flamethrower special ability
                         break;
                 }
             }
         }
     }
 
+    // Activate the boss's special ability if possible
     private void ActiveSpecialAbility()
     {
         if (enemy.CanDoAbility())
             stateMachine.ChangeState(enemy.abilityState);
     }
-
-    private bool ShouldSpeedUp()
-    {
-        if (SpeedUpActive)
-        {
-            return false;
-        }
-
-        if (Time.time > enemy.attackState.lastTimeAttack + timeBeforeSpeedUp)
-        {
-            return true;
-        }
-        return false;
-    }
+    #endregion
 }

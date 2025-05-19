@@ -9,12 +9,14 @@ public class AbilityState_Boss : EnemyState
         enemy = (Enemy_Boss)enemyBase;
     }
 
+    #region State Lifecycle Methods
     public override void Enter()
     {
         base.Enter();
 
         enemy.agent.isStopped = true;
         enemy.agent.velocity = Vector3.zero;
+
         stateTimer = enemy.flamethrowDuration;
         enemy.bossVisual.EnableWeaponTrail(true);
     }
@@ -22,6 +24,7 @@ public class AbilityState_Boss : EnemyState
     public override void Update()
     {
         base.Update();
+
         enemy.FaceTarget(enemy.player.position);
 
         if (ShouldDisableFlamethrower())
@@ -31,22 +34,31 @@ public class AbilityState_Boss : EnemyState
             stateMachine.ChangeState(enemy.moveState);
     }
 
-    private bool ShouldDisableFlamethrower()
+    public override void Exit()
     {
-        return stateTimer < 0;
-    }
+        base.Exit();
 
+        // Reset the ability cooldown and recharge the batteries
+        enemy.SetAbilityOnCooldown();
+        enemy.bossVisual.ResetBatteries();
+        enemy.bossVisual.EnableWeaponTrail(false);
+    }
+    #endregion
+
+    #region Ability Trigger Logic
+    // Trigger the boss's ability based on weapon type
     public override void AbilityTrigger()
     {
         base.AbilityTrigger();
 
+        // For flamethrower boss: Activate flamethrower, discharge batteries, and expand damage area
         if (enemy.weaponType == BossWeaponType.Flamethrower)
         {
             enemy.ActivateFlamethrower(true);
             enemy.bossVisual.DischargeBatteries();
             enemy.bossVisual.EnableWeaponTrail(false);
 
-            // Kích ho?t m? r?ng collider
+            // Enable the damage area of the flamethrower
             Flamethrower_DamageArea damageArea = enemy.flamethrower.GetComponentInChildren<Flamethrower_DamageArea>();
             if (damageArea != null)
             {
@@ -54,32 +66,30 @@ public class AbilityState_Boss : EnemyState
             }
         }
 
+        // For hammer boss: Activate hammer and enable weapon trail
         if (enemy.weaponType == BossWeaponType.Hammer)
         {
             enemy.ActivateHammer();
             enemy.bossVisual.EnableWeaponTrail(true);
         }
     }
+    #endregion
 
-    public override void Exit()
+    #region Flamethrower Control Methods
+    private bool ShouldDisableFlamethrower()
     {
-        base.Exit();
-        enemy.SetAbilityOnCooldown();
-        enemy.bossVisual.ResetBatteries();
-        enemy.bossVisual.EnableWeaponTrail(false);
+        return stateTimer < 0;
     }
 
     public void DisableFlamethrower()
     {
         if (enemy.weaponType != BossWeaponType.Flamethrower)
-        {
             return;
-        }
 
         if (enemy.flamethrowerActive == false)
-        {
             return;
-        }
+
         enemy.ActivateFlamethrower(false);
     }
+    #endregion
 }
