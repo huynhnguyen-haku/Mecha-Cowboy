@@ -19,52 +19,51 @@ public enum EnemyMelee_Type { Regular, Shield, Dodge, AxeThrow }
 
 public class Enemy_Melee : Enemy
 {
-    public Enemy_MeleeSFX meleeSFX { get; private set; } // Reference to the sound effects component
+    public Enemy_MeleeSFX meleeSFX { get; private set; }
 
     #region States
-    public IdleState_Melee idleState { get; private set; } // Reference to idle state
-    public MoveState_Melee moveState { get; private set; } // Reference to move state
-    public RecoveryState_Melee recoveryState { get; private set; } // Reference to recovery state
-    public ChaseState_Melee chaseState { get; private set; } // Reference to chase state
-    public AttackState_Melee attackState { get; private set; } // Reference to attack state
-    public DeadState_Melee deadState { get; private set; } // Reference to dead state
-    public AbilityState_Melee abilityState { get; private set; } // Reference to ability state
+    public IdleState_Melee idleState { get; private set; }
+    public MoveState_Melee moveState { get; private set; }
+    public RecoveryState_Melee recoveryState { get; private set; }
+    public ChaseState_Melee chaseState { get; private set; }
+    public AttackState_Melee attackState { get; private set; }
+    public DeadState_Melee deadState { get; private set; }
+    public AbilityState_Melee abilityState { get; private set; }
     #endregion
 
     #region Fields
     [Header("Enemy Setting")]
-    public EnemyMelee_Type meleeType; // Type of melee enemy
-    public Enemy_MeleeWeaponType weaponType; // Type of weapon used by the enemy
+    public EnemyMelee_Type meleeType;
+    public Enemy_MeleeWeaponType weaponType;
 
     [Header("Shield")]
-    public int shieldDurability; // Durability of the shield
-    public Transform shieldTransform; // Transform of the shield object
+    public int shieldDurability;
+    public Transform shieldTransform;
 
     [Header("Dodge")]
-    public float dodgeCooldown; // Cooldown time for dodge roll
-    private float lastDodgeTime; // Last time a dodge was performed
+    public float dodgeCooldown;
+    private float lastDodgeTime;
 
     [Header("Attack Data")]
-    public AttackData_EnemyMelee attackData; // Current attack data
-    public List<AttackData_EnemyMelee> attackList; // List of possible attacks
-    private Enemy_WeaponModel currentWeapon; // Current weapon model
-    private bool isAttackReady; // Tracks if an attack is ready
+    public AttackData_EnemyMelee attackData;
+    public List<AttackData_EnemyMelee> attackList;
+    private Enemy_WeaponModel currentWeapon;
+    private bool isAttackReady;
 
     [Header("Special Attack")]
-    public int axeDamage; // Damage dealt by axe throw
-    public GameObject axePrefab; // Prefab for the axe
-    public float axeFlySpeed; // Speed of the thrown axe
-    public float axeAimTimer; // Time to aim before throwing the axe
-    public float axeThrowCooldown; // Cooldown for axe throw
-    private float lastAxeThrowTime; // Last time an axe was thrown
-    public Transform axeStartPoint; // Starting point for axe throw
+    public int axeDamage;
+    public GameObject axePrefab;
+    public float axeFlySpeed;
+    public float axeAimTimer;
+    public float axeThrowCooldown;
+    private float lastAxeThrowTime;
+    public Transform axeStartPoint;
 
     [Header("Minimap Icon")]
-    private GameObject minimapIcon; // Reference to the minimap icon
+    private GameObject minimapIcon;
 
     [Space]
-
-    [SerializeField] private GameObject meleeAttackFX; // Visual effect for melee attacks
+    [SerializeField] private GameObject meleeAttackFX;
     #endregion
 
     #region Unity Methods
@@ -79,10 +78,10 @@ public class Enemy_Melee : Enemy
         recoveryState = new RecoveryState_Melee(this, stateMachine, "Recovery");
         chaseState = new ChaseState_Melee(this, stateMachine, "Chase");
         attackState = new AttackState_Melee(this, stateMachine, "Attack");
-        deadState = new DeadState_Melee(this, stateMachine, "Idle"); // We use ragdoll instead of animation
+        deadState = new DeadState_Melee(this, stateMachine, "Idle"); // Uses ragdoll on death
         abilityState = new AbilityState_Melee(this, stateMachine, "AxeThrow");
 
-        // Add minimap icon
+        // Add minimap icon if available
         if (minimapIcon == null)
         {
             var minimapSprite = GetComponentInChildren<MinimapSprite>(true);
@@ -108,7 +107,6 @@ public class Enemy_Melee : Enemy
     // Randomize the first attack to avoid repetition
     private void RandomizeFirstAttack()
     {
-        // This method is used to fix the bug where the enemy always uses the same attack
         if (attackList.Count > 0)
             attackData = attackList[Random.Range(0, attackList.Count)];
     }
@@ -121,7 +119,6 @@ public class Enemy_Melee : Enemy
         MeleeAttackCheck(currentWeapon.damagePoints, currentWeapon.attackCheckRadius, meleeAttackFX, attackData.attackDamage);
     }
 
-    // Draw gizmos in the editor for debugging
     protected override void OnDrawGizmos()
     {
         base.OnDrawGizmos();
@@ -138,11 +135,10 @@ public class Enemy_Melee : Enemy
             return;
 
         base.EnterBattleMode();
-        UpdateAttackData(); // Update attack data when entering battle mode
+        UpdateAttackData();
         stateMachine.ChangeState(recoveryState);
     }
 
-    // Trigger the ability and adjust movement
     public override void AbilityTrigger()
     {
         base.AbilityTrigger();
@@ -150,12 +146,11 @@ public class Enemy_Melee : Enemy
         visual.EnableWeaponModel(false);
     }
 
-    // Handle the death of the enemy
     public override void Die()
     {
         base.Die();
 
-        if (!HealthController.muteDeathSound) // Check if the death sound should be muted
+        if (!HealthController.muteDeathSound)
             meleeSFX.deadSFX.Play();
 
         if (stateMachine.currentState != deadState)
@@ -170,7 +165,6 @@ public class Enemy_Melee : Enemy
     private void SetLayerRecursively(GameObject obj, int newLayer)
     {
         obj.layer = newLayer;
-
         foreach (Transform child in obj.transform)
             SetLayerRecursively(child.gameObject, newLayer);
     }
@@ -193,7 +187,7 @@ public class Enemy_Melee : Enemy
         newAxe.GetComponent<Enemy_Axe>().AxeSetup(axeFlySpeed, player, axeAimTimer, axeDamage);
     }
 
-    // Check if the enemy can throw an axe
+    // True if the enemy can throw an axe
     public bool CanThrowAxe()
     {
         if (meleeType != EnemyMelee_Type.AxeThrow)
@@ -207,7 +201,7 @@ public class Enemy_Melee : Enemy
         return false;
     }
 
-    // Check if the player is within attack range
+    // True if the player is within attack range
     public bool PlayerInAttackRange()
     {
         return Vector3.Distance(transform.position, player.position) < attackData.attackRange;
@@ -248,10 +242,8 @@ public class Enemy_Melee : Enemy
             shieldTransform.gameObject.SetActive(true);
             weaponType = Enemy_MeleeWeaponType.OneHand;
         }
-
         else if (meleeType == EnemyMelee_Type.Dodge)
             weaponType = Enemy_MeleeWeaponType.Unarmed;
-
         else if (meleeType == EnemyMelee_Type.AxeThrow)
             weaponType = Enemy_MeleeWeaponType.Throw;
     }

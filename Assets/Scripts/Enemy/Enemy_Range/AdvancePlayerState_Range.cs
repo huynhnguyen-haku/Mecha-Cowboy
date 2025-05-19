@@ -4,9 +4,9 @@ public class AdvancePlayerState_Range : EnemyState
 {
     private Enemy_Range enemy;
 
-    [Header("Advance Player Parameters")]
     public float lastTimeAdvanced { get; private set; } // Last time this state was exited
     private Vector3 playerPosition;
+
     private float footstepTimer;
     private float footstepInterval;
 
@@ -86,7 +86,11 @@ public class AdvancePlayerState_Range : EnemyState
 
     private void PlayFootstepSFX()
     {
-        enemy.rangeSFX.runSFX.PlayOneShot(enemy.rangeSFX.runSFX.clip);
+        if (enemy.rangeSFX.walkSFX.isPlaying)
+            enemy.rangeSFX.walkSFX.Stop();
+
+        if (!enemy.rangeSFX.runSFX.isPlaying)
+            enemy.rangeSFX.runSFX.PlayOneShot(enemy.rangeSFX.runSFX.clip);
     }
 
     private float CalculateFootstepInterval(float speed)

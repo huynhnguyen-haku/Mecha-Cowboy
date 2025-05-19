@@ -6,10 +6,9 @@ public class AttackState_Melee : EnemyState
 {
     private Enemy_Melee enemy;
 
-    [Header("Attack Parameters")]
-    private Vector3 attackDirection; // Direction for the enemy to move during the attack
-    private float attackMoveSpeed; // Speed at which the enemy moves during the attack
-    private const float MAX_ATTACK_DISTANCE = 50f; // Maximum distance of charge attack
+    private Vector3 attackDirection;      // Direction to move during attack
+    private float attackMoveSpeed;        // Speed during attack
+    private const float MAX_ATTACK_DISTANCE = 50f; // Max distance for charge attack
 
     public AttackState_Melee(Enemy enemyBase, EnemyStateMachine stateMachine, string animBoolName) : base(enemyBase, stateMachine, animBoolName)
     {
@@ -17,6 +16,7 @@ public class AttackState_Melee : EnemyState
     }
 
     #region State Lifecycle Methods
+
     public override void Enter()
     {
         base.Enter();
@@ -29,7 +29,7 @@ public class AttackState_Melee : EnemyState
         enemy.anim.SetFloat("AttackAnimationSpeed", enemy.attackData.animationSpeed);
         enemy.anim.SetFloat("AttackIndex", enemy.attackData.attackIndex);
 
-        // Randomize the attack animation based on the number of attack animations available
+        // Randomize slash animation
         enemy.anim.SetFloat("SlashAttackIndex", Random.Range(0, 6));
 
         enemy.agent.isStopped = true;
@@ -42,38 +42,37 @@ public class AttackState_Melee : EnemyState
     {
         base.Update();
 
+        // Update direction if manual rotation is active
         if (enemy.ManualRotationActive())
         {
             enemy.FaceTarget(enemy.player.position);
             attackDirection = enemy.transform.position + (enemy.transform.forward * MAX_ATTACK_DISTANCE);
         }
 
+        // Move enemy if manual movement is active
         if (enemy.ManualMovementActive())
             enemy.transform.position = Vector3.MoveTowards(enemy.transform.position, attackDirection, attackMoveSpeed * Time.deltaTime);
 
+        // Switch to recovery or chase state after attack animation
         if (triggerCalled)
         {
             if (enemy.PlayerInAttackRange())
-                // Change to recovery state, to determine next action
-                // Such as throwing an axe, continue attacking, or chase
-                stateMachine.ChangeState(enemy.recoveryState);
-
+                stateMachine.ChangeState(enemy.recoveryState); // Next action: throw axe, attack, or chase
             else
-                // Chase the player if not in attack range
-                stateMachine.ChangeState(enemy.chaseState);
+                stateMachine.ChangeState(enemy.chaseState);    // Chase player if not in range
         }
     }
 
     public override void Exit()
     {
         base.Exit();
-        // Set up next attack by using the attack data
-        SetupNextAttack(); 
+        SetupNextAttack(); // Prepare next attack data
         enemy.visual.EnableWeaponTrail(false);
     }
     #endregion
 
     #region Attack Setup Methods
+
     private void SetupNextAttack()
     {
         int recoveryIndex = PlayerClose() ? 1 : 0;
@@ -81,10 +80,10 @@ public class AttackState_Melee : EnemyState
         enemy.attackData = UpdatedAttackData();
     }
 
-    // Check if the player is close (within 1 unit)
+    // True if player is within 1 unit
     private bool PlayerClose() => Vector3.Distance(enemy.transform.position, enemy.player.position) <= 1;
 
-    // Select a new attack data, excluding charge attacks if player is close
+    // Select new attack data, exclude charge if player is close
     private AttackData_EnemyMelee UpdatedAttackData()
     {
         List<AttackData_EnemyMelee> validAttacks = new List<AttackData_EnemyMelee>(enemy.attackList);

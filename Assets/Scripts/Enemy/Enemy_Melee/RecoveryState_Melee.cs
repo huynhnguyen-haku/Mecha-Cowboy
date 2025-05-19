@@ -10,29 +10,29 @@ public class RecoveryState_Melee : EnemyState
     }
 
     #region State Lifecycle Methods
+
     public override void Enter()
     {
         base.Enter();
         enemy.agent.isStopped = true;
     }
+
     public override void Update()
     {
         base.Update();
         enemy.FaceTarget(enemy.player.transform.position);
 
+        // Switch to next state based on conditions when animation trigger is called
         if (triggerCalled)
         {
             if (enemy.CanThrowAxe())
-                // Change to ability state if the axe is available
-                stateMachine.ChangeState(enemy.abilityState);
+                stateMachine.ChangeState(enemy.abilityState);      // Axe throw if available
 
             else if (enemy.PlayerInAttackRange())
-                // Change to attack state if the player is in attack range
-                stateMachine.ChangeState(enemy.attackState);
+                stateMachine.ChangeState(enemy.attackState);       // Attack if in range
 
             else
-                // Chase the player if not in attack range
-                stateMachine.ChangeState(enemy.chaseState);
+                stateMachine.ChangeState(enemy.chaseState);        // Otherwise chase player
         }
     }
 

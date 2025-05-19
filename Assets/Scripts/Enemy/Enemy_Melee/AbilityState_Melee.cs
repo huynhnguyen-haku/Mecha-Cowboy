@@ -4,10 +4,9 @@ public class AbilityState_Melee : EnemyState
 {
     private Enemy_Melee enemy;
 
-    [Header("Ability Parameters")]
-    private Vector3 movementDirection; // Direction for the enemy to move during the ability
-    private float moveSpeed; // Speed at which the enemy moves during the ability
-    private const float MAX_MOVEMENT_DISTANCE = 20f; // Maximum distance of the ability
+    private Vector3 movementDirection; // Direction to move during ability
+    private float moveSpeed;           // Speed during ability
+    private const float MAX_MOVEMENT_DISTANCE = 20f; // Max distance for ability move
 
     public AbilityState_Melee(Enemy enemyBase, EnemyStateMachine stateMachine, string animBoolName) : base(enemyBase, stateMachine, animBoolName)
     {
@@ -15,12 +14,12 @@ public class AbilityState_Melee : EnemyState
     }
 
     #region State Lifecycle Methods
+
     public override void Enter()
     {
         base.Enter();
 
-        // Enable the weapon mode, change movespeed to its walk speed
-        // Limit the movement distance while activating the ability
+        // Enable weapon model and set up movement for ability
         enemy.visual.EnableWeaponModel(true);
         moveSpeed = enemy.walkSpeed;
         movementDirection = enemy.transform.position + (enemy.transform.forward * MAX_MOVEMENT_DISTANCE);
@@ -30,16 +29,18 @@ public class AbilityState_Melee : EnemyState
     {
         base.Update();
 
+        // Update direction if manual rotation is active
         if (enemy.ManualRotationActive())
         {
             enemy.FaceTarget(enemy.player.position);
             movementDirection = enemy.transform.position + (enemy.transform.forward * MAX_MOVEMENT_DISTANCE);
         }
 
+        // Move enemy if manual movement is active
         if (enemy.ManualMovementActive())
             enemy.transform.position = Vector3.MoveTowards(enemy.transform.position, movementDirection, enemy.walkSpeed * Time.deltaTime);
 
-        // Change to recovery state when the ability is complete
+        // Switch to recovery state when ability is complete
         if (triggerCalled)
             stateMachine.ChangeState(enemy.recoveryState);
     }
@@ -55,6 +56,7 @@ public class AbilityState_Melee : EnemyState
     #endregion
 
     #region Ability Trigger Logic
+
     public override void AbilityTrigger()
     {
         base.AbilityTrigger();

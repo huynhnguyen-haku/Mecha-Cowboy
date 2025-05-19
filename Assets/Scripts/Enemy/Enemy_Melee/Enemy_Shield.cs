@@ -26,7 +26,6 @@ public class Enemy_Shield : MonoBehaviour, I_Damagable
         }
     }
 
-    // Implement I_Damagable interface to take damage
     public void TakeDamage(int damage)
     {
         ReduceDurability(damage);

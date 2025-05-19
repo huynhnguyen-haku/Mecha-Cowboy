@@ -6,6 +6,7 @@ public class Enemy_Grenade : MonoBehaviour
     [SerializeField] private GameObject explosionFX;
     [SerializeField] private float impactRadius;
     [SerializeField] private float upwardsMulti = 1;
+
     private Rigidbody rb;
     private float timer;
     private float impactPower;
