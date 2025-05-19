@@ -14,6 +14,9 @@ public class GameManager : MonoBehaviour
     [Header("Settings")]
     public bool friendlyFire;
 
+    public bool quickStart; // Remove this in the final build
+
+
 
     // Trạng thái game để quản lý BGM
     private enum GameState { MainMenu, InGame, GameOver, MissionComplete }
