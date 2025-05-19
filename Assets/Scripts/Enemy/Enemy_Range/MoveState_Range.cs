@@ -6,24 +6,25 @@ public class MoveState_Range : EnemyState
     private Vector3 destination;
 
     private float footstepTimer;
-    private float footstepInterval; 
+    private float footstepInterval;
 
     public MoveState_Range(Enemy enemyBase, EnemyStateMachine stateMachine, string animBoolName) : base(enemyBase, stateMachine, animBoolName)
     {
         enemy = (Enemy_Range)enemyBase;
     }
 
+    #region State Lifecycle Methods
+
     public override void Enter()
     {
         base.Enter();
-
         enemy.visual.EnableIK(true, false);
         enemy.agent.speed = enemy.walkSpeed;
         destination = enemy.GetPatrolDestination();
         enemy.agent.SetDestination(destination);
 
-        footstepInterval = CalculateFootstepInterval(enemy.agent.speed); 
-        footstepTimer = 0f; 
+        footstepInterval = CalculateFootstepInterval(enemy.agent.speed);
+        footstepTimer = 0f;
         PlayFootstepSFX();
     }
 
@@ -38,13 +39,15 @@ public class MoveState_Range : EnemyState
 
         enemy.FaceTarget(enemy.agent.steeringTarget);
 
-        if (enemy.agent.remainingDistance <= enemy.agent.stoppingDistance + 0.05f)        
+        // Switch to idle state when destination is reached
+        if (enemy.agent.remainingDistance <= enemy.agent.stoppingDistance + 0.05f)
             stateMachine.ChangeState(enemy.idleState);
-        
+
         HandleFootstepSFX();
     }
+    #endregion
 
-    // Footstep sfx
+    #region Footstep Sound Effects
 
     private void HandleFootstepSFX()
     {
@@ -66,8 +69,10 @@ public class MoveState_Range : EnemyState
             enemy.rangeSFX.walkSFX.PlayOneShot(enemy.rangeSFX.walkSFX.clip);
     }
 
+    // Interval between footstep sounds based on speed
     private float CalculateFootstepInterval(float speed)
     {
         return Mathf.Clamp(1f / speed, 0.4f, 0.7f);
     }
+    #endregion
 }

@@ -12,12 +12,13 @@ public class Enemy_Grenade : MonoBehaviour
     private int grenadeDamage;
 
     private LayerMask allyLayerMask;
-    private bool canExplode; // Flag to check if the grenade has already exploded  
+    private bool canExplode;
 
+    #region Unity Methods
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
-        rb.collisionDetectionMode = CollisionDetectionMode.Continuous; // Ensure proper collision detection  
+        rb.collisionDetectionMode = CollisionDetectionMode.Continuous;
     }
 
     private void Update()
@@ -29,19 +30,22 @@ public class Enemy_Grenade : MonoBehaviour
         }
     }
 
-    private void OnCollisionEnter(Collision collision)
+    private void OnCollisionEnter(Collision collision) { }
+
+    private void OnDrawGizmos()
     {
-        // No additional logic needed for collision with the ground
-        // The grenade will naturally bounce and roll
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(transform.position, impactRadius);
     }
+    #endregion
 
-
+    #region Explosion Logic
     private void Explode()
     {
-        canExplode = false; // Set the flag to false to prevent further explosions  
+        canExplode = false; // Prevent further explosions, make sure that it can only explode once
         CreateExplosionFX();
 
-        HashSet<GameObject> uniqueEntities = new HashSet<GameObject>(); // To store unique entities hit by the explosion  
+        HashSet<GameObject> uniqueEntities = new HashSet<GameObject>(); // To store unique entities hit by the explosion
         Collider[] colliders = Physics.OverlapSphere(transform.position, impactRadius);
 
         foreach (Collider hit in colliders)
@@ -54,13 +58,12 @@ public class Enemy_Grenade : MonoBehaviour
 
                 GameObject rootEntity = hit.transform.root.gameObject;
                 if (uniqueEntities.Add(rootEntity) == false)
-                    continue; // Skip if the entity has already been hit  
+                    continue; // Skip if the entity has already been hit
 
                 damagable.TakeDamage(grenadeDamage);
             }
             ApplyPhysicalForce(hit);
         }
-
         ObjectPool.instance.ReturnObject(gameObject); // Return the grenade to the pool
     }
 
@@ -74,11 +77,12 @@ public class Enemy_Grenade : MonoBehaviour
     private void CreateExplosionFX()
     {
         GameObject newFX = ObjectPool.instance.GetObject(explosionFX, transform);
-
-        ObjectPool.instance.ReturnObject(gameObject); // Return the grenade  
-        ObjectPool.instance.ReturnObject(newFX, 2); // Return the explosion fx atfer 1s  
+        ObjectPool.instance.ReturnObject(gameObject);
+        ObjectPool.instance.ReturnObject(newFX, 2);
     }
+    #endregion
 
+    #region Setup Methods
     public void SetupGrenade(LayerMask allyLayerMask, Vector3 target, float timeToTarget, float countdown, float impactPower, int grenadeDamage)
     {
         this.allyLayerMask = allyLayerMask;
@@ -86,42 +90,38 @@ public class Enemy_Grenade : MonoBehaviour
         this.impactPower = impactPower;
 
         timer = countdown + timeToTarget;
-        canExplode = true; // Make grenade able to explode  
+        canExplode = true;
 
         rb.linearVelocity = CalculateLaunchVelocity(target, timeToTarget);
     }
 
+    // If friendly fire is enabled, then other enemies can also take damage (is valid target)
+    // If disabled, then only the player and vehicles can take damage
     private bool IsTargetValid(Collider collider)
     {
-        // Check if friendly fire is enabled, all colliders are valid  
         if (GameManager.instance.friendlyFire)
             return true;
 
-        // If collider is on ally layer, target is invalid  
         if ((allyLayerMask & (1 << collider.gameObject.layer)) > 0)
             return false;
 
         return true;
     }
 
+    // Calculate the launch velocity to reach the target (make the grenade fly in an parabolic arc)
     private Vector3 CalculateLaunchVelocity(Vector3 target, float timeToTarget)
     {
-        Vector3 direction = target - transform.position;
-        Vector3 directionXZ = new Vector3(direction.x, 0, direction.z);
-        Vector3 velocityXZ = directionXZ / timeToTarget;
+        Vector3 direction = target - transform.position; // Vector from current position to target
+        Vector3 directionXZ = new Vector3(direction.x, 0, direction.z); // Horizontal (XZ) component only
+        Vector3 velocityXZ = directionXZ / timeToTarget; // Required horizontal velocity
 
-        float velocityY =
-            (direction.y - (Physics.gravity.y * Mathf.Pow(timeToTarget, 2)) / 2) / timeToTarget;
+        // Required vertical velocity, accounting for gravity
+        float velocityY = (direction.y - (Physics.gravity.y * Mathf.Pow(timeToTarget, 2)) / 2) / timeToTarget;
 
-        Vector3 launchVelocity = velocityXZ + Vector3.up * velocityY;
+        Vector3 launchVelocity = velocityXZ + Vector3.up * velocityY; // Combine horizontal and vertical
 
         return launchVelocity;
     }
 
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(transform.position, impactRadius);
-    }
+    #endregion
 }
-

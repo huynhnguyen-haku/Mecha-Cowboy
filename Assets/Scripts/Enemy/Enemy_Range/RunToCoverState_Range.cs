@@ -15,13 +15,14 @@ public class RunToCoverState_Range : EnemyState
         enemy = (Enemy_Range)enemyBase;
     }
 
+    #region State Lifecycle Methods
+
     public override void Enter()
     {
         base.Enter();
         destination = enemy.currentCover.transform.position;
 
         enemy.visual.EnableIK(true, false);
-
         enemy.agent.isStopped = false;
         enemy.agent.speed = enemy.runSpeed;
         enemy.agent.SetDestination(destination);
@@ -42,16 +43,16 @@ public class RunToCoverState_Range : EnemyState
         base.Update();
         enemy.FaceTarget(enemy.agent.steeringTarget);
 
+        // Switch to battle state when cover is reached
         if (Vector3.Distance(enemy.transform.position, destination) < 0.5f)
-        {
-            Debug.Log("Reached cover");
             stateMachine.ChangeState(enemy.battleState);
-        }
+
         HandleFootstepSFX();
     }
+    #endregion
 
+    #region Footstep Sound Effects
 
-    // Footstep sfx
     private void HandleFootstepSFX()
     {
         footstepTimer += Time.deltaTime;
@@ -68,7 +69,7 @@ public class RunToCoverState_Range : EnemyState
         if (enemy.rangeSFX.walkSFX.isPlaying)
             enemy.rangeSFX.walkSFX.Stop();
 
-        if (enemy.rangeSFX.runSFX.isPlaying)
+        if (!enemy.rangeSFX.runSFX.isPlaying)
             enemy.rangeSFX.runSFX.PlayOneShot(enemy.rangeSFX.runSFX.clip);
     }
 
@@ -76,4 +77,5 @@ public class RunToCoverState_Range : EnemyState
     {
         return Mathf.Clamp(1f / speed, 0.3f, 0.5f);
     }
+    #endregion
 }
