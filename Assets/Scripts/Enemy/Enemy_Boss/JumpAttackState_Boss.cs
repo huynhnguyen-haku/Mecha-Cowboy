@@ -24,7 +24,7 @@ public class JumpAttackState_Boss : EnemyState
         enemy.agent.isStopped = true;
         enemy.agent.velocity = Vector3.zero;
 
-        // Place the landing zone effect at the player's position and enable weapon trail
+        // Place the landing zone effect at the player's position
         enemy.bossVisual.PlaceLandingZone(lastPlayerPosition);
         enemy.bossVisual.EnableWeaponTrail(true);
 
@@ -67,7 +67,7 @@ public class JumpAttackState_Boss : EnemyState
     {
         base.Exit();
 
-        // Cool down the jump attack ability and disable weapon trail
+        // Cool down the jump attack ability
         enemy.SetJumpAttackOnCooldown();
         enemy.bossVisual.EnableWeaponTrail(false);
     }

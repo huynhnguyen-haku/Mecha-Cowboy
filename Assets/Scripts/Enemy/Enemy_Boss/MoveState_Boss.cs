@@ -45,7 +45,7 @@ public class MoveState_Boss : EnemyState
         {
             // In battle mode: Chase the player and perform actions
             if (ShouldSpeedUp())
-                SpeedUp(); // Chase the player
+                SpeedUp();
 
             Vector3 playerPosition = enemy.player.position;
             enemy.agent.SetDestination(playerPosition);
@@ -67,7 +67,6 @@ public class MoveState_Boss : EnemyState
     #endregion
 
     #region Footstep Sound Effects
-    // Manage footstep sound effects timing
     private void HandleFootstepSFX()
     {
         footstepTimer += Time.deltaTime;
@@ -99,7 +98,6 @@ public class MoveState_Boss : EnemyState
     #endregion
 
     #region Speed Control Methods
-    // Reset the boss's speed to walking speed
     private void SpeedReset()
     {
         SpeedUpActive = false;
@@ -109,7 +107,6 @@ public class MoveState_Boss : EnemyState
         footstepInterval = CalculateFootstepInterval(enemy.walkSpeed);
     }
 
-    // Increase the boss's speed to running speed
     private void SpeedUp()
     {
         SpeedUpActive = true;
@@ -133,7 +130,6 @@ public class MoveState_Boss : EnemyState
     #endregion
 
     #region Action Logic
-    // Perform a random action based on the boss's abilities
     private void PerfomRandomAction()
     {
         actionTimer = enemy.actionCooldown;
@@ -144,9 +140,9 @@ public class MoveState_Boss : EnemyState
         {
             if (enemy.CanDoJumpAttack())
                 stateMachine.ChangeState(enemy.jumpAttackState); // Prioritize jump attack if possible
+
             else
             {
-                // Default action based on the boss's weapon type
                 switch (enemy.weaponType)
                 {
                     case BossWeaponType.Hammer:
@@ -161,7 +157,6 @@ public class MoveState_Boss : EnemyState
         }
     }
 
-    // Activate the boss's special ability if possible
     private void ActiveSpecialAbility()
     {
         if (enemy.CanDoAbility())

@@ -35,6 +35,7 @@ public class AttackState_Boss : EnemyState
         {
             if (enemy.PlayerInAttackRange())
                 stateMachine.ChangeState(enemy.idleState);
+
             else
                 stateMachine.ChangeState(enemy.moveState);
         }

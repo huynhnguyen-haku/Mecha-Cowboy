@@ -107,7 +107,6 @@ public class Enemy_Boss : Enemy
         MeleeAttackCheck(damagePoints, attackCheckRadius, meleeAttackFX, meleeAttackDamage);
     }
 
-    // Draw gizmos in the editor for debugging
     protected override void OnDrawGizmos()
     {
         base.OnDrawGizmos();
@@ -141,7 +140,6 @@ public class Enemy_Boss : Enemy
     #endregion
 
     #region Battle Mode Methods
-    // Enters battle mode if not already in it
     public override void EnterBattleMode()
     {
         if (inBattleMode)
@@ -151,13 +149,13 @@ public class Enemy_Boss : Enemy
         stateMachine.ChangeState(moveState);
     }
 
-    // Checks if the player is within attack range
+    // Checks if the player is within attack range (to perform melee attacks)
     public bool PlayerInAttackRange()
     {
         return Vector3.Distance(transform.position, player.position) < attackRange;
     }
 
-    // Checks if the player is in clear sight of the boss
+    // Checks if the player is in clear sight of the boss (to perform jump attacks/chase)
     public bool IsPlayerInClearSight()
     {
         Vector3 myPosition = transform.position + new Vector3(0, 1.5f, 0);
@@ -283,7 +281,6 @@ public class Enemy_Boss : Enemy
     #endregion
 
     #region Damage Methods
-    // Handles the death of the boss
     public override void Die()
     {
         base.Die();

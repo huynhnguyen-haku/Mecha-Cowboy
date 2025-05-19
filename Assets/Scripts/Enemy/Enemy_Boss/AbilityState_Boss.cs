@@ -46,7 +46,6 @@ public class AbilityState_Boss : EnemyState
     #endregion
 
     #region Ability Trigger Logic
-    // Trigger the boss's ability based on weapon type
     public override void AbilityTrigger()
     {
         base.AbilityTrigger();
