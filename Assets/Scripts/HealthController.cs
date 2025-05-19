@@ -51,7 +51,8 @@ public class HealthController : MonoBehaviour
             if (!lowHealthEffect.activeSelf)
                 lowHealthEffect.SetActive(true);
         }
-        // Disable VFX if health is 50% or above
+
+        // Disable VFX if health is 25% or above
         else
         {
             if (lowHealthEffect.activeSelf)

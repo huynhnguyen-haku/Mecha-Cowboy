@@ -52,7 +52,7 @@ public class MoveState_Boss : EnemyState
                 PerfomRandomAction(); // Try jump attack or special ability
 
             else if (enemy.PlayerInAttackRange())
-                stateMachine.ChangeState(enemy.attackState); // Attack if in range
+                stateMachine.ChangeState(enemy.attackState); // Normal attack if in range
         }
         else
         {
