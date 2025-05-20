@@ -37,6 +37,7 @@ public class Enemy_Visual : MonoBehaviour
 
     private void Update()
     {
+        // Smoothly update IK weights for ranged enemies
         if (enemyRange != null)
         {
             leftHandIKConstraint.weight = AdjustIKWeight(leftHandIKConstraint.weight, leftHandTargetWeight);
@@ -45,6 +46,7 @@ public class Enemy_Visual : MonoBehaviour
     }
 
     #region Weapon Methods
+
     public void EnableWeaponTrail(bool enable)
     {
         Enemy_WeaponModel currentWeaponScript = currentWeaponModel.GetComponent<Enemy_WeaponModel>();
@@ -66,6 +68,7 @@ public class Enemy_Visual : MonoBehaviour
         grenadeModel?.SetActive(active);
     }
 
+    // Find and return the correct range weapon model for this enemy
     private GameObject FindRangeWeaponModel()
     {
         Enemy_RangeWeaponModel[] weaponModels = GetComponentsInChildren<Enemy_RangeWeaponModel>(true);
@@ -85,6 +88,7 @@ public class Enemy_Visual : MonoBehaviour
         return null;
     }
 
+    // Find and return a random melee weapon model for this enemy
     private GameObject FindMeleeWeaponModel()
     {
         Enemy_WeaponModel[] weaponModels = GetComponentsInChildren<Enemy_WeaponModel>(true);
@@ -101,6 +105,7 @@ public class Enemy_Visual : MonoBehaviour
         return filteredWeaponModels[randomIndex].gameObject;
     }
 
+    // Find and return the holding weapon model for this enemy
     private GameObject FindHoldingWeaponModel()
     {
         Enemy_HoldWeaponModel[] weaponModels = GetComponentsInChildren<Enemy_HoldWeaponModel>(true);
@@ -109,37 +114,36 @@ public class Enemy_Visual : MonoBehaviour
         foreach (var weaponModel in weaponModels)
         {
             if (weaponModel.weaponType == weaponType)
-            {
                 return weaponModel.gameObject;
-            }
         }
         return null;
     }
 
+    // Override the animator controller with the weapon's override if available
     private void OverrideAnimatorController()
     {
         AnimatorOverrideController overrideController = currentWeaponModel.GetComponent<Enemy_WeaponModel>()?.overrideController;
         if (overrideController != null)
-        {
             GetComponentInChildren<Animator>().runtimeAnimatorController = overrideController;
-        }
     }
 
+    // Switch animation layer for weapon holding type
     private void SwitchAnimationLayer(int layerIndex)
     {
         Animator animator = GetComponentInChildren<Animator>();
 
         // Turn off all layers
         for (int i = 1; i < animator.layerCount; i++)
-        {
             animator.SetLayerWeight(i, 0);
-        }
+
         // Turn on the layer we want
         animator.SetLayerWeight(layerIndex, 1);
     }
     #endregion
 
     #region Visual Setup Methods
+
+    // Randomize color, weapon, and crystals for enemy
     public void SetupVisual()
     {
         SetupRandomColor();
@@ -163,14 +167,10 @@ public class Enemy_Visual : MonoBehaviour
         bool thisEnemyIsRange = enemyRange != null;
 
         if (thisEnemyIsMelee)
-        {
             currentWeaponModel = FindMeleeWeaponModel();
-        }
 
         if (thisEnemyIsRange)
-        {
             currentWeaponModel = FindRangeWeaponModel();
-        }
 
         currentWeaponModel.SetActive(true);
         OverrideAnimatorController();
@@ -200,20 +200,22 @@ public class Enemy_Visual : MonoBehaviour
         }
     }
 
+    // Collect all crystal GameObjects in children (to randomize active)
     private GameObject[] CollectCrystals()
     {
         Enemy_Crystal[] crystalComponents = GetComponentsInChildren<Enemy_Crystal>(true);
         GameObject[] crystals = new GameObject[crystalComponents.Length];
 
         for (int i = 0; i < crystalComponents.Length; i++)
-        {
             crystals[i] = crystalComponents[i].gameObject;
-        }
+
         return crystals;
     }
     #endregion
 
     #region IK Methods
+
+    // Enable/disable IK for left hand and weapon aim
     public void EnableIK(bool enableLeftHand, bool enableAim, float changeRate = 10)
     {
         if (enemyRange != null)
@@ -224,6 +226,7 @@ public class Enemy_Visual : MonoBehaviour
         }
     }
 
+    // Set up IK targets for left hand and elbow
     private void SetupLeftHandIK(Transform leftHandTarget, Transform leftElbowTarget)
     {
         if (enemyRange != null)
@@ -236,6 +239,7 @@ public class Enemy_Visual : MonoBehaviour
         }
     }
 
+    // Smoothly adjust IK weight toward target
     private float AdjustIKWeight(float currentWeight, float targetWeight)
     {
         if (Mathf.Abs(currentWeight - targetWeight) > 0.05f)

@@ -17,7 +17,6 @@ public class Enemy : MonoBehaviour
     public EnemyType enemyType;
 
     [Space]
-
     [Header("Idle Info")]
     public float idleTime;
     public float arrgresssionRange;
@@ -27,15 +26,13 @@ public class Enemy : MonoBehaviour
     public float runSpeed = 4f;
     public float turnSpeed;
 
-
     private bool manualMovement;
     private bool manualRotation;
 
     [SerializeField] private Transform[] patrolPoints;
     private Vector3[] patrolPointsPosition;
-
-
     private int currentPatrolIndex;
+
     public bool inBattleMode { get; private set; }
     protected bool isMeleeAttackReady;
 
@@ -49,6 +46,7 @@ public class Enemy : MonoBehaviour
     public Enemy_DropController dropController { get; private set; }
     public AudioManager audioManager { get; private set; }
 
+    #region Unity Methods
 
     protected virtual void Awake()
     {
@@ -71,13 +69,13 @@ public class Enemy : MonoBehaviour
     protected virtual void Update()
     {
         if (ShouldEnterBattleMode())
-        {
             EnterBattleMode();
-        }
     }
+    #endregion
 
     protected virtual void InitializePerk() { }
 
+    // Increase health and scale for stronger enemies
     public virtual void MakeEnemyStronger()
     {
         int addtionalHealth = Mathf.RoundToInt(health.currentHealth * 1.5f);
@@ -85,6 +83,7 @@ public class Enemy : MonoBehaviour
         transform.localScale = transform.localScale * 1.5f;
     }
 
+    // True if player is in aggression range and not already in battle mode
     protected bool ShouldEnterBattleMode()
     {
         if (IsPlayerInAgrressionRage() && !inBattleMode)
@@ -100,6 +99,7 @@ public class Enemy : MonoBehaviour
         inBattleMode = true;
     }
 
+    // Take damage and check for death
     public virtual void GetHit(int damage)
     {
         EnterBattleMode();
@@ -109,9 +109,10 @@ public class Enemy : MonoBehaviour
             Die();
     }
 
+    // Check for melee attack hits and apply damage
     public virtual void MeleeAttackCheck(Transform[] damagePoints, float attackCheckRadius, GameObject FX, int damage)
     {
-        if (isMeleeAttackReady == false)
+        if (!isMeleeAttackReady)
             return;
 
         foreach (Transform damagePoint in damagePoints)
@@ -140,6 +141,7 @@ public class Enemy : MonoBehaviour
         isMeleeAttackReady = enable;
     }
 
+    // Handle enemy death: drop items, ragdoll, and disable agent/animator
     public virtual void Die()
     {
         dropController.DropItems();
@@ -148,10 +150,8 @@ public class Enemy : MonoBehaviour
         if (agent == null)
             return; // Enemy has died before
 
-        if (agent.enabled) // Chỉ gọi isStopped nếu agent đang enabled
-        {
+        if (agent.enabled)
             agent.isStopped = true;
-        }
         agent.enabled = false;
 
         ragdoll.RagdollActive(true);
@@ -160,6 +160,7 @@ public class Enemy : MonoBehaviour
         huntTarget?.InvokeOnTargetKilled();
     }
 
+    // Apply force to ragdoll on bullet impact if enemy should die
     public virtual void BulletImpact(Vector3 force, Vector3 hitpoint, Rigidbody rb)
     {
         if (health.EnemyShouldDie())
@@ -172,35 +173,38 @@ public class Enemy : MonoBehaviour
         rb.AddForceAtPosition(force, hitpoint, ForceMode.Impulse);
     }
 
+    // Trigger special ability (state-specific)
     public virtual void AbilityTrigger()
     {
         stateMachine.currentState.AbilityTrigger();
     }
 
+    // Rotate to face a target position
     public void FaceTarget(Vector3 target, float turnSpeed = 0)
     {
         Quaternion targetRotation = Quaternion.LookRotation(target - transform.position);
         Vector3 currentEulerAngels = transform.rotation.eulerAngles;
 
         if (turnSpeed == 0)
-        {
             turnSpeed = this.turnSpeed;
-        }
 
         float yRotation = Mathf.LerpAngle(currentEulerAngels.y, targetRotation.eulerAngles.y, turnSpeed * Time.deltaTime);
         transform.rotation = Quaternion.Euler(currentEulerAngels.x, yRotation, currentEulerAngels.z);
     }
 
-
     #region Animation Events
+
     public void ActivateManualMovement(bool manualMovement) => this.manualMovement = manualMovement;
     public bool ManualMovementActive() => manualMovement;
     public void ActivateManualRotation(bool manualRotation) => this.manualRotation = manualRotation;
     public bool ManualRotationActive() => manualRotation;
     public void AnimationTrigger() => stateMachine.currentState.AnimationTrigger();
+
     #endregion
 
     #region Patrol
+
+    // Get next patrol destination
     public Vector3 GetPatrolDestination()
     {
         Vector3 destination = patrolPointsPosition[currentPatrolIndex];
@@ -212,6 +216,7 @@ public class Enemy : MonoBehaviour
         return destination;
     }
 
+    // Cache patrol points' positions
     private void InitializePatrolPoints()
     {
         patrolPointsPosition = new Vector3[patrolPoints.Length];
@@ -222,6 +227,7 @@ public class Enemy : MonoBehaviour
         }
     }
 
+    // True if player is within aggression range
     public bool IsPlayerInAgrressionRage()
     {
         return Vector3.Distance(transform.position, player.position) < arrgresssionRange;
