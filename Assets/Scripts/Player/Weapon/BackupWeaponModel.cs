@@ -8,6 +8,5 @@ public class BackupWeaponModel : MonoBehaviour
     [SerializeField] private HangType hangType;
 
     public void Activate(bool activated) => gameObject.SetActive(activated);
-
     public bool HangTypeIs(HangType hangType) => this.hangType == hangType;
 }

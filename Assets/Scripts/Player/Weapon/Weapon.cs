@@ -91,8 +91,11 @@ public class Weapon
 
     #region Firing Logic
 
+    // Weapon can fire if: enough bullets in magazine, and ready to fire
+    // Ready to fire is determined by the fire rate and the last shot time
     public bool CanShot() => HaveEnoughBullet() && ReadyToFire();
 
+    // Check if enough time has passed since last shot to fire again
     private bool ReadyToFire()
     {
         float timeBetweenShots = 60f / fireRate;
@@ -108,6 +111,7 @@ public class Weapon
 
     #region Spread Logic
 
+    // Spread is applied to the bullet direction
     public Vector3 ApplySpread(Vector3 originalDirection)
     {
         UpdateSpread();
@@ -116,12 +120,17 @@ public class Weapon
         return spreadRotation * originalDirection;
     }
 
+    // Update spread value based on firing activity
     private void UpdateSpread()
     {
+        // If the weapon is not fired for a while, decrease the spread
         if (Time.time > lastSpreadUpdateTime + spreadCooldown)
             DecreaseSpread();
+
+        // The more shots fired, the more spread is applied, and the less accurate the weapon is
         else
             IncreaseSpread();
+
         lastSpreadUpdateTime = Time.time;
     }
 
@@ -139,6 +148,7 @@ public class Weapon
 
     #region Burst Fire Logic
 
+    // Check if burst mode can be activated (enough bullets, weapon is rifle)
     public bool BurstActivated()
     {
         if (weaponType == WeaponType.Shotgun)
@@ -146,12 +156,14 @@ public class Weapon
             burst_FireDelay = 0;
             return true;
         }
+
         if (bulletsInMagazine < burst_BulletsPerShot)
             return false;
 
         return burstActive;
     }
 
+    // Toggle burst mode on/off and update fire rate and bullets per shot
     public void ToggleBurstMode()
     {
         if (!burstAvailable)
@@ -175,6 +187,7 @@ public class Weapon
 
     #region Reload Logic
 
+    // Can reload if magazine is not full and there is reserve ammo
     public bool CanReload()
     {
         if (bulletsInMagazine == magazineCapacity)
@@ -183,8 +196,10 @@ public class Weapon
         return TotalReserveAmmo > 0;
     }
 
+    // True if there is at least one bullet in the magazine
     public bool HaveEnoughBullet() => bulletsInMagazine > 0;
 
+    // Fill magazine from reserve ammo
     public void RefillBullets()
     {
         int bulletsToReload = magazineCapacity - bulletsInMagazine;
