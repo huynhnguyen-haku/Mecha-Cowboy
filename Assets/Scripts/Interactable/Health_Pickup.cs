@@ -4,10 +4,12 @@ public class Health_Pickup : Interactable
 {
     [SerializeField] private int healthAmount = 50; // Amount of health to restore
 
+    #region Interaction Logic
 
+    // Restore health to player and return to pool
     public override void Interact()
     {
-        Player player = FindFirstObjectByType<Player>(); // Find the player in the scene
+        Player player = FindFirstObjectByType<Player>();
         if (player != null)
         {
             Player_Health playerHealth = player.GetComponent<Player_Health>();
@@ -23,7 +25,8 @@ public class Health_Pickup : Interactable
     private void RestoreHealth(Player_Health playerHealth)
     {
         playerHealth.IncreaseHealth(healthAmount);
-
         Debug.Log($"[Health_Pickup] Player restored {healthAmount} health.");
     }
+
+    #endregion
 }

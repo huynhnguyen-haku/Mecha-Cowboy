@@ -27,7 +27,9 @@ public class Ammo_PickUp : Interactable
         SetupBoxModel();
     }
 
+    #region Interaction Logic
 
+    // Give ammo to all matching weapons in inventory
     public override void Interact()
     {
         List<AmmoData> currentAmmoList = smallBoxAmmo;
@@ -44,7 +46,7 @@ public class Ammo_PickUp : Interactable
         ObjectPool.instance.ReturnObject(gameObject);
     }
 
-
+    // Add bullets to weapon if found
     private void AddBullets(Weapon weapon, int amount)
     {
         if (weapon == null)
@@ -54,7 +56,7 @@ public class Ammo_PickUp : Interactable
         weaponController.UpdateWeaponUI();
     }
 
-
+    // Activate the correct box model and update mesh/material
     private void SetupBoxModel()
     {
         for (int i = 0; i < boxModel.Length; i++)
@@ -69,4 +71,5 @@ public class Ammo_PickUp : Interactable
         }
     }
 
+    #endregion
 }
