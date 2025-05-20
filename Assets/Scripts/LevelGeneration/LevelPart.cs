@@ -11,6 +11,8 @@ public class LevelPart : MonoBehaviour
     [SerializeField] private Collider[] intersectionCheckColliders;
     [SerializeField] private Transform intersectionCheckParent;
 
+    #region Unity Methods
+
     private void Start()
     {
         if (intersectionCheckColliders.Length <= 0)
@@ -19,6 +21,11 @@ public class LevelPart : MonoBehaviour
         }
     }
 
+    #endregion
+
+    #region Intersection Logic
+
+    // Check if this part intersects with others in the intersection layer
     public bool IntersectionDetected()
     {
         Physics.SyncTransforms();
@@ -39,6 +46,11 @@ public class LevelPart : MonoBehaviour
         return false;
     }
 
+    #endregion
+
+    #region Snap & Align
+
+    // Snap and align this part to a target snap point
     public void SnapAndAlignPartTo(SnapPoint targetSnapPoint)
     {
         SnapPoint entrancePoint = GetEntrancePoint();
@@ -46,6 +58,7 @@ public class LevelPart : MonoBehaviour
         SnapTo(entrancePoint, targetSnapPoint);
     }
 
+    // Move this part so its snap point matches the target
     private void SnapTo(SnapPoint ownSnapPoint, SnapPoint targetSnapPoint)
     {
         var offset = transform.position - ownSnapPoint.transform.position;
@@ -53,20 +66,18 @@ public class LevelPart : MonoBehaviour
         transform.position = newPosition;
     }
 
+    // Align this part's rotation to the target snap point
     private void AlignTo(SnapPoint ownSnapPoint, SnapPoint targetSnapPoint)
     {
-        // Calculate the rotation offset between the level part's current rotation and its own snap point's rotation
         var rotationOffset = ownSnapPoint.transform.rotation.eulerAngles.y - transform.rotation.eulerAngles.y;
-
-        // Align the level part's rotation to the target snap point's rotation
         transform.rotation = targetSnapPoint.transform.rotation;
-
-        // Rotate the level part by 180 degrees to face the correct direction
         transform.Rotate(0, 180, 0);
-
-        // Apply the rotation offset to fine-tune the alignment
         transform.Rotate(0, -rotationOffset, 0);
     }
+
+    #endregion
+
+    #region Snap Point Access
 
     public SnapPoint GetEntrancePoint()
     {
@@ -83,7 +94,6 @@ public class LevelPart : MonoBehaviour
         SnapPoint[] snapPoints = GetComponentsInChildren<SnapPoint>();
         List<SnapPoint> filteredSnapPoints = new List<SnapPoint>();
 
-        // Collect all snap points of the specified type
         foreach (SnapPoint snapPoint in snapPoints)
         {
             if (snapPoint.pointType == pointType)
@@ -92,17 +102,20 @@ public class LevelPart : MonoBehaviour
             }
         }
 
-        // If there are matching snap points, choose one at random
         if (filteredSnapPoints.Count > 0)
         {
             int randomIndex = Random.Range(0, filteredSnapPoints.Count);
             return filteredSnapPoints[randomIndex];
         }
 
-        // If no matching snap points are found, return null
         return null;
     }
 
+    #endregion
+
+    #region Enemy Access
+
     public Enemy[] GetEnemies() => GetComponentsInChildren<Enemy>(true);
 
+    #endregion
 }

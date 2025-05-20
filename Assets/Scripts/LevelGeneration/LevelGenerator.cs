@@ -8,27 +8,29 @@ public class LevelGenerator : MonoBehaviour
 
     [SerializeField] private NavMeshSurface navMeshSurface;
 
-    // Level parts  
-    [SerializeField] private List<Transform> levelParts; // Tất cả các LevelPart
-    [SerializeField] private Transform lastLevelPart; // Phần cuối của màn chơi
-    private List<Transform> currentLevelParts; // Các LevelPart được lọc theo MissionType
-    private List<Transform> generatedLevelParts = new List<Transform>(); // Các LevelPart đã được tạo
+    // Level parts
+    [SerializeField] private List<Transform> levelParts;
+    [SerializeField] private Transform lastLevelPart;
+    private List<Transform> currentLevelParts;
+    private List<Transform> generatedLevelParts = new List<Transform>();
 
-    // Snap points  
+    // Snap points
     [SerializeField] private SnapPoint nextSnapPoint;
     private SnapPoint defaultSnapPoint;
 
-    // Generation  
+    // Generation state
     [Space]
     [SerializeField] private float generationCooldown;
     private bool generationOver = true;
     private float cooldownTimer;
 
-    // Enemies  
+    // Enemies
     private List<Enemy> enemyList;
 
     // Pathfinding Indicator
-    private PathfindingIndicator pathfindingIndicator; // Tham chiếu đến PathfindingIndicator
+    private PathfindingIndicator pathfindingIndicator;
+
+    #region Unity Methods
 
     private void Awake()
     {
@@ -39,7 +41,7 @@ public class LevelGenerator : MonoBehaviour
     {
         enemyList = new List<Enemy>();
         defaultSnapPoint = nextSnapPoint;
-        pathfindingIndicator = FindObjectOfType<PathfindingIndicator>(); // Tìm PathfindingIndicator trong scene
+        pathfindingIndicator = FindObjectOfType<PathfindingIndicator>();
     }
 
     private void Update()
@@ -62,13 +64,18 @@ public class LevelGenerator : MonoBehaviour
         }
     }
 
+    #endregion
+
+    #region Generation Logic
+
+    // Start or restart level generation
     [ContextMenu("Restart Generation")]
     public void InitializeGeneration()
     {
         nextSnapPoint = defaultSnapPoint;
         generationOver = false;
 
-        // Lọc danh sách LevelPart theo MissionType
+        // Filter level parts by mission type
         MissionType currentMissionType = MissionManager.instance.currentMission.GetMissionType();
         currentLevelParts = new List<Transform>();
 
@@ -81,12 +88,12 @@ public class LevelGenerator : MonoBehaviour
             }
         }
 
-        // Debug để kiểm tra danh sách đã lọc
         Debug.Log($"Filtered LevelParts for MissionType {currentMissionType}: {currentLevelParts.Count} parts found.");
 
         ClearGeneratedLevelParts();
     }
 
+    // Destroy all generated parts and enemies
     private void ClearGeneratedLevelParts()
     {
         foreach (Enemy enemy in enemyList)
@@ -99,6 +106,7 @@ public class LevelGenerator : MonoBehaviour
         enemyList = new List<Enemy>();
     }
 
+    // Finalize level, build navmesh, and activate enemies
     private void FinishGeneration()
     {
         generationOver = true;
@@ -112,11 +120,9 @@ public class LevelGenerator : MonoBehaviour
             enemy.gameObject.SetActive(true);
         }
 
-        // Luôn spawn MissionComplete_Zone (loại bỏ điều kiện LastDefense)
         GameObject missionCompleteZone = GameObject.Find("MissionComplete_Zone");
         if (missionCompleteZone == null)
         {
-            // Nếu không tìm thấy, thử tạo thủ công (cần có prefab hoặc logic spawn)
             Debug.LogWarning("LevelGenerator: MissionComplete_Zone not found! Please ensure it's spawned in lastLevelPart.");
         }
         else if (pathfindingIndicator != null && MissionManager.instance.currentMission.GetMissionType() != MissionType.LastDefense)
@@ -128,6 +134,7 @@ public class LevelGenerator : MonoBehaviour
         MissionManager.instance.StartMission();
     }
 
+    // Instantiate and align the next level part
     [ContextMenu("Generate Next Level Part")]
     private void GenerateNextLevelPart()
     {
@@ -135,13 +142,11 @@ public class LevelGenerator : MonoBehaviour
 
         if (generationOver)
             newPart = Instantiate(lastLevelPart);
-
         else
             newPart = Instantiate(ChooseRandomPart());
 
         if (newPart == null)
             return;
-
 
         generatedLevelParts.Add(newPart);
 
@@ -158,17 +163,22 @@ public class LevelGenerator : MonoBehaviour
         enemyList.AddRange(levelPartScript.GetEnemies());
     }
 
+    // Randomly select and remove a level part from the pool
     private Transform ChooseRandomPart()
     {
         if (currentLevelParts.Count == 0)
             return null;
-        
+
         int randomIndex = Random.Range(0, currentLevelParts.Count);
         Transform chosenPart = currentLevelParts[randomIndex];
         currentLevelParts.RemoveAt(randomIndex);
 
         return chosenPart;
     }
+
+    #endregion
+
+    #region Enemy Access
 
     public Enemy GetRandomEnemy()
     {
@@ -177,4 +187,6 @@ public class LevelGenerator : MonoBehaviour
     }
 
     public List<Enemy> GetEnemyList() => enemyList;
+
+    #endregion
 }
