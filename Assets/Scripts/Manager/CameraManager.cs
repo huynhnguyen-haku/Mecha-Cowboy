@@ -13,6 +13,8 @@ public class CameraManager : MonoBehaviour
     [SerializeField] private float targetCameraDistance;
     [SerializeField] private float distanceChangeRate;
 
+    #region Unity Methods
+
     private void Awake()
     {
         if (instance == null)
@@ -31,6 +33,11 @@ public class CameraManager : MonoBehaviour
         UpdateCameraDistance();
     }
 
+    #endregion
+
+    #region Camera Logic
+
+    // Smoothly update camera distance if allowed
     private void UpdateCameraDistance()
     {
         if (!canChangeCameraDistance)
@@ -43,12 +50,14 @@ public class CameraManager : MonoBehaviour
         transposer.m_CameraDistance = Mathf.Lerp(currentDistance, targetCameraDistance, distanceChangeRate * Time.deltaTime);
     }
 
+    // Set new camera distance and change rate
     public void ChangeCameraDistance(float distance, float newChangeRate = 0.25f)
     {
         distanceChangeRate = newChangeRate;
         targetCameraDistance = distance;
     }
 
+    // Change camera follow target and optionally distance/lookahead
     public void ChangeCameraTarget(Transform target, float cameraDistance = 10, float newLookAheadTime = 0)
     {
         virtualCamera.Follow = target;
@@ -56,4 +65,5 @@ public class CameraManager : MonoBehaviour
         ChangeCameraDistance(cameraDistance);
     }
 
+    #endregion
 }

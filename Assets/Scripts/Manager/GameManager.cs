@@ -1,5 +1,4 @@
-﻿using NUnit.Framework;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -13,14 +12,13 @@ public class GameManager : MonoBehaviour
 
     [Header("Settings")]
     public bool friendlyFire;
-
     public bool quickStart; // Remove this in the final build
 
-
-
-    // Trạng thái game để quản lý BGM
+    // Game state for BGM management
     private enum GameState { MainMenu, InGame, GameOver, MissionComplete }
     private GameState currentGameState = GameState.MainMenu;
+
+    #region Unity Methods
 
     private void Awake()
     {
@@ -34,41 +32,43 @@ public class GameManager : MonoBehaviour
         UpdateGameState(GameState.MainMenu);
     }
 
-    // Testing areas
+    #endregion
+
+    #region Player Money
+
+    // Add money and save to PlayerPrefs
     public void AddMoney(int amount)
     {
         playerMoney += amount;
         Debug.Log($"Player received {amount} golds. Total money: {playerMoney}");
-
-        // Lưu số tiền vào PlayerPrefs
         SavePlayerMoney();
     }
 
     private void SavePlayerMoney()
     {
         PlayerPrefs.SetInt("PlayerMoney", playerMoney);
-        PlayerPrefs.Save(); // Đảm bảo lưu ngay lập tức
+        PlayerPrefs.Save();
     }
 
     private void LoadPlayerMoney()
     {
-        // Tải số tiền từ PlayerPrefs, mặc định là 0 nếu chưa có
         playerMoney = PlayerPrefs.GetInt("PlayerMoney", 0);
         Debug.Log($"Loaded player money: {playerMoney}");
     }
-    // End of testing areas
+
+    #endregion
+
+    #region Game State Logic
 
     public void GameStart()
     {
         SetDefaultWeapon();
         Cursor.visible = false;
-        // Start selected mission in a LevelGenerator script, after we done with level creation
         UpdateGameState(GameState.InGame);
     }
 
     public void RestartScene()
     {
-        // Restart the scene from the main menu
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         Cursor.visible = true;
 
@@ -97,18 +97,20 @@ public class GameManager : MonoBehaviour
     public void CompleteGame()
     {
         UI.instance.DisplayVictoryScreenUI();
-        ControlsManager.instance.controls.Character.Disable(); // Prevent player from moving
-        player.health.currentHealth += 999; // Set player health to max just in case
+        ControlsManager.instance.controls.Character.Disable();
+        player.health.currentHealth += 999;
         Cursor.visible = true;
         UpdateGameState(GameState.MissionComplete);
     }
 
+    // Set default weapon selection for player
     private void SetDefaultWeapon()
     {
         List<Weapon_Data> newList = UI.instance.weaponSelection.SelectedWeaponData();
         player.weapon.SetDefaultWeapon(newList);
     }
 
+    // Update game state and play corresponding BGM
     private void UpdateGameState(GameState newState)
     {
         if (currentGameState == newState)
@@ -116,26 +118,27 @@ public class GameManager : MonoBehaviour
 
         currentGameState = newState;
 
-        // Phát BGM dựa trên trạng thái game
         switch (currentGameState)
         {
             case GameState.MainMenu:
-                AudioManager.instance.PlayBGM(0); // Main Menu
+                AudioManager.instance.PlayBGM(0);
                 break;
 
             case GameState.InGame:
-                AudioManager.instance.PlayBGM(1); // Mission
+                AudioManager.instance.PlayBGM(1);
                 break;
 
             case GameState.GameOver:
-                AudioManager.instance.PlayBGM(2); // Game Over
+                AudioManager.instance.PlayBGM(2);
                 break;
 
             case GameState.MissionComplete:
-                AudioManager.instance.PlayBGM(3); // Mission Complete
+                AudioManager.instance.PlayBGM(3);
                 break;
         }
 
         Debug.Log($"GameManager: Updated state to {currentGameState}");
     }
+
+    #endregion
 }

@@ -8,6 +8,8 @@ public class WeaponUnlockManager : MonoBehaviour
 
     private const string UnlockKeyPrefix = "WeaponUnlocked_";
 
+    #region Unity Methods
+
     private void Awake()
     {
         if (instance == null)
@@ -23,12 +25,18 @@ public class WeaponUnlockManager : MonoBehaviour
         LoadAllWeaponStates();
     }
 
+    #endregion
+
+    #region Save/Load Logic
+
+    // Save unlock state for a weapon
     public void SaveWeaponState(Weapon_Data weapon)
     {
         PlayerPrefs.SetInt(UnlockKeyPrefix + weapon.weaponName, weapon.isUnlocked ? 1 : 0);
         PlayerPrefs.Save();
     }
 
+    // Load unlock state for a weapon
     public void LoadWeaponState(Weapon_Data weapon)
     {
         if (PlayerPrefs.HasKey(UnlockKeyPrefix + weapon.weaponName))
@@ -37,6 +45,7 @@ public class WeaponUnlockManager : MonoBehaviour
         }
     }
 
+    // Load all weapon unlock states
     private void LoadAllWeaponStates()
     {
         foreach (var weapon in allWeapons)
@@ -45,6 +54,7 @@ public class WeaponUnlockManager : MonoBehaviour
         }
     }
 
+    // Reset all weapon unlock states
     public void ResetAllWeaponStates()
     {
         foreach (var weapon in allWeapons)
@@ -54,4 +64,6 @@ public class WeaponUnlockManager : MonoBehaviour
         }
         PlayerPrefs.Save();
     }
+
+    #endregion
 }

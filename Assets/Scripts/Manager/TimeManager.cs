@@ -11,18 +11,22 @@ public class TimeManager : MonoBehaviour
     private float timeAdjustRate;
     private float targetTimeScale;
 
+    #region Unity Methods
+
     private void Awake()
     {
-        instance = this;    
+        instance = this;
     }
 
     private void Update()
     {
+        // Debug: Q for slow motion
         if (Input.GetKeyDown(KeyCode.Q))
         {
             SlowMotionFor(1f);
         }
 
+        // Smoothly adjust time scale toward target
         if (Mathf.Abs(Time.timeScale - targetTimeScale) > 0.05f)
         {
             float adjustRate = Time.unscaledDeltaTime * timeAdjustRate;
@@ -34,25 +38,27 @@ public class TimeManager : MonoBehaviour
         }
     }
 
+    #endregion
+
+    #region Time Control
+
+    // Pause game time and player movement
     public void PauseTime()
     {
         timeAdjustRate = pauseRate;
         targetTimeScale = 0;
-
-        // Dừng nhân vật
         GameManager.instance.player.movement.SetPaused(true);
     }
 
+    // Resume game time and player movement
     public void ResumeTime()
     {
         timeAdjustRate = resumeRate;
         targetTimeScale = 1;
-
-        // Tiếp tục nhân vật
         GameManager.instance.player.movement.SetPaused(false);
     }
 
-
+    // Trigger slow motion for a duration
     public void SlowMotionFor(float duration)
     {
         StartCoroutine(SlowTime(duration));
@@ -65,4 +71,6 @@ public class TimeManager : MonoBehaviour
         yield return new WaitForSecondsRealtime(duration);
         ResumeTime();
     }
+
+    #endregion
 }
