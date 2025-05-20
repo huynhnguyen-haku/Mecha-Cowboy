@@ -3,7 +3,7 @@
 public class Player : MonoBehaviour
 {
     public Transform playerBody;
-    public PlayerControls controls { get; private set; } 
+    public PlayerControls controls { get; private set; }
     public Player_AimController aim { get; private set; }
     public Player_Movement movement { get; private set; }
     public Player_WeaponController weapon { get; private set; }
@@ -11,10 +11,10 @@ public class Player : MonoBehaviour
     public Player_Interaction interaction { get; private set; }
     public Player_Health health { get; private set; }
     public Player_SFX sfx { get; private set; }
-    public Ragdoll ragdoll { get; private set; } 
+    public Ragdoll ragdoll { get; private set; }
     public Animator anim { get; private set; }
 
-    public bool controlsEnabled { get; private set; } 
+    public bool controlsEnabled { get; private set; }
 
     private void Awake()
     {
@@ -33,12 +33,14 @@ public class Player : MonoBehaviour
     private void OnEnable()
     {
         controls.Enable();
+
+        // Register UI toggle actions to input events
         controls.Character.ToggleMissionUI.performed += ctx => UI.instance.inGameUI.ToggleMissionUI();
         controls.Character.TogglePauseUI.performed += ctx => UI.instance.TogglePauseUI();
-        controls.Character.ToggleMinimap.performed += ctx => 
+        controls.Character.ToggleMinimap.performed += ctx =>
         {
             bool isMinimapActive = UI.instance.inGameUI.minimap.activeSelf;
-            UI.instance.ToggleMinimap(!isMinimapActive); 
+            UI.instance.ToggleMinimap(!isMinimapActive);
         };
     }
 
@@ -47,6 +49,7 @@ public class Player : MonoBehaviour
         controls.Disable();
     }
 
+    // Enable or disable player controls and related systems
     public void SetControlsEnabled(bool enabled)
     {
         controlsEnabled = enabled;

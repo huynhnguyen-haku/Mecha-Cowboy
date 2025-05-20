@@ -38,16 +38,12 @@ public class Player_AimController : MonoBehaviour
     private void Start()
     {
         instance = this;
-
         cameraManager = CameraManager.instance;
         player = GetComponent<Player>();
         AssignInputEvents();
 
-        // Đảm bảo aimTarget ban đầu được tắt nếu không cần thiết
         if (aimTarget != null)
-        {
             aimTarget.SetActive(false);
-        }
     }
 
     private void Update()
@@ -63,53 +59,22 @@ public class Player_AimController : MonoBehaviour
         UpdateCameraPosition();
 
         if (isLockedOn && lockedEnemy != null)
-        {
             RotatePlayerTowardsLockedTarget();
-        }
     }
 
     public Transform Aim() => aim;
 
-    private void ToggleLockOn(bool enable)
-    {
-        isLockedOn = enable;
+    #region Aim Logic
 
-        if (isLockedOn)
-        {
-            // Khi bật lock-on, tìm mục tiêu gần nhất
-            CheckLockOn();
-        }
-        else
-        {
-            // Khi tắt lock-on, hủy mục tiêu đã khóa
-            lockedEnemy = null;
-        }
-    }
-
-    public void EnableLaserAim(bool enable) => aimLaser.enabled = enable;
-
-    public void EnableAimTarget(bool enable)
-    {
-        if (aimTarget != null)
-        {
-            aimTarget.SetActive(enable);
-        }
-    }
-
-    public Transform GetAimCameraTarget()
-    {
-        cameraTarget.position = player.transform.position;
-        return cameraTarget;
-    }
-
+    // Update aim laser and weapon visuals
     private void UpdateAimVisual()
     {
         aim.transform.rotation = Quaternion.LookRotation(Camera.main.transform.forward);
 
         aimLaser.enabled = player.weapon.WeaponReady();
-        if (aimLaser.enabled == false)
+        if (!aimLaser.enabled)
         {
-            EnableAimTarget(false); // Tắt aimTarget nếu không có laser
+            EnableAimTarget(false);
             return;
         }
 
@@ -135,15 +100,15 @@ public class Player_AimController : MonoBehaviour
         aimLaser.SetPosition(1, endPoint);
         aimLaser.SetPosition(2, endPoint + laserDirection * laserTipLength);
 
-        // Đảm bảo aimTarget hiển thị khi laser đang bật
+        // Show aimTarget when laser is enabled
         EnableAimTarget(true);
         if (aimTarget != null)
         {
-            aimTarget.transform.position = aim.position; // Đồng bộ vị trí với aim
-            aimTarget.transform.rotation = Quaternion.LookRotation(Camera.main.transform.forward); // Xoay sprite để đối diện camera
+            aimTarget.transform.position = aim.position;
+            aimTarget.transform.rotation = Quaternion.LookRotation(Camera.main.transform.forward);
         }
 
-        // Nếu đang lock-on, đảm bảo nòng súng hướng về mục tiêu lock-on
+        // If locked on, force weapon to look at target
         if (isLockedOn && lockedEnemy != null)
         {
             weaponModel.transform.LookAt(lockedEnemy.position);
@@ -151,31 +116,68 @@ public class Player_AimController : MonoBehaviour
         }
     }
 
-
+    // Update aim position based on lock-on or mouse
     private void UpdateAimPosition()
     {
         if (isLockedOn && lockedEnemy != null)
         {
-            // Khi lock-on, aim sẽ theo mục tiêu đã khóa
             aim.position = lockedEnemy.position;
-            aimTarget.GetComponent<SpriteRenderer>().color = Color.red; // Đổi màu khi lock-on
+            aimTarget.GetComponent<SpriteRenderer>().color = Color.red;
         }
         else
         {
-            // Khi không lock-on, aim sẽ theo vị trí chuột
             aim.position = GetMouseHitInfo().point;
-            aimTarget.GetComponent<SpriteRenderer>().color = Color.white; // Màu mặc định
+            aimTarget.GetComponent<SpriteRenderer>().color = Color.white;
         }
     }
 
+    public void EnableLaserAim(bool enable) => aimLaser.enabled = enable;
 
+    public void EnableAimTarget(bool enable)
+    {
+        if (aimTarget != null)
+            aimTarget.SetActive(enable);
+    }
+
+    // Get the world position where the mouse is aiming
+    public RaycastHit GetMouseHitInfo()
+    {
+        Ray ray = Camera.main.ScreenPointToRay(mouseInput);
+        if (Physics.Raycast(ray, out RaycastHit hitInfo, Mathf.Infinity, aimLayer))
+        {
+            lastKnownMouseHit = hitInfo;
+            return hitInfo;
+        }
+        return lastKnownMouseHit;
+    }
+
+    // Get camera target for aiming
+    public Transform GetAimCameraTarget()
+    {
+        cameraTarget.position = player.transform.position;
+        return cameraTarget;
+    }
+
+    #endregion
+
+    #region Lock-On Logic
+
+    // Enable or disable lock-on and update target
+    private void ToggleLockOn(bool enable)
+    {
+        isLockedOn = enable;
+
+        if (isLockedOn)
+            CheckLockOn(); // Find nearest target
+        else
+            lockedEnemy = null; // Clear target
+    }
+
+    // Find and set the closest enemy for lock-on
     private void CheckLockOn()
     {
         if (!isLockedOn)
-        {
-            // Nếu lock-on bị tắt, không làm gì cả
             return;
-        }
 
         Collider[] enemies = Physics.OverlapSphere(aim.position, lockOnRadius, lockOnLayer);
         if (enemies.Length > 0)
@@ -193,49 +195,35 @@ public class Player_AimController : MonoBehaviour
             }
 
             if (closestEnemy != null)
-            {
                 lockedEnemy = closestEnemy;
-            }
         }
     }
 
+    // Smoothly rotate player toward locked target
     private void RotatePlayerTowardsLockedTarget()
     {
         if (lockedEnemy == null || player == null)
             return;
 
-        // Lấy hướng từ người chơi đến mục tiêu lock-on
         Vector3 directionToTarget = lockedEnemy.position - player.transform.position;
-        directionToTarget.y = 0; // Loại bỏ trục Y để chỉ xoay trên mặt phẳng XZ
+        directionToTarget.y = 0;
 
-        if (directionToTarget.sqrMagnitude > 0.01f) // Kiểm tra nếu có hướng hợp lệ
+        if (directionToTarget.sqrMagnitude > 0.01f)
         {
-            // Tính toán góc quay
             Quaternion targetRotation = Quaternion.LookRotation(directionToTarget);
-
-            // Xoay người chơi dần dần về phía mục tiêu
             player.transform.rotation = Quaternion.Slerp(
                 player.transform.rotation,
                 targetRotation,
-                Time.deltaTime * 10f // Tốc độ xoay (có thể điều chỉnh)
+                Time.deltaTime * 10f
             );
         }
     }
 
+    #endregion
 
-    public RaycastHit GetMouseHitInfo()
-    {
-        Ray ray = Camera.main.ScreenPointToRay(mouseInput);
-        if (Physics.Raycast(ray, out RaycastHit hitInfo, Mathf.Infinity, aimLayer))
-        {
-            lastKnownMouseHit = hitInfo;
-            return hitInfo;
-        }
-        return lastKnownMouseHit;
-    }
+    #region Camera Logic
 
-    #region Camera Region
-
+    // Calculate desired camera position based on aim and movement
     private Vector3 DesieredCameraPosition()
     {
         float actualMaxCameraDistance = player.movement.moveInput.y < -0.5f ? minCameraDistance : maxCameraDistance;
@@ -252,6 +240,7 @@ public class Player_AimController : MonoBehaviour
         return desiredCameraPosition;
     }
 
+    // Smoothly update camera position toward desired position
     private void UpdateCameraPosition()
     {
         bool canMoveCamera = Vector3.Distance(cameraTarget.position, DesieredCameraPosition()) > 1f;
@@ -263,6 +252,9 @@ public class Player_AimController : MonoBehaviour
 
     #endregion
 
+    #region Input Events
+
+    // Assign input events for aiming and lock-on
     private void AssignInputEvents()
     {
         controls = player.controls;
@@ -273,4 +265,6 @@ public class Player_AimController : MonoBehaviour
         controls.Character.ToggleLockOn.performed += ctx => ToggleLockOn(true);
         controls.Character.ToggleLockOn.canceled += ctx => ToggleLockOn(false);
     }
+
+    #endregion
 }

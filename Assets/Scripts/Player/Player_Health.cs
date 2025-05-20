@@ -5,7 +5,7 @@ public class Player_Health : HealthController
     private Player player;
     private Player_AimController aim;
 
-    public bool playerIsDead; 
+    public bool playerIsDead;
     private LineRenderer aimLaser;
 
     protected override void Awake()
@@ -15,20 +15,22 @@ public class Player_Health : HealthController
         aimLaser = player.aim.aimLaser;
     }
 
+    #region Health Logic
+
+    // Reduce health and handle player death
     public override void ReduceHealth(int damage)
     {
         base.ReduceHealth(damage);
         if (PlayerShouldDie())
-        {
             Die();
-        }
 
         UI.instance.inGameUI.UpdateHealthUI(currentHealth, maxHealth);
     }
 
+    // Handle player death: disable controls, play ragdoll, trigger game over
     private void Die()
     {
-        if (playerIsDead) 
+        if (playerIsDead)
             return;
 
         playerIsDead = true;
@@ -38,4 +40,6 @@ public class Player_Health : HealthController
 
         GameManager.instance.GameOver();
     }
+
+    #endregion
 }

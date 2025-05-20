@@ -3,7 +3,6 @@
 public class Player_Movement : MonoBehaviour
 {
     private Player player;
-
     private PlayerControls controls;
     private CharacterController controller;
     private Animator animator;
@@ -36,7 +35,6 @@ public class Player_Movement : MonoBehaviour
 
         controller = GetComponent<CharacterController>();
         animator = GetComponentInChildren<Animator>();
-
         speed = walkSpeed;
 
         AssignInputEvents();
@@ -58,29 +56,35 @@ public class Player_Movement : MonoBehaviour
         AnimatorControllers();
     }
 
+    #region Pause Logic
+
+    // Pause/unpause movement and animation
     public void SetPaused(bool isPaused)
     {
-        // Nếu người chơi đang ở trong xe, không thay đổi trạng thái CharacterController
+        // Do not change controller state if player is in car
         if (isInCar)
         {
             Debug.Log("Player is in car, skipping CharacterController state change.");
             return;
         }
 
-        // Kiểm tra nếu CharacterController hợp lệ trước khi thay đổi trạng thái
+        // Only change state if controller is valid and state is different
         if (controller != null && controller.enabled != !isPaused)
         {
             controller.enabled = !isPaused;
 
-            // Dừng hoạt ảnh nếu cần
+            // Pause or resume animator
             if (animator != null)
-            {
                 animator.speed = isPaused ? 0 : 1;
-            }
+            
         }
     }
 
+    #endregion
 
+    #region Animation Logic
+
+    // Update animator parameters for movement
     private void AnimatorControllers()
     {
         float xVelocity = Vector3.Dot(moveDirection.normalized, transform.right);
@@ -93,9 +97,14 @@ public class Player_Movement : MonoBehaviour
         animator.SetBool("isRunning", playRunAnimation);
     }
 
+    #endregion
+
+    #region Movement Logic
+
+    // Rotate player toward aim direction unless locked-on
+    // Because if the player is locked on, the player should rotate to face the enemy
     private void ApplyRotation()
     {
-        // Bỏ qua xoay nếu đang lock-on
         if (player.aim.isLockedOn && player.aim.lockedEnemy != null)
             return;
 
@@ -104,15 +113,15 @@ public class Player_Movement : MonoBehaviour
         aimDirection.Normalize();
 
         Quaternion targetRotation = Quaternion.LookRotation(aimDirection);
-        // Smoothly rotate towards the target point.
         transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, turnSpeed * Time.deltaTime);
     }
 
-
+    // Move player based on input and play footstep SFX
     private void ApplyMovement()
     {
         moveDirection = new Vector3(moveInput.x, 0, moveInput.y);
         ApplyGravity();
+
         if (moveDirection.magnitude > 0)
         {
             PlayFootstepsSFX();
@@ -120,31 +129,7 @@ public class Player_Movement : MonoBehaviour
         }
     }
 
-    private void EnableFootstepsSFX() => canPlayFootstepsSFX = true;
-
-    private void PlayFootstepsSFX()
-    {
-        if (!canPlayFootstepsSFX)
-            return;
-
-        if (isRunning)
-        {
-            if (runSFX.isPlaying == false)
-                runSFX.Play();
-        }
-        else
-        {
-            if (walkSFX.isPlaying == false)
-                walkSFX.Play();
-        }
-    }
-
-    private void StopFootstepsSFX()
-    {
-        walkSFX.Stop();
-        runSFX.Stop();
-    }
-
+    // Apply gravity to movement
     private void ApplyGravity()
     {
         if (!controller.isGrounded)
@@ -158,6 +143,11 @@ public class Player_Movement : MonoBehaviour
         }
     }
 
+    #endregion
+
+    #region Input Events
+
+    // Assign input events for movement and sprint
     private void AssignInputEvents()
     {
         controls = player.controls;
@@ -173,7 +163,6 @@ public class Player_Movement : MonoBehaviour
         {
             speed = runSpeed;
             isRunning = true;
-
         };
 
         controls.Character.Sprint.canceled += ctx =>
@@ -182,4 +171,36 @@ public class Player_Movement : MonoBehaviour
             isRunning = false;
         };
     }
+
+    #endregion
+
+    #region Footstep Sound Effects
+
+    private void EnableFootstepsSFX() => canPlayFootstepsSFX = true;
+
+    private void PlayFootstepsSFX()
+    {
+        if (!canPlayFootstepsSFX)
+            return;
+
+        if (isRunning)
+        {
+            if (!runSFX.isPlaying)
+                runSFX.Play();
+        }
+        else
+        {
+            if (!walkSFX.isPlaying)
+                walkSFX.Play();
+        }
+    }
+
+    // Stop all footstep SFX
+    private void StopFootstepsSFX()
+    {
+        walkSFX.Stop();
+        runSFX.Stop();
+    }
+
+    #endregion
 }
