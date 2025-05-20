@@ -8,7 +8,7 @@ public class Car_Wheel : MonoBehaviour
     public AxelType axleType;
     public WheelCollider cd { get; private set; }
     public GameObject model;
-    public TrailRenderer trailRenderer; 
+    public TrailRenderer trailRenderer;
 
     private float defaultSideStiffness;
 
@@ -21,11 +21,13 @@ public class Car_Wheel : MonoBehaviour
 
         trailRenderer.emitting = false;
 
-        if (model == null)   
+        if (model == null)
             model = GetComponentInChildren<MeshRenderer>().gameObject;
-        
     }
 
+    #region Wheel Stiffness
+
+    // Set and restore default sideways friction stiffness
     public void SetDefaltStiffness(float newValue)
     {
         defaultSideStiffness = newValue;
@@ -38,4 +40,7 @@ public class Car_Wheel : MonoBehaviour
         sidewaysFriction.stiffness = defaultSideStiffness;
         cd.sidewaysFriction = sidewaysFriction;
     }
+
+    #endregion
 }
+

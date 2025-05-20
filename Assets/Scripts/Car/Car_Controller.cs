@@ -6,8 +6,7 @@ public enum DriveType { FrontWheelDrive, RearWheelDrive, AllWheelDrive }
 [RequireComponent(typeof(Rigidbody))]
 public class Car_Controller : MonoBehaviour
 {
-    public Car_SFX carSounds { get; private set; }   
-
+    public Car_SFX carSounds { get; private set; }
     public Rigidbody rb { get; private set; }
     private PlayerControls controls;
 
@@ -41,7 +40,7 @@ public class Car_Controller : MonoBehaviour
     [Header("Engine Settings")]
     private float currentSpeed;
 
-    // Those 2 parameters are mile, not kilometer
+    // These 2 parameters are mile, not kilometer
     [Range(4, 20)]
     [SerializeField] private float maxSpeed = 7;
 
@@ -72,13 +71,12 @@ public class Car_Controller : MonoBehaviour
 
     [SerializeField] private float driftDuration = 1;
     private float driftTimer;
-    public bool isDrifting {  get; private set; }
+    public bool isDrifting { get; private set; }
     private bool canEmitTrails = true;
 
     [Header("Drift Effects")]
     [SerializeField] private ParticleSystem RLWParticleSystem;
     [SerializeField] private ParticleSystem RRWParticleSystem;
-
 
     private Car_Wheel[] wheels;
     private UI ui;
@@ -153,6 +151,7 @@ public class Car_Controller : MonoBehaviour
 
     #region Setup Methods
 
+    // Set up car mass, center of mass, and wheel stiffness
     private void SetupDefaultValues()
     {
         rb.centerOfMass = centerOfMass.localPosition;
@@ -170,6 +169,7 @@ public class Car_Controller : MonoBehaviour
         }
     }
 
+    // Register input events for car controls
     private void AssignInputEvents()
     {
         controls.Car.Movement.performed += ctx =>
@@ -198,7 +198,7 @@ public class Car_Controller : MonoBehaviour
         controls.Car.ToggleMinimap.performed += ctx =>
         {
             bool isMinimapActive = UI.instance.inGameUI.minimap.activeSelf;
-            UI.instance.ToggleMinimap(!isMinimapActive); // Gọi trực tiếp từ UI
+            UI.instance.ToggleMinimap(!isMinimapActive);
         };
     }
 
@@ -206,6 +206,7 @@ public class Car_Controller : MonoBehaviour
 
     #region Driving Methods
 
+    // Apply motor torque to wheels based on drive type
     private void HandleDriving()
     {
         currentSpeed = moveInput * accelerationRate * Time.deltaTime;
@@ -219,31 +220,30 @@ public class Car_Controller : MonoBehaviour
                 if (wheel.axleType == AxelType.Front)
                     wheel.cd.motorTorque = motorTorqueValue;
             }
-
             // RWD Car
             else if (driveType == DriveType.RearWheelDrive)
             {
                 if (wheel.axleType == AxelType.Rear)
                     wheel.cd.motorTorque = motorTorqueValue;
             }
-
             // AWD Car
             else if (driveType == DriveType.AllWheelDrive)
                 wheel.cd.motorTorque = motorTorqueValue;
         }
     }
 
+    // Clamp car speed to maxSpeed
     private void HandleSpeedLimit()
     {
         if (rb.linearVelocity.magnitude > maxSpeed)
             rb.linearVelocity = rb.linearVelocity.normalized * maxSpeed;
     }
 
+    // Steer front wheels based on input
     private void HandleSteering()
     {
         foreach (var wheel in wheels)
         {
-            // Only front wheels can steer
             if (wheel.axleType == AxelType.Front)
             {
                 float targetSteeringAngle = turnInput * turnSensitivity;
@@ -252,22 +252,20 @@ public class Car_Controller : MonoBehaviour
         }
     }
 
+    // Apply brake torque to wheels
     private void HandleBraking()
     {
         foreach (var wheel in wheels)
         {
             bool backBrakes = wheel.axleType == AxelType.Rear;
-
-            // Use rear or front brake sensitivity, based on the wheel's position [Front/Rear]
             float brakeSensitivity = backBrakes ? backBrakeSensitivity : frontBrakeSensitivity;
-
             float newBrakeForce = brakeForce * brakeSensitivity * Time.deltaTime;
             float currentBrakeTorque = isBraking ? newBrakeForce : 0;
-
             wheel.cd.brakeTorque = currentBrakeTorque;
         }
     }
 
+    // Emit tire trails when drifting or braking
     private void ApplyTrailOnTheGround()
     {
         if (!canEmitTrails)
@@ -275,50 +273,39 @@ public class Car_Controller : MonoBehaviour
 
         foreach (var wheel in wheels)
         {
-            // Chỉ bật TrailRenderer khi xe đang drifting và braking
             if (isDrifting || isBraking)
             {
                 WheelHit hit;
-
-                // Kiểm tra nếu bánh xe chạm đất và bề mặt thuộc lớp whatIsGround
                 if (wheel.cd.GetGroundHit(out hit) &&
                     (whatIsGround == (whatIsGround | (1 << hit.collider.gameObject.layer))))
                 {
                     if (wheel.trailRenderer != null)
-                    {
                         wheel.trailRenderer.emitting = true;
-                    }
                 }
                 else
                 {
                     if (wheel.trailRenderer != null)
-                    {
                         wheel.trailRenderer.emitting = false;
-                    }
                 }
             }
             else
             {
-                // Tắt TrailRenderer nếu không thỏa mãn điều kiện
-                if (wheel.trailRenderer != null )
-                {
+                if (wheel.trailRenderer != null)
                     wheel.trailRenderer.emitting = false;
-                }
             }
         }
     }
 
-
     #endregion
 
     #region Drift Methods
+
+    // Reduce wheel friction for drift effect
     private void HandleDrift()
     {
         foreach (var wheel in wheels)
         {
             bool backWheel = wheel.axleType == AxelType.Rear;
-
-            // Use rear or front drift factor, based on the wheel's position [Front/Rear]
             float driftFactor = backWheel ? rearDriftFactor : frontDriftFactor;
 
             WheelFrictionCurve sidewaysFriction = wheel.cd.sidewaysFriction;
@@ -330,6 +317,7 @@ public class Car_Controller : MonoBehaviour
         carSounds.HandleTireSqueal(true);
     }
 
+    // Restore wheel friction and stop drift effects
     private void StopDrift()
     {
         foreach (var wheel in wheels)
@@ -344,7 +332,7 @@ public class Car_Controller : MonoBehaviour
         }
     }
 
-
+    // Play or stop drift particle systems
     private void DriftCarPS(bool isDrifting = true)
     {
         try
@@ -370,13 +358,13 @@ public class Car_Controller : MonoBehaviour
 
     #region Animation Methods
 
+    // Update wheel model positions and rotations
     private void HandleWheelAnimation()
     {
         foreach (var wheel in wheels)
         {
             Quaternion rotation;
             Vector3 position;
-
             wheel.cd.GetWorldPose(out position, out rotation);
 
             if (wheel.model != null)
@@ -391,24 +379,24 @@ public class Car_Controller : MonoBehaviour
 
     #region Public Methods
 
+    // Enable or disable car controls and SFX
     public void ActivateCar(bool active)
     {
         carActive = active;
         if (carSounds != null)
             carSounds.ActivateCarSFX(active);
-
     }
 
+    // Break car, stop all effects and set physics for explosion
     public void BreakCar()
     {
-        canEmitTrails = false; // Ensure that trail won't render while car is exploding
+        canEmitTrails = false;
 
         foreach (var wheel in wheels)
         {
             wheel.trailRenderer.emitting = false;
         }
 
-        // Turn off car engine sound
         carSounds.ActivateCarSFX(false);
 
         motorForce = 0;
@@ -416,5 +404,6 @@ public class Car_Controller : MonoBehaviour
         frontDriftFactor = 0.9f;
         rearDriftFactor = 0.9f;
     }
+
     #endregion
 }

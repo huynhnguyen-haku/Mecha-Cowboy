@@ -15,7 +15,7 @@ public class Car_HealthController : MonoBehaviour, I_Damagable
 
     [Header("Explosion Setting")]
     [SerializeField] private int explosionDamage = 350;
-    [SerializeField] private float explosionRadius = 5;   
+    [SerializeField] private float explosionRadius = 5;
     [Space]
     [SerializeField] private ParticleSystem fireFX;
     [SerializeField] private ParticleSystem explosionFX;
@@ -24,7 +24,6 @@ public class Car_HealthController : MonoBehaviour, I_Damagable
     [SerializeField] private float explosionDelay = 3;
     [SerializeField] private float explosionForce = 7;
     [SerializeField] private float explosionUpwardModifier = 2;
-
 
     private void Start()
     {
@@ -40,6 +39,8 @@ public class Car_HealthController : MonoBehaviour, I_Damagable
         }
     }
 
+    #region UI
+
     public void UpdateCarHealthUI()
     {
         if (GameManager.instance.currentCar == carController)
@@ -48,7 +49,11 @@ public class Car_HealthController : MonoBehaviour, I_Damagable
         }
     }
 
+    #endregion
 
+    #region Health Logic
+
+    // Reduce car health and handle breaking
     private void ReduceHealth(int damage)
     {
         if (carBroken)
@@ -61,9 +66,9 @@ public class Car_HealthController : MonoBehaviour, I_Damagable
             currentHealth = 0;
             BreakTheCar();
         }
-
     }
 
+    // Set car to broken state and start explosion sequence
     private void BreakTheCar()
     {
         carBroken = true;
@@ -82,7 +87,11 @@ public class Car_HealthController : MonoBehaviour, I_Damagable
         }
     }
 
+    #endregion
 
+    #region Explosion Logic
+
+    // Start explosion after delay
     private IEnumerator ExplosionCar(float delay)
     {
         yield return new WaitForSeconds(delay);
@@ -93,6 +102,7 @@ public class Car_HealthController : MonoBehaviour, I_Damagable
         Explode();
     }
 
+    // Damage all entities in explosion radius and apply force
     private void Explode()
     {
         HashSet<GameObject> uniqueEntities = new HashSet<GameObject>();
@@ -104,8 +114,8 @@ public class Car_HealthController : MonoBehaviour, I_Damagable
             if (damagable != null)
             {
                 GameObject rootEntity = hit.transform.root.gameObject;
-                if (uniqueEntities.Add(rootEntity) == false)
-                    continue; // Skip if the entity has already been hit
+                if (!uniqueEntities.Add(rootEntity))
+                    continue; // Skip if already hit
 
                 damagable.TakeDamage(explosionDamage);
 
@@ -114,7 +124,7 @@ public class Car_HealthController : MonoBehaviour, I_Damagable
             }
         }
 
-        // Kiểm tra khoảng cách giữa người chơi và vụ nổ
+        // Damage player if in car and within explosion radius
         Transform playerTransform = GameManager.instance.player.transform;
         float distanceToExplosion = Vector3.Distance(playerTransform.position, explosionPoint.position);
 
@@ -131,6 +141,7 @@ public class Car_HealthController : MonoBehaviour, I_Damagable
         }
     }
 
+    #endregion
 
     private void OnDrawGizmos()
     {
@@ -138,3 +149,4 @@ public class Car_HealthController : MonoBehaviour, I_Damagable
         Gizmos.DrawWireSphere(explosionPoint.position, explosionRadius);
     }
 }
+

@@ -7,11 +7,9 @@ public class Car_SFX : MonoBehaviour
     [SerializeField] private AudioSource engineStart;
     [SerializeField] private AudioSource engineIdle;
     [SerializeField] private AudioSource engineStop;
-
     [SerializeField] private AudioSource tireSqueal;
 
     private float defaultEngineIdleVolume;
-
     private float maxSpeed = 20;
 
     public float minPitch = 0.75f;
@@ -22,7 +20,6 @@ public class Car_SFX : MonoBehaviour
     private void Start()
     {
         carController = GetComponent<Car_Controller>();
-
         defaultEngineIdleVolume = engineIdle.volume;
         Invoke(nameof(EnableCarSFX), 1f);
     }
@@ -32,19 +29,20 @@ public class Car_SFX : MonoBehaviour
         UpdateEngineSFX();
     }
 
+    #region Engine SFX
+
+    // Update engine idle pitch based on car speed
     private void UpdateEngineSFX()
     {
         float currentSpeed = Mathf.Abs(carController.speed) / 3.6f;
         float pitch = Mathf.Lerp(minPitch, maxPitch, currentSpeed / maxSpeed);
-
-        // Áp dụng pitch cho âm thanh động cơ
         engineIdle.pitch = pitch;
     }
 
-
+    // Start or stop engine SFX
     public void ActivateCarSFX(bool active)
     {
-        if (enableCarSFX == false)
+        if (!enableCarSFX)
             return;
 
         if (active)
@@ -59,7 +57,11 @@ public class Car_SFX : MonoBehaviour
         }
     }
 
+    #endregion
 
+    #region Tire SFX
+
+    // Play or fade out tire squeal SFX when drifting
     public void HandleTireSqueal(bool isDrifting)
     {
         if (!enableCarSFX || tireSqueal == null)
@@ -67,16 +69,14 @@ public class Car_SFX : MonoBehaviour
 
         if (isDrifting)
         {
-            // Chỉ phát âm thanh nếu nó chưa đang phát
             if (!tireSqueal.isPlaying)
             {
-                tireSqueal.volume = 0.2f; 
+                tireSqueal.volume = 0.2f;
                 tireSqueal.Play();
             }
         }
         else
         {
-            // Fade out âm thanh tire squeal khi ngừng drift
             if (tireSqueal.isPlaying)
             {
                 AudioManager.instance.ControlSFX_FadeAndDelay(tireSqueal, false, 0f, 0.25f, 0.25f);
@@ -88,4 +88,7 @@ public class Car_SFX : MonoBehaviour
     {
         enableCarSFX = true;
     }
+
+    #endregion
 }
+
