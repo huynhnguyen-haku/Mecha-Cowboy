@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections.Generic;
 
 public class Enemy_Axe : MonoBehaviour
 {
@@ -10,9 +11,12 @@ public class Enemy_Axe : MonoBehaviour
     private Transform player;
     private float flySpeed;
     private float rotationSpeed;
-    private float timer = 1;           // Time the axe will home toward the player
+    private float timer = 1;
     private float currentLifeTime = 10;
     private int damage;
+
+    // Track unique entities hit by this axe
+    private HashSet<GameObject> uniqueEntities = new HashSet<GameObject>();
 
     // Initialize axe parameters and target
     public void AxeSetup(float flySpeed, Transform player, float timer, int damage)
@@ -22,6 +26,8 @@ public class Enemy_Axe : MonoBehaviour
         this.flySpeed = flySpeed;
         this.player = player;
         this.timer = timer;
+
+        uniqueEntities.Clear(); // Reset hit tracking for this throw
     }
 
     private void Update()
@@ -31,11 +37,9 @@ public class Enemy_Axe : MonoBehaviour
 
         UpdateRotation();
 
-        // Home toward player while timer is active
         if (timer > 0)
             UpdateDirection();
 
-        // Return to pool if lifetime expires
         if (currentLifeTime <= 0)
             ReturnAxeToPool();
     }
@@ -45,30 +49,36 @@ public class Enemy_Axe : MonoBehaviour
         rb.linearVelocity = direction.normalized * flySpeed;
     }
 
-    // Rotate axe visual and align with velocity
     private void UpdateRotation()
     {
         axeVisual.Rotate(Vector3.right * rotationSpeed * Time.deltaTime);
         transform.forward = rb.linearVelocity;
     }
 
-    // Update direction toward player
     private void UpdateDirection()
     {
         direction = player.position + Vector3.up - transform.position;
     }
 
-    // Return axe to object pool
     private void ReturnAxeToPool()
     {
         ObjectPool.instance.ReturnObject(gameObject);
     }
 
-    // Handle collision: deal damage, play FX, and return to pool
+    // Only damage each entity once per axe throw
     private void OnCollisionEnter(Collision collision)
     {
-        I_Damagable damagable = collision.gameObject.GetComponent<I_Damagable>();
-        damagable?.TakeDamage(damage);
+        GameObject rootEntity = collision.transform.root.gameObject;
+
+        if (!uniqueEntities.Contains(rootEntity))
+        {
+            I_Damagable damagable = rootEntity.GetComponentInChildren<I_Damagable>();
+            if (damagable != null)
+            {
+                damagable.TakeDamage(damage);
+                uniqueEntities.Add(rootEntity);
+            }
+        }
 
         GameObject newFx = ObjectPool.instance.GetObject(impactFx, transform);
 
