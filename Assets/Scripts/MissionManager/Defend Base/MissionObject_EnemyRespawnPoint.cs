@@ -2,5 +2,5 @@ using UnityEngine;
 
 public class MissionObject_EnemyRespawnPoint : MonoBehaviour
 {
-    // We need this to detect respawn points of enemies
+    // Used to mark enemy respawn points in the scene
 }

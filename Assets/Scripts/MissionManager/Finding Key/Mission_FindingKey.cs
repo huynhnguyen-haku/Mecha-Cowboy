@@ -19,6 +19,8 @@ public class Misson_KeyFind : Mission
 
         MissionObject_Key.OnKeyPickedUp += PickupKey;
 
+        // Give the key to a random enemy
+        // Also make the enemy bigger
         Enemy enemy = LevelGenerator.instance.GetRandomEnemy();
         enemy.GetComponent<Enemy_DropController>()?.GiveKey(key);
         enemy.MakeEnemyStronger();
@@ -28,7 +30,6 @@ public class Misson_KeyFind : Mission
     {
         return isKeyFound;
     }
-
 
     private void PickupKey()
     {

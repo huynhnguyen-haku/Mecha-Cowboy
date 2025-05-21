@@ -14,7 +14,7 @@ public class MissionObject_BaseToDefend : MonoBehaviour
         if (other.gameObject != player)
             return;
 
-        // Chỉ bắt đầu defense nếu mission là LastDefense và chưa bắt đầu
+        // Start defense event if mission is LastDefense and not started
         var mission = MissionManager.instance.currentMission as Mission_LastDefense;
         if (mission != null && !mission.isDefenceStarted)
         {

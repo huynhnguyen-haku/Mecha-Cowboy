@@ -5,54 +5,53 @@ public class Mission_Timer : Mission
 {
     public float time;
     private float currentTime;
-    private bool isCompleted; // Theo dõi trạng thái hoàn thành
+    private bool isCompleted;
 
     private void OnEnable()
     {
-        currentTime = time; // Reset thời gian
-        isCompleted = false; // Reset trạng thái hoàn thành
+        currentTime = time;
+        isCompleted = false;
     }
 
     public override void StartMission()
     {
-        currentTime = time; // Đảm bảo thời gian khởi đầu đúng
+        currentTime = time;
         isCompleted = false;
         string missionText = "Get to the airplane before the time runs out.";
         string missionDetails = "Time Left: " + System.TimeSpan.FromSeconds(currentTime).ToString("mm':'ss");
         UI.instance.inGameUI.UpdateMissionUI(missionText, missionDetails);
     }
 
+    // Continously update the mission UI with the remaining time
+    // and check if the mission is completed (player reached the airplane)
     public override void UpdateMission()
     {
         if (isCompleted)
-            return; // Không cập nhật nếu đã hoàn thành
+            return;
 
         if (currentTime > 0)
         {
             currentTime -= Time.deltaTime;
             string timeText = System.TimeSpan.FromSeconds(currentTime).ToString("mm':'ss");
-
             string missionText = "Get to the airplane before the time runs out.";
             string missionDetails = "Time Left: " + timeText;
             UI.instance.inGameUI.UpdateMissionUI(missionText, missionDetails);
         }
         else
         {
-            // Thời gian hết, mission thất bại
             string missionText = "Time's up!";
             string missionDetails = "Mission failed. Return to main menu to try again.";
-
             UI.instance.inGameUI.UpdateMissionUI(missionText, missionDetails);
-            GameManager.instance.GameOver(); // Kết thúc game khi thất bại
+            GameManager.instance.GameOver();
         }
     }
 
     public override bool MissionCompleted()
     {
-        return isCompleted && currentTime > 0; // Hoàn thành nếu được đánh dấu hoàn thành và thời gian còn
+        return isCompleted && currentTime > 0;
     }
 
-    // Được gọi bởi MissionEnd_Trigger khi người chơi đến đích
+    // Called by MissionEnd_Trigger when player reaches the airplane
     public void MarkAsCompleted()
     {
         isCompleted = true;

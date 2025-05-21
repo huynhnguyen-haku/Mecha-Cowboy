@@ -5,8 +5,9 @@ public class MissionManager : MonoBehaviour
     public static MissionManager instance;
     public Mission currentMission;
     private bool isMissionActive = false;
+    private bool hasSetFinalTarget = false; // Prevents setting target multiple times
 
-    private bool hasSetFinalTarget = false; // Flag để tránh gán target nhiều lần
+    #region Unity Methods
 
     private void Awake()
     {
@@ -15,9 +16,11 @@ public class MissionManager : MonoBehaviour
 
     private void Update()
     {
+        // Update mission logic if active
         if (isMissionActive)
             currentMission?.UpdateMission();
 
+        // Set pathfinding target to mission complete zone after mission completion
         PathfindingIndicator pathfindingIndicator = FindObjectOfType<PathfindingIndicator>();
         if (pathfindingIndicator != null && currentMission != null && currentMission.MissionCompleted() && !hasSetFinalTarget)
         {
@@ -31,29 +34,37 @@ public class MissionManager : MonoBehaviour
         }
     }
 
+    #endregion
+
+    #region Mission Logic
+
+    // Set the current mission and reset state
     public void SetCurrentMission(Mission newMission)
     {
         currentMission = newMission;
-        hasSetFinalTarget = false; // Reset flag khi bắt đầu mission mới
+        hasSetFinalTarget = false;
     }
 
+    // Start the current mission
     public void StartMission()
     {
         isMissionActive = true;
         currentMission.StartMission();
     }
 
+    // Check if the mission is completed and handle reward
     public bool MissionCompleted()
     {
         if (currentMission != null && currentMission.MissionCompleted())
         {
-            GameManager.instance.AddMoney(currentMission.reward); // Cộng tiền thưởng
+            GameManager.instance.AddMoney(currentMission.reward);
             Debug.Log($"Mission '{currentMission.missionName}' completed! Reward: {currentMission.reward} golds.");
             return true;
         }
         return false;
     }
 
+    // Reset mission state after completion
     public void ResetAfterCompletion()
     {
         currentMission = null;
@@ -61,4 +72,7 @@ public class MissionManager : MonoBehaviour
         hasSetFinalTarget = false;
         Debug.Log("MissionManager: Reset after mission completion.");
     }
+
+    #endregion
 }
+

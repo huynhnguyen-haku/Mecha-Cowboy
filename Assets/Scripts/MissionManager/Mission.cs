@@ -15,8 +15,16 @@ public abstract class Mission : ScriptableObject
     [Header("Mission Preview")]
     public Sprite missionPreview;
 
+    // Start the mission logic
     public abstract void StartMission();
+
+    // Check if the mission is completed
     public abstract bool MissionCompleted();
+
+    // Optional: update mission progress each frame
     public virtual void UpdateMission() { }
+
+    // Get the mission type (for filtering level parts, etc.)
     public abstract MissionType GetMissionType();
 }
+

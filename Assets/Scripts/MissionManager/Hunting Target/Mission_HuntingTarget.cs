@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "New Mission Hunting Target", menuName = "Mission/Hunting Target")]
@@ -14,13 +13,14 @@ public class Mission_HuntingTarget : Mission
         remainingTargets = numberOfTarget;
         UpdateMissionUI();
 
-        // Hủy đăng ký sự kiện trước khi đăng ký lại để tránh trùng lặp
+        // Register event for target killed
         MissionObject_Target.OnTargetKilled -= ReduceRemainingTargets;
         MissionObject_Target.OnTargetKilled += ReduceRemainingTargets;
 
         List<Enemy> validEnemies = new List<Enemy>();
 
-        // Tìm tất cả các enemy phù hợp với loại enemyType
+        // Get the list of enemies from the LevelGenerator
+        // Find all enemies of the specified type, and add the MissionObject_Target component to them
         foreach (Enemy enemy in LevelGenerator.instance.GetEnemyList())
         {
             if (enemy.enemyType == enemyType)
@@ -29,7 +29,6 @@ public class Mission_HuntingTarget : Mission
             }
         }
 
-        // Gắn MissionObject_Target cho tất cả các enemy phù hợp
         foreach (Enemy enemy in validEnemies)
         {
             if (enemy.GetComponent<MissionObject_Target>() == null)
@@ -38,10 +37,8 @@ public class Mission_HuntingTarget : Mission
             }
         }
 
-        // Debug để kiểm tra số lượng enemy được gắn script
         Debug.Log($"Total valid enemies with type {enemyType}: {validEnemies.Count}");
     }
-
 
     public override bool MissionCompleted()
     {
@@ -49,24 +46,20 @@ public class Mission_HuntingTarget : Mission
     }
 
 
+    // This method is called when a target is killed
+    // It reduces the number of remaining targets and updates the UI
     private void ReduceRemainingTargets()
     {
         remainingTargets--;
         UpdateMissionUI();
 
-        // Kiểm tra nếu tất cả các target đã bị tiêu diệt
         if (remainingTargets <= 0)
         {
-            // Cập nhật UI để thông báo hoàn thành nhiệm vụ
-
             string missionText = "Target eliminated.";
             string missionDetails = "Now go to the airplane to complete the mission.";
             UI.instance.inGameUI.UpdateMissionUI(missionText, missionDetails);
 
-            // Hủy đăng ký sự kiện để tránh lỗi
             MissionObject_Target.OnTargetKilled -= ReduceRemainingTargets;
-
-            // Đánh dấu nhiệm vụ là hoàn thành
             Debug.Log("Mission completed!");
         }
     }
@@ -75,7 +68,6 @@ public class Mission_HuntingTarget : Mission
     {
         string missionText = "Eliminate " + numberOfTarget + " " + enemyType.ToString() + " enemies";
         string missionDetails = "Remaining: " + remainingTargets;
-
         UI.instance.inGameUI.UpdateMissionUI(missionText, missionDetails);
     }
 
@@ -84,4 +76,3 @@ public class Mission_HuntingTarget : Mission
         return MissionType.HuntingTarget;
     }
 }
-

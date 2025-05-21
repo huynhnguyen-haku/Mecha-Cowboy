@@ -1,21 +1,27 @@
 ﻿using UnityEngine;
 
 [CreateAssetMenu(fileName = "Car Delivery Mission", menuName = "Mission/Car Delivery - Mission")]
-
 public class Mission_CarDelivery : Mission
 {
     private bool isCarDelivered;
+
+    #region Unity Methods
 
     private void OnEnable()
     {
         isCarDelivered = false;
     }
 
+    #endregion
+
+    #region Mission Logic
+
     public override void StartMission()
     {
         if (isCarDelivered)
             return;
 
+        // Activate delivery zone and set pathfinding target
         FindObjectOfType<MissionObject_CarDeliveryZone>(true).gameObject.SetActive(true);
         MissionObject_CarDeliveryZone deliveryZone = FindObjectOfType<MissionObject_CarDeliveryZone>();
         if (deliveryZone != null)
@@ -31,15 +37,16 @@ public class Mission_CarDelivery : Mission
                 Debug.LogWarning("Mission_CarDelivery: PathfindingIndicator not found in scene!");
             }
 
-
             string missionText = "Find a functional car";
             string missionDetails = "Get to the car and drive it to the specified parking area";
-
             UI.instance.inGameUI.UpdateMissionUI(missionText, missionDetails);
 
+            // Register event for car delivery (unregistered in CompleteCarDelivery to prevent duplicate calls)
             MissionObject_Car.OnCarDelivery += CompleteCarDelivery;
-            Car_Controller[] cars = Object.FindObjectsByType<Car_Controller>(FindObjectsSortMode.None);
 
+
+            // Attach MissionObject_Car to all cars
+            Car_Controller[] cars = Object.FindObjectsByType<Car_Controller>(FindObjectsSortMode.None);
             foreach (var car in cars)
             {
                 if (car != null)
@@ -50,11 +57,13 @@ public class Mission_CarDelivery : Mission
         }
     }
 
+    // Return true if the car is delivered
     public override bool MissionCompleted()
     {
         return isCarDelivered;
     }
 
+    // Complete the mission when the car is delivered
     private void CompleteCarDelivery()
     {
         isCarDelivered = true;
@@ -69,4 +78,6 @@ public class Mission_CarDelivery : Mission
     {
         return MissionType.CarDelivery;
     }
+
+    #endregion
 }

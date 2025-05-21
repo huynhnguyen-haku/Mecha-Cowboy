@@ -25,18 +25,24 @@ public class Mission_LastDefense : Mission
     public GameObject[] enemyPrefabs;
     private string defenceTimerText;
 
+    #region Unity Methods
+
     private void OnEnable()
     {
         isDefenceStarted = false;
         isMissionCompleted = false;
     }
 
+    #endregion
+
+    #region Mission Logic
+
     public override void StartMission()
     {
         if (isMissionCompleted)
             return;
 
-        // Tìm MissionObject_BaseToDefend và gán làm target cho PathfindingIndicator
+        // Set defense point and pathfinding target
         MissionObject_BaseToDefend baseToDefend = FindObjectOfType<MissionObject_BaseToDefend>();
         if (baseToDefend != null)
         {
@@ -66,14 +72,11 @@ public class Mission_LastDefense : Mission
 
     public override void UpdateMission()
     {
-        if (isDefenceStarted == false || isMissionCompleted) return;
-
+        if (!isDefenceStarted || isMissionCompleted) return;
         waveTimer -= Time.deltaTime;
 
         if (defenseTimer > 0)
-        {
             defenseTimer -= Time.deltaTime;
-        }
 
         if (defenseTimer <= 0)
         {
@@ -81,6 +84,7 @@ public class Mission_LastDefense : Mission
             return;
         }
 
+        // Spawn enemies every timeBetweenWaves seconds (new wave)
         if (waveTimer < 0)
         {
             CreateNewEnemies(numberOfEnemiesPerWave);
@@ -88,7 +92,6 @@ public class Mission_LastDefense : Mission
         }
 
         defenceTimerText = System.TimeSpan.FromSeconds(defenseTimer).ToString("mm':'ss");
-
         string missionText = "Activating. Please standby...";
         string missionDetails = "Time Left: " + defenceTimerText;
         UI.instance.inGameUI.UpdateMissionUI(missionText, missionDetails);
@@ -111,10 +114,10 @@ public class Mission_LastDefense : Mission
         foreach (var enemy in allEnemies)
         {
             HealthController healthController = enemy.GetComponent<HealthController>();
-            if (healthController != null && !healthController.isDead) // Chỉ xử lý enemy chưa chết
+            if (healthController != null && !healthController.isDead)
             {
                 NavMeshAgent agent = enemy.GetComponent<NavMeshAgent>();
-                if (agent != null && agent.enabled) // Chỉ xử lý enemy có agent đang enabled
+                if (agent != null && agent.enabled)
                 {
                     healthController.SetHealthToZero();
                 }
@@ -128,31 +131,27 @@ public class Mission_LastDefense : Mission
         UI.instance.inGameUI.UpdateMissionUI(missionText, missionDetails);
     }
 
+    // Spawns enemies at respawn points
     private void CreateNewEnemies(int number)
     {
-        // Kiểm tra nếu số lượng enemy và số lượng spawn points không khớp
         if (number != respawnPoints.Count)
-        {
             return;
-        }
 
-        // Lặp qua từng spawn point và tạo enemy tương ứng
         for (int i = 0; i < respawnPoints.Count; i++)
         {
             Transform spawnPoint = respawnPoints[i];
-            GameObject enemyPrefab = enemyPrefabs[i % enemyPrefabs.Length]; // Lấy enemy theo thứ tự, lặp lại nếu cần
-
-            // Spawn enemy tại spawn point
+            GameObject enemyPrefab = enemyPrefabs[i % enemyPrefabs.Length];
             GameObject spawnedEnemy = ObjectPool.instance.GetObject(enemyPrefab, spawnPoint);
             Enemy enemyComponent = spawnedEnemy.GetComponent<Enemy>();
             if (enemyComponent != null)
             {
-                enemyComponent.arrgresssionRange = 100; // Thiết lập aggression range
+                enemyComponent.arrgresssionRange = 100;
             }
         }
     }
 
-
+    // Finds the closest respawn points to the defense point
+    // Because maybe there are more than required spawn points in the map
     private List<Transform> ClosestPoints(int number)
     {
         List<Transform> closestPoints = new List<Transform>();
@@ -188,4 +187,6 @@ public class Mission_LastDefense : Mission
     {
         return MissionType.LastDefense;
     }
+
+    #endregion
 }
