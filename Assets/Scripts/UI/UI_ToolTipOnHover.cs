@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.EventSystems;
 
 public class UI_ToolTipOnHover : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerDownHandler
@@ -11,28 +9,28 @@ public class UI_ToolTipOnHover : MonoBehaviour, IPointerEnterHandler, IPointerEx
     [SerializeField] private AudioSource pointerEnterSFX;
     [SerializeField] private AudioSource pointerDownSFX;
 
+    // Play SFX on pointer down
     public void OnPointerDown(PointerEventData eventData)
     {
-        if (pointerDownSFX != null)
-            pointerDownSFX.Play();
+        pointerDownSFX?.Play();
     }
 
+    // Show tooltip and play SFX on hover
     public void OnPointerEnter(PointerEventData eventData)
     {
         if (eventData.pointerEnter == gameObject)
         {
-            if (pointerEnterSFX != null)
-                pointerEnterSFX.Play();
+            pointerEnterSFX?.Play();
         }
-
         if (tooltip != null)
             tooltip.SetActive(true);
     }
 
-
+    // Hide tooltip on exit
     public void OnPointerExit(PointerEventData eventData)
     {
         if (tooltip != null)
             tooltip.SetActive(false);
     }
 }
+

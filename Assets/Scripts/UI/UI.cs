@@ -10,8 +10,7 @@ public class UI : MonoBehaviour
     public UI_WeaponSelection weaponSelection { get; private set; }
     public UI_GameOver gameOverUI { get; private set; }
     public UI_Settings settingsUI { get; private set; }
-    public UI_WeaponConfirmation weaponConfirmation { get; private set; } // Thêm tham chiếu đến UI_WeaponConfirmation
-
+    public UI_WeaponConfirmation weaponConfirmation { get; private set; }
 
     public GameObject victoryScreenUI;
     public GameObject pauseUI;
@@ -21,15 +20,17 @@ public class UI : MonoBehaviour
     [Header("Fade Image")]
     [SerializeField] private Image fadeImage;
 
+    #region Unity Methods
 
     private void Awake()
     {
+        // Cache references to all UI panels
         instance = this;
         inGameUI = GetComponentInChildren<UI_InGame>(true);
         weaponSelection = GetComponentInChildren<UI_WeaponSelection>(true);
         gameOverUI = GetComponentInChildren<UI_GameOver>(true);
         settingsUI = GetComponentInChildren<UI_Settings>(true);
-        weaponConfirmation = GetComponentInChildren<UI_WeaponConfirmation>(true); // Gán tham chiếu
+        weaponConfirmation = GetComponentInChildren<UI_WeaponConfirmation>(true);
     }
 
     private void Start()
@@ -38,24 +39,27 @@ public class UI : MonoBehaviour
         StartCoroutine(ChangeImageAlpha(0, 1.5f, null));
         settingsUI.LoadSettingsValues();
 
-        // Use for recording
+        // Quick start for testing/recording
         if (GameManager.instance.quickStart)
         {
             StartGame();
         }
     }
 
+    #endregion
+
+    #region UI Navigation
+
+    // Switch to a specific UI panel
     public void SwitchTo(GameObject uiElementToActivate)
     {
         foreach (GameObject go in UIElements)
-        {
             go.SetActive(false);
-        }
 
         uiElementToActivate.SetActive(true);
     }
 
-
+    // Start the game and show in-game UI
     public void StartGame()
     {
         StartCoroutine(StartGameSequence());
@@ -63,30 +67,27 @@ public class UI : MonoBehaviour
 
     public void QuitGame()
     {
-        {
-            Application.Quit();
-        }
+        Application.Quit();
     }
 
     public void RestartGame()
     {
-        TogglePauseUI(); // Close pause menu 
+        TogglePauseUI();
         StartCoroutine(ChangeImageAlpha(1, 1f, GameManager.instance.RestartScene));
     }
 
+    // Show game over UI with a message
     public void ShowGameOverUI(string message = "Game Over")
     {
         SwitchTo(gameOverUI.gameObject);
         gameOverUI.ShowGameOverMessage(message);
-
-
     }
 
     public void StartLevelGeneration() => LevelGenerator.instance.InitializeGeneration();
 
+    // Toggle pause menu and handle input/cursor state
     public void TogglePauseUI()
     {
-        // Nếu Pause Menu đang hoạt động, đóng menu và khôi phục trạng thái điều khiển
         if (pauseUI.activeSelf)
         {
             SwitchTo(inGameUI.gameObject);
@@ -97,24 +98,23 @@ public class UI : MonoBehaviour
                 ControlsManager.instance.SwitchToCharacterControls();
 
             TimeManager.instance.ResumeTime();
-            // Làm mới trạng thái tương tác
+
+            // Refresh interactables
             Player_Interaction playerInteraction = GameManager.instance.player.GetComponent<Player_Interaction>();
             if (playerInteraction != null)
             {
-                playerInteraction.GetInteractables().Clear(); // Xóa tất cả interactables
-                playerInteraction.UpdateClosestInteracble(); // Cập nhật lại
+                playerInteraction.GetInteractables().Clear();
+                playerInteraction.UpdateClosestInteracble();
             }
             return;
         }
 
-        // Kiểm tra nếu UI_InGame không được bật, không cho phép mở Pause Menu
         if (!inGameUI.gameObject.activeSelf)
         {
             Debug.Log("Pause Menu is only available when In-Game UI is active.");
             return;
         }
 
-        // Mở Pause Menu
         Cursor.visible = true;
         SwitchTo(pauseUI);
         ControlsManager.instance.SwitchToUIControls();
@@ -126,13 +126,18 @@ public class UI : MonoBehaviour
         inGameUI.ToggleMinimap(isActive);
     }
 
+    #endregion
 
+    #region UI Effects & Helpers
+
+    // Assign input events for UI controls
     private void AssignInputUI()
     {
         PlayerControls controls = GameManager.instance.player.controls;
         controls.UI.TogglePauseUI.performed += ctx => TogglePauseUI();
     }
 
+    // Show victory screen with fade effect
     public void DisplayVictoryScreenUI()
     {
         StartCoroutine(ChangeImageAlpha(1, 1.5f, SwitchToVictoryScreenUI));
@@ -141,32 +146,17 @@ public class UI : MonoBehaviour
     private void SwitchToVictoryScreenUI()
     {
         SwitchTo(victoryScreenUI);
-
         Color color = fadeImage.color;
         color.a = 0;
-
         fadeImage.color = color;
     }
 
-    //private IEnumerator StartGameSequence()
-    //{
-    //    fadeImage.color = Color.black;
-    //    StartCoroutine(ChangeImageAlpha(1, 1, null));
-    //    yield return new WaitForSeconds(1f);
-
-    //    yield return null;
-    //    SwitchTo(inGameUI.gameObject);
-    //    GameManager.instance.GameStart();
-
-    //    StartCoroutine(ChangeImageAlpha(0, 1f, null));
-    //}
-
-    // Use for recording
+    // Fade in/out effect for UI transitions
     private IEnumerator StartGameSequence()
     {
         bool quickStart = GameManager.instance.quickStart;
 
-        if (quickStart == false)
+        if (!quickStart)
         {
             fadeImage.color = Color.black;
             StartCoroutine(ChangeImageAlpha(1, 1, null));
@@ -178,13 +168,9 @@ public class UI : MonoBehaviour
         GameManager.instance.GameStart();
 
         if (quickStart)
-        {
             StartCoroutine(ChangeImageAlpha(0, 0.1f, null));
-        }
         else
-        {
             StartCoroutine(ChangeImageAlpha(0, 1f, null));
-        }
     }
 
     private IEnumerator ChangeImageAlpha(float targetAlpha, float duration, System.Action onComplete)
@@ -197,17 +183,15 @@ public class UI : MonoBehaviour
         {
             timeElapsed += Time.deltaTime;
             float newAlpha = Mathf.Lerp(startAlpha, targetAlpha, timeElapsed / duration);
-
             fadeImage.color = new Color(currentColor.r, currentColor.g, currentColor.b, newAlpha);
             yield return null;
         }
 
         fadeImage.color = new Color(currentColor.r, currentColor.g, currentColor.b, targetAlpha);
-
         onComplete?.Invoke();
     }
 
-
+    // Assign audio sources to all UI buttons in the scene
     [ContextMenu("Assign Audio Listeners to Button")]
     public void AssignAudioListenersToButton()
     {
@@ -217,4 +201,7 @@ public class UI : MonoBehaviour
             button.AssignAudioSource();
         }
     }
+
+    #endregion
 }
+

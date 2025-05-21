@@ -14,6 +14,7 @@ public class HealthController : MonoBehaviour
         currentHealth = maxHealth;
 
         // Check if lowHealthEffect is null before trying to disable it
+        // Because some enemies don't have this effect
         if (lowHealthEffect != null)
             lowHealthEffect.SetActive(false);
     }
@@ -53,6 +54,7 @@ public class HealthController : MonoBehaviour
         }
 
         // Disable VFX if health is 25% or above
+        // Used when player picks up medkit
         else
         {
             if (lowHealthEffect.activeSelf)
@@ -60,7 +62,7 @@ public class HealthController : MonoBehaviour
         }
     }
 
-    // Used for enemy
+    // Return true if the enemy should die
     public bool EnemyShouldDie()
     {
         if (isDead)
@@ -78,16 +80,15 @@ public class HealthController : MonoBehaviour
         return false;
     }
 
-    // Used for player
+    // Return true if the player should die
     public bool PlayerShouldDie()
     {
-        // Only disable the low health effect if the player is dead
+        // Disable the low health effect if the player is dead
         if (currentHealth <= 0 && lowHealthEffect != null)
             lowHealthEffect.SetActive(false);
         
         return currentHealth <= 0;
     }
-
 
     public virtual void SetHealthToZero()
     {

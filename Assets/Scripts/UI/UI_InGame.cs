@@ -1,4 +1,3 @@
-using NUnit.Framework;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -30,23 +29,32 @@ public class UI_InGame : MonoBehaviour
 
     private bool MissionUIActive = true;
 
+    #region Unity Methods
+
     private void Awake()
     {
         weaponSlots_UI = GetComponentsInChildren<UI_WeaponSlot>();
     }
 
+    #endregion
+
+    #region UI Logic
+
+    // Switch to character UI (hide car UI)
     public void SwitchToCharacterUI()
     {
         characterUI.SetActive(true);
         carUI.SetActive(false);
     }
 
+    // Switch to car UI (hide character UI)
     public void SwitchToCarUI()
     {
         characterUI.SetActive(false);
         carUI.SetActive(true);
     }
 
+    // Toggle mission UI and guide
     public void ToggleMissionUI()
     {
         MissionUIActive = !MissionUIActive;
@@ -54,20 +62,22 @@ public class UI_InGame : MonoBehaviour
         missionGuide.SetActive(!MissionUIActive);
     }
 
+    // Update mission text and details
     public void UpdateMissionUI(string mission, string missionDetails = "")
     {
         missionText.text = mission;
         missionDetai.text = missionDetails;
     }
 
+    // Update weapon slots UI
     public void UpdateWeaponUI(List<Weapon> weaponSlots, Weapon currentWeapon)
     {
         for (int i = 0; i < weaponSlots_UI.Length; i++)
         {
             if (i < weaponSlots.Count)
             {
-                bool isACtiveWeapon = weaponSlots[i] == currentWeapon ? true : false; // Check if the weapon is the current active weapon
-                weaponSlots_UI[i].UpdateWeaponSlot(weaponSlots[i], isACtiveWeapon);
+                bool isActiveWeapon = weaponSlots[i] == currentWeapon;
+                weaponSlots_UI[i].UpdateWeaponSlot(weaponSlots[i], isActiveWeapon);
             }
             else
             {
@@ -76,21 +86,25 @@ public class UI_InGame : MonoBehaviour
         }
     }
 
+    // Update player health bar
     public void UpdateHealthUI(float currenHealth, float maxHealth)
     {
         healthBar.fillAmount = currenHealth / maxHealth;
     }
 
+    // Update car health bar
     public void UpdateCarHealthUI(float currentCarHealth, float maxCarHealth)
     {
         carHealthBar.fillAmount = currentCarHealth / maxCarHealth;
     }
 
+    // Update car speed text
     public void UpdateSpeedText(string text)
     {
         carSpeedText.text = text;
     }
 
+    // Show/hide minimap
     public void ToggleMinimap(bool isActive)
     {
         if (minimap != null)
@@ -98,4 +112,7 @@ public class UI_InGame : MonoBehaviour
             minimap.SetActive(isActive);
         }
     }
+
+    #endregion
 }
+

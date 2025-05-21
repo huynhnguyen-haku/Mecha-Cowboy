@@ -6,32 +6,37 @@ public class UI_Credit : MonoBehaviour
 
     private float scrollSpeed = 150f;
     private bool isScrolling = true;
-    private Vector2 startPosition; // Vị trí ban đầu của creditText
+    private Vector2 startPosition; // Initial position of creditText
+
+    #region Unity Methods
 
     private void Awake()
     {
-        // Gán vị trí ban đầu khi UI được khởi tạo
+        // Cache the initial position of the credit text
         startPosition = creditText.anchoredPosition;
     }
 
     private void OnEnable()
     {
-        // Reset vị trí về ban đầu khi UI được kích hoạt
+        // Reset position and start scrolling when UI is enabled
         creditText.anchoredPosition = startPosition;
-        isScrolling = true; // Bắt đầu cuộn lại
+        isScrolling = true;
     }
 
     private void OnDisable()
     {
-        // Tạm dừng cuộn khi UI bị disable
+        // Stop scrolling when UI is disabled
         isScrolling = false;
     }
 
     private void Update()
     {
+        // Scroll the credit text upward if active
         if (isScrolling)
         {
             creditText.anchoredPosition += Vector2.up * scrollSpeed * Time.deltaTime;
         }
     }
+
+    #endregion
 }

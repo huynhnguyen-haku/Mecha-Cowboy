@@ -9,10 +9,11 @@ public class UI_WeaponSlot : MonoBehaviour
 
     private void Awake()
     {
-        weaponIcon = GetComponentInChildren<Image>(); 
+        weaponIcon = GetComponentInChildren<Image>();
         ammoText = GetComponentInChildren<TextMeshProUGUI>();
     }
 
+    // Update weapon icon and ammo display
     public void UpdateWeaponSlot(Weapon myWeapon, bool activeWeapon)
     {
         if (myWeapon == null)
@@ -22,7 +23,8 @@ public class UI_WeaponSlot : MonoBehaviour
             return;
         }
 
-        Color newColor = activeWeapon ? Color.white : new Color(1, 1, 1, 0.35f); // New color is transparent white
+        // Set icon color based on active state
+        Color newColor = activeWeapon ? Color.white : new Color(1, 1, 1, 0.35f);
         weaponIcon.color = newColor;
         weaponIcon.sprite = myWeapon.weaponData.weaponIcon;
 
@@ -30,3 +32,4 @@ public class UI_WeaponSlot : MonoBehaviour
         ammoText.color = Color.white;
     }
 }
+

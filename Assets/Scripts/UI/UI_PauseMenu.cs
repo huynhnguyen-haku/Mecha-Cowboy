@@ -18,50 +18,49 @@ public class PauseMenuUI : MonoBehaviour
     [SerializeField] private TextMeshProUGUI musicSliderText;
     [SerializeField] private string bgmParameter;
 
+    #region Unity Methods
+
     private void Start()
     {
-        // Load saved values from PlayerPrefs
         LoadPauseMenuValues();
     }
 
+    #endregion
+
+    #region Audio Settings
+
+    // Update SFX volume and save to PlayerPrefs
     public void SfxSliderValue(float value)
     {
-        // Update slider text
         sfxSliderText.text = Mathf.RoundToInt(value * 100) + "%";
-
-        // Convert slider value to logarithmic scale and set it in the AudioMixer
         float newValue = Mathf.Log10(value) * sliderMulti;
         audioMixer.SetFloat(sfxParameter, newValue);
-
-        // Save the value to PlayerPrefs
         PlayerPrefs.SetFloat(sfxParameter, value);
         PlayerPrefs.Save();
     }
 
+    // Update music volume and save to PlayerPrefs
     public void MusicSliderValue(float value)
     {
-        // Update slider text
         musicSliderText.text = Mathf.RoundToInt(value * 100) + "%";
-
-        // Convert slider value to logarithmic scale and set it in the AudioMixer
         float newValue = Mathf.Log10(value) * sliderMulti;
         audioMixer.SetFloat(bgmParameter, newValue);
-
-        // Save the value to PlayerPrefs
         PlayerPrefs.SetFloat(bgmParameter, value);
         PlayerPrefs.Save();
     }
 
+    // Load saved values for sliders
     private void LoadPauseMenuValues()
     {
-        // Load SFX value
-        float sfxValue = PlayerPrefs.GetFloat(sfxParameter, 0.5f); // Default value is 0.5
+        float sfxValue = PlayerPrefs.GetFloat(sfxParameter, 0.5f);
         sfxSlider.value = sfxValue;
         sfxSliderText.text = Mathf.RoundToInt(sfxValue * 100) + "%";
 
-        // Load Music value
-        float musicValue = PlayerPrefs.GetFloat(bgmParameter, 0.5f); // Default value is 0.5
+        float musicValue = PlayerPrefs.GetFloat(bgmParameter, 0.5f);
         musicSlider.value = musicValue;
         musicSliderText.text = Mathf.RoundToInt(musicValue * 100) + "%";
     }
+
+    #endregion
 }
+
