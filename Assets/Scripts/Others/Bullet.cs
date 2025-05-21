@@ -14,7 +14,9 @@ public class Bullet : MonoBehaviour
     private float currentLifeTime;
 
     private LayerMask allyLayerMask;
-    private bool canCollide; // Flag to check if the bullet has already collided
+    private bool canCollide; // Prevents multiple collisions per bullet
+
+    #region Unity Methods
 
     protected void Awake()
     {
@@ -37,6 +39,11 @@ public class Bullet : MonoBehaviour
         }
     }
 
+    #endregion
+
+    #region Bullet Setup
+
+    // Initialize bullet parameters and reset state
     public void BulletSetup(LayerMask allyLayerMask, int bulletDamage, float impactForce = 100)
     {
         this.allyLayerMask = allyLayerMask;
@@ -44,16 +51,21 @@ public class Bullet : MonoBehaviour
         this.bulletDamage = bulletDamage;
         boxCollider.enabled = true;
         bulletTrail.Clear();
-        canCollide = true; // Reset the flag when the bullet is setup
+        canCollide = true;
     }
+
+    #endregion
+
+    #region Collision Logic
 
     protected virtual void OnCollisionEnter(Collision collision)
     {
-        if (!canCollide) return; // If the bullet has already collided, do nothing
+        if (!canCollide) return;
 
-        canCollide = false; // Set the flag to false to prevent further collisions
+        canCollide = false;
 
-        if (FriendlyFire() == false)
+        // Ignore collision with allies if friendly fire is off
+        if (!FriendlyFire())
         {
             if ((allyLayerMask.value & (1 << collision.gameObject.layer)) > 0)
             {
@@ -65,12 +77,14 @@ public class Bullet : MonoBehaviour
         CreateImpactFX();
         ReturnBulletToPool();
 
-        I_Damagable damagable = collision.gameObject.GetComponentInChildren<I_Damagable>(); // Check for damageable component (even in children)
+        // Deal damage if possible
+        I_Damagable damagable = collision.gameObject.GetComponentInChildren<I_Damagable>();
         damagable?.TakeDamage(bulletDamage);
 
         ApplyBulletImpact(collision);
     }
 
+    // Apply force to enemy ragdoll if hit
     private void ApplyBulletImpact(Collision collision)
     {
         Enemy enemy = collision.gameObject.GetComponentInParent<Enemy>();
@@ -81,6 +95,10 @@ public class Bullet : MonoBehaviour
             enemy.BulletImpact(force, collision.contacts[0].point, hitRigibBody);
         }
     }
+
+    #endregion
+
+    #region Pool & FX
 
     protected void ReturnBulletToPool(float delay = 0)
     {
@@ -93,9 +111,15 @@ public class Bullet : MonoBehaviour
         ObjectPool.instance.ReturnObject(newImpactFX, 1);
     }
 
+    #endregion
+
+    #region Utility
+
     public bool FriendlyFire()
     {
         return GameManager.instance.friendlyFire;
     }
+
+    #endregion
 }
 

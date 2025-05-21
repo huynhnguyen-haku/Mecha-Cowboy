@@ -9,7 +9,6 @@ public class AmmoRefillZone : MonoBehaviour
         {
             // Get the Player_WeaponController component from the player
             Player_WeaponController weaponController = other.GetComponent<Player_WeaponController>();
-
             if (weaponController != null)
             {
                 // Get the current weapon the player is using
