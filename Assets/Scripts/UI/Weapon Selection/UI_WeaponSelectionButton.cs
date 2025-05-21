@@ -21,7 +21,7 @@ public class UI_WeaponSelectionButton : UI_Button
         weaponSelectionUI = GetComponentInParent<UI_WeaponSelection>();
 
         // Load the unlock state of the weapon
-        weaponData.LoadUnlockState(); // Sử dụng weaponData thay vì currentWeaponData
+        weaponData.LoadUnlockState();
 
         // Update the weapon icon
         weaponIcon.sprite = weaponData.weaponIcon;
@@ -52,22 +52,22 @@ public class UI_WeaponSelectionButton : UI_Button
 
         if (!weaponData.isUnlocked)
         {
-            // Mở UI xác nhận mua vũ khí
+            // Open weapon purchase confirmation UI
             UI.instance.weaponConfirmation.SetupConfirmationUI(weaponData);
             UI.instance.SwitchTo(UI.instance.weaponConfirmation.gameObject);
             return;
         }
 
-        // Kiểm tra xem vũ khí đã được chọn trong slot nào chưa
+        // Check if weapon is already assigned to a slot
         UI_SelectedWeaponWindow assignedWeaponSlot = weaponSelectionUI.FindSlotWithWeaponOfType(weaponData);
         if (assignedWeaponSlot != null)
         {
-            // Nếu đã được chọn, hủy chọn vũ khí khỏi slot
+            // If already assigned, remove from slot
             assignedWeaponSlot.SetWeaponSlot(null);
             return;
         }
 
-        // Nếu chưa được chọn, tìm slot trống để gán vũ khí
+        // Assign weapon to an empty slot if available
         emptySlot = weaponSelectionUI.FindEmptySlot();
         if (emptySlot != null)
         {
@@ -75,10 +75,11 @@ public class UI_WeaponSelectionButton : UI_Button
         }
         else
         {
-            // Nếu không có slot trống, hiển thị thông báo
+            // Show warning if no empty slot
             weaponSelectionUI.ShowWarningMessage("No empty slot...");
         }
 
-        emptySlot = null; // Reset lại tham chiếu
+        emptySlot = null;
     }
 }
+

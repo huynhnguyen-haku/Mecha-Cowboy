@@ -1,4 +1,3 @@
-using NUnit.Framework;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -15,9 +14,11 @@ public class UI_WeaponSelection : MonoBehaviour
     private float currentWarningAlpha;
     private float targetWarningAlpha;
 
+    #region Unity Methods
+
     private void Start()
     {
-      selectedWeapon = GetComponentsInChildren<UI_SelectedWeaponWindow>();
+        selectedWeapon = GetComponentsInChildren<UI_SelectedWeaponWindow>();
     }
 
     private void Update()
@@ -25,14 +26,18 @@ public class UI_WeaponSelection : MonoBehaviour
         if (currentWarningAlpha > targetWarningAlpha)
         {
             currentWarningAlpha -= Time.deltaTime * disappearingSpeed;
-            warningText.color = new Color (1, 1, 1, currentWarningAlpha);
+            warningText.color = new Color(1, 1, 1, currentWarningAlpha);
         }
     }
 
+    #endregion
+
+    #region Weapon Selection Logic
+
+    // Get all selected weapon data
     public List<Weapon_Data> SelectedWeaponData()
     {
         List<Weapon_Data> selectedData = new List<Weapon_Data>();
-
         foreach (UI_SelectedWeaponWindow weapon in selectedWeapon)
         {
             if (weapon.weaponData != null)
@@ -43,13 +48,12 @@ public class UI_WeaponSelection : MonoBehaviour
         return selectedData;
     }
 
+    // Confirm weapon selection and proceed if valid
     public void ConfirmWeaponSelection()
     {
         if (HasSelectedWeapon())
         {
             UI.instance.SwitchTo(nextUIElementToActivate);
-
-            // Generate level part here so there won't be any issues with weapon selection
             UI.instance.StartLevelGeneration();
         }
         else
@@ -58,8 +62,10 @@ public class UI_WeaponSelection : MonoBehaviour
         }
     }
 
+    // Check if at least one weapon is selected
     private bool HasSelectedWeapon() => SelectedWeaponData().Count > 0;
 
+    // Find the first empty weapon slot
     public UI_SelectedWeaponWindow FindEmptySlot()
     {
         for (int i = 0; i < selectedWeapon.Length; i++)
@@ -69,10 +75,10 @@ public class UI_WeaponSelection : MonoBehaviour
                 return selectedWeapon[i];
             }
         }
-
         return null;
     }
 
+    // Find the slot containing the specified weapon
     public UI_SelectedWeaponWindow FindSlotWithWeaponOfType(Weapon_Data weaponData)
     {
         for (int i = 0; i < selectedWeapon.Length; i++)
@@ -82,16 +88,18 @@ public class UI_WeaponSelection : MonoBehaviour
                 return selectedWeapon[i];
             }
         }
-
         return null;
     }
 
+    // Show a warning message to the user
     public void ShowWarningMessage(string message)
     {
         warningText.color = Color.white;
         warningText.text = message;
-
         currentWarningAlpha = warningText.color.a;
         targetWarningAlpha = 0;
     }
+
+    #endregion
 }
+

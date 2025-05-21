@@ -1,5 +1,4 @@
 ﻿using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -23,29 +22,32 @@ public class UI_MissionSelectionButton : UI_Button
         myText.text = myMission.missionName;
     }
 
+    // Display mission information when the button is hovered over
     public override void OnPointerEnter(PointerEventData eventData)
     {
         base.OnPointerEnter(eventData);
         missionSelection.SetMissionDescription(myMission.missionDescription);
         missionSelection.SetMissionObjective(myMission.missionObjective);
-
         missionSelection.SetMissionReward(myMission.reward);
-        missionSelection.SetMissionPreview(myMission.missionPreview); // Truyền hình ảnh minh họa
+        missionSelection.SetMissionPreview(myMission.missionPreview);
     }
 
+    // Set the current mission to the manager when the button is clicked
+    // This will be used to start the mission
     public override void OnPointerDown(PointerEventData eventData)
     {
         base.OnPointerDown(eventData);
         MissionManager.instance.SetCurrentMission(myMission);
     }
 
+    // Reset mission information when the button is not hovered over
     public override void OnPointerExit(PointerEventData eventData)
     {
         base.OnPointerExit(eventData);
         missionSelection.SetMissionDescription("Choose a mission");
         missionSelection.SetMissionObjective(null);
-
         missionSelection.SetMissionReward(0);
-        missionSelection.SetMissionPreview(null); // Ẩn hình ảnh khi rời chuột
+        missionSelection.SetMissionPreview(null);
     }
 }
+

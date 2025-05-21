@@ -9,18 +9,26 @@ public class UI_SelectedWeaponWindow : MonoBehaviour
     [SerializeField] private Image weaponIcon;
     [SerializeField] private TextMeshProUGUI weaponInfo;
 
+    #region Unity Methods
+
     private void Start()
     {
         weaponData = null;
         UpdateSlotInfo(null);
     }
 
+    #endregion
+
+    #region Slot Logic
+
+    // Assign a weapon to this slot and update UI
     public void SetWeaponSlot(Weapon_Data newWeaponData)
     {
         weaponData = newWeaponData;
         UpdateSlotInfo(weaponData);
     }
 
+    // Update slot visuals based on weapon data
     public void UpdateSlotInfo(Weapon_Data weapon_data)
     {
         if (weapon_data == null)
@@ -35,8 +43,12 @@ public class UI_SelectedWeaponWindow : MonoBehaviour
         weaponInfo.text = weapon_data.weaponInfo;
     }
 
+    // Check if this slot is empty
     public bool IsEmpty()
     {
         return weaponData == null;
     }
+
+    #endregion
 }
+
