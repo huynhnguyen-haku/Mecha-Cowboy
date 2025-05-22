@@ -10788,8 +10788,8 @@ MonoBehaviour:
   attackRange: 1.6
   actionCooldown: 1
   attackAnimationCount: 2
-  flameDamage: 13
-  flameDamageCooldown: 0.5
+  flameDamage: 18
+  flameDamageCooldown: 0.3
   flamethrowDuration: 3
   flamethrower: {fileID: 8029618251136310172}
   hammerActiveDamage: 0
@@ -10853,7 +10853,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c9dcaefae6c9584880f103e99fc6df4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 3600
+  maxHealth: 4000
   currentHealth: 0
   isDead: 0
   lowHealthEffect: {fileID: 8767582427695256793}
