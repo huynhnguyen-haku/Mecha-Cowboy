@@ -72,7 +72,7 @@ public class Weapon
 
         reloadSpeed = weapon_Data.reloadSpeed;
         equipSpeed = weapon_Data.equipSpeed;
-        laserDistance = Mathf.Infinity;
+        laserDistance = 999;
         cameraDistance = weapon_Data.cameraDistance;
 
         minSpread = weapon_Data.minSpread;

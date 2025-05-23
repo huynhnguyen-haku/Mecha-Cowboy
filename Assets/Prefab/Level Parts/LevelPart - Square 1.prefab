@@ -6531,6 +6531,10 @@ PrefabInstance:
       propertyPath: m_ConstrainProportionsScale
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 5449173031395327410, guid: d08f548e62a7c25418846cc858b38ecf, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -15022,6 +15026,10 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: -5.89
       objectReference: {fileID: 0}
+    - target: {fileID: 4959626459035778287, guid: 5fe01cf504556fa46924c625bf47d817, type: 3}
+      propertyPath: coverPerk
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5478877348500432786, guid: 5fe01cf504556fa46924c625bf47d817, type: 3}
       propertyPath: m_Name
       value: Enemy_Range - Scout Variant
@@ -16301,6 +16309,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1746395094359593027, guid: 093a941a7c31db64e9ac47f66ef09c0d, type: 3}
+      propertyPath: coverPerk
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1746395094359593027, guid: 093a941a7c31db64e9ac47f66ef09c0d, type: 3}
       propertyPath: arrgresssionRange
       value: 15
       objectReference: {fileID: 0}
@@ -16632,6 +16644,14 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1831055982687409160, guid: f14841b09c52fdc4f93cf8dc865fb542, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 7.07
+      objectReference: {fileID: 0}
+    - target: {fileID: 1831055982687409160, guid: f14841b09c52fdc4f93cf8dc865fb542, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.34
+      objectReference: {fileID: 0}
     - target: {fileID: 2212518091435050244, guid: f14841b09c52fdc4f93cf8dc865fb542, type: 3}
       propertyPath: m_LocalPosition.x
       value: -52.83
@@ -16671,6 +16691,22 @@ PrefabInstance:
     - target: {fileID: 2212518091435050244, guid: f14841b09c52fdc4f93cf8dc865fb542, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3536095673992638969, guid: f14841b09c52fdc4f93cf8dc865fb542, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.86
+      objectReference: {fileID: 0}
+    - target: {fileID: 3536095673992638969, guid: f14841b09c52fdc4f93cf8dc865fb542, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 2.81
+      objectReference: {fileID: 0}
+    - target: {fileID: 7919489221113089262, guid: f14841b09c52fdc4f93cf8dc865fb542, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -7.58
+      objectReference: {fileID: 0}
+    - target: {fileID: 7919489221113089262, guid: f14841b09c52fdc4f93cf8dc865fb542, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.19
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -26008,6 +26044,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2523341443481763773, guid: 5fe01cf504556fa46924c625bf47d817, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4959626459035778287, guid: 5fe01cf504556fa46924c625bf47d817, type: 3}
+      propertyPath: coverPerk
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4959626459035778287, guid: 5fe01cf504556fa46924c625bf47d817, type: 3}

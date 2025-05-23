@@ -72,7 +72,6 @@ public class PathfindingIndicator : MonoBehaviour
         }
         else
         {
-            Debug.LogWarning("PathfindingIndicator: NavMesh.CalculatePath failed!");
             lineRenderer.positionCount = 0;
         }
     }

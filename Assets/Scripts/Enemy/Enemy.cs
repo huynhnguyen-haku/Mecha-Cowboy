@@ -180,17 +180,24 @@ public class Enemy : MonoBehaviour
     }
 
     // Rotate to face a target position
-    public void FaceTarget(Vector3 target, float turnSpeed = 0)
+    public void FaceTarget(Vector3 targetPosition, float turnSpeedOverride = 0)
     {
-        Quaternion targetRotation = Quaternion.LookRotation(target - transform.position);
-        Vector3 currentEulerAngels = transform.rotation.eulerAngles;
+        Vector3 directionToTarget = targetPosition - transform.position;
+        directionToTarget.y = 0;
 
-        if (turnSpeed == 0)
-            turnSpeed = this.turnSpeed;
+        if (directionToTarget.sqrMagnitude > 0.001f) 
+        {
+            Quaternion targetIdealRotation = Quaternion.LookRotation(directionToTarget);
+            Vector3 currentEulerAngles = transform.rotation.eulerAngles; 
 
-        float yRotation = Mathf.LerpAngle(currentEulerAngels.y, targetRotation.eulerAngles.y, turnSpeed * Time.deltaTime);
-        transform.rotation = Quaternion.Euler(currentEulerAngels.x, yRotation, currentEulerAngels.z);
+            float actualTurnSpeed = (turnSpeedOverride == 0) ? this.turnSpeed : turnSpeedOverride;
+            float yRotation = Mathf.LerpAngle(currentEulerAngles.y, targetIdealRotation.eulerAngles.y, actualTurnSpeed * Time.deltaTime);
+
+            transform.rotation = Quaternion.Euler(currentEulerAngles.x, yRotation, currentEulerAngles.z);
+        }
     }
+
+
 
     #region Animation Events
 

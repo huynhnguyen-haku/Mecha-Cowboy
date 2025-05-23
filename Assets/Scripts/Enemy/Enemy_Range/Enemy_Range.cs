@@ -7,7 +7,7 @@ public enum GrenadePerk { None, ThrowGrenade }
 
 public class Enemy_Range : Enemy
 {
-    public Enemy_RangeSFX rangeSFX;
+    public Enemy_RangeSFX rangeSFX { get; private set; }
 
     [Header("Enemy Perks")]
     public Enemy_RangeWeaponType weaponType;

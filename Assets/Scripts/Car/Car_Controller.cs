@@ -127,11 +127,12 @@ public class Car_Controller : MonoBehaviour
         isDrifting = false;
 
         // Slow down the car after exiting
-        rb.linearVelocity = Vector3.Lerp(rb.linearVelocity, Vector3.zero, Time.fixedDeltaTime * 5f);
-        rb.angularVelocity = Vector3.Lerp(rb.angularVelocity, Vector3.zero, Time.fixedDeltaTime * 5f);
-
+        rb.linearVelocity = Vector3.Lerp(rb.linearVelocity, Vector3.zero, Time.fixedDeltaTime * 10f);
+        rb.angularVelocity = Vector3.Lerp(rb.angularVelocity, Vector3.zero, Time.fixedDeltaTime * 10f);
+       
         HandleWheelAnimation();
     }
+
 
     private void Update()
     {
