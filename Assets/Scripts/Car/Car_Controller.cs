@@ -398,6 +398,7 @@ public class Car_Controller : MonoBehaviour
 
     #region Public Methods
 
+    // Used when player enters the car
     public void ActivateCar(bool active)
     {
         carActive = active;
@@ -412,7 +413,8 @@ public class Car_Controller : MonoBehaviour
             isDrifting = false;
         }
     }
-
+    
+    // Used when the car's health = 0
     public void BreakCar()
     {
         canEmitTrails = false;
