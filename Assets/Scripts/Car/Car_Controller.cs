@@ -416,7 +416,6 @@ public class Car_Controller : MonoBehaviour
     public void BreakCar()
     {
         canEmitTrails = false;
-        carActive = false;
 
         foreach (var wheel in wheels)
         {
@@ -429,6 +428,7 @@ public class Car_Controller : MonoBehaviour
 
         motorForce = 0;
         rb.linearDamping = 1;
+
     }
 
     #endregion
