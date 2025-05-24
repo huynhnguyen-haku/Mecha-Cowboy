@@ -245,7 +245,6 @@ MonoBehaviour:
   whatIsGround:
     serializedVersion: 2
     m_Bits: 64
-  speed: 0
   turnSensitivity: 35
   driveType: 0
   centerOfMass: {fileID: 5536538650790172350}
@@ -253,7 +252,7 @@ MonoBehaviour:
   wheelsMass: 30
   frontWheelTraction: 1
   rearWheelTraction: 1
-  maxSpeed: 7
+  maxSpeedKPH: 45
   accelerationRate: 3
   motorForce: 1600
   frontBrakeSensitivity: 4

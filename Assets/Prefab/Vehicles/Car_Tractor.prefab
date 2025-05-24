@@ -459,7 +459,6 @@ MonoBehaviour:
   whatIsGround:
     serializedVersion: 2
     m_Bits: 64
-  speed: 0
   turnSensitivity: 40
   driveType: 1
   centerOfMass: {fileID: 6390261943126464028}
@@ -467,7 +466,7 @@ MonoBehaviour:
   wheelsMass: 60
   frontWheelTraction: 1.5
   rearWheelTraction: 1.5
-  maxSpeed: 20
+  maxSpeedKPH: 100
   accelerationRate: 10
   motorForce: 4000
   frontBrakeSensitivity: 5
@@ -1225,7 +1224,9 @@ GameObject:
   - component: {fileID: 5309910789345721627}
   - component: {fileID: 8987860270499517184}
   - component: {fileID: 1492946312995138219}
-  - component: {fileID: 6379919700233633640}
+  - component: {fileID: 8420197529377752331}
+  - component: {fileID: 5514676882866909117}
+  - component: {fileID: 5346971444625557836}
   m_Layer: 0
   m_Name: tractor_body
   m_TagString: Untagged
@@ -1302,8 +1303,8 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &6379919700233633640
-MeshCollider:
+--- !u!65 &8420197529377752331
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -1320,10 +1321,51 @@ MeshCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 1
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 262703872657226142, guid: 4292b5b59f56ad64ba543dd154f416ce, type: 3}
+  serializedVersion: 3
+  m_Size: {x: 1.161747, y: 0.8232306, z: 1.4840927}
+  m_Center: {x: 0, y: 0.75772923, z: -0.36901855}
+--- !u!65 &5514676882866909117
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6619877631484467501}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.6465492, y: 0.6269636, z: 1.1815147}
+  m_Center: {x: 0, y: 0.82315147, z: 0.9844036}
+--- !u!65 &5346971444625557836
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6619877631484467501}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.97366333, y: 0.7823415, z: 1.1487999}
+  m_Center: {x: 0, y: 1.6531963, z: -0.28315163}
 --- !u!1 &7222519571001218531
 GameObject:
   m_ObjectHideFlags: 0

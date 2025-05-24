@@ -179,7 +179,6 @@ MonoBehaviour:
   whatIsGround:
     serializedVersion: 2
     m_Bits: 64
-  speed: 0
   turnSensitivity: 45
   driveType: 1
   centerOfMass: {fileID: 1499781076503881678}
@@ -187,7 +186,7 @@ MonoBehaviour:
   wheelsMass: 35
   frontWheelTraction: 1.2
   rearWheelTraction: 1.2
-  maxSpeed: 15
+  maxSpeedKPH: 80
   accelerationRate: 6
   motorForce: 2500
   frontBrakeSensitivity: 0
@@ -1047,7 +1046,8 @@ GameObject:
   - component: {fileID: 585958544464153765}
   - component: {fileID: 1955827569366103773}
   - component: {fileID: 6642400320167097825}
-  - component: {fileID: 5470465452052653414}
+  - component: {fileID: 6286828718484053491}
+  - component: {fileID: 6252466890566989494}
   m_Layer: 0
   m_Name: mustang_body
   m_TagString: Untagged
@@ -1124,8 +1124,8 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &5470465452052653414
-MeshCollider:
+--- !u!65 &6286828718484053491
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -1142,10 +1142,30 @@ MeshCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 1
-  m_CookingOptions: 30
-  m_Mesh: {fileID: -2368964576604762216, guid: d2858e1f48611f643b7ba488af654dd9, type: 3}
+  serializedVersion: 3
+  m_Size: {x: 0.7493477, y: 0.27367735, z: 0.8826828}
+  m_Center: {x: 0.0014629364, y: 0.8243685, z: 0.025997162}
+--- !u!65 &6252466890566989494
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6424859518477928176}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1.3995191, y: 0.45630348, z: 3.4510272}
+  m_Center: {x: 0, y: 0.40282613, z: 0.29625952}
 --- !u!1 &6457788316451895392
 GameObject:
   m_ObjectHideFlags: 0

@@ -1253,7 +1253,6 @@ MonoBehaviour:
   whatIsGround:
     serializedVersion: 2
     m_Bits: 64
-  speed: 0
   turnSensitivity: 40
   driveType: 2
   centerOfMass: {fileID: 6235032167547258948}
@@ -1261,7 +1260,7 @@ MonoBehaviour:
   wheelsMass: 40
   frontWheelTraction: 1.5
   rearWheelTraction: 1.5
-  maxSpeed: 12.5
+  maxSpeedKPH: 60
   accelerationRate: 4
   motorForce: 1800
   frontBrakeSensitivity: 8
@@ -1762,7 +1761,7 @@ BoxCollider:
   m_Enabled: 1
   serializedVersion: 3
   m_Size: {x: 1.2087746, y: 0.56394124, z: 3.053173}
-  m_Center: {x: 0.010919571, y: 0.669567, z: -0.19713402}
+  m_Center: {x: 0, y: 0.669567, z: -0.19713402}
 --- !u!65 &2546979878855597626
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1783,7 +1782,7 @@ BoxCollider:
   m_Enabled: 1
   serializedVersion: 3
   m_Size: {x: 1.1340256, y: 0.40141368, z: 2.039734}
-  m_Center: {x: 0.015388489, y: 1.1881899, z: -0.63809204}
+  m_Center: {x: 0, y: 1.1881899, z: -0.63809204}
 --- !u!65 &8265125744470304026
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1804,7 +1803,7 @@ BoxCollider:
   m_Enabled: 1
   serializedVersion: 3
   m_Size: {x: 0.6085205, y: 0.56880337, z: 0.25823975}
-  m_Center: {x: 0.050971985, y: 0.8235196, z: -1.8695984}
+  m_Center: {x: 0, y: 0.8235196, z: -1.8695984}
 --- !u!1 &8773419645279973835
 GameObject:
   m_ObjectHideFlags: 0
