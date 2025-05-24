@@ -398,7 +398,7 @@ public class Car_Controller : MonoBehaviour
 
     #region Public Methods
 
-    // Used when player enters the car
+    // Used when player enters or exits the car
     public void ActivateCar(bool active)
     {
         carActive = active;
@@ -426,7 +426,7 @@ public class Car_Controller : MonoBehaviour
         }
 
         if (carSounds != null)
-            carSounds.ActivateCarSFX(false);
+            carSounds.StopEngineIdleOnly();
 
         motorForce = 0;
         rb.linearDamping = 1;

@@ -57,6 +57,15 @@ public class Car_SFX : MonoBehaviour
         }
     }
 
+    // Play when car is broken down
+    public void StopEngineIdleOnly()
+    {
+        if (!enableCarSFX)
+            return;
+
+        AudioManager.instance.ControlSFX_FadeAndDelay(engineIdle, false, 0f, 0.25f);
+    }
+
     #endregion
 
     #region Tire SFX
