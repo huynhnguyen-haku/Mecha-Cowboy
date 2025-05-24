@@ -9312,6 +9312,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1180487862}
     m_Modifications:
+    - target: {fileID: 576398171817946424, guid: e5f7a37fbccb59e4da5e55053ffecd31, type: 3}
+      propertyPath: maxSpeedKPH
+      value: 45
+      objectReference: {fileID: 0}
     - target: {fileID: 6419167400474118289, guid: e5f7a37fbccb59e4da5e55053ffecd31, type: 3}
       propertyPath: m_Name
       value: Car_Jeep
@@ -25518,9 +25522,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 993674908}
-        m_TargetAssemblyTypeName: UI, Assembly-CSharp
-        m_MethodName: StartGame
+      - m_Target: {fileID: 1624496555}
+        m_TargetAssemblyTypeName: UI_WeaponSelection, Assembly-CSharp
+        m_MethodName: TryStartGame
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

@@ -16,11 +16,9 @@ public class Car_Controller : MonoBehaviour
     private float moveInput;
     private float turnInput;
 
-    // Tốc độ thực tế của Rigidbody
-    public float actualSpeedMPS { get; private set; } // Mét trên giây
-    public float actualSpeedKPH { get; private set; } // Kilômét trên giờ
-
-    private WheelCollider frontLeftWheel;
+    // Actual speed of rigidbody
+    public float actualSpeedMPS { get; private set; } // Mile per second
+    public float actualSpeedKPH { get; private set; } // Kilometer per hour
 
     [Range(30, 60)][SerializeField] private float turnSensitivity = 30;
 
@@ -41,11 +39,10 @@ public class Car_Controller : MonoBehaviour
     [SerializeField] private float rearWheelTraction = 1;
 
     [Header("Engine Settings")]
-    private float currentSpeed; // Biến này dùng cho motorTorque, không phải tốc độ hiển thị
+    private float currentMotorInputFactor;
 
-    // These 2 parameters are mile, not kilometer (Lưu ý: maxSpeed này đang được dùng như m/s trong HandleSpeedLimit)
-    [Range(4, 20)]
-    [SerializeField] private float maxSpeed = 7;
+    [Range(20, 150)]
+    [SerializeField] private float maxSpeedKPH = 80;
 
     [Range(0.5f, 10)]
     [SerializeField] private float accelerationRate = 2;
@@ -82,7 +79,6 @@ public class Car_Controller : MonoBehaviour
     [SerializeField] private ParticleSystem RRWParticleSystem;
 
     private Car_Wheel[] wheels;
-    private UI ui;
 
     #region Unity Methods
 
@@ -91,9 +87,12 @@ public class Car_Controller : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         wheels = GetComponentsInChildren<Car_Wheel>();
         carSounds = GetComponent<Car_SFX>();
-        ui = UI.instance;
 
         controls = ControlsManager.instance.controls;
+        if (controls == null)
+        {
+            Debug.LogError("Car_Controller: ControlsManager.instance.controls is null!");
+        }
 
         ActivateCar(false);
         AssignInputEvents();
@@ -102,7 +101,6 @@ public class Car_Controller : MonoBehaviour
 
     private void FixedUpdate()
     {
-
         if (!carActive)
         {
             DecelerateCar();
@@ -133,22 +131,26 @@ public class Car_Controller : MonoBehaviour
         HandleWheelAnimation();
     }
 
-
     private void Update()
     {
-        if (!carActive)
-        {
-            return;
-        }
-
+        // Calculate car speed
         actualSpeedMPS = rb.linearVelocity.magnitude;
         actualSpeedKPH = actualSpeedMPS * 3.6f;
 
+        if (!carActive)
+            return;
+
+        // Update UI speed text
         UI.instance.inGameUI.UpdateSpeedText(Mathf.RoundToInt(actualSpeedKPH) + " km/h");
 
-        driftTimer -= Time.deltaTime;
-        if (driftTimer < 0)
-            isDrifting = false;
+        if (carActive)
+        {
+            driftTimer -= Time.deltaTime;
+            if (driftTimer < 0)
+            {
+                isDrifting = false;
+            }
+        }
     }
 
     #endregion
@@ -162,18 +164,27 @@ public class Car_Controller : MonoBehaviour
 
         foreach (var wheel in wheels)
         {
-            wheel.cd.mass = wheelsMass;
+            if (wheel.cd != null)
+            {
+                wheel.cd.mass = wheelsMass;
 
-            if (wheel.axleType == AxelType.Front)
-                wheel.SetDefaltStiffness(frontWheelTraction);
+                if (wheel.axleType == AxelType.Front)
+                    wheel.SetDefaltStiffness(frontWheelTraction);
 
-            if (wheel.axleType == AxelType.Rear)
-                wheel.SetDefaltStiffness(rearWheelTraction);
+                if (wheel.axleType == AxelType.Rear)
+                    wheel.SetDefaltStiffness(rearWheelTraction);
+            }
+            else
+            {
+                Debug.LogWarning($"Car_Controller: WheelCollider (cd) is null for one of the wheels in GameObject {wheel.gameObject.name}", wheel.gameObject);
+            }
         }
     }
 
     private void AssignInputEvents()
     {
+        if (controls == null) return;
+
         controls.Car.Movement.performed += ctx =>
         {
             Vector2 input = ctx.ReadValue<Vector2>();
@@ -195,12 +206,23 @@ public class Car_Controller : MonoBehaviour
         };
 
         controls.Car.Brake.canceled += ctx => isBraking = false;
-        controls.Car.EnterExit.performed += ctx => GetComponent<Car_Interaction>().ExitCar();
-        controls.Car.TogglePauseUI.performed += ctx => UI.instance.TogglePauseUI();
+
+        var carInteraction = GetComponent<Car_Interaction>();
+        if (carInteraction != null)
+            controls.Car.EnterExit.performed += ctx => carInteraction.ExitCar();
+
+        else
+            Debug.LogWarning("Car_Controller: Car_Interaction component not found. Enter/Exit control will not work.");
+
+
+        controls.Car.TogglePauseUI.performed += ctx => { if (UI.instance != null) UI.instance.TogglePauseUI(); };
         controls.Car.ToggleMinimap.performed += ctx =>
         {
-            bool isMinimapActive = UI.instance.inGameUI.minimap.activeSelf;
-            UI.instance.ToggleMinimap(!isMinimapActive);
+            if (UI.instance != null && UI.instance.inGameUI != null && UI.instance.inGameUI.minimap != null)
+            {
+                bool isMinimapActive = UI.instance.inGameUI.minimap.activeSelf;
+                UI.instance.ToggleMinimap(!isMinimapActive);
+            }
         };
     }
 
@@ -210,11 +232,13 @@ public class Car_Controller : MonoBehaviour
 
     private void HandleDriving()
     {
-        currentSpeed = moveInput * accelerationRate * Time.deltaTime;
-        float motorTorqueValue = motorForce * currentSpeed;
+        currentMotorInputFactor = moveInput * accelerationRate * Time.deltaTime;
+        float motorTorqueValue = motorForce * currentMotorInputFactor;
 
         foreach (var wheel in wheels)
         {
+            if (wheel.cd == null) continue;
+
             if (driveType == DriveType.FrontWheelDrive)
             {
                 if (wheel.axleType == AxelType.Front)
@@ -232,15 +256,18 @@ public class Car_Controller : MonoBehaviour
 
     private void HandleSpeedLimit()
     {
-        // Giả sử maxSpeed là đơn vị m/s (Unity units/second)
-        if (rb.linearVelocity.magnitude > maxSpeed)
-            rb.linearVelocity = rb.linearVelocity.normalized * maxSpeed;
+        // Conver maxSpeedKPH (km/h) to m/s to compare it to rb.linearVelocity.magnitude
+        // 1 km/h = 1000m / 3600s = 1 / 3.6 m/s
+        float maxSpeedMPS = maxSpeedKPH / 3.6f;
+        if (rb.linearVelocity.magnitude > maxSpeedMPS)
+            rb.linearVelocity = rb.linearVelocity.normalized * maxSpeedMPS;
     }
 
     private void HandleSteering()
     {
         foreach (var wheel in wheels)
         {
+            if (wheel.cd == null) continue;
             if (wheel.axleType == AxelType.Front)
             {
                 float targetSteeringAngle = turnInput * turnSensitivity;
@@ -253,10 +280,13 @@ public class Car_Controller : MonoBehaviour
     {
         foreach (var wheel in wheels)
         {
+            if (wheel.cd == null) continue;
+
             bool backBrakes = wheel.axleType == AxelType.Rear;
             float brakeSensitivity = backBrakes ? backBrakeSensitivity : frontBrakeSensitivity;
-            float newBrakeForce = brakeForce * brakeSensitivity * Time.deltaTime;
-            float currentBrakeTorque = isBraking ? newBrakeForce : 0;
+
+            float actualBrakeForce = brakeForce * brakeSensitivity * Time.fixedDeltaTime;
+            float currentBrakeTorque = isBraking ? actualBrakeForce : 0;
             wheel.cd.brakeTorque = currentBrakeTorque;
         }
     }
@@ -268,10 +298,11 @@ public class Car_Controller : MonoBehaviour
 
         foreach (var wheel in wheels)
         {
+            if (wheel.cd == null) continue;
+
             if (isDrifting || isBraking)
             {
-                WheelHit hit;
-                if (wheel.cd.GetGroundHit(out hit) &&
+                if (wheel.cd.GetGroundHit(out WheelHit hit) &&
                     (whatIsGround == (whatIsGround | (1 << hit.collider.gameObject.layer))))
                 {
                     if (wheel.trailRenderer != null)
@@ -299,51 +330,48 @@ public class Car_Controller : MonoBehaviour
     {
         foreach (var wheel in wheels)
         {
+            if (wheel.cd == null) continue;
+
             bool backWheel = wheel.axleType == AxelType.Rear;
             float driftFactor = backWheel ? rearDriftFactor : frontDriftFactor;
 
             WheelFrictionCurve sidewaysFriction = wheel.cd.sidewaysFriction;
-            sidewaysFriction.stiffness *= (1 - driftFactor);
+            sidewaysFriction.stiffness *= (1f - driftFactor);
             wheel.cd.sidewaysFriction = sidewaysFriction;
         }
 
-        DriftCarPS();
-        carSounds.HandleTireSqueal(true);
+        DriftCarPS(true);
+        if (carSounds != null) carSounds.HandleTireSqueal(true);
     }
 
     private void StopDrift()
     {
         foreach (var wheel in wheels)
+        {
+            if (wheel.cd == null) continue;
             wheel.RestoreDefaultStiffness();
+        }
 
         DriftCarPS(false);
-        carSounds.HandleTireSqueal(false);
-
+        if (carSounds != null) carSounds.HandleTireSqueal(false);
         foreach (var wheel in wheels)
         {
-            if (wheel.trailRenderer != null) 
+            if (wheel.trailRenderer != null)
                 wheel.trailRenderer.emitting = false;
         }
     }
 
-    private void DriftCarPS(bool isDrifting = true)
+    private void DriftCarPS(bool play)
     {
-        try
+        if (play)
         {
-            if (isDrifting)
-            {
-                RLWParticleSystem?.Play();
-                RRWParticleSystem?.Play();
-            }
-            else
-            {
-                RLWParticleSystem?.Stop();
-                RRWParticleSystem?.Stop();
-            }
+            RLWParticleSystem?.Play();
+            RRWParticleSystem?.Play();
         }
-        catch (Exception ex)
+        else
         {
-            Debug.LogWarning(ex);
+            RLWParticleSystem?.Stop();
+            RRWParticleSystem?.Stop();
         }
     }
 
@@ -355,9 +383,8 @@ public class Car_Controller : MonoBehaviour
     {
         foreach (var wheel in wheels)
         {
-            Quaternion rotation;
-            Vector3 position;
-            wheel.cd.GetWorldPose(out position, out rotation);
+            if (wheel.cd == null) continue;
+            wheel.cd.GetWorldPose(out Vector3 position, out Quaternion rotation);
 
             if (wheel.model != null)
             {
@@ -375,25 +402,33 @@ public class Car_Controller : MonoBehaviour
     {
         carActive = active;
         if (carSounds != null)
+        {
             carSounds.ActivateCarSFX(active);
+        }
+
+        if (!active)
+        {
+            isBraking = false;
+            isDrifting = false;
+        }
     }
 
     public void BreakCar()
     {
         canEmitTrails = false;
+        carActive = false;
 
         foreach (var wheel in wheels)
         {
-            if (wheel.trailRenderer != null) // Thêm kiểm tra null
+            if (wheel.trailRenderer != null)
                 wheel.trailRenderer.emitting = false;
         }
 
-        carSounds.ActivateCarSFX(false);
+        if (carSounds != null)
+            carSounds.ActivateCarSFX(false);
 
         motorForce = 0;
         rb.linearDamping = 1;
-        frontDriftFactor = 0.9f;
-        rearDriftFactor = 0.9f;
     }
 
     #endregion

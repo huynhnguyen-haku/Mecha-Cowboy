@@ -56,11 +56,20 @@ public class UI_WeaponSelection : MonoBehaviour
             UI.instance.SwitchTo(nextUIElementToActivate);
             UI.instance.StartLevelGeneration();
         }
-        else
-        {
-            ShowWarningMessage("Please select at least one weapon.");
-        }
     }
+
+    public void TryStartGame()
+    {
+        // Check if at least one weapon is selected before starting the game
+        if (HasSelectedWeapon())      
+            UI.instance.StartGame();
+
+        // If no weapon is selected, show a warning message
+        else
+            ShowWarningMessage("Please select at least one weapon.");
+        
+    }
+
 
     // Check if at least one weapon is selected
     private bool HasSelectedWeapon() => SelectedWeaponData().Count > 0;
