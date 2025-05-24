@@ -18,7 +18,7 @@ public class Car_DamageZone : MonoBehaviour
     // Deal damage and apply force if car is moving fast enough
     private void OnTriggerEnter(Collider other)
     {
-        if (Mathf.Abs(carController.speed) < minSpeedToDamage)
+        if (Mathf.Abs(carController.actualSpeedKPH) < minSpeedToDamage)
             return;
 
         I_Damagable damagable = other.GetComponent<I_Damagable>();

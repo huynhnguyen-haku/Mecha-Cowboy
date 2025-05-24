@@ -16,7 +16,10 @@ public class Car_Controller : MonoBehaviour
     private float moveInput;
     private float turnInput;
 
-    public float speed;
+    // Tốc độ thực tế của Rigidbody
+    public float actualSpeedMPS { get; private set; } // Mét trên giây
+    public float actualSpeedKPH { get; private set; } // Kilômét trên giờ
+
     private WheelCollider frontLeftWheel;
 
     [Range(30, 60)][SerializeField] private float turnSensitivity = 30;
@@ -38,9 +41,9 @@ public class Car_Controller : MonoBehaviour
     [SerializeField] private float rearWheelTraction = 1;
 
     [Header("Engine Settings")]
-    private float currentSpeed;
+    private float currentSpeed; // Biến này dùng cho motorTorque, không phải tốc độ hiển thị
 
-    // These 2 parameters are mile, not kilometer
+    // These 2 parameters are mile, not kilometer (Lưu ý: maxSpeed này đang được dùng như m/s trong HandleSpeedLimit)
     [Range(4, 20)]
     [SerializeField] private float maxSpeed = 7;
 
@@ -91,7 +94,6 @@ public class Car_Controller : MonoBehaviour
         ui = UI.instance;
 
         controls = ControlsManager.instance.controls;
-        frontLeftWheel = wheels[3].cd;
 
         ActivateCar(false);
         AssignInputEvents();
@@ -100,9 +102,9 @@ public class Car_Controller : MonoBehaviour
 
     private void FixedUpdate()
     {
+
         if (!carActive)
         {
-            // Slow down the car if not in use
             DecelerateCar();
             return;
         }
@@ -122,14 +124,12 @@ public class Car_Controller : MonoBehaviour
 
     public void DecelerateCar()
     {
-        // Stop drifting (for sfx and vfx)
         StopDrift();
         isDrifting = false;
 
-        // Slow down the car after exiting
         rb.linearVelocity = Vector3.Lerp(rb.linearVelocity, Vector3.zero, Time.fixedDeltaTime * 7f);
         rb.angularVelocity = Vector3.Lerp(rb.angularVelocity, Vector3.zero, Time.fixedDeltaTime * 7f);
-       
+
         HandleWheelAnimation();
     }
 
@@ -137,11 +137,14 @@ public class Car_Controller : MonoBehaviour
     private void Update()
     {
         if (!carActive)
+        {
             return;
+        }
 
-        // Car speed calculation
-        speed = (2 * Mathf.PI * frontLeftWheel.radius * frontLeftWheel.rpm * 60) / 1000;
-        UI.instance.inGameUI.UpdateSpeedText(Mathf.RoundToInt(speed) + " km/h");
+        actualSpeedMPS = rb.linearVelocity.magnitude;
+        actualSpeedKPH = actualSpeedMPS * 3.6f;
+
+        UI.instance.inGameUI.UpdateSpeedText(Mathf.RoundToInt(actualSpeedKPH) + " km/h");
 
         driftTimer -= Time.deltaTime;
         if (driftTimer < 0)
@@ -152,7 +155,6 @@ public class Car_Controller : MonoBehaviour
 
     #region Setup Methods
 
-    // Set up car mass, center of mass, and wheel stiffness
     private void SetupDefaultValues()
     {
         rb.centerOfMass = centerOfMass.localPosition;
@@ -170,7 +172,6 @@ public class Car_Controller : MonoBehaviour
         }
     }
 
-    // Register input events for car controls
     private void AssignInputEvents()
     {
         controls.Car.Movement.performed += ctx =>
@@ -207,7 +208,6 @@ public class Car_Controller : MonoBehaviour
 
     #region Driving Methods
 
-    // Apply motor torque to wheels based on drive type
     private void HandleDriving()
     {
         currentSpeed = moveInput * accelerationRate * Time.deltaTime;
@@ -215,32 +215,28 @@ public class Car_Controller : MonoBehaviour
 
         foreach (var wheel in wheels)
         {
-            // FWD Car
             if (driveType == DriveType.FrontWheelDrive)
             {
                 if (wheel.axleType == AxelType.Front)
                     wheel.cd.motorTorque = motorTorqueValue;
             }
-            // RWD Car
             else if (driveType == DriveType.RearWheelDrive)
             {
                 if (wheel.axleType == AxelType.Rear)
                     wheel.cd.motorTorque = motorTorqueValue;
             }
-            // AWD Car
             else if (driveType == DriveType.AllWheelDrive)
                 wheel.cd.motorTorque = motorTorqueValue;
         }
     }
 
-    // Clamp car speed to maxSpeed
     private void HandleSpeedLimit()
     {
+        // Giả sử maxSpeed là đơn vị m/s (Unity units/second)
         if (rb.linearVelocity.magnitude > maxSpeed)
             rb.linearVelocity = rb.linearVelocity.normalized * maxSpeed;
     }
 
-    // Steer front wheels based on input
     private void HandleSteering()
     {
         foreach (var wheel in wheels)
@@ -253,7 +249,6 @@ public class Car_Controller : MonoBehaviour
         }
     }
 
-    // Apply brake torque to wheels
     private void HandleBraking()
     {
         foreach (var wheel in wheels)
@@ -266,7 +261,6 @@ public class Car_Controller : MonoBehaviour
         }
     }
 
-    // Emit tire trails when drifting or braking
     private void ApplyTrailOnTheGround()
     {
         if (!canEmitTrails)
@@ -301,7 +295,6 @@ public class Car_Controller : MonoBehaviour
 
     #region Drift Methods
 
-    // Reduce wheel friction for drift effect
     private void HandleDrift()
     {
         foreach (var wheel in wheels)
@@ -318,7 +311,6 @@ public class Car_Controller : MonoBehaviour
         carSounds.HandleTireSqueal(true);
     }
 
-    // Restore wheel friction and stop drift effects
     private void StopDrift()
     {
         foreach (var wheel in wheels)
@@ -329,11 +321,11 @@ public class Car_Controller : MonoBehaviour
 
         foreach (var wheel in wheels)
         {
-            wheel.trailRenderer.emitting = false;
+            if (wheel.trailRenderer != null) 
+                wheel.trailRenderer.emitting = false;
         }
     }
 
-    // Play or stop drift particle systems
     private void DriftCarPS(bool isDrifting = true)
     {
         try
@@ -359,7 +351,6 @@ public class Car_Controller : MonoBehaviour
 
     #region Animation Methods
 
-    // Update wheel model positions and rotations
     private void HandleWheelAnimation()
     {
         foreach (var wheel in wheels)
@@ -380,7 +371,6 @@ public class Car_Controller : MonoBehaviour
 
     #region Public Methods
 
-    // Enable or disable car controls and SFX
     public void ActivateCar(bool active)
     {
         carActive = active;
@@ -388,14 +378,14 @@ public class Car_Controller : MonoBehaviour
             carSounds.ActivateCarSFX(active);
     }
 
-    // Break car, stop all effects and set physics for explosion
     public void BreakCar()
     {
         canEmitTrails = false;
 
         foreach (var wheel in wheels)
         {
-            wheel.trailRenderer.emitting = false;
+            if (wheel.trailRenderer != null) // Thêm kiểm tra null
+                wheel.trailRenderer.emitting = false;
         }
 
         carSounds.ActivateCarSFX(false);

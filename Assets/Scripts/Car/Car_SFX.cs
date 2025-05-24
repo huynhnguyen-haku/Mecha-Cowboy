@@ -34,7 +34,7 @@ public class Car_SFX : MonoBehaviour
     // Update engine idle pitch based on car speed
     private void UpdateEngineSFX()
     {
-        float currentSpeed = Mathf.Abs(carController.speed) / 3.6f;
+        float currentSpeed = Mathf.Abs(carController.actualSpeedKPH) / 3.6f;
         float pitch = Mathf.Lerp(minPitch, maxPitch, currentSpeed / maxSpeed);
         engineIdle.pitch = pitch;
     }
