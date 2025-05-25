@@ -25,9 +25,11 @@
 
 ## Technology
 - Built with **Unity**.
-- Utilizes **State Machine** for enemy behavior
-- **Object Pool** for performance optimization
-- **NavMesh** for pathfinding.
+- Utilizes **State Machine** for enemy behavior.
+- **Object Pool** for performance optimization.
+- **NavMesh** for enemy pathfinding and player minimap navigation.
+- Uses **Unity Input System** for responsive controls.
+- Implements **procedural generation** for randomized levels (based on selected mission).
 - Features a custom driving system with realistic physics and drift mechanics.
 
 ## Try It Out
