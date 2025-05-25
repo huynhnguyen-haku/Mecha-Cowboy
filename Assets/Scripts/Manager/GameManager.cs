@@ -81,7 +81,6 @@ public class GameManager : MonoBehaviour
         {
             Debug.LogWarning("GameManager: PathfindingIndicator not found during RestartScene!");
         }
-
         UpdateGameState(GameState.MainMenu);
     }
 

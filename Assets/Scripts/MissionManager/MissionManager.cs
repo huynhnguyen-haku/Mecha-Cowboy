@@ -43,7 +43,14 @@ public class MissionManager : MonoBehaviour
     {
         currentMission = newMission;
         hasSetFinalTarget = false;
+
+        // Specific reset for LastDefense mission
+        if (currentMission is Mission_LastDefense lastDefenseMission)
+        {
+            lastDefenseMission.ResetMissionState();
+        }
     }
+
 
     // Start the current mission
     public void StartMission()
