@@ -31,9 +31,9 @@
 - Features a custom driving system with realistic physics and drift mechanics.
 
 ## Try It Out
-- **Play on itch.io**: [Play here](https://your-itch-io-link).
+- **Play on itch.io**: [Play here](https://huynhnguyen-haku.itch.io/mecha-cowboy).
   
-- **PC version**: [Download here](https://your-itch-io-link).
+- **PC version**: [Download here](https://drive.google.com/file/d/1j4b9v7cOIhpL8B4KhuijzsYaEn1qkwcp/view?usp=sharing).
   
 - **Gameplay Demo**: Watch the full gameplay introduction on [YouTube](https://your-youtube-link).
 
