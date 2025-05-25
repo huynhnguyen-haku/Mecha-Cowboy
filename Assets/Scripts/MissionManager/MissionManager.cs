@@ -49,6 +49,12 @@ public class MissionManager : MonoBehaviour
         {
             lastDefenseMission.ResetMissionState();
         }
+
+        // Specific reset for CarDelivery mission
+        if (currentMission is Mission_CarDelivery carDeliveryMission)
+        {
+            carDeliveryMission.ResetMissionState();
+        }
     }
 
 

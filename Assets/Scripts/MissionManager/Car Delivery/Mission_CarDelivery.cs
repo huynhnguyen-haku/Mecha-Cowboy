@@ -63,6 +63,13 @@ public class Mission_CarDelivery : Mission
         return isCarDelivered;
     }
 
+    // Resets the mission state
+    public void ResetMissionState()
+    {
+        isCarDelivered = false;
+    }
+
+
     // Complete the mission when the car is delivered
     private void CompleteCarDelivery()
     {

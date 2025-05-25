@@ -33,17 +33,6 @@ public class Mission_LastDefense : Mission
         isMissionCompleted = false;
     }
 
-    // Resets the mission state
-    public void ResetMissionState()
-    {
-        isDefenceStarted = false;
-        isMissionCompleted = false;
-        defenseTimer = 0f;
-        waveTimer = 0f;
-        respawnPoints = null;
-        defenceTimerText = "";
-    }
-
     #endregion
 
     #region Mission Logic
@@ -80,6 +69,18 @@ public class Mission_LastDefense : Mission
     {
         return isMissionCompleted;
     }
+
+    // Resets the mission state
+    public void ResetMissionState()
+    {
+        isDefenceStarted = false;
+        isMissionCompleted = false;
+        defenseTimer = 0f;
+        waveTimer = 0f;
+        respawnPoints = null;
+        defenceTimerText = "";
+    }
+
 
     public override void UpdateMission()
     {
