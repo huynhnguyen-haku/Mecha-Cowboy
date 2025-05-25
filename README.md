@@ -57,8 +57,3 @@
 
 **Note**: The WebGL version on itch.io may lack some VFX and have some bugs, due to platform limitations. Download the Windows version for the full experience.
 
-## Get Involved
-Enjoying *Mecha Hunter: Bounty*? Share your feedback on [itch.io](https://huynhnguyen-haku.itch.io/mecha-cowboy) Your input helps shape future updates!
-
-## About the Developer
-Created by **Huynh Nguyen**, a passionate solo developer aiming to bring thrilling action games to life.
