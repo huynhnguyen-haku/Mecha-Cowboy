@@ -5275,14 +5275,13 @@ MonoBehaviour:
     m_Bits: 257
   enemyType: 1
   idleTime: 1.5
-  arrgresssionRange: 5
+  arrgresssionRange: 8
   walkSpeed: 1
   runSpeed: 3
-  turnSpeed: 6
+  turnSpeed: 10
   patrolPoints:
   - {fileID: 8357150741987942660}
   - {fileID: 4311735259814070112}
-  rangeSFX: {fileID: 0}
   weaponType: 3
   coverPerk: 2
   unstoppablePerk: 0
