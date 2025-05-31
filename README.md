@@ -9,6 +9,7 @@
 ![Image](https://github.com/user-attachments/assets/301332b7-5546-4cbf-af55-f9311085e255)
 
 ![Image](https://github.com/user-attachments/assets/5f4e108b-8d14-4a19-be70-bcc8398422f8)
+
 ## Key Features
 🎮 **Dynamic Combat**: Choose from a variety of weapons, each with unique strengths and weaknesses. Lock-on targeting and laser sights enhance precision in fast-paced battles.
 
@@ -32,8 +33,6 @@
 - Use the lock-on system (hold right-click) for precise targeting.
 
 - Pick up weapons and ammo boxes in the map.
-
-- Avoid unnecessary fights.
   
 
 ## Technology
@@ -41,7 +40,7 @@
   
 - **State Machine**: Manages complex enemy AI behaviors, enabling dynamic responses to player actions.
   
-- **Object Pool**: Optimizes performance by reusing game objects like bullets, ammo boxes and grenadas.
+- **Object Pooling**: Optimizes performance by reusing game objects like bullets, ammo boxes and grenades.
   
 - **NavMesh**: Powers enemy pathfinding and player minimap navigation for seamless exploration.
   
@@ -49,8 +48,6 @@
   
 - **Procedural Generation**: Creates unique level layouts for each mission, enhancing replayability.
   
-- **Custom Driving System**: Simulates realistic vehicle physics with FWD, RWD, and AWD handling, plus drift mechanics.
-
 
 ## Try It Out
 - **Play on itch.io**: [Play here](https://huynhnguyen-haku.itch.io/mecha-cowboy)
