@@ -20,7 +20,6 @@ public class UI_Settings : MonoBehaviour
 
     [Header("Fire Settings")]
     [SerializeField] private Toggle friendlyFireToggle;
-    [SerializeField] private Toggle preciseAimToggle;
 
     #region Audio Settings
 
