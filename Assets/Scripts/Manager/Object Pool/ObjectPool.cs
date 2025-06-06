@@ -2,20 +2,22 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
+public class PoolConfig
+{
+    public GameObject prefab;
+    public int poolSize = 10;
+}
+
 public class ObjectPool : MonoBehaviour
 {
     public static ObjectPool instance;
 
-    [SerializeField] private int poolSize = 10;
+    [SerializeField] private List<PoolConfig> pools;
 
-    // Maps prefab to its pool of inactive objects
-    private Dictionary<GameObject, Queue<GameObject>> poolDictionary =
-        new Dictionary<GameObject, Queue<GameObject>>();
+    private Dictionary<GameObject, Queue<GameObject>> poolDictionary = new();
+    private Dictionary<GameObject, int> poolSizeDictionary = new();
 
-    [Header("To Initialize")]
-    [SerializeField] private GameObject weaponPickup;
-    [SerializeField] private GameObject ammoPickup;
-    [SerializeField] private GameObject healthPickUp;
 
     #region Unity Methods
 
@@ -29,9 +31,10 @@ public class ObjectPool : MonoBehaviour
 
     private void Start()
     {
-        InitializeNewPool(weaponPickup);
-        InitializeNewPool(ammoPickup);
-        InitializeNewPool(healthPickUp);
+        foreach (var pool in pools)
+        {
+            InitializeNewPool(pool.prefab, pool.poolSize);
+        }
     }
 
     #endregion
@@ -42,13 +45,12 @@ public class ObjectPool : MonoBehaviour
     public GameObject GetObject(GameObject prefab, Transform target)
     {
         if (!poolDictionary.ContainsKey(prefab))
-            InitializeNewPool(prefab);
+            InitializeNewPool(prefab, poolSizeDictionary.ContainsKey(prefab) ? poolSizeDictionary[prefab] : 10);
 
         if (poolDictionary[prefab].Count == 0)
-            CreateNewObject(prefab); // Expand pool if empty
+            CreateNewObject(prefab);
 
         GameObject objectToGet = poolDictionary[prefab].Dequeue();
-
         objectToGet.transform.position = target.position;
         objectToGet.transform.parent = null;
         objectToGet.SetActive(true);
@@ -84,11 +86,11 @@ public class ObjectPool : MonoBehaviour
     #region Pool Initialization
 
     // Create a new pool for a prefab
-    private void InitializeNewPool(GameObject prefab)
+    private void InitializeNewPool(GameObject prefab, int size)
     {
         poolDictionary[prefab] = new Queue<GameObject>();
-
-        for (int i = 0; i < poolSize; i++)
+        poolSizeDictionary[prefab] = size;
+        for (int i = 0; i < size; i++)
         {
             CreateNewObject(prefab);
         }
@@ -100,7 +102,6 @@ public class ObjectPool : MonoBehaviour
         GameObject newObject = Instantiate(prefab, transform);
         newObject.AddComponent<PooledObject>().originalPrefab = prefab;
         newObject.SetActive(false);
-
         poolDictionary[prefab].Enqueue(newObject);
     }
 

@@ -65,5 +65,15 @@ public class WeaponUnlockManager : MonoBehaviour
         PlayerPrefs.Save();
     }
 
+    // Unlock all weapons
+    public void UnlockAllWeapons()
+    {
+        foreach (var weapon in allWeapons)
+        {
+            weapon.isUnlocked = true;
+            SaveWeaponState(weapon);
+        }
+        PlayerPrefs.Save();
+    }
     #endregion
 }
