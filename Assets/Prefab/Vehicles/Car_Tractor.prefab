@@ -466,8 +466,8 @@ MonoBehaviour:
   wheelsMass: 60
   frontWheelTraction: 1.5
   rearWheelTraction: 1.5
-  maxSpeedKPH: 100
-  accelerationRate: 10
+  maxSpeedKPH: 40
+  accelerationRate: 4
   motorForce: 4000
   frontBrakeSensitivity: 5
   backBrakeSensitivity: 5

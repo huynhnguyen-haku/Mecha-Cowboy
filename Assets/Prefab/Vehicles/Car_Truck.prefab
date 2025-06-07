@@ -1723,15 +1723,15 @@ MonoBehaviour:
   wheelsMass: 60
   frontWheelTraction: 2
   rearWheelTraction: 2
-  maxSpeedKPH: 50
-  accelerationRate: 1
+  maxSpeedKPH: 30
+  accelerationRate: 2.5
   motorForce: 4500
   frontBrakeSensitivity: 10
   backBrakeSensitivity: 10
   brakeForce: 6000
-  frontDriftFactor: 1
-  rearDriftFactor: 1
-  driftDuration: 0
+  frontDriftFactor: 0.5
+  rearDriftFactor: 0.5
+  driftDuration: 1
   RLWParticleSystem: {fileID: 4310670411525448809}
   RRWParticleSystem: {fileID: 5496067411402920794}
 --- !u!114 &2641004001818890550
