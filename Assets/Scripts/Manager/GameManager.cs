@@ -90,7 +90,10 @@ public class GameManager : MonoBehaviour
         TimeManager.instance.SlowMotionFor(2);
         UI.instance.ShowGameOverUI();
         CameraManager.instance.ChangeCameraDistance(5);
+
         Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
+
         UpdateGameState(GameState.GameOver);
     }
 
@@ -98,7 +101,10 @@ public class GameManager : MonoBehaviour
     {
         UI.instance.DisplayVictoryScreenUI();
         ControlsManager.instance.controls.Character.Disable();
+
         Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
+
         UpdateGameState(GameState.MissionComplete);
 
         // Disable all enemies on the map

@@ -45,6 +45,7 @@ public class UI_InGame : MonoBehaviour
     {
         characterUI.SetActive(true);
         carUI.SetActive(false);
+        Cursor.lockState = CursorLockMode.None;
     }
 
     // Switch to car UI (hide character UI)
@@ -52,6 +53,7 @@ public class UI_InGame : MonoBehaviour
     {
         characterUI.SetActive(false);
         carUI.SetActive(true);
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
     // Toggle mission UI and guide
