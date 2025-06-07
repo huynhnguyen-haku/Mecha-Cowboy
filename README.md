@@ -11,30 +11,16 @@
 ![Image](https://github.com/user-attachments/assets/5f4e108b-8d14-4a19-be70-bcc8398422f8)
 
 ## Key Features
-🎮 **Dynamic Combat**: Choose from a variety of weapons, each with unique strengths and weaknesses. Lock-on targeting and laser sights enhance precision in fast-paced battles.
+- **Dynamic Combat**: Choose from a variety of weapons, each with unique strengths and weaknesses. Lock-on targeting and laser sights enhance precision in fast-paced battles.
 
-🤖 **Diverse Enemies**: Face melee robots, ranged attackers, and massive bosses like *Flamethrower* or *Warhammer*.
+- **Diverse Enemies**: Face melee robots, ranged attackers, and massive bosses like *Flamethrower* or *Warhammer*.
 
-🗺️ **Mission Variety**: Complete 5 mission types: elimination, core recovery, base defense, vehicle retrieval, and timed escapes.
+- **Mission Variety**: Complete 5 mission types: elimination, core recovery, base defense, vehicle retrieval, and timed escapes.
 
-🚗 **Realistic Driving System**: Drive vehicles with unique handling (FWD, RWD, AWD), drift through obstacles, or use them as weapons.
+- **Realistic Driving System**: Drive vehicles with unique handling (FWD, RWD, AWD), drift through obstacles, or use them as weapons.
 
-🌍 **Randomized Levels**: Procedurally generated maps ensure no two playthroughs are the same. A minimap navigation system guides you to objectives.
-
-## How to Play
-🎯 **Choose Your Weapon**: Select your loadout before each mission. Unlock new weapons using bounty rewards or find them in-game.
-
-🗺️ **Complete Missions**: Hunt enemies, recover stolen cores, defend areas, retrieve vehicles, or escape under time pressure
-
-✈️ **Survive and Escape**: Reach the airplane at the end of each mission to claim your rewards.
-
-**Tips**:
-
-- Use the lock-on system (hold right-click) for precise targeting.
-
-- Pick up weapons and ammo boxes in the map.
+- **Randomized Levels**: Procedurally generated maps. A minimap navigation system guides you to objectives.
   
-
 ## Technology
 - **Unity**: Core game engine for rendering, physics, and cross-platform deployment.
   
