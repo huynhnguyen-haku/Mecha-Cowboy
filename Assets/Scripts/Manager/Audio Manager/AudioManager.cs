@@ -127,6 +127,7 @@ public class AudioManager : MonoBehaviour
         }
     }
 
+
     // Get BGM AudioSource by type
     private AudioSource GetBGMSourceByType(int bgmType, out string bgmTypeName)
     {
@@ -163,11 +164,19 @@ public class AudioManager : MonoBehaviour
     // Get currently playing BGM AudioSource
     private AudioSource GetCurrentPlayingBGM()
     {
-        if (mainMenuBGM != null && mainMenuBGM.isPlaying) return mainMenuBGM;
+        if (mainMenuBGM != null && mainMenuBGM.isPlaying)
+            return mainMenuBGM;
+
         foreach (var bgm in missionBGMs)
-            if (bgm != null && bgm.isPlaying) return bgm;
-        if (gameOverBGM != null && gameOverBGM.isPlaying) return gameOverBGM;
-        if (missionCompleteBGM != null && missionCompleteBGM.isPlaying) return missionCompleteBGM;
+            if (bgm != null && bgm.isPlaying)
+                return bgm;
+
+        if (gameOverBGM != null && gameOverBGM.isPlaying)
+            return gameOverBGM;
+
+        if (missionCompleteBGM != null && missionCompleteBGM.isPlaying)
+            return missionCompleteBGM;
+
         return null;
     }
 
