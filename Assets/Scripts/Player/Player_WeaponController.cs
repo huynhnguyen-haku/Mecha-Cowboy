@@ -74,10 +74,12 @@ public class Player_WeaponController : MonoBehaviour
         if (i >= weaponSlots.Count)
             return;
 
+        if (currentWeapon == weaponSlots[i])
+            return;
+
         SetWeaponReady(false);
         currentWeapon = weaponSlots[i];
         player.weaponVisuals.PlayWeaponEquipAnimation();
-        //CameraManager.instance.ChangeCameraDistance(currentWeapon.cameraDistance);
         UpdateWeaponUI();
     }
 
@@ -142,7 +144,6 @@ public class Player_WeaponController : MonoBehaviour
     // Handle burst fire logic
     private IEnumerator BurstFire()
     {
-        SetWeaponReady(false);
 
         for (int i = 1; i <= currentWeapon.bulletsPerShot; i++)
         {
@@ -270,6 +271,7 @@ public class Player_WeaponController : MonoBehaviour
 
         if (currentWeapon.weaponType == WeaponType.Shotgun)
             player.weaponVisuals.CurrentWeaponModel().fireSFX.Play();
+
         else if (currentWeapon.weaponType != WeaponType.Minigun)
             player.weaponVisuals.CurrentWeaponModel().fireSFX.PlayOneShot(player.weaponVisuals.CurrentWeaponModel().fireSFX.clip);
 
