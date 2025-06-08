@@ -29,6 +29,7 @@ public class Enemy_Boss : Enemy
     public float flameDamageCooldown;
     public float flamethrowDuration;
     public ParticleSystem flamethrower;
+    public GameObject flameDamageZone;
     public bool flamethrowerActive { get; private set; }
 
     [Header("Hammer")]
@@ -284,6 +285,9 @@ public class Enemy_Boss : Enemy
 
         if (minimapIcon != null)
             minimapIcon.SetActive(false);
+
+        if (flameDamageZone != null)
+            flameDamageZone.SetActive(false);        
 
         SetLayerRecursively(gameObject, LayerMask.NameToLayer("Enemy"));
     }
