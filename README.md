@@ -38,7 +38,7 @@
 ## Try It Out
 - **Play on itch.io**: [Play here](https://huynhnguyen-haku.itch.io/mecha-cowboy)
 
-- **PC version**: [Download here](https://drive.google.com/file/d/1fTDJZ9UZZooUjDF3OBab4r3qCpyAdeql/view?usp=sharing)
+- **PC version**: [Download here](https://drive.google.com/file/d/1evnpVzMeUHfhCYUGptccPeVW90XyAgpM/view?usp=sharing)
   
 - **Gameplay Demo**: Watch the full gameplay introduction on [YouTube](https://your-youtube-link)
 
